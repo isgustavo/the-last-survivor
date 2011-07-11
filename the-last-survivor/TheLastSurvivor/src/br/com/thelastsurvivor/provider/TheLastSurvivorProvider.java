@@ -38,8 +38,10 @@ public abstract class TheLastSurvivorProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		// TODO Auto-generated method stub
-		return false;
+		if(this.getDbHelper() == null){
+			this.setDbHelper(new DBHelper(getContext(), DATABASE_NAME, DATABASE_VERSION));  
+		}
+		return true;
 	}
 
 	@Override
