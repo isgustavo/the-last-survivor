@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.player;
+package br.com.thelastsurvivor.provider.player;
 
 import android.content.ContentValues;
 import android.database.Cursor;

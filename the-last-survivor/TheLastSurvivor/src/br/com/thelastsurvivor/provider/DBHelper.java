@@ -1,6 +1,6 @@
 package br.com.thelastsurvivor.provider;
 
-import br.com.thelastsurvivor.player.Player;
+import br.com.thelastsurvivor.model.player.Player;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,8 +16,8 @@ public class DBHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		
 		db.execSQL("CREATE TABLE" + Player.getNameTable() +" ( " 
-				+ Player.getId() +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ Player.getIdentifierPlayer() +" LONGTEXT NOT NULL, "
+				+ Player.getId() +" NUMBER PRIMARY KEY AUTOINCREMENT, "
+				+ Player.getIdentifierPlayer() +" LONGTEXT, "
 				+ Player.getLgtwitter() + "LONGTEXT );");
 		
 	}
