@@ -3,6 +3,7 @@ package br.com.thelastsurvivor.provider;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class DBHelper extends SQLiteOpenHelper{
 
@@ -14,11 +15,11 @@ public class DBHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
-	/*	db.execSQL("CREATE TABLE" + Player.getNameTable() +" ( " 
-				+ Player.getId() +" NUMBER PRIMARY KEY AUTOINCREMENT, "
-				+ Player.getIdentifierPlayer() +" LONGTEXT, "
-				+ Player.getLgtwitter() + "LONGTEXT );");
-		*/
+		db.execSQL("CREATE TABLE" + PlayerProvider.NAME_TABLE +" ( " 
+				+ PlayerProvider.ID +" NUMBER PRIMARY KEY AUTOINCREMENT, "
+				+ PlayerProvider.IDENTIFIER_PLAYER +" LONGTEXT, "
+				+ PlayerProvider.LGTWITTER + "LONGTEXT );");
+		
 	}
 
 	@Override

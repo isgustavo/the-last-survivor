@@ -9,16 +9,18 @@ import br.com.thelastsurvivor.provider.TheLastSurvivorProvider;
 public class PlayerProvider extends TheLastSurvivorProvider implements BaseColumns{
 
 	
-	private static final Uri CONTENT_URI = Uri.parse("content://"
+	/*private static final Uri CONTENT_URI = Uri.parse("content://"
 			+ TheLastSurvivorProvider.CONTENT_URI+ "/player");
 	
 	private static final String CONTENT_TYPE = "vnd.android.cursor.dir/"
 			+TheLastSurvivorProvider.CONTENT_URI;
-	
-	private static final String NAME_TABLE ="player";
-	private static final String ID = "id";
-	private static final String IDENTIFIER_PLAYER = "identifier";
-	private static final String LGTWITTER = "lg_twitter"; 
+	*/
+	public static final String NAME_TABLE ="player";
+    public static final int NOTES = 1;  
+    
+	public static final String ID = "id";
+	public static final String IDENTIFIER_PLAYER = "identifier";
+	public static final String LGTWITTER = "lg_twitter"; 
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -57,27 +59,7 @@ public class PlayerProvider extends TheLastSurvivorProvider implements BaseColum
 	}
 
 
-	public static String getContentType() {
-		return CONTENT_TYPE;
-	}
-
-
-	public static String getNameTable(){
-		return NAME_TABLE;
-	}
 	
-	public static String getId() {
-		return ID;
-	}
 
-	public static String getIdentifierPlayer(){
-		return IDENTIFIER_PLAYER;
-	}
-
-	public static String getLgtwitter() {
-		return LGTWITTER;
-	}
-	
-	
 
 }

@@ -1,5 +1,6 @@
-package br.com.thelastsurvivor;
+package br.com.thelastsurvivor.activity;
 
+import br.com.thelastsurvivor.R;
 import android.app.Activity;
 import android.os.Bundle;
 
