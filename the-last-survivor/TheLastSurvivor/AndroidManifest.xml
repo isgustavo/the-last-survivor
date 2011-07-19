@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         
-        <provider android:name=".activity.provider.TheLastSurvivorProvider"
+        <provider android:name=".provider.TheLastSurvivorProvider"
          		  android:authorities="br.com.thelastsurvivor.provider.thelastsurvivorprovider" /> 
         
 

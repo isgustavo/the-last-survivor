@@ -2,11 +2,6 @@ package br.com.thelastsurvivor.model.player;
 
 import java.io.Serializable;
 
-import br.com.thelastsurvivor.provider.TheLastSurvivorProvider;
-
-import android.net.Uri;
-import android.provider.BaseColumns;
-
 public class Player implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
