@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TheLastSurvivorActivity!</string>
-    <string name="app_name">The Last Survivor</string>
+    
+    <string name="app_name">O último sobrevivente</string>
+    
+    <string name="nickname">Apelido</string>
+    <string name="lg_twitter">Nome de usuário ou e-mail do Twitter</string>
+    
+    
+    
+    
 </resources>

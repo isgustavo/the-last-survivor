@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<HorizontalScrollView android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:scrollbars="none">
+       
+<FrameLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+           
+    <ImageView android:id="@+id/imageView1"
+    	 android:layout_width="wrap_content" 
+    	 android:layout_height="wrap_content" 
+    	 android:src="@drawable/layout_menu_pt_rbr">
+    </ImageView>
+           
+           <AbsoluteLayout 
+    			android:orientation="vertical"
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent">
+        		
+        		<Button android:id="@+id/buttonSimpleMode" 
+        				android:background="@drawable/simple_mode_button_pt_rbr"
+        		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
+        		        android:layout_x="400dp" android:layout_y="50dp">
+        	    </Button>  
+        	    
+        	     <Button android:id="@+id/buttonMultiMode" 
+        				android:background="@drawable/multiplayer_mode_button_pt_rbr"
+        		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
+        		        android:layout_x="400dp" android:layout_y="110dp">
+        	    </Button> 
+        	    
+        	    <Button android:id="@+id/buttonTrophies" 
+        				android:background="@drawable/trophies_button_pt_rbr"
+        		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
+        		        android:layout_x="590dp" android:layout_y="50dp">
+        	    </Button>
+        	    
+        	    <Button android:id="@+id/rankTrophies" 
+        				android:background="@drawable/rank_button"
+        		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
+        		        android:layout_x="675dp" android:layout_y="50dp">
+        	    </Button>
+        	    
+        	     <Button android:id="@+id/buttonOption" 
+        				android:background="@drawable/option_button_pt_rbr"
+        		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
+        		        android:layout_x="590dp" android:layout_y="150dp">
+        	    </Button> 
+      
+      </AbsoluteLayout>  
+</FrameLayout>
+</HorizontalScrollView>
+
+</AbsoluteLayout>

@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TheLastSurvivorActivity!</string>
     <string name="app_name">The Last Survivor</string>
+    <string name="app_name_for">For</string>
+    <string name="app_name_players">Players</string>
+    
+    
+    
+    <string name="nickname">Nickname</string>
+    <string name="lg_twitter">Username or e-mail Twitter</string>
+    
+    <string name="lista">LISTA</string>
+    
 </resources>
