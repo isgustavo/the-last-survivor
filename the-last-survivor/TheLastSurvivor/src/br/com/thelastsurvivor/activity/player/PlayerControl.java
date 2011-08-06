@@ -1,8 +1,6 @@
 package br.com.thelastsurvivor.activity.player;
 
-import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 import br.com.thelastsurvivor.model.player.Player;

@@ -1,25 +1,14 @@
 package br.com.thelastsurvivor.activity;
 
-import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.player.CadastrePlayerActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.view.GestureDetector.OnGestureListener;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Scroller;
+import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.SimpleGameActivity;
 
 public class MainMenuActivity extends Activity{
 		/** Called when the activity is first created. */
@@ -49,12 +38,11 @@ public class MainMenuActivity extends Activity{
 	
 	private OnClickListener buttonSimpleGameListener = new OnClickListener() {  
         public void onClick(View v) {  
-        	AlertDialog.Builder alerta = new AlertDialog.Builder(
-					MainMenuActivity.this);
-			alerta.setIcon(null);
-			alerta.setTitle("SIMPLE GAME");
-			alerta.setNeutralButton("OK", null);
-			alerta.show();
+        	
+        	Intent i = new Intent(MainMenuActivity.this, SimpleGameActivity.class);
+        //	Intent i = new Intent(MainMenuActivity.this, Principal.class);
+			startActivity(i);
+     
         }  
 	};  
    

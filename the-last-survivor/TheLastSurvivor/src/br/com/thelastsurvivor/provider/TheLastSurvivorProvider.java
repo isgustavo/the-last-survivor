@@ -2,8 +2,6 @@ package br.com.thelastsurvivor.provider;
 
 import java.util.HashMap;
 
-import br.com.thelastsurvivor.provider.player.PlayerProvider;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -13,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
+import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class TheLastSurvivorProvider extends ContentProvider {
 
@@ -22,7 +21,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
 	 public static final String CONTENT_TYPE =  
              "vnd.android.cursor.dir/" + AUTHORITY; 
 
-	private static final String DATABASE_NAME = "thelastSurvivorGame.db";
+	private static final String DATABASE_NAME = "theLastSurvivorGame.db";
 	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteHelper helper;

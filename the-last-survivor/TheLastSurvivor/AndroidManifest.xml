@@ -30,7 +30,22 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+    
+    <activity android:name=".activity.game.SimpleGameActivity"
+  			  android:screenOrientation="landscape"
+  			  android:launchMode="singleTask"
+  			  android:alwaysRetainTaskState="true">
+     	<intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         
+        <activity android:name=".activity.game.Principal"
+  			  android:screenOrientation="landscape">
+     	<intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
     <activity android:name=".activity.game.SavedGamesActivity"
 	  		   android:screenOrientation="landscape">
       	<intent-filter>
@@ -53,4 +68,5 @@
     </activity>
 
     </application>
+    
 </manifest>

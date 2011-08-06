@@ -4,18 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
-import br.com.thelastsurvivor.activity.game.SavedGamesActivity;
 import br.com.thelastsurvivor.model.player.Player;
-import br.com.thelastsurvivor.provider.TheLastSurvivorProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class CadastrePlayerActivity extends Activity {
