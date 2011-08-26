@@ -3,25 +3,36 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
+ 
+ <br.com.thelastsurvivor.view.MainMenuView
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:id="@+id/surfaceView" /> 
+					
 <HorizontalScrollView android:layout_width="wrap_content" 
     android:layout_height="wrap_content" 
     android:scrollbars="none">
-       
+
+     
 <FrameLayout android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-           
-    <ImageView android:id="@+id/imageView1"
+    
+   <ImageView android:id="@+id/imageView1"
     	 android:layout_width="wrap_content" 
     	 android:layout_height="wrap_content" 
     	 android:src="@drawable/layout_menu">
     </ImageView>
-           
+    
+   
+    
+             
            <AbsoluteLayout 
     			android:orientation="vertical"
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
         		
+        		
+		
         		<Button android:id="@+id/buttonSimpleMode" 
         				android:background="@drawable/simple_mode_button_us"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
@@ -50,10 +61,11 @@
         				android:background="@drawable/option_button_us"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
         		        android:layout_x="590dp" android:layout_y="150dp">
-        	    </Button> 
-      
+        	    </Button>
+        	     
+       
       </AbsoluteLayout>  
-</FrameLayout>
-</HorizontalScrollView>
+ </FrameLayout> 
+</HorizontalScrollView> 
 
 </AbsoluteLayout>

@@ -1,18 +1,16 @@
-package br.com.thelastsurvivor.engine;
+package br.com.thelastsurvivor.view.particle;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import br.com.thelastsurvivor.view.IAnimationBehavior;
 
-public class GameLoopThread extends Thread{
+public class ViewThread extends Thread{
 
 	
 	private SurfaceHolder holder;
-	//private Handler handler;
-	private Context context;
-	private EngineGame engine;
+	private IAnimationBehavior view;
 	
 	private Paint blackScreen;
 	
@@ -21,26 +19,21 @@ public class GameLoopThread extends Thread{
 	
 	public int state = 1;
 	
-	//public enum state {RUNNING, PAUSED};
 
-	//public StateGame state;
-	
 	public final static int RUNNING = 1;
 	public final static int PAUSED = 2;
 	
-	public GameLoopThread(SurfaceHolder holder, Context context, EngineGame engine){
-		Log.d("GameLoopThread", "01");
+	public ViewThread(SurfaceHolder holder, IAnimationBehavior view){
+		super();
 		this.holder = holder;
-		//this.handler = handler;
-		this.context = context;
-		this.engine = engine;
-		
+		this.view = view;
+	
 		blackScreen = new Paint();
 		blackScreen.setARGB(255, 0, 0, 0);
 		blackScreen.setAntiAlias(true);
-		
-		
+	
 	}
+	
 	
 	@Override
 	public void run() {
@@ -50,8 +43,8 @@ public class GameLoopThread extends Thread{
 			Log.d("GameLoopThread", "UDPATE");
 			long beforeTime = System.nanoTime();
 			
-			engine.update();
-			
+			//engine.update();
+			view.update();
 			
 			
 			//DRAW
@@ -63,9 +56,12 @@ public class GameLoopThread extends Thread{
 				Log.d("GameLoopThread", "canvas");
 				synchronized (canvas) {
 					Log.d("GameLoopThread", "synchronized");
-					canvas.drawRect(0,0,canvas.getWidth(), canvas.getHeight(), this.blackScreen);
+					canvas.drawRect(0,0,
+							canvas.getWidth(), canvas.getHeight(), 
+							this.blackScreen);
 					
-					engine.draw(canvas);
+					//engine.draw(canvas);
+					view.draw(canvas);
 				}
 			}finally{
 				if(canvas != null){
@@ -91,4 +87,5 @@ public class GameLoopThread extends Thread{
 		}
 		
 	}
+
 }

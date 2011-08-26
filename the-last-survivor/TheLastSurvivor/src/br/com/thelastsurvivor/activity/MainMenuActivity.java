@@ -6,18 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.SimpleGameActivity;
+import br.com.thelastsurvivor.view.MainMenuView;
 
 public class MainMenuActivity extends Activity{
 		/** Called when the activity is first created. */
+	
+	private MainMenuView view;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main_menu);
 		
+	
 		Button buttonSimpleGame = (Button)findViewById(R.id.buttonSimpleMode);  
 		buttonSimpleGame.setOnClickListener(buttonSimpleGameListener);  
 		

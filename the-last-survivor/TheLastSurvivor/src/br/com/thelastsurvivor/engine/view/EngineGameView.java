@@ -1,7 +1,6 @@
 package br.com.thelastsurvivor.engine.view;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;

@@ -1,129 +1,145 @@
 package br.com.thelastsurvivor.activity.game;
 
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-import br.com.thelastsurvivor.engine.EngineGame;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.MotionEvent;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
 
-public class SimpleGameActivity extends Activity implements SensorEventListener{
-
-	TextView txtAcc;
-	TextView txtX;
-	TextView txtY;
-	TextView txtZ;
+public class SimpleGameActivity extends Activity implements SensorEventListener, OnGestureListener{
 	
 	private SensorManager manager;
     private Sensor accelerometer;
+    private GestureDetector gestureScanner;
     
     private EngineGameView view;
     private SimplePlayerMode engine;
     
+    private WakeLock wakeLock;
+    private Long beforeTime;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-	    manager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
-		//boolean accelerometerAvailable = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0;
-		
-	    accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-		//if(!manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME ) )
-		   //accelerometerAvailable = false;
-		
-		//txtAcc = (TextView) this.findViewById(R.id.txtAccuracy);
-		//txtX   = (TextView) this.findViewById(R.id.txtX);
-		//txtY   = (TextView) this.findViewById(R.id.txtY);
-		//txtZ   = (TextView) this.findViewById(R.id.txtZ);    
-	    Log.d("SimpleGameActivity", "01");
-		 init();
-		 Log.d("SimpleGameActivity", "02");
-	     setContentView(view);
-	     Log.d("SimpleGameActivity", "03");
-		
-		//setContentView(R.layout.simple_game);
-		
-	/*	sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);              
-		 accelerometer  = 
-			        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); 
-		 
-		
-		
-		
-		*/
+        this.init();
+	    
+        this.setContentView(view);
+	  
 	}
 	
+	@Override
+	public void onPause() {
+        super.onPause();
+        
+        this.manager.unregisterListener(this); 
+	}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        
+        this.manager.registerListener(this, 
+            accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	
+    	this.wakeLock.release();
+    }
+	    
+
 	public void init(){
-		engine = new SimplePlayerMode();
-    	view = new EngineGameView(this,engine);
+		
+		this.manager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
+		
+	    this.accelerometer = this.manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+	    this.manager.registerListener (this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+	      
+	    this.gestureScanner = new GestureDetector(this);
+	    	    
+	    final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        this.wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "");
+        this.wakeLock.acquire();      
+        
+        this.beforeTime = 0L;
+		
+		this.engine = new SimplePlayerMode(this);
+		
+    	this.view = new EngineGameView(this,engine);
 	}
 
 	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		// TODO Auto-generated method stub
-		 // Mudou a acurácia do sensor
-        //txtAcc.setText("= " + arg1);
-		
-	}
+	public void onAccuracyChanged(Sensor arg0, int arg1) {}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
 		
-		this.engine.getSpacecraft().updateOrientation(event.values[1],event.values[0]);
-		
-/*		if((event.values[1]*10) > 10 && (event.values[1]*10) < 20 ){
-			this.engine.getSpacecraft().setPosX(this.engine.getSpacecraft().getPosX()+4);
-		}else if((event.values[1]*10) > 20 && (event.values[1]*10) < 30){
-			this.engine.getSpacecraft().setPosX(this.engine.getSpacecraft().getPosX()+10);
-		}else if((event.values[1]*10) > 30){
-			this.engine.getSpacecraft().setPosX(this.engine.getSpacecraft().getPosX()+15);
-		}else if((event.values[1]*10) > -10 && (event.values[1]*10) < -20 ){
-			this.engine.getSpacecraft().setPosX(this.engine.getSpacecraft().getPosX()-4);
-		}else if((event.values[1]*10) > -20 && (event.values[1]*10) < -30){
-			this.engine.getSpacecraft().setPosX(this.engine.getSpacecraft().getPosX()-10);
-		}else if((event.values[1]*10) > -30){
-			this.engine.getSpacecraft().setPosX(this.engine.getSpacecraft().getPosX()-15);
-		}
-		if((event.values[0]*10) > 10 && (event.values[0]*10) < 20 ){
-			this.engine.getSpacecraft().setPosY(this.engine.getSpacecraft().getPosY()+4);
-		}else if((event.values[0]*10) > 20 && (event.values[0]*10) < 30){
-			this.engine.getSpacecraft().setPosY(this.engine.getSpacecraft().getPosY()+10);
-		}else if((event.values[0]*10) > 30){
-			this.engine.getSpacecraft().setPosY(this.engine.getSpacecraft().getPosY()+15);	
-		}else if((event.values[0]*10) < -10){
-			this.engine.getSpacecraft().setPosY(this.engine.getSpacecraft().getPosY()-4);
-		}else if((event.values[0]*10) < -20){
-			this.engine.getSpacecraft().setPosY(this.engine.getSpacecraft().getPosY()-10);
-		}else if((event.values[0]*10) < -30){
-			this.engine.getSpacecraft().setPosY(this.engine.getSpacecraft().getPosY()-15);
-		}
-		*/
-		
-		 // Houve alguma aceleração no sensor
-        //txtX.setText("= " + event.values[0]);
-        //txtY.setText("= " + event.values[1]);
-        //txtZ.setText("= " + event.values[2]);
-		
+		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
+            return;	
+        
+		this.engine.getSpacecraft().updateOrientation((event.values[1]),(event.values[0]));   
 	}
 	
-	 @Override
-	 public void onPause() {
-	        super.onPause();
-	        manager.unregisterListener(this); 
-	    }
+	
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+    	
+    	return this.gestureScanner.onTouchEvent(event);
+    	
+    }
+	    
+    @Override
+	public void onShowPress(MotionEvent arg0) {}
+	    
+	@Override
+	public boolean onDown(MotionEvent arg0) {
+		
+		return false;
+	}
 
-	    @Override
-	    public void onResume() {
-	        super.onResume();
-	        manager.registerListener(this, 
-	            accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-	    }
+	@Override
+	public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg3,
+			float arg4) {
+		
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent arg0) {}
+
+	@Override
+	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
+			float arg3) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent event) {
+		//Long nowTime = System.nanoTime();
+		
+		//if(nowTime > beforeTime+1000000000L){
+			this.engine.getSpacecraft().newShoot();
+			
+			
+		//}
+		
+		//beforeTime = nowTime;
+		return true;
+	}
+
+	
 
 }

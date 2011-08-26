@@ -3,24 +3,26 @@ package br.com.thelastsurvivor.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import br.com.thelastsurvivor.engine.game.Spacecraft;
 
 public abstract class EngineGame{
 	
-	
-	//private IDrawControllable spacecraft;
-	private List<INotDrawControllable> drawableList;
+	private List<IDrawBehavior> drawableList;
+
+	protected Context context;
 	
 
-	public EngineGame() {
+	public EngineGame(Context context) {
+		this.context = context;
+		
 		init();
 	}
 
 
 	public void init() {
-		this.drawableList = new ArrayList<INotDrawControllable>();
+		
+		this.drawableList = new ArrayList<IDrawBehavior>();
 		
 	}
 
@@ -34,17 +36,18 @@ public abstract class EngineGame{
 		//spacecraft.draw(c);
 	}
 	
-	public List<INotDrawControllable> getDrawableList() {
+	public List<IDrawBehavior> getDrawableList() {
 		return drawableList;
 	}
 
 
-	public void setDrawableList(List<INotDrawControllable> drawableList) {
+	public void setDrawableList(List<IDrawBehavior> drawableList) {
 		this.drawableList = drawableList;
 	}
 
-	
-	
-	
+
+	public Context getContext() {
+		return context;
+	}
 	
 }
