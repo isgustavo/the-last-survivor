@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsoluteLayout;
@@ -22,6 +23,8 @@ public class MainMenuActivity extends Activity{
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main_menu);
+		
+		this.view = (MainMenuView)findViewById(R.id.surfaceView);
 		
 	
 		Button buttonSimpleGame = (Button)findViewById(R.id.buttonSimpleMode);  
@@ -47,6 +50,7 @@ public class MainMenuActivity extends Activity{
         	
         	Intent i = new Intent(MainMenuActivity.this, SimpleGameActivity.class);
         //	Intent i = new Intent(MainMenuActivity.this, Principal.class);
+        	
 			startActivity(i);
      
         }  
@@ -96,4 +100,36 @@ public class MainMenuActivity extends Activity{
 		}  
 	};  
 	
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		
+		this.view.getViewThread().run();
+	}
+	
+	
+	
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		this.view.getViewThread().stop();
+	}
+	
+	
+	
+	
+	@Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	
+    	 	
+    }
 }

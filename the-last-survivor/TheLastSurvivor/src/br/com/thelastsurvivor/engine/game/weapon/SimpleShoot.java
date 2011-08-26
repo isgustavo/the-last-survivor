@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.Constant;
 import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -26,6 +27,7 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	private EOrientation orientation;
 	
 	private Matrix matrix;
+	private Boolean isAlive;
 	
 	public SimpleShoot(Context context, Vector2D position, EOrientation orientation){
 		this.context = context;
@@ -41,7 +43,8 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot);
 		//this.image = this.context.getResources().getDrawable(R.drawable.simple_shoot);
 		
-		this.firstPosition();		
+		this.firstPosition();	
+		this.isAlive = true;
 		
 		this.matrix = new Matrix();
 		this.matrix.setRotate(0);
@@ -98,6 +101,8 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	public void update() {
 		
 		controlUpdate();
+		checkOutShootsOfTheGameSpace();
+		
 		
 	}
 	
@@ -176,6 +181,15 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		this.drawableImage = newImage;
 	}
 
+	
+	private void checkOutShootsOfTheGameSpace(){
+		if(!(Constant.LIMIT_LEFT < this.position.getX() && this.position.getX() < Constant.LIMIT_RIGHT
+				&& Constant.LIMIT_UP < this.position.getY() && this.position.getY() < Constant.LIMIT_DOWN)){
+			this.isAlive = false;
+		}
+		
+	}
+	
 	@Override
 	public void draw(Canvas c) {
 		
@@ -185,10 +199,16 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	    
 	    
 	    this.drawableImage.draw(c);
-	
-		
-		
+
 	}
+
+
+	@Override
+	public boolean isAlive() {
+		return this.isAlive;
+	}
+	
+	
 
 	
 }

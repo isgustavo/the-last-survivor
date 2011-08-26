@@ -40,7 +40,6 @@ public class ViewThread extends Thread{
 
 		//UPDATE
 		while(state == RUNNING){
-			Log.d("GameLoopThread", "UDPATE");
 			long beforeTime = System.nanoTime();
 			
 			//engine.update();
@@ -51,16 +50,12 @@ public class ViewThread extends Thread{
 			
 			Canvas canvas = null;
 			try{
-				Log.d("GameLoopThread", "DRAW");
-				canvas = holder.lockCanvas(null);
-				Log.d("GameLoopThread", "canvas");
+				canvas = holder.lockCanvas(null);	
 				synchronized (canvas) {
-					Log.d("GameLoopThread", "synchronized");
 					canvas.drawRect(0,0,
 							canvas.getWidth(), canvas.getHeight(), 
 							this.blackScreen);
 					
-					//engine.draw(canvas);
 					view.draw(canvas);
 				}
 			}finally{
@@ -73,7 +68,6 @@ public class ViewThread extends Thread{
 			//SLEEP
 			
 			this.sleepTime = delay -((System.nanoTime()-beforeTime)/1000000L);
-			Log.d("GameLoopThread", "SLEEP");
 			try{
 				
 				if(sleepTime > 0){

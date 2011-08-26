@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import br.com.thelastsurvivor.R;
@@ -30,7 +31,6 @@ public class TheLastSurvivorView extends SurfaceView implements SurfaceHolder.Ca
 		this.init();
 	}
 	
-	
 	@Override
 	public void init(){
 		
@@ -51,13 +51,10 @@ public class TheLastSurvivorView extends SurfaceView implements SurfaceHolder.Ca
 		}
 	}
 
-
-
-
 	@Override
 	public void draw(Canvas c) {
 		
-		
+		Log.d("LASTSURVIVOR", "canvas");
 		
 		c.drawColor(Color.BLACK);
 		this.image.setBounds(0,0, c.getWidth(), c.getHeight());
@@ -73,8 +70,6 @@ public class TheLastSurvivorView extends SurfaceView implements SurfaceHolder.Ca
 
 	}
 	
-	
-
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
 
@@ -107,9 +102,5 @@ public class TheLastSurvivorView extends SurfaceView implements SurfaceHolder.Ca
 		
 	}
 
-
-
-
-	
 
 }

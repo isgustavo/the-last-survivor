@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -66,7 +67,7 @@ public class MainMenuView extends SurfaceView implements SurfaceHolder.Callback,
 	public void draw(Canvas c) {
 		
 		
-		
+		Log.d("MAINMANU", "canvas");
 		c.drawColor(Color.BLACK);
 		//this.image.setBounds(0,0, c.getWidth(), c.getHeight());
 		
@@ -113,5 +114,12 @@ public class MainMenuView extends SurfaceView implements SurfaceHolder.Callback,
 		
 	}
 
+	
+	public ViewThread getViewThread() {
+		return viewThread;
+	}
 
+
+	
+	
 }
