@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
@@ -20,7 +21,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + PlayerProvider.NAME_TABLE + " ( "
 				+ PlayerProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR, "
-				+ PlayerProvider.LGTWITTER + " VARCHAR );");
+				+ PlayerProvider.LGTWITTER + " VARCHAR ); "
+				+"CREATE TABLE "+TrophiesProvider.NAME_TABLE + "( "
+				+ TrophiesProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+				+ TrophiesProvider.NAME +" VARCHAR, " 
+				+ TrophiesProvider.IS_ACHIEVED +" BOOLEAN, " 
+				+ TrophiesProvider.OBJECTIVE + " VARCHAR, " 
+				+ TrophiesProvider.STATUS + " INTEGER );");
+
 
 	}
 

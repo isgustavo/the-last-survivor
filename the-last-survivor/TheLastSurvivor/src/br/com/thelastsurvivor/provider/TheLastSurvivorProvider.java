@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 
 public class TheLastSurvivorProvider extends ContentProvider {
 
@@ -99,6 +100,15 @@ public class TheLastSurvivorProvider extends ContentProvider {
                     builder.setTables(PlayerProvider.NAME_TABLE);  
                     builder.setProjectionMap(projection);  
                     break;  
+                    
+                case br.com.thelastsurvivor.provider.util.Constant.IS_TROPHIES:  
+                    // O Builer receberá dois parametros: a tabela  
+                    // onde será feita a busca, e uma projection -  
+                    // que nada mais é que uma HashMap com os campos  
+                    // que queremos recuperar do banco de dados.  
+                    builder.setTables(TrophiesProvider.NAME_TABLE);  
+                    builder.setProjectionMap(projection);  
+                    break;
   
                 default:  
                     throw new IllegalArgumentException(  
