@@ -11,6 +11,7 @@ import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.SimpleGameActivity;
+import br.com.thelastsurvivor.activity.trophies.TrophiesActivity;
 import br.com.thelastsurvivor.view.MainMenuView;
 
 public class MainMenuActivity extends Activity{
@@ -69,12 +70,17 @@ public class MainMenuActivity extends Activity{
   
 	private OnClickListener buttonTrophiesListener = new OnClickListener() {  
 		public void onClick(View v) {  
-			AlertDialog.Builder alerta = new AlertDialog.Builder(
+			/*AlertDialog.Builder alerta = new AlertDialog.Builder(
 					MainMenuActivity.this);
 			alerta.setIcon(null);
 			alerta.setTitle("YOU TROPHIES GAME");
 			alerta.setNeutralButton("OK", null);
-			alerta.show();
+			alerta.show();*/
+			
+			Intent i = new Intent(MainMenuActivity.this, TrophiesActivity.class);
+	        //	Intent i = new Intent(MainMenuActivity.this, Principal.class);
+	        	
+				startActivity(i);
 		}  
 	};  
  
