@@ -4,28 +4,27 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.SimpleGameActivity;
+import br.com.thelastsurvivor.activity.player.AlterationPlayerActivity;
 import br.com.thelastsurvivor.activity.trophies.TrophiesActivity;
-import br.com.thelastsurvivor.view.MainMenuView;
+import br.com.thelastsurvivor.view.BackgroundView;
 
 public class MainMenuActivity extends Activity{
 		/** Called when the activity is first created. */
 	
-	private MainMenuView view;
+	private BackgroundView view;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.main_menu);
+		setContentView(R.layout.main_menu_view);
 		
-		this.view = (MainMenuView)findViewById(R.id.surfaceView);
+		this.view = (BackgroundView)findViewById(R.id.surfaceView);
 		
 	
 		Button buttonSimpleGame = (Button)findViewById(R.id.buttonSimpleMode);  
@@ -97,12 +96,10 @@ public class MainMenuActivity extends Activity{
 
 	private OnClickListener buttonOptionListener = new OnClickListener() {  
 		public void onClick(View v) {  
-			AlertDialog.Builder alerta = new AlertDialog.Builder(
-				MainMenuActivity.this);
-			alerta.setIcon(null);
-			alerta.setTitle("OPTION GAME");
-			alerta.setNeutralButton("OK", null);
-			alerta.show();
+			
+			Intent i = new Intent(MainMenuActivity.this, AlterationPlayerActivity.class);
+			
+			startActivity(i);
 		}  
 	};  
 	
@@ -111,7 +108,7 @@ public class MainMenuActivity extends Activity{
 	protected void onRestart() {
 		super.onRestart();
 		
-		this.view.getViewThread().run();
+		//this.view.getViewThread().start();
 	}
 	
 	
@@ -126,7 +123,7 @@ public class MainMenuActivity extends Activity{
 	@Override
 	protected void onStop() {
 		super.onStop();
-		this.view.getViewThread().stop();
+		//this.view.getViewThread().destroy();
 	}
 	
 	

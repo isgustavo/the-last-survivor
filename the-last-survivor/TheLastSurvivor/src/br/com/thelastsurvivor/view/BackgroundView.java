@@ -8,15 +8,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.AbsoluteLayout;
-import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.GameLoopThread;
 import br.com.thelastsurvivor.view.particle.Explosion;
 import br.com.thelastsurvivor.view.particle.ViewThread;
 
-public class MainMenuView extends SurfaceView implements SurfaceHolder.Callback, IAnimationBehavior {
+public class BackgroundView extends SurfaceView implements SurfaceHolder.Callback, IAnimationBehavior {
 
 	private static final int EXPLOSION_SIZE = 200;
 	
@@ -26,14 +23,14 @@ public class MainMenuView extends SurfaceView implements SurfaceHolder.Callback,
 	
 	private Drawable image;
 	
-	public MainMenuView(Context context) {
+	public BackgroundView(Context context) {
 		super(context);
 		this.context = context;
 		
 		this.init();
 	}
 	
-	public MainMenuView(Context context, AttributeSet attrs){
+	public BackgroundView(Context context, AttributeSet attrs){
 		super(context, attrs);
 		
 		this.init();
@@ -46,7 +43,7 @@ public class MainMenuView extends SurfaceView implements SurfaceHolder.Callback,
 		this.setFocusable(true);
 
 
-		image = this.getResources().getDrawable(R.drawable.layout_menu);
+		image = this.getResources().getDrawable(R.drawable.layout_menu_image);
 		
 		this.viewThread = new ViewThread(getHolder(), this);
 		this.explosion = new Explosion(EXPLOSION_SIZE);

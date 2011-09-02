@@ -11,6 +11,54 @@
     
     <string name="lista">LISTA</string>
     
+    
+    <string name="t01">The beginning!</string>
+    <string name="tObjective01">Finalizar uma partida simples.</string>
+    
+    <string name="t02">Destroyer of stones!</string>
+    <string name="tObjective02">Getting 1000 points in a partida simples.</string>
+    
+    <string name="t03">Demolidor!</string>
+    <string name="tObjective03">Conseguir 5000 pontos em uma partida simples.</string>
+    
+    <string name="t04">Habilidade com armas.</string>
+    <string name="tObjective04">conseguir todas as marmas do jogo em um partida simples.</string>
+   
+   	<string name="t05">O melhor!</string>
+    <string name="tObjective05">Conseguir melhorar sua posição no rank pela primeira vez.</string>
+
+	<string name="t06">Drift do espaço!</string>
+    <string name="tObjective06">Permanecer 2 minutos sem colidir com asteróides.</string>
+	  
+	<string name="t07">Ação em grupo.</string>
+    <string name="tObjective07">Finalizar uma partida em rede.</string>
+	  
+	<string name="t08">O último sobrevivente!</string>
+    <string name="tObjective08">Vencer uma partida em rede.</string>
+    
+    <string name="t09">Sem testemunhas!</string>
+    <string name="tObjective09">Destruir todas as naves inimigas em uma partida em rede.</string>
+    
+    <string name="t10">Kamikaze!</string>
+    <string name="tObjective10">Destruir um inimigo eum um ataque suicida.</string>
+    
+	<string name="t11">Davi contra Golias!</string>
+    <string name="tObjective11">Vencer um parida em rede com dois times desiguais.</string>
+	     
+    <string name="t12">Sócios!</string>
+    <string name="tObjective12">Vencer uma partida em rede 2-contra-2.</string>
+    
+    <string name="t13">Eu sou o melhor!</string>
+    <string name="tObjective13">Vencer uma partida em rede cada um por si.</string>
+    
+    <string name="t14">O fim!</string>
+    <string name="tObjective14">Utilizar a arma "Buraco Negro".</string>    
+    
+    <string name="t15">Sol da manhã!</string>
+    <string name="tObjective15">Conquistar todos os troféus do jogo.</string>
+    
+    
+    
     <string name="no_trophies">No Trophies yet.</string>
     
     

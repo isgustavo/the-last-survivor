@@ -8,16 +8,12 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.player.PlayerActivity;
 import br.com.thelastsurvivor.view.TheLastSurvivorView;
 
 public class TheLastSurvivorActivity extends Activity {
 
-	private static final Integer SPLASH_DURATION = 5000;
+	private static final Integer SPLASH_DURATION = 1000;
 	private WakeLock wakeLock;
  
 	private TheLastSurvivorView view;

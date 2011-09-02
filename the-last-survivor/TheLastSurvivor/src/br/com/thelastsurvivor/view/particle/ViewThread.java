@@ -2,7 +2,6 @@ package br.com.thelastsurvivor.view.particle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import br.com.thelastsurvivor.view.IAnimationBehavior;
 
@@ -80,6 +79,11 @@ public class ViewThread extends Thread{
 			
 		}
 		
+	}
+	
+	@Override
+	public void destroy() {
+		super.destroy();
 	}
 
 }

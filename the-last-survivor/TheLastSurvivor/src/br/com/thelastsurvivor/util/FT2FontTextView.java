@@ -5,12 +5,12 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class MyTextView extends TextView {
+public class FT2FontTextView extends TextView {
 
 	protected Context context;
 	protected String ttfName;
 
-	public MyTextView(Context context, AttributeSet attrs) {
+	public FT2FontTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 

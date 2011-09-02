@@ -1,18 +1,12 @@
 package br.com.thelastsurvivor.activity.trophies;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.model.Trophies;
-import br.com.thelastsurvivor.provider.player.PlayerProvider;
-import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.SimpleCursorAdapter;
+import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.model.trophies.Trophies;
 
 public class TrophiesActivity extends ListActivity{
 	
@@ -21,9 +15,13 @@ public class TrophiesActivity extends ListActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.trophies_list);
+		
 		init();
+		
 		getTrophies();
+		
+		setContentView(R.layout.trophies_list);
+		
 	}
 
 	private void init() {
@@ -32,8 +30,7 @@ public class TrophiesActivity extends ListActivity{
 
 	private void getTrophies() {
 	
-	  
-	        Map projection = new HashMap<String,String>();  
+	/*      Map projection = new HashMap<String,String>();  
 	        projection.put(TrophiesProvider.ID, TrophiesProvider.ID);  
 	        projection.put(TrophiesProvider.NAME, TrophiesProvider.NAME); 
 	        projection.put(TrophiesProvider.OBJECTIVE, TrophiesProvider.OBJECTIVE); 
@@ -54,6 +51,6 @@ public class TrophiesActivity extends ListActivity{
 		        R.layout.trophies_row,
 		        c,
 		        from,
-		        to));
+		        to));*/
 	}
 }

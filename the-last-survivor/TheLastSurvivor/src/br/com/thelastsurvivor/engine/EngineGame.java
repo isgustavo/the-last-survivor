@@ -5,16 +5,19 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Vibrator;
 
 public abstract class EngineGame{
 	
 	private List<IDrawBehavior> drawableList;
 
 	protected Context context;
-	
+	protected Vibrator vibrator;
 
-	public EngineGame(Context context) {
+	public EngineGame(Context context, Vibrator vibrator) {
 		this.context = context;
+		this.vibrator = vibrator;
+		
 		
 		init();
 	}
@@ -23,7 +26,7 @@ public abstract class EngineGame{
 	public void init() {
 		
 		this.drawableList = new ArrayList<IDrawBehavior>();
-		
+
 	}
 
 	

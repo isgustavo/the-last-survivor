@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
  
- <br.com.thelastsurvivor.view.MainMenuView
+<br.com.thelastsurvivor.view.BackgroundView
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent"
 					android:id="@+id/surfaceView" /> 
@@ -20,12 +20,9 @@
    <ImageView android:id="@+id/imageView1"
     	 android:layout_width="wrap_content" 
     	 android:layout_height="wrap_content" 
-    	 android:src="@drawable/layout_menu">
+    	 android:src="@drawable/layout_menu_image">
     </ImageView>
-    
-   
-    
-             
+
            <AbsoluteLayout 
     			android:orientation="vertical"
     			android:layout_width="fill_parent"
@@ -34,13 +31,13 @@
         		
 		
         		<Button android:id="@+id/buttonSimpleMode" 
-        				android:background="@drawable/simple_mode_button_us"
+        				android:background="@drawable/simple_mode_button_image"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
         		        android:layout_x="400dp" android:layout_y="50dp">
         	    </Button>  
         	    
         	    <Button android:id="@+id/buttonTrophies" 
-        				android:background="@drawable/trophies_button_us"
+        				android:background="@drawable/trophies_button_image"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
         		        android:layout_x="590dp" android:layout_y="50dp">
         	    </Button>
@@ -52,13 +49,13 @@
         	    </Button>
         	    
         	    <Button android:id="@+id/buttonMultiMode" 
-        				android:background="@drawable/multiplayer_mode_button_us"
+        				android:background="@drawable/multiplayer_mode_button_image"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
         		        android:layout_x="400dp" android:layout_y="110dp">
         	    </Button> 
         	    
         	     <Button android:id="@+id/buttonOption" 
-        				android:background="@drawable/option_button_us"
+        				android:background="@drawable/profile_button_image"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
         		        android:layout_x="590dp" android:layout_y="150dp">
         	    </Button>

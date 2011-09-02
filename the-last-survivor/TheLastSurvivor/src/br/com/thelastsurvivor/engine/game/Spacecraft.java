@@ -11,7 +11,6 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.util.Xml.Encoding;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.IDrawControllable;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
@@ -28,6 +27,9 @@ public class Spacecraft implements IDrawControllable {
 	private Bitmap image;
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
+	
+	private Drawable alertImage;
+	private Boolean alertFlag;
 	
 	private Vector2D position;
 	private Vector2D sensorPosition;
@@ -52,7 +54,10 @@ public class Spacecraft implements IDrawControllable {
 		this.sensorPosition = new Vector2D(0,0);
 		this.orientation = EOrientation.up;
 	
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft);
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		
+		this.alertImage = this.context.getResources().getDrawable(R.drawable.alert_image);
+		this.alertFlag = false;
 		
         this.matrix = new Matrix();
 		this.matrix.setRotate(0);
@@ -75,11 +80,13 @@ public class Spacecraft implements IDrawControllable {
 	@Override
 	public void update() {
 		
+		this.alertFlag = false;
+		
 		controlUpdate();
 	
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
 		this.drawableImage = newImage;
-		
+
 		if(this.shootsDrawables != null){
 			
 			this.getShootsDrawables();
@@ -109,6 +116,7 @@ public class Spacecraft implements IDrawControllable {
 	}
 	
 	private void controlUpdate(){
+		
 		switch (this.orientation.getOrientation()) {
 		case 1:
 			if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() < 0){
@@ -117,7 +125,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addY(-SPEED_SHOOT);
+		    	
+		    	if(this.position.getY() >= 60){
+		    		this.position.addY(-SPEED_SHOOT);
+		    	}
+		    	
 		    	this.orientation = EOrientation.up;
 			
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
@@ -136,9 +148,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	//this.position.addX(this.sensorPosition.getX());
-		    	//this.position.addY(this.sensorPosition.getY());
+		    	this.position.addX(-SPEED_SHOOT);
+		    	this.position.addY(-SPEED_SHOOT);
 		    	this.orientation = EOrientation.up_left;
+			}else{
+				this.alertFlag = true;
 			}
 		break;
 
@@ -258,7 +272,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.getPosition().getY() < 360){
+		    		this.position.addY(SPEED_SHOOT);
+		    	}
+		    	
+		    
 		    	this.orientation = EOrientation.down;
 		    	
 			 }else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() < 0){
@@ -404,18 +422,36 @@ public class Spacecraft implements IDrawControllable {
 	    
 	    
 	    this.drawableImage.draw(c);
-	
-	    
-	    
+	 
 	    if(!this.shootsDrawables.isEmpty()){
 			for (IWeaponBehavior shoot : this.shootsDrawables) {
 				shoot.draw(c);
 			}
 		}
 	    
+	    if(this.alertFlag){
+	    	this.alertImage.setBounds(100, 100, 250, 250 );
+	    	
+	    	this.alertImage.draw(c);
+	    }
+	    
+	}
+
+	public Vector2D getPosition() {
+		return position;
+	}
+
+	public EOrientation getOrientation() {
+		return orientation;
 	}
 	
+	
+	
+	
 }
+
+
+
 
 /*	if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() > 0){
 this.matrix.setRotate(180);

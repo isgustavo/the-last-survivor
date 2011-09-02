@@ -59,6 +59,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+    
+    <activity android:name=".activity.player.AlterationPlayerActivity"
+  			  android:screenOrientation="landscape">
+     	<intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         
     <activity android:name=".activity.player.PlayerActivity"
   			  android:screenOrientation="landscape">
@@ -73,8 +80,12 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+    
+    
 
     </application>
     
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    
 </manifest>

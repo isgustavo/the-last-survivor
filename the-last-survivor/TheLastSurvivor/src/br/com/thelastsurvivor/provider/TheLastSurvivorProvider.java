@@ -13,16 +13,18 @@ import android.net.Uri;
 import android.util.Log;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
+import br.com.thelastsurvivor.provider.util.Constant;
 
 public class TheLastSurvivorProvider extends ContentProvider {
 
+	//sqlite3 /data/data/br.com.thelastsurvivor/databases/LastSurvivorDatabase.db
 	public static final String AUTHORITY = "br.com.thelastsurvivor.provider.thelastsurvivorprovider";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 	
 	 public static final String CONTENT_TYPE =  
              "vnd.android.cursor.dir/" + AUTHORITY; 
 
-	private static final String DATABASE_NAME = "theLastSurvivorGame.db";
+	private static final String DATABASE_NAME = "LastSurvivorDatabase.db";
 	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteHelper helper;
@@ -99,9 +101,14 @@ public class TheLastSurvivorProvider extends ContentProvider {
                     // que queremos recuperar do banco de dados.  
                     builder.setTables(PlayerProvider.NAME_TABLE);  
                     builder.setProjectionMap(projection);  
-                    break;  
+                break;  
+                case Constant.UPDATE_PLAYER:
+                
+                	builder.setTables(PlayerProvider.NAME_TABLE);
+                	builder.setProjectionMap(projection);
+                break;
                     
-                case br.com.thelastsurvivor.provider.util.Constant.IS_TROPHIES:  
+                case Constant.IS_TROPHIES:  
                     // O Builer receberá dois parametros: a tabela  
                     // onde será feita a busca, e uma projection -  
                     // que nada mais é que uma HashMap com os campos  
@@ -116,7 +123,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
             }  
   
             cursor = builder.query(database, projection2, selection,  
-             selectionArgs, null, null, sortOrder);  
+            selectionArgs, null, null, sortOrder);  
   
             cursor.setNotificationUri(getContext().getContentResolver(), uri);  
             return cursor;  

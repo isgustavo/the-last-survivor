@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.Vibrator;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
@@ -20,6 +21,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	private SensorManager manager;
     private Sensor accelerometer;
     private GestureDetector gestureScanner;
+    private Vibrator vibrator;
     
     private EngineGameView view;
     private SimplePlayerMode engine;
@@ -73,9 +75,11 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
         this.wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "");
         this.wakeLock.acquire();      
         
+        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        
         this.beforeTime = 0L;
 		
-		this.engine = new SimplePlayerMode(this);
+		this.engine = new SimplePlayerMode(this, vibrator);
 		
     	this.view = new EngineGameView(this,engine);
 	}

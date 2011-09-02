@@ -1,10 +1,8 @@
 package br.com.thelastsurvivor.view;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -37,7 +35,7 @@ public class TheLastSurvivorView extends SurfaceView implements SurfaceHolder.Ca
 		this.getHolder().addCallback(this);
 		this.setFocusable(true);
 		
-		this.image = this.getResources().getDrawable(R.drawable.the_last_survivor);
+		this.image = this.getResources().getDrawable(R.drawable.the_last_survivor_image);
 
 		this.viewThread = new ViewThread(getHolder(), this);
 		this.explosion = new Explosion(EXPLOSION_SIZE);

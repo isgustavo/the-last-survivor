@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+ -->  
+ 
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+<br.com.thelastsurvivor.view.BackgroundView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:id="@+id/surfaceView" /> 
+			
+<ImageView android:id="@+id/imageView1"
+    	 android:layout_width="fill_parent" 
+    	 android:layout_height="wrap_content" 
+    	 android:src="@drawable/cadastre_profile_image"
+    	 android:layout_x="0dp" android:layout_y="2dp">
+</ImageView>
+    
+<LinearLayout android:id="@+id/linearLayout2" 
+              android:orientation="vertical"
+		      android:paddingTop="145dp" 
+		      android:paddingLeft="30dp" 
+              android:layout_height="fill_parent" 
+              android:layout_width="wrap_content" >
+
+	<br.com.thelastsurvivor.util.FT2FontTextView 
+	   android:id="@+id/textNickName" android:text="@string/nickname" 
+	   android:textSize="30dp" android:textColor="@android:color/white"
+	   android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF">
+    </br.com.thelastsurvivor.util.FT2FontTextView>
+	
+	<EditText android:layout_height="40dp" android:layout_width="300dp" 
+	          android:textSize="17dp"
+	          android:id="@+id/editNickName" android:inputType="textPersonName">
+	</EditText>
+	
+	<br.com.thelastsurvivor.util.FT2FontTextView 
+	         android:id="@+id/textLGTwitter" android:text="@string/lg_twitter" 
+	         android:textSize="23dp" android:textColor="@android:color/white"
+	         android:layout_width="fill_parent" android:layout_height="wrap_content"
+             lht:ttf_name="FT2FONT.TTF">
+   </br.com.thelastsurvivor.util.FT2FontTextView>
+	
+	
+	<EditText android:layout_height="40dp" android:layout_width="300dp" 
+	          android:textSize="17dp" android:id="@+id/editLGTwitter">
+	</EditText>
+
+</LinearLayout>
+   		
+<LinearLayout android:id="@+id/linearLayout2" android:orientation="vertical"
+	 		  android:paddingTop="170dp" android:paddingLeft="350dp" 
+              android:layout_height="fill_parent" android:layout_width="wrap_content" >
+              
+    <Button android:layout_height="wrap_content" 
+      		android:layout_width="wrap_content"
+      		android:background="@drawable/button_ok_image" 
+      		android:id="@+id/buttonOk">
+    </Button>
+     	
+</LinearLayout>	
+     		  
+     		
+<!--      		
+</LinearLayout>  
+ -->
+ 
+ 
+ </AbsoluteLayout>  
