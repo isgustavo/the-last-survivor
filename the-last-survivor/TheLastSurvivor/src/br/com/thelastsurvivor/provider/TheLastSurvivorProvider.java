@@ -87,18 +87,13 @@ public class TheLastSurvivorProvider extends ContentProvider {
 	@Override  
     public Cursor query(Uri uri, String[] projection2, String selection,  
             String[] selectionArgs, String sortOrder) {  
-            // Aqui usaremos o SQLiteQueryBuilder para construir  
-            // a query que será feito ao DB, retornando um cursor  
-            // que enviaremos à aplicação.  
+            
             SQLiteQueryBuilder builder = new  SQLiteQueryBuilder();  
             SQLiteDatabase database = helper.getReadableDatabase();  
             Cursor cursor;  
             switch (matcher.match(uri)) {  
                 case PlayerProvider.IS_PLAYERS:  
-                    // O Builer receberá dois parametros: a tabela  
-                    // onde será feita a busca, e uma projection -  
-                    // que nada mais é que uma HashMap com os campos  
-                    // que queremos recuperar do banco de dados.  
+                   
                     builder.setTables(PlayerProvider.NAME_TABLE);  
                     builder.setProjectionMap(projection);  
                 break;  
@@ -131,31 +126,45 @@ public class TheLastSurvivorProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		Log.d("PlayerProvider", "03");
+		
 		switch (matcher.match(uri)) {
+		
 		case PlayerProvider.IS_PLAYERS:
-			Log.d("PlayerProvider", "04");
+		
 			SQLiteDatabase db = helper.getWritableDatabase();
-			Log.d("PlayerProvider", "05");
 			long rowId = db.insert(PlayerProvider.NAME_TABLE, null, values);
-			Log.d("PlayerProvider", "06");
+		
 			if (rowId > 0) {
-				Log.d("PlayerProvider", "07");
-				Uri playerUri = ContentUris.withAppendedId(uri, rowId);
-				Log.d("PlayerProvider", "08");
-				getContext().getContentResolver().notifyChange(playerUri, null);
-				Log.d("PlayerProvider", "09");
+				Uri playerUri = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(playerUri, null);			
 				return playerUri;
 			}
+		break;
 		default:
-			Log.d("PlayerProvider", "10");
+			
 			throw new IllegalArgumentException("URI desconhecida " + uri);
 		}
+		
+		return null;
 	}
 
 	@Override
-	public int update(Uri arg0, ContentValues arg1, String arg2, String[] arg3) {
-		// TODO Auto-generated method stub
+	public int update(Uri uri, ContentValues values, String selection, String[] arg3) {
+		
+		switch (matcher.match(uri)) {
+		
+		case PlayerProvider.IS_PLAYERS:
+			SQLiteDatabase db = helper.getWritableDatabase();
+			int romId = db.update(PlayerProvider.NAME_TABLE,values, selection, null);
+		
+			if (romId > 0) {
+				Uri playerUri = ContentUris.withAppendedId(uri, romId);		
+				getContext().getContentResolver().notifyChange(playerUri, null);			
+				return romId;
+			}
+			
+		break;
+		}
 		return 0;
 	}
 

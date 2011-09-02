@@ -72,7 +72,7 @@ public class CadastrePlayerActivity extends Activity {
 	private OnClickListener buttonListener = new OnClickListener() {  
         public void onClick(View v) {  
         	
-        	if (getNickname().getText().equals("")) {
+        	if (getNickname().getText().toString().equals("")) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(CadastrePlayerActivity.this);
 				alert.setIcon(null);
 				alert.setTitle("Nickname is necessary");

@@ -19,7 +19,7 @@
 <ImageView android:id="@+id/imageView1"
     	 android:layout_width="fill_parent" 
     	 android:layout_height="wrap_content" 
-    	 android:src="@drawable/cadastre_profile_image"
+    	 android:src="@drawable/alteration_profile_image"
     	 android:layout_x="0dp" android:layout_y="2dp">
 </ImageView>
     
