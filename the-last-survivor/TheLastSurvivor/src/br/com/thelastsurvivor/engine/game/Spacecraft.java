@@ -11,7 +11,9 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawControllable;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
@@ -20,8 +22,11 @@ import br.com.thelastsurvivor.util.Vector2D;
 
 public class Spacecraft implements IDrawControllable {
 	
-	private static final int SPEED_SHOOT = 3;
+	private static final int SPEED = 3;
 
+	
+
+	
 	private Context context;
 	
 	private Bitmap image;
@@ -40,9 +45,11 @@ public class Spacecraft implements IDrawControllable {
 	private List<IWeaponBehavior> shoots;
 	private List<IWeaponBehavior> shootsDrawables;
 	
-	public Spacecraft(Context context){
-	
+	public Spacecraft(Context context, Display display){
 		this.context = context;
+		
+		
+		
 		
 		init();
 	}
@@ -126,8 +133,8 @@ public class Spacecraft implements IDrawControllable {
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
 		    	
-		    	if(this.position.getY() >= 60){
-		    		this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+		    		this.position.addY(-SPEED);
 		    	}
 		    	
 		    	this.orientation = EOrientation.up;
@@ -138,8 +145,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    
-		    	this.position.addX(SPEED_SHOOT);
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
+		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+			    	this.position.addY(-SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.up_right;
 		    	
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() < 0){
@@ -148,10 +159,18 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
+		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		
+		    		this.position.addX(-SPEED);
+		    		this.position.addY(-SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.up_left;
 			}else{
+				if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+		    		this.position.addY(-SPEED);
+		    	}
 				this.alertFlag = true;
 			}
 		break;
@@ -163,7 +182,9 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+		    		this.position.addY(-SPEED);
+		    	}
 		    	this.orientation = EOrientation.up;
 		    	
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
@@ -172,8 +193,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
+		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+			    	this.position.addY(-SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.up_right;
 		    	
 			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
@@ -182,7 +207,10 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
+		    	if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.right;
 			}
 			
@@ -195,8 +223,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 
-		    	this.position.addX(SPEED_SHOOT);
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
+		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+			    	this.position.addY(-SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.up_right;
 		    	
 			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
@@ -205,7 +237,10 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
+		    	if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.right;
 			
 			}else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() > 0){
@@ -214,8 +249,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
+		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+		    		this.position.addY(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.down_right;
 			}
 			
@@ -228,7 +267,10 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
+		    	if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.right;
 		    	
 			}else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() > 0){
@@ -237,8 +279,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
+		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+		    		this.position.addY(SPEED);
+		    	}
 		    	this.orientation = EOrientation.down_right;
 			
 			}else if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() > 0){
@@ -247,7 +292,10 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 			    	
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+		    		this.position.addY(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.down;
 			}
 			 
@@ -262,8 +310,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(SPEED_SHOOT);
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
+		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+		    		this.position.addX(SPEED);
+		    		this.position.addY(SPEED);
+		    	}
 		    	this.orientation = EOrientation.down_right;
 		    	
 			}else  if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() > 0){
@@ -272,11 +323,10 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	if(this.getPosition().getY() < 360){
-		    		this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+		    		this.position.addY(SPEED);
 		    	}
-		    	
-		    
+
 		    	this.orientation = EOrientation.down;
 		    	
 			 }else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() < 0){
@@ -285,8 +335,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
+		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		this.position.addX(-SPEED);
+		    		this.position.addY(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.down_left;
 		    	
 			}
@@ -299,7 +353,9 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+		    		this.position.addY(SPEED);
+		    	}
 		    	this.orientation = EOrientation.down;
 		    	
 		 }else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() < 0){
@@ -308,8 +364,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
+		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		this.position.addX(-SPEED);
+		    		this.position.addY(SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.down_left;
 		    	
 			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
@@ -318,7 +378,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
+		    	if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		this.position.addX(-SPEED);
+		    	}
+		    	
+		    	
 		    	this.orientation = EOrientation.left;
 		    	
 			}
@@ -335,8 +399,11 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
-		    	this.position.addY(SPEED_SHOOT);
+		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
+		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		this.position.addX(-SPEED);
+		    		this.position.addY(SPEED);
+		    	}
 		    	this.orientation = EOrientation.down_left;
 		    	
 			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
@@ -345,7 +412,9 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
+		    	if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		this.position.addX(-SPEED);
+		    	}
 		    	this.orientation = EOrientation.left;
 			
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() < 0){
@@ -354,8 +423,14 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
-		    	this.position.addY(-SPEED_SHOOT);
+		    	
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
+		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		
+		    		this.position.addX(-SPEED);
+		    		this.position.addY(-SPEED);
+		    	}
+		    	
 		    	this.orientation = EOrientation.up_left;
 		    	
 			}
@@ -369,7 +444,9 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
+		    	if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		this.position.addX(-SPEED);
+		    	}
 		    	this.orientation = EOrientation.left;
 			
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() < 0){
@@ -378,8 +455,12 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addX(-SPEED_SHOOT);
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
+		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+		    		
+		    		this.position.addX(-SPEED);
+		    		this.position.addY(-SPEED);
+		    	}
 		    	this.orientation = EOrientation.up_left;
 		    	
 			}else if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() < 0){
@@ -388,7 +469,9 @@ public class Spacecraft implements IDrawControllable {
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
-		    	this.position.addY(-SPEED_SHOOT);
+		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+		    		this.position.addY(-SPEED);
+		    	}
 		    	this.orientation = EOrientation.up;
 			}
 		break;
@@ -444,8 +527,7 @@ public class Spacecraft implements IDrawControllable {
 	public EOrientation getOrientation() {
 		return orientation;
 	}
-	
-	
+
 	
 	
 }

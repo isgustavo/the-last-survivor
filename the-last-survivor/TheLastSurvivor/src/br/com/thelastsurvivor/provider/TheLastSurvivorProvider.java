@@ -92,24 +92,20 @@ public class TheLastSurvivorProvider extends ContentProvider {
             SQLiteDatabase database = helper.getReadableDatabase();  
             Cursor cursor;  
             switch (matcher.match(uri)) {  
-                case PlayerProvider.IS_PLAYERS:  
+                
+            	case PlayerProvider.IS_PLAYERS:  
                    
                     builder.setTables(PlayerProvider.NAME_TABLE);  
-                    builder.setProjectionMap(projection);  
+                    //builder.setProjectionMap(projection);  
                 break;  
-                case Constant.UPDATE_PLAYER:
                 
-                	builder.setTables(PlayerProvider.NAME_TABLE);
-                	builder.setProjectionMap(projection);
-                break;
-                    
                 case Constant.IS_TROPHIES:  
                     // O Builer receberá dois parametros: a tabela  
                     // onde será feita a busca, e uma projection -  
                     // que nada mais é que uma HashMap com os campos  
                     // que queremos recuperar do banco de dados.  
                     builder.setTables(TrophiesProvider.NAME_TABLE);  
-                    builder.setProjectionMap(projection);  
+                    //builder.setProjectionMap(projection);  
                     break;
   
                 default:  
@@ -139,7 +135,11 @@ public class TheLastSurvivorProvider extends ContentProvider {
 				getContext().getContentResolver().notifyChange(playerUri, null);			
 				return playerUri;
 			}
+			
+			
 		break;
+		
+		
 		default:
 			
 			throw new IllegalArgumentException("URI desconhecida " + uri);

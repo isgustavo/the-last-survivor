@@ -61,11 +61,11 @@ public class AlterationPlayerActivity extends Activity{
 		try{
 			while(c.moveToNext()){
 				Log.d("COUNT", ""+c.getColumnCount());
-				player = new Player(c.getInt(1),c.getString(2), c.getString(3));
+				player = new Player(c.getInt(0),c.getString(1), c.getString(2));
 			}
 			
 		}catch(IllegalStateException e){
-			player = new Player(c.getInt(1),c.getString(2), "");
+			player = new Player(c.getInt(0),c.getString(1), "");
 		}
 	
 		

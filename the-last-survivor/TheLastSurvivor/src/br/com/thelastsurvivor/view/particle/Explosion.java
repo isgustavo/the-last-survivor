@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
+import br.com.thelastsurvivor.util.Vector2D;
 
 public class Explosion {
 
@@ -58,6 +59,27 @@ public class Explosion {
 		this.cleanListParticules();
 	}
 	
+	public void updateInGame(Vector2D camera) {
+		
+		//for (int i = 0; i < 1; i++) {
+			//Particle p = new Particle(new Vector2D(200,200));
+			//this.particles[i] = p;
+	 		this.particles.add(new Particle());
+	 	//}
+		
+		if (this.isAlive) {
+			for (Particle particle : particles) {
+				if(particle.isAlive()){
+					particle.update(camera);
+				}
+			}
+			this.cleanListParticules();
+		}
+		
+		this.cleanListParticules();
+	}
+		
+	
 	public void draw(Canvas c) {
 		if (this.isAlive) {
 			for (Particle particle : particles) {
@@ -67,6 +89,7 @@ public class Explosion {
 			}
 		}
 	}
+	
 	
 	private void cleanListParticules(){
 		List<Particle> particleAlives = new ArrayList<Particle>();

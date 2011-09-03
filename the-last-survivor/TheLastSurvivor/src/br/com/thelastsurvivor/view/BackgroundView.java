@@ -64,7 +64,6 @@ public class BackgroundView extends SurfaceView implements SurfaceHolder.Callbac
 	public void draw(Canvas c) {
 		
 		
-		Log.d("MAINMANU", "canvas");
 		c.drawColor(Color.BLACK);
 		//this.image.setBounds(0,0, c.getWidth(), c.getHeight());
 		

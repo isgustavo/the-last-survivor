@@ -10,7 +10,7 @@ public class Trophies implements Serializable{
 	private String objective;
 	private Boolean isAchieved;
 	private Drawable image;
-	private Integer status;
+
 	
 	
 	

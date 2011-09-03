@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
 
@@ -77,9 +79,11 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
         
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         
+        final Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        
         this.beforeTime = 0L;
 		
-		this.engine = new SimplePlayerMode(this, vibrator);
+		this.engine = new SimplePlayerMode(this, vibrator, display);
 		
     	this.view = new EngineGameView(this,engine);
 	}

@@ -52,7 +52,7 @@ public class TheLastSurvivorView extends SurfaceView implements SurfaceHolder.Ca
 	@Override
 	public void draw(Canvas c) {
 		
-		Log.d("LASTSURVIVOR", "canvas");
+		
 		
 		c.drawColor(Color.BLACK);
 		this.image.setBounds(0,0, c.getWidth(), c.getHeight());

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.util.Log;
 import br.com.thelastsurvivor.activity.player.PlayerActivity;
 import br.com.thelastsurvivor.view.TheLastSurvivorView;
 
@@ -21,7 +20,6 @@ public class TheLastSurvivorActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		
 		this.init();
 
@@ -31,16 +29,12 @@ public class TheLastSurvivorActivity extends Activity {
 
 			@Override
 			public void run() {
-				Log.d("TheLastSurvivorActivity", "01");
-
+				
 				Intent i = new Intent(TheLastSurvivorActivity.this,
 						PlayerActivity.class);
 				TheLastSurvivorActivity.this.startActivity(i);
 
 				TheLastSurvivorActivity.this.finish();
-
-				// startActivity(i);
-				Log.d("TheLastSurvivorActivity", "02");
 
 			}
 		}, SPLASH_DURATION);

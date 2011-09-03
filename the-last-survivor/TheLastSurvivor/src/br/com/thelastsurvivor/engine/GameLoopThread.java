@@ -29,7 +29,7 @@ public class GameLoopThread extends Thread{
 	public final static int PAUSED = 2;
 	
 	public GameLoopThread(SurfaceHolder holder, Context context, EngineGame engine){
-		Log.d("GameLoopThread", "01");
+		
 		this.holder = holder;
 		//this.handler = handler;
 		this.context = context;
@@ -47,7 +47,7 @@ public class GameLoopThread extends Thread{
 
 		//UPDATE
 		while(state == RUNNING){
-			Log.d("GameLoopThread", "UDPATE");
+			
 			long beforeTime = System.nanoTime();
 			
 			engine.update();
@@ -58,11 +58,11 @@ public class GameLoopThread extends Thread{
 			
 			Canvas canvas = null;
 			try{
-				Log.d("GameLoopThread", "DRAW");
+				
 				canvas = holder.lockCanvas(null);
-				Log.d("GameLoopThread", "canvas");
+			
 				synchronized (canvas) {
-					Log.d("GameLoopThread", "synchronized");
+				
 					canvas.drawRect(0,0,canvas.getWidth(), canvas.getHeight(), this.blackScreen);
 					
 					engine.draw(canvas);
@@ -77,7 +77,7 @@ public class GameLoopThread extends Thread{
 			//SLEEP
 			
 			this.sleepTime = delay -((System.nanoTime()-beforeTime)/1000000L);
-			Log.d("GameLoopThread", "SLEEP");
+			
 			try{
 				
 				if(sleepTime > 0){

@@ -25,9 +25,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ TrophiesProvider.IS_ACHIEVED +" INTEGER ); ");
 		
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (0, 0 ); ");
+				+ "VALUES (0, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (1, 0 ); ");
+				+ "VALUES (1, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ "VALUES (2, 0 ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
