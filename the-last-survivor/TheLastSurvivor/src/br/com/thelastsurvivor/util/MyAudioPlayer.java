@@ -1,5 +1,7 @@
 package br.com.thelastsurvivor.util;
 
+import br.com.thelastsurvivor.R;
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
@@ -15,15 +17,14 @@ public class MyAudioPlayer implements OnCompletionListener{
 	private MediaPlayer player;
 	private String mp3;
 	
-	public MyAudioPlayer() {
+	public MyAudioPlayer(Activity act, int audio) {
 		statusAtual = NOVO;
-		player = new MediaPlayer();
+		player = MediaPlayer.create(act, audio);
 		player.setOnCompletionListener(this);
 	}
 	
-	public void start(String mp3) {
-		Log.i("", "Inicio da música: " + mp3);
-		this.mp3 = mp3;
+	public void start() {
+//		Log.i("", "Inicio da música: " + mp3);
 		try {
 			// Seguindo o ciclo de vida do MediaPlayer
 			switch (statusAtual) {
@@ -32,8 +33,8 @@ public class MyAudioPlayer implements OnCompletionListener{
 				case PARADO:
 					player.reset();
 				case NOVO:
-					player.setDataSource(mp3);
-					player.prepare();
+//					player.setDataSource(mp3);
+//					player.prepare();
 				case PAUSADO:
 					player.start();
 					break;
