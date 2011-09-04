@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
@@ -20,44 +21,41 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR, "
 				+ PlayerProvider.LGTWITTER + " VARCHAR ); ");
 		
-/*		db.execSQL(" CREATE TABLE "+ TrophiesProvider.NAME_TABLE + "( "
+		db.execSQL(" CREATE TABLE "+ TrophiesProvider.NAME_TABLE + "( "
 				+ TrophiesProvider.ID + " INTEGER PRIMARY KEY, " 
-				+ TrophiesProvider.IS_ACHIEVED +" INTEGER ); ");
+				+ TrophiesProvider.DATE_ACHIEVED +" INTEGER ); ");
 		
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (0, null ); ");
+				+ " VALUES (1, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (1, null ); ");
+				+ " VALUES (2, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (2, 0 ); ");
+				+ " VALUES (3, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (3, 0 ); ");
+				+ " VALUES (4, null); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (4, 0 ); ");
+				+ " VALUES (5, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (5, 0 ); ");
+				+ " VALUES (6, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (6, 0 ); ");
+				+ " VALUES (7, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (7, 0 ); ");
+				+ " VALUES (8, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (8, 0 ); ");
+				+ " VALUES (9, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (9, 0 ); ");
+				+ " VALUES (10, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (10, 0 ); ");
+				+ " VALUES (11, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (11, 0 ); ");
+				+ " VALUES (12, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (12, 0 ); ");
+				+ " VALUES (13, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (13, 0 ); ");
+				+ " VALUES (14, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (14, 0 ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ "VALUES (15, 0 ); ");
+				+ " VALUES (15, null ); ");
 				
-		*/
 
 	}
 
