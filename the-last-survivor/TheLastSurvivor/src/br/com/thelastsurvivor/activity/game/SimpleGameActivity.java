@@ -15,8 +15,10 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
+import br.com.thelastsurvivor.util.MyAudioPlayer;
 
 public class SimpleGameActivity extends Activity implements SensorEventListener, OnGestureListener{
 	
@@ -24,6 +26,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     private Sensor accelerometer;
     private GestureDetector gestureScanner;
     private Vibrator vibrator;
+    private MyAudioPlayer audioPlayer;
     
     private EngineGameView view;
     private SimplePlayerMode engine;
@@ -59,12 +62,16 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     @Override
     protected void onDestroy() {
     	super.onDestroy();
+    	this.audioPlayer.fechar();
     	
     	this.wakeLock.release();
     }
 	    
 
 	public void init(){
+		
+		this.audioPlayer = new MyAudioPlayer(this, R.raw.singleplayer_soundtrack);
+		this.audioPlayer.start();
 		
 		this.manager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
 		
