@@ -11,10 +11,6 @@ public class Trophies implements Serializable{
 	private Boolean isAchieved;
 	private Drawable image;
 
-	
-	
-	
-	
 	public String getName() {
 		return name;
 	}
@@ -36,12 +32,7 @@ public class Trophies implements Serializable{
 	public void setImage(Drawable image) {
 		this.image = image;
 	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+	
 	
 	
 	
