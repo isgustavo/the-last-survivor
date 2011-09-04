@@ -1,43 +1,35 @@
 package br.com.thelastsurvivor.activity.trophies;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.model.trophies.Trophies;
-import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
+import br.com.thelastsurvivor.util.MyAudioPlayer;
 
 public class TrophiesActivity extends ListActivity{
 	
-	private List<Trophies> trophies; 
+//	private List<Trophies> trophies; 
+	private MyAudioPlayer audioPlayer;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//init();
+		audioPlayer = new MyAudioPlayer(this, R.raw.sol);
+		audioPlayer.start();
 		
 		setContentView(R.layout.trophies_list);
 		
 		getTrophies();
-		
-		
 	}
 
-	private void init() {
-		this.trophies = new ArrayList<Trophies>();
-	}
+//	private void init() {
+//		this.trophies = new ArrayList<Trophies>();
+//	}
 
 	private void getTrophies() {
 	
@@ -153,5 +145,11 @@ public class TrophiesActivity extends ListActivity{
 
 		
 //		setListAdapter(new ArrayAdapter(this,R.id.trophie_name,R.layout.trophies_row, from));
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		audioPlayer.fechar();
 	}
 }
