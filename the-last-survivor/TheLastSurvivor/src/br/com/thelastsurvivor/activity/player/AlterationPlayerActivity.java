@@ -60,12 +60,12 @@ public class AlterationPlayerActivity extends Activity{
 				null, null , null, null);
 		try{
 			while(c.moveToNext()){
-				Log.d("COUNT", ""+c.getColumnCount());
-				player = new Player(c.getInt(0),c.getString(1), c.getString(2));
+				//Log.d("COUNT", ""+c.getColumnCount());
+				this.player = new Player(c.getInt(0),c.getString(1), c.getString(2));
 			}
 			
 		}catch(IllegalStateException e){
-			player = new Player(c.getInt(0),c.getString(1), "");
+			this.player = new Player(c.getInt(0),c.getString(1), "");
 		}
 	
 		

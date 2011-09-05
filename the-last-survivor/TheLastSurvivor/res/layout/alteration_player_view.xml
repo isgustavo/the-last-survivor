@@ -39,7 +39,9 @@
 	<EditText android:layout_height="40dp" android:layout_width="300dp" 
 	          android:textSize="17dp"
 	          android:id="@+id/editNickName" 
-	          android:inputType="textPersonName">
+	          android:inputType="textPersonName"
+	          
+	          >
 	</EditText>
 	
 	<br.com.thelastsurvivor.util.FT2FontTextView 
