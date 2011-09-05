@@ -207,6 +207,20 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	public boolean isAlive() {
 		return this.isAlive;
 	}
+
+
+	@Override
+	public Vector2D getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void update(EOrientation orientation) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

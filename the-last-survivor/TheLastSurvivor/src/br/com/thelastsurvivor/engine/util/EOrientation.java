@@ -21,5 +21,11 @@ public enum EOrientation {
 	public Integer getOrientation() {
 		return orientation;
 	}
+
+	public void setOrientation(Integer orientation) {
+		this.orientation = orientation;
+	}
+	
+	
 	
 }

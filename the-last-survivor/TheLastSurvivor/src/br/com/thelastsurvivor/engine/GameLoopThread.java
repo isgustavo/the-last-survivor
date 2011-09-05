@@ -3,7 +3,6 @@ package br.com.thelastsurvivor.engine;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameLoopThread extends Thread{

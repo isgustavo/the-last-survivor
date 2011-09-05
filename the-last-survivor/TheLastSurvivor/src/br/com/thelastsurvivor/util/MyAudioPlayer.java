@@ -1,6 +1,5 @@
 package br.com.thelastsurvivor.util;
 
-import br.com.thelastsurvivor.R;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;

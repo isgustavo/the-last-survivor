@@ -18,97 +18,220 @@ public class SimplePlayerMode extends EngineGame {
 
 	private Drawable image;
 	
-	private Spacecraft spacecraft;
-	private Explosion explosion;
+	
+	
 	
 	
 	public SimplePlayerMode(Context context, Vibrator vibrator, Display display) {
 		super(context, vibrator, display);
-		Log.d("init","init");
+		
 		init();
 	}
 
 
 	@Override
 	public void init() {
-		
-		//this.camera = new Vector2D(0,0);
-		
+		super.init();
+
 		this.image = this.context.getResources().getDrawable(R.drawable.spacecraft_image);
 		
-		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay());
+		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(this.camera.getBeginningSizeWidth(),this.camera.getBeginningSizeHeight()));
 		
-		this.explosion = new Explosion(200);
+		
 	}
 	
-	boolean particleFlag = true;
-	
+
 	@Override
 	public void update(){
-		
-		
+		super.update();
 		
 		spacecraft.update();
-		
+
 		switch (this.spacecraft.getOrientation().getOrientation()) {
+		
 		case 1:
 			
 			if(this.spacecraft.getPosition().getY() < EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-				Log.d("CAMERA",""+camera.getY());
-				//camera.addY(320);
-				if(camera.getY() < 40 && particleFlag){
-					camera.addY(1);
+				
+				if(0 <  this.camera.getBeginningSizeHeight()){
+					this.camera.addBeginningSizeHeight(-1);
+					this.camera.addFinalSizeHeight(-1);
 				}else{
-					particleFlag = false;
-					camera.setY(0);
+					
+					this.vibrator.vibrate(300);
+
 				}
-			
-	    		
 	    	}
+
+		break;
+		case 2:
+			
+			if(this.spacecraft.getPosition().getY() < EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+				
+				if(0 < this.camera.getBeginningSizeHeight()){
+					this.camera.addBeginningSizeHeight(-1);
+					this.camera.addFinalSizeHeight(-1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
+			
+			if(this.spacecraft.getPosition().getX() > EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+				
+				if(this.camera.getFinalSizeWidth() < this.getSCREEN_SIZE_WIDTH()){
+					this.camera.addFinalSizeWidth(1);
+					this.camera.addBeginningSizeWidth(1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
 			
 		break;
-		}
+			
+		case 3:
 
-		if (this.explosion != null && this.explosion.isAlive) {
-			this.explosion.updateInGame(camera);
+			if(this.spacecraft.getPosition().getX() >= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+				
+				if(this.camera.getFinalSizeWidth() < this.getSCREEN_SIZE_WIDTH()){
+					
+					this.camera.addFinalSizeWidth(1);
+					this.camera.addBeginningSizeWidth(1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
+		break;
+		
+			
+		case 4:
+			
+			if(this.spacecraft.getPosition().getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+				if(this.camera.getFinalSizeHeight() < this.getSCREEN_SIZE_HEIGHT()){
+					this.camera.addFinalSizeHeight(1);
+					this.camera.addBeginningSizeHeight(1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
+			if(this.spacecraft.getPosition().getX() >= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
+				if(this.camera.getFinalSizeWidth() < this.getSCREEN_SIZE_WIDTH()){
+					this.camera.addFinalSizeWidth(1);
+					this.camera.addBeginningSizeWidth(1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			
+			}
+			
+		break;
+		
+		
+		case 5:
+			
+			if(this.spacecraft.getPosition().getY() > EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+				if(this.camera.getFinalSizeHeight() < this.getSCREEN_SIZE_HEIGHT()){
+					this.camera.addFinalSizeHeight(1);
+					this.camera.addBeginningSizeHeight(1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
+		break;
+		
+		case 6:
+			if(this.spacecraft.getPosition().getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+				
+				if(this.camera.getFinalSizeHeight() < this.getSCREEN_SIZE_HEIGHT()){
+					this.camera.addFinalSizeHeight(1);
+					this.camera.addBeginningSizeHeight(1);
+					
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+				
+				
+			
+			}if(this.spacecraft.getPosition().getX() <= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+				if(0 < this.camera.getBeginningSizeWidth()){
+					this.camera.addBeginningSizeWidth(-1);
+					this.camera.addFinalSizeWidth(-1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
+			
+		break;
+		
+		case 7:
+		
+			if(this.spacecraft.getPosition().getX() <= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+				if(0 < this.camera.getBeginningSizeWidth()){
+					this.camera.addBeginningSizeWidth(-1);
+					this.camera.addFinalSizeWidth(-1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+			}
+			
+			
+		break;
+		
+		case 8:
+			if(this.spacecraft.getPosition().getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+				if(0 <  this.camera.getBeginningSizeHeight()){
+					this.camera.addBeginningSizeHeight(-1);
+					this.camera.addFinalSizeHeight(-1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+
+				}
+				
+			}
+			if(this.spacecraft.getPosition().getX() <= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
+				if(0 < this.camera.getBeginningSizeWidth()){
+					this.camera.addBeginningSizeWidth(-1);
+					this.camera.addFinalSizeWidth(-1);
+				}else{
+					
+					this.vibrator.vibrate(300);
+				}
+				
+			}
+		break;
 		}
 		
-		super.update();
+		if (this.explosion != null && this.explosion.isAlive) {
+			this.explosion.update(this.spacecraft.getOrientation());
+		}
+		
 	}
 	
 	@Override
 	public void draw(Canvas c) {
 		
+		
 		this.spacecraft.draw(c);
 	    
-	    //c.translate(camera.getX(), camera.getY());
-	    
-	    
-	   // Log.d("CAMERA", ""+camera.getX());
-	    //Log.d("CAMERA", ""+camera.getY());
-	    
-		if(this.camera.getY() 
-				< -100 && 
-				-100 < 
-				EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-			this.image.setBounds(40, -100, 40+44, -100+48);
-			
-		    this.image.draw(c);
-		}
-		
-	    
-	
-	    // render explosions
- 		if (explosion != null) {
- 			explosion.draw(c);
- 		}
-	    
-	    
-	    //Log.d("direcao", ""+camera.getY());
-		super.draw(c);
-		
-		
-	
+	 
+ 		super.draw(c);
+	 
+
 	}
 
 

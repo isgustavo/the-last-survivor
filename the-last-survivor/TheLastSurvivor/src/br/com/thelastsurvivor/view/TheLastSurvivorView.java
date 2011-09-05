@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import br.com.thelastsurvivor.R;
