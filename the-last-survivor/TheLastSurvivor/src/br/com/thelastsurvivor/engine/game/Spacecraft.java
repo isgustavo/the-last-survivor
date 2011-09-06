@@ -37,6 +37,7 @@ public class Spacecraft implements IDrawControllable {
 	private EOrientation orientation;
 	private Boolean orientationChange;
 
+	Integer rotacao = 0;
 	private Matrix matrix;
 	
 	private List<IWeaponBehavior> shoots;
@@ -123,7 +124,7 @@ public class Spacecraft implements IDrawControllable {
 		
 		switch (this.orientation.getOrientation()) {
 		case 1:
-			if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() < 0){
+			if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
 				
 				this.matrix.setRotate(0);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -138,7 +139,7 @@ public class Spacecraft implements IDrawControllable {
 			
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
 				
-				this.matrix.setRotate(45);
+				this.matrix.setRotate(++rotacao);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    
@@ -165,17 +166,29 @@ public class Spacecraft implements IDrawControllable {
 		    	
 		    	this.orientation = EOrientation.up_left;
 			}else{
-				if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+				 if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
+						
+					this.matrix.setRotate(180);
+			    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+			        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+			    	
+			    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+			    		this.position.addY(SPEED);
+			    	}
+
+			    	this.orientation = EOrientation.down;
+				 }
+				/*if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
 		    		this.position.addY(-SPEED);
 		    	}
-				this.alertFlag = true;
+				this.alertFlag = true;*/
 			}
 		break;
 
 		case 2:
-			if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() < 0){
-				
-				this.matrix.setRotate(0);
+			if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
+				this.matrix.setRotate(--rotacao);
+				//this.matrix.setRotate(0);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
@@ -186,8 +199,8 @@ public class Spacecraft implements IDrawControllable {
 		    	this.orientation = EOrientation.up;
 		    	
 			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
-				
-				this.matrix.setRotate(45);
+				this.matrix.setRotate(++rotacao);
+				//this.matrix.setRotate(45);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
@@ -199,9 +212,9 @@ public class Spacecraft implements IDrawControllable {
 		    	
 		    	this.orientation = EOrientation.up_right;
 		    	
-			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
-				
-				this.matrix.setRotate(90);
+			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
+				this.matrix.setRotate(++rotacao);
+				//this.matrix.setRotate(90);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
@@ -224,8 +237,8 @@ public class Spacecraft implements IDrawControllable {
 		
 		case 3:
 			if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
-				
-				this.matrix.setRotate(45);
+				this.matrix.setRotate(--rotacao);
+				//this.matrix.setRotate(45);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 
@@ -238,9 +251,9 @@ public class Spacecraft implements IDrawControllable {
 
 		    	this.orientation = EOrientation.up_right;
 		    	
-			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
-				
-				this.matrix.setRotate(90);
+			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)){
+				this.matrix.setRotate(++rotacao);
+				//this.matrix.setRotate(90);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		    	
@@ -273,7 +286,7 @@ public class Spacecraft implements IDrawControllable {
 		break;	
 		
 		case 4:
-			if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
+			if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)){
 				
 				this.matrix.setRotate(90);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -299,7 +312,7 @@ public class Spacecraft implements IDrawControllable {
 		    	}
 		    	this.orientation = EOrientation.down_right;
 			
-			}else if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() > 0){
+			}else if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
 					
 				this.matrix.setRotate(180);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -339,7 +352,7 @@ public class Spacecraft implements IDrawControllable {
 		    	
 		    	this.orientation = EOrientation.down_right;
 		    	
-			}else  if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() > 0){
+			}else  if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
 				
 				this.matrix.setRotate(180);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -375,7 +388,7 @@ public class Spacecraft implements IDrawControllable {
 		break;
 		
 		case 6:
-			if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() > 0){
+			if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
 				
 				this.matrix.setRotate(180);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -402,7 +415,7 @@ public class Spacecraft implements IDrawControllable {
 		    	
 		    	this.orientation = EOrientation.down_left;
 		    	
-			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
+			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
 				
 				this.matrix.setRotate(270);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -442,7 +455,7 @@ public class Spacecraft implements IDrawControllable {
 		    	
 		    	this.orientation = EOrientation.down_left;
 		    	
-			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
+			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
 				
 				this.matrix.setRotate(270);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -479,7 +492,7 @@ public class Spacecraft implements IDrawControllable {
 		
 		
 		case 8:
-			if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -10)){
+			if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
 				
 				this.matrix.setRotate(270);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -505,7 +518,7 @@ public class Spacecraft implements IDrawControllable {
 		    	}
 		    	this.orientation = EOrientation.up_left;
 		    	
-			}else if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -10) && this.sensorPosition.getY() < 0){
+			}else if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
 				
 				this.matrix.setRotate(0);
 		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -564,6 +577,15 @@ public class Spacecraft implements IDrawControllable {
 	    	this.alertImage.draw(c);
 	    }
 	    
+	}
+	
+	public void drawDrif(Canvas c){
+		this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
+	    		this.position.getX()+this.resizedBitmap.getWidth(), 
+	    			this.position.getY()+this.resizedBitmap.getHeight());
+		
+		 this.drawableImage.draw(c);
+		 
 	}
 
 	public Vector2D getPosition() {
