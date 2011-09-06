@@ -16,13 +16,75 @@
 			android:layout_height="fill_parent"
 			android:id="@+id/surfaceView" /> 
 			
-<ImageView android:id="@+id/imageView1"
+<!-- <ImageView android:id="@+id/imageView1"
     	 android:layout_width="fill_parent" 
     	 android:layout_height="wrap_content" 
     	 android:src="@drawable/alteration_profile_image"
     	 android:layout_x="0dp" android:layout_y="2dp">
 </ImageView>
+-->   
+
+<br.com.thelastsurvivor.util.FT2FontTextView 
+	   				android:id="@+id/app_name" android:text="@string/app_name" 
+	   				android:textSize="25dp" android:textColor="@android:color/white"
+	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+	   				android:layout_x="10dp" android:layout_y="15dp">
+    			</br.com.thelastsurvivor.util.FT2FontTextView>
+    			
+<br.com.thelastsurvivor.util.FT2FontTextView 
+	   				android:id="@+id/app_name" android:text="@string/app_alterarion_player" 
+	   				android:textSize="18dp" android:textColor="@android:color/white"
+	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+	   				android:layout_x="250dp" android:layout_y="15dp">
+    			</br.com.thelastsurvivor.util.FT2FontTextView>
     
+    
+    <br.com.thelastsurvivor.util.FT2FontTextView 
+		   android:id="@+id/textNickName" android:text="@string/nickname" 
+		   android:textSize="30dp" android:textColor="@android:color/white"
+		   android:layout_width="fill_parent" android:layout_height="wrap_content" 
+		   lht:ttf_name="FT2FONT.TTF"
+		   android:layout_x="30dp" android:layout_y="53dp">
+    </br.com.thelastsurvivor.util.FT2FontTextView>
+    
+    <EditText android:layout_height="40dp" android:layout_width="200dp" 
+	          android:textSize="17dp"
+	          android:id="@+id/editNickName" 
+	          android:inputType="textPersonName" 
+	          android:layout_x="180dp" android:layout_y="50dp">
+	</EditText>
+	
+	<br.com.thelastsurvivor.util.FT2FontTextView 
+	         android:id="@+id/textLGTwitter" android:text="@string/lg_twitter_01" 
+	         android:textSize="23dp" android:textColor="@android:color/white"
+	         android:layout_width="fill_parent" android:layout_height="wrap_content"
+             lht:ttf_name="FT2FONT.TTF"
+             android:layout_x="30dp" android:layout_y="100dp">
+   </br.com.thelastsurvivor.util.FT2FontTextView>
+   
+   <br.com.thelastsurvivor.util.FT2FontTextView 
+	         android:id="@+id/textLGTwitter" android:text="@string/lg_twitter_02" 
+	         android:textSize="23dp" android:textColor="@android:color/white"
+	         android:layout_width="fill_parent" android:layout_height="wrap_content"
+             lht:ttf_name="FT2FONT.TTF"
+             android:layout_x="30dp" android:layout_y="120dp">
+   </br.com.thelastsurvivor.util.FT2FontTextView>
+	
+	
+	<EditText android:layout_height="40dp" android:layout_width="300dp" 
+	          android:textSize="17dp" android:id="@+id/editLGTwitter"
+	          android:layout_x="180dp" android:layout_y="100dp">
+	</EditText>
+	
+	<Button android:layout_height="wrap_content" 
+      		android:layout_width="wrap_content"
+      		android:background="@drawable/button_ok_image" 
+      		android:id="@+id/buttonOk"
+      		android:layout_x="200dp" android:layout_y="150dp">
+    </Button>
+     	
+  
+<!--     
 <LinearLayout android:id="@+id/linearLayout2" 
               android:orientation="vertical"
 		      android:paddingTop="145dp" 
@@ -39,9 +101,7 @@
 	<EditText android:layout_height="40dp" android:layout_width="300dp" 
 	          android:textSize="17dp"
 	          android:id="@+id/editNickName" 
-	          android:inputType="textPersonName"
-	          
-	          >
+	          android:inputType="textPersonName" >
 	</EditText>
 	
 	<br.com.thelastsurvivor.util.FT2FontTextView 
@@ -62,15 +122,10 @@
 	 		  android:paddingTop="170dp" android:paddingLeft="350dp" 
               android:layout_height="fill_parent" android:layout_width="wrap_content" >
               
-    <Button android:layout_height="wrap_content" 
-      		android:layout_width="wrap_content"
-      		android:background="@drawable/button_ok_image" 
-      		android:id="@+id/buttonOk">
-    </Button>
-     	
+    
 </LinearLayout>	
      		  
-     		
+    -->  		
 <!--      		
 </LinearLayout>  
  -->

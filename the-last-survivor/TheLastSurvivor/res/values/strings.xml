@@ -8,10 +8,13 @@
     <string name="app_name_for">For</string>
     <string name="app_name_players">Players</string>
     
-    
+    <string name="app_alterarion_player">Alterarion Profile</string>
     
     <string name="nickname">Nickname</string>
     <string name="lg_twitter">Username or e-mail Twitter</string>
+    
+    <string name="lg_twitter_01">Username or </string>
+    <string name="lg_twitter_02">e-mail Twitter</string>
     
     <string name="lista">LISTA</string>
     

@@ -87,7 +87,9 @@ public class Spacecraft implements IDrawControllable {
 		
 		this.alertFlag = false;
 		
-		controlUpdate();
+		//controlUpdate();
+		
+		newControlUpdate();
 	
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
 		this.drawableImage = newImage;
@@ -118,6 +120,22 @@ public class Spacecraft implements IDrawControllable {
 		this.shootsDrawables.clear();
 		this.shootsDrawables.addAll(shoots);
 		
+	}
+	
+	private void newControlUpdate(){
+		if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
+			if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+	    		this.position.addY(-SPEED);
+	    	}
+		}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
+			this.matrix.setRotate(++rotacao);
+		}else if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
+			if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+	    		this.position.addY(SPEED);
+	    	}
+		}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
+			this.matrix.setRotate(rotacao);
+		}
 	}
 	
 	private void controlUpdate(){
