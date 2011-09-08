@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.pm.FeatureInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
@@ -75,12 +77,22 @@ public class Spacecraft implements IDrawControllable {
     	
 	}
 	
+	
+	boolean left = false;
+	boolean right = false;
+	
 	@Override
 	public void updateOrientation(Float orientationX, Float orientationY){
 	
 		this.sensorPosition.setX(((orientationX.intValue())*10));
 		this.sensorPosition.setY(((orientationY.intValue())*10));
+		
+		
+	      
 	}
+	
+	boolean down = false;
+	boolean up = false; 
 	
 	@Override
 	public void update() {
@@ -89,8 +101,30 @@ public class Spacecraft implements IDrawControllable {
 		
 		//controlUpdate();
 		
+		if (this.sensorPosition.getX() > 20 ) {
+			Log.d("LEFT", "LEFT");
+	    	
+	    	right = true;
+	 
+	    }else if(this.sensorPosition.getX() < -20 ) {
+	    	Log.d("right", "right");
+	    	left = true;
+	    }
+		
+		
+		if(this.sensorPosition.getY() > 20){
+			down = true;
+		}else if(this.sensorPosition.getY() < -20){
+			up = true;
+		}
+		
 		newControlUpdate();
 	
+		left = false;
+		right = false;
+		down = false;
+		up = false;
+		
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
 		this.drawableImage = newImage;
 
@@ -107,6 +141,7 @@ public class Spacecraft implements IDrawControllable {
 			//clean list new shoots
 			this.shoots.clear();
 		}
+		
 	}
 	
 	private void getShootsDrawables(){
@@ -122,20 +157,404 @@ public class Spacecraft implements IDrawControllable {
 		
 	}
 	
+	 static int width = 320;          // Dimensions of the graphics area.
+	  static int height =  480;
+
+	        
+	
+	  Double  angle = 0.0;             
+	 
+	  Double  x = 200.0, y= 200.0;             
+	  Double  deltaX =  200.0, deltaY = 200.0;    
+	    
+	  static final int DELAY = 20;    
+	  static final int FPS   =                 // the resulting frame rate.
+			    Math.round(100/ DELAY);
+	
+	  static final double SHIP_ANGLE_STEP = Math.PI / FPS;
+
+	  private Double getPositiveNumber(Double number){
+		  if(number < 0){
+			  return number *(-1.0);
+		  }
+		  return number;
+	  }
+	  
+	  private Double getNegativeNumber(Double number){
+		  if(number > 0){
+			  return number * (-1.0);
+		  }
+		  return number;
+	  }
+	  
 	private void newControlUpdate(){
-		if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
-			if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-	    		this.position.addY(-SPEED);
-	    	}
-		}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
-			this.matrix.setRotate(++rotacao);
-		}else if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
-			if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-	    		this.position.addY(SPEED);
-	    	}
-		}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
-			this.matrix.setRotate(rotacao);
+		
+		double dx = 0, dy = 0, speed;
+
+	    if (left) {
+	    	
+	    	this.angle = 20.0;
+	 
+	    }else if(right) {
+	      this.angle = 50.0;
+	     
+	    }    
+	    
+	    
+	   if(angle > 0 && angle < 90){
+	    	dx = 5 * Math.sin(angle);
+		    dy = 5 * Math.cos(angle);
+	    }else if(angle > 90 && angle < 180){
+	    	dx = 5 * Math.sin(angle);
+		    dy = 5 * Math.cos(angle);
+	    }else if(angle > 180 && angle < 270){
+	    	dx = 5 * Math.sin(angle);
+		    dy = 5 * Math.cos(angle);
+	    }else if(angle > 270 && angle < 360){
+	    	dx = 5 * Math.sin(angle);
+		    dy = 5 * Math.cos(angle);
+	    }
+	    
+	  /* dx = 5 * -Math.sin(angle);
+	    dy = 5 * Math.cos(angle);*/
+	/*    if (down) {
+	      deltaX += dx;
+	      deltaY += dy;
+	      
+	    }*/
+	   
+	   if (up) {
+	    	if(angle > 0 && angle < 90){
+	    		 deltaX += getPositiveNumber(dx);
+	 	         deltaY -= getPositiveNumber(dy);
+	 	    }else if(angle > 90 && angle < 180){
+	 	    	 deltaX += getPositiveNumber(dx);
+	 	         deltaY += getPositiveNumber(dy);
+	 	    }else if(angle > 180 && angle < 270){
+	 	    	 deltaX -= getPositiveNumber(dx);
+	 	         deltaY += getPositiveNumber(dy);
+		    }else if(angle > 270 && angle < 360){
+		    	 deltaX -= getPositiveNumber(dx);
+	 	         deltaY -= getPositiveNumber(dy);
+		    }
+	    }/*else if(down){
+	    	if(angle > 0 && angle < 90){
+	    		 deltaX -= dx;
+	 	         deltaY += dy;
+	 	    }else if(angle > 90 && angle < 180){
+	 	    	 deltaX -= dx;
+	 	         deltaY -= dy;
+	 	    }else if(angle > 180 && angle < 270){
+	 	    	 deltaX += dx;
+	 	         deltaY -= dy;
+		    }else if(angle > 270 && angle < 360){
+		    	 deltaX += dx;
+	 	         deltaY += dy;
+		    }
+	    }
+
+
+	    if (up || down) {
+	      speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+	      if (speed > 1) {
+	        dx = 5 * -Math.sin(angle); //velocidade da nave
+	        dy = 5 *  Math.cos(angle);
+	      
+	        if (up)
+	          deltaX = dx;
+	        else
+	          deltaX = -dx;
+	        if (up)
+	          deltaY = dy;
+	        else
+	          deltaY = -dy;
+	      }
+	    }
+*/
+	   
+	    this.x = this.deltaX;
+		   
+	    this.y = this.deltaY;
+
+	   
+	     // advance();
+	    
+		
+		
+	      this.matrix.setRotate(angle.floatValue());
+	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+	    
+	    	
+	    		this.position.setX((int) Math.round(x));
+		    	this.position.setY((int) Math.round(y));
+		
+		Log.d("X", ""+this.position.getX());
+		Log.d("Y", ""+this.position.getY());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+/*			Double dx, dy, speed;
+			
+		if (this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)) {
+	      this.rotacao--;
+	      
+	      if(angle == 360 ){
+	    	  angle = 0.0;
+	      }else{
+	    	  angle += 1;
+	      }
+	      if (this.angle > 2 * Math.PI)
+	    	  this.angle -= (int)(2 * Math.PI);
+	      
+	      this.matrix.setRotate( this.angle.floatValue());
+	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		}
+	    if (this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)) {
+	    	 this.rotacao++;
+	    	 if(angle == 360 ){
+		    	  angle = 0.0;
+		      }else{
+		    	  angle -= 1;
+		      }
+	      if (this.angle < 0)
+	    	  this.angle += (int)(2 * Math.PI);
+	      
+	      this.matrix.setRotate( this.angle.floatValue());
+	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+	    }
+
+		// Fire thrusters if up or down cursor key is down.
+
+	    dx = 10 * -Math.sin(angle);
+	    dy = 10 * Math.cos(angle);
+	    
+	    //advance();
+	    
+	    if (((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0)) {
+	     deltaX += dx;
+	     deltaY += dy;
+	    	
+	    	this.position.addX(deltaX.intValue());
+	     this.position.addY(deltaY.intValue());
+	    }
+	    
+	   //advance();
+	    
+	    
+	    
+	   /* if (down) {
+	        ship.deltaX -= dx;
+	        ship.deltaY -= dy;
+	    }
+		*/	    
+			    
+			
+		/*	if (this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)) {
+				
+				if(this.rotacao-10 == 360){
+					this.rotacao = 0;
+				}else{
+					this.rotacao = 23;
+				}
+				angle = this.rotacao.doubleValue();
+				this.matrix.setRotate(this.rotacao);
+				this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+			            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+			    	
+				
+			    angle += SHIP_ANGLE_STEP;
+			    if (angle > 2 * Math.PI)
+			       angle -= 2 * Math.PI;
+			}
+			if (this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)) {
+				if(this.rotacao+10 == 360){
+					this.rotacao = 0;
+				}else{
+					this.rotacao = 23;
+				}
+			    	angle = this.rotacao.doubleValue();
+			    	this.matrix.setRotate(this.rotacao);
+			    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+				            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+				    	
+			    	
+			    	angle -= SHIP_ANGLE_STEP;
+			      if (angle < 0)
+			        angle += 2 * Math.PI;
+	         }
+
+			    // Fire thrusters if up or down cursor key is down.
+			Log.d("AnGLE", "."+angle);
+			    dx = SHIP_SPEED_STEP * -(Math.sin(angle)*10);
+			    dy = SHIP_SPEED_STEP *  (Math.cos(angle)*10);
+			    if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0) {
+			    	
+			    	
+			    	if(angle == 0){
+			    		 this.position.addY(-dy.intValue());
+			    	}else if(angle > 0 && angle < 90){
+			    		 this.position.addX(dx.intValue());
+				    	 this.position.addY(dy.intValue());
+			    	}else if(angle == 90){
+			    		this.position.addX(-dx.intValue());
+			    	}else if(angle > 90 && angle < 180){
+			    		 this.position.addX(-dx.intValue());
+				    	 this.position.addY(-dy.intValue());
+			    	}else if(angle == 180){
+			    		this.position.addY(-dy.intValue());
+			    	}else if(angle > 180 && angle < 270){
+			    		this.position.addX(dx.intValue());
+				    	this.position.addY(-dy.intValue());
+			    	}else if( angle == 270){
+			    		this.position.addX(dx.intValue());
+			    	}else{
+			    		this.position.addX(dx.intValue());
+				    	this.position.addY(dy.intValue());
+			    	}
+			    	
+			    	
+			    	/* this.position.addX(dx.intValue());
+			    	 this.position.addY(dy.intValue());
+			    	 Log.d("UPX", "."+dx.intValue());
+			    	 Log.d("UPY", "."+dy.intValue());
+			    }
+			 //   if ((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0) {
+			 //   	 this.position.addX(-dx.intValue());
+			 //   	 this.position.addY(-dy.intValue());
+			//    	 Log.d("DOWN", ".");
+			 //   }
+
+			    // Don't let ship go past the speed limit.
+			   
+			    if (((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0)
+			    	|| ((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0)) {
+			      
+			     speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+			      if (speed > MAX_SHIP_SPEED) {
+			        dx = MAX_SHIP_SPEED * -Math.sin(angle);
+			        dy = MAX_SHIP_SPEED *  Math.cos(angle);
+			        if (((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0))
+			          this.position.setX(dx.intValue());
+			        else
+			        	this.position.setX(-dx.intValue());
+			        if (((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0))
+			        	this.position.setY(dy.intValue());
+			        else
+			        	this.position.setY(-dy.intValue());
+			      }
+			    }
+*/
+			
+/*			this.angle += this.rotacao;
+			    if (this.angle < 0)
+			      this.angle += 2 * Math.PI;
+			    if (this.angle > 2 * Math.PI)
+			      this.angle -= 2 * Math.PI;
+			   
+			    this.position.addX(this.deltaX.intValue());
+			//    if (this.position.getX() < -width / 2) {
+			//    	this.position.addX(width);
+			    
+			//    }
+			//    if (this.position.getX() > width / 2) {
+			//    	this.position.addX(-width);
+			      
+			//    }
+			    this.position.addY(-this.deltaY.intValue());
+			//    if (this.position.getY() < -height / 2) {
+			//    	this.position.addY(height);
+			    
+			//    }
+			//    if (this.position.getY() > height / 2) {
+			//    	this.position.addY(-height);
+			     
+			//    }
+			    
+			  
+			
+			*/
+			
+			
+			
+	/*	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
+	    		
+			if(this.rotacao == 0){
+				this.position.addY(-SPEED);
+			}else if(this.rotacao > 0 && this.rotacao <= 15){	
+				this.position.addX(SPEED+2);
+				this.position.addY(-SPEED-12);
+			}else if(this.rotacao > 15 && this.rotacao <= 30){
+				this.position.addX(SPEED);
+				this.position.addY(-SPEED-6);
+			}else if(this.rotacao > 45 && this.rotacao < 90){
+				this.position.addX(SPEED+2);
+				this.position.addY(-SPEED);
+			}else if(this.rotacao == 90){
+				this.position.addX(SPEED);	
+			}else if(this.rotacao > 90 && this.rotacao < 135){
+				this.position.addX(SPEED);
+				this.position.addY(SPEED+2);
+			}else if(this.rotacao > 135 && this.rotacao < 190){
+				this.position.addX(SPEED+2);
+				this.position.addY(SPEED);
+			}
+	    }
+	    */
+		
+		
+
+	/*		
+		}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)){
+			
+			this.rotacao++;
+			Log.d("rotacao", "."+this.rotacao);
+			this.matrix.setRotate(this.rotacao);
+			this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+			
+			
+		}*/
 	}
 	
 	private void controlUpdate(){
@@ -618,9 +1037,25 @@ public class Spacecraft implements IDrawControllable {
 		return orientationChange;
 	}
 
-	
+	public void advance() {
 
-	
+
+	    // Update the rotation and position of the sprite based on the delta
+	    // values. If the sprite moves off the edge of the screen, it is wrapped
+	    // around to the other side and TRUE is returnd.
+
+	   //this.angle += this.deltaAngle;
+	/*    if (this.angle < 0)
+	      this.angle += 2 * Math.PI;
+	    if (this.angle > 2 * Math.PI)
+	      this.angle -= 2 * Math.PI;*/
+	  
+	    this.x += this.deltaX;
+	   
+	    this.y -= this.deltaY;
+	    
+	    
+	  }
 	
 }
 
