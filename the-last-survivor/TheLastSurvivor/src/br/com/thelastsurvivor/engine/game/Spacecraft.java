@@ -119,8 +119,7 @@ public class Spacecraft implements IDrawControllable {
 			up = true;
 		}
 		
-		left = true;
-		up = true;
+		
 		newControlUpdate();
 	
 		left = false;
@@ -274,7 +273,7 @@ public class Spacecraft implements IDrawControllable {
 	 	    	 deltaX += getPositiveNumber(dx);
 	 	         deltaY += getPositiveNumber(dy);
 	 	   }else if(angle == 90){
-	 		  deltaX += getPositiveNumber(dx);
+	 		   	 deltaX += getPositiveNumber(dx);
 	 	   }else if(angle > 180 && angle < 270){
 	 	    	 deltaX -= getPositiveNumber(dx);
 	 	         deltaY += getPositiveNumber(dy);
@@ -284,7 +283,7 @@ public class Spacecraft implements IDrawControllable {
 		    	 deltaX -= getPositiveNumber(dx);
 	 	         deltaY -= getPositiveNumber(dy);
 		    }else if(angle == 270){
-		    	deltaX -= getPositiveNumber(dx);
+		    	  deltaX -= getPositiveNumber(dx);
 		    }
 	    }
 	   
