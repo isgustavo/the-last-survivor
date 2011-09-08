@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -118,6 +119,8 @@ public class Spacecraft implements IDrawControllable {
 			up = true;
 		}
 		
+		left = true;
+		up = true;
 		newControlUpdate();
 	
 		left = false;
@@ -187,33 +190,70 @@ public class Spacecraft implements IDrawControllable {
 		  return number;
 	  }
 	  
+	  public void advance() {
+
+
+		    // Update the rotation and position of the sprite based on the delta
+		    // values. If the sprite moves off the edge of the screen, it is wrapped
+		    // around to the other side and TRUE is returnd.
+
+		   //this.angle += this.deltaAngle;
+		    if (this.angle < 0)
+		      this.angle += 2 * Math.PI;
+		    if (this.angle > 2 * Math.PI)
+		      this.angle -= 2 * Math.PI;
+		  
+		    this.x += this.deltaX;
+		   
+		    this.y += this.deltaY;
+		    
+		    
+		  }
+	  
 	private void newControlUpdate(){
 		
 		double dx = 0, dy = 0, speed;
-
+		
 	    if (left) {
-	    	
-	    	this.angle = 20.0;
-	 
+	    	if(this.angle == 350){
+	    		this.angle = 0.0;
+	    	}else{
+	    		this.angle += 5;
+	    	}
+	    		
+
 	    }else if(right) {
-	      this.angle = 50.0;
-	     
-	    }    
+	    	this.angle = 0.0;
+    	}else{
+    		this.angle += 5 ;
+    	}
+    		
 	    
-	    
-	   if(angle > 0 && angle < 90){
-	    	dx = 5 * Math.sin(angle);
-		    dy = 5 * Math.cos(angle);
-	    }else if(angle > 90 && angle < 180){
-	    	dx = 5 * Math.sin(angle);
-		    dy = 5 * Math.cos(angle);
-	    }else if(angle > 180 && angle < 270){
-	    	dx = 5 * Math.sin(angle);
-		    dy = 5 * Math.cos(angle);
-	    }else if(angle > 270 && angle < 360){
-	    	dx = 5 * Math.sin(angle);
-		    dy = 5 * Math.cos(angle);
-	    }
+	  if(angle == 0){
+		  dx = 5 * Math.cos(angle);
+		  dy = 5 * Math.sin(angle);
+	  }else if(angle > 0 && angle < 90){
+		  dx = 5 * Math.cos(angle);
+		  dy = 5 * Math.sin(angle);
+	  }else if(angle == 90){
+		  dx = 5 * Math.cos(angle);
+		  dy = 5 * Math.sin(angle);
+	  }else if(angle > 90 && angle < 180){
+		  dx = 5 * Math.cos(angle);
+		  dy = 5 * Math.sin(angle);
+	  }else if(angle == 180){
+		  dx = 5 * Math.sin(angle);
+		  dy = 5 * Math.cos(angle);
+	  }else if(angle > 180 && angle < 270){
+		  dx = 5 * Math.sin(angle);
+		  dy = 5 * Math.cos(angle);
+	  }else if(angle == 270){
+		  dx = 5 * Math.sin(angle);
+		  dy = 5 * Math.cos(angle);
+	  }else if(angle > 270 && angle < 360){
+		  dx = 5 * Math.sin(angle);
+		  dy = 5 * Math.cos(angle);
+	  }
 	    
 	  /* dx = 5 * -Math.sin(angle);
 	    dy = 5 * Math.cos(angle);*/
@@ -224,60 +264,37 @@ public class Spacecraft implements IDrawControllable {
 	    }*/
 	   
 	   if (up) {
-	    	if(angle > 0 && angle < 90){
+		   if(angle == 0 ){
+			   deltaY -= getPositiveNumber(dy);
+		   }
+	       if(angle > 0 && angle < 90){
 	    		 deltaX += getPositiveNumber(dx);
 	 	         deltaY -= getPositiveNumber(dy);
-	 	    }else if(angle > 90 && angle < 180){
+	 	   }else if(angle > 90 && angle < 180){
 	 	    	 deltaX += getPositiveNumber(dx);
 	 	         deltaY += getPositiveNumber(dy);
-	 	    }else if(angle > 180 && angle < 270){
+	 	   }else if(angle == 90){
+	 		  deltaX += getPositiveNumber(dx);
+	 	   }else if(angle > 180 && angle < 270){
 	 	    	 deltaX -= getPositiveNumber(dx);
 	 	         deltaY += getPositiveNumber(dy);
+	 	   }else if(angle == 180){
+	 		  deltaY += getPositiveNumber(dy);
 		    }else if(angle > 270 && angle < 360){
 		    	 deltaX -= getPositiveNumber(dx);
 	 	         deltaY -= getPositiveNumber(dy);
-		    }
-	    }/*else if(down){
-	    	if(angle > 0 && angle < 90){
-	    		 deltaX -= dx;
-	 	         deltaY += dy;
-	 	    }else if(angle > 90 && angle < 180){
-	 	    	 deltaX -= dx;
-	 	         deltaY -= dy;
-	 	    }else if(angle > 180 && angle < 270){
-	 	    	 deltaX += dx;
-	 	         deltaY -= dy;
-		    }else if(angle > 270 && angle < 360){
-		    	 deltaX += dx;
-	 	         deltaY += dy;
+		    }else if(angle == 270){
+		    	deltaX -= getPositiveNumber(dx);
 		    }
 	    }
-
-
-	    if (up || down) {
-	      speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-	      if (speed > 1) {
-	        dx = 5 * -Math.sin(angle); //velocidade da nave
-	        dy = 5 *  Math.cos(angle);
-	      
-	        if (up)
-	          deltaX = dx;
-	        else
-	          deltaX = -dx;
-	        if (up)
-	          deltaY = dy;
-	        else
-	          deltaY = -dy;
-	      }
-	    }
-*/
+	   
 	   
 	    this.x = this.deltaX;
 		   
 	    this.y = this.deltaY;
 
 	   
-	     // advance();
+	    
 	    
 		
 		
@@ -292,45 +309,7 @@ public class Spacecraft implements IDrawControllable {
 		Log.d("X", ""+this.position.getX());
 		Log.d("Y", ""+this.position.getY());
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 /*			Double dx, dy, speed;
 			
@@ -1037,25 +1016,7 @@ public class Spacecraft implements IDrawControllable {
 		return orientationChange;
 	}
 
-	public void advance() {
-
-
-	    // Update the rotation and position of the sprite based on the delta
-	    // values. If the sprite moves off the edge of the screen, it is wrapped
-	    // around to the other side and TRUE is returnd.
-
-	   //this.angle += this.deltaAngle;
-	/*    if (this.angle < 0)
-	      this.angle += 2 * Math.PI;
-	    if (this.angle > 2 * Math.PI)
-	      this.angle -= 2 * Math.PI;*/
-	  
-	    this.x += this.deltaX;
-	   
-	    this.y -= this.deltaY;
-	    
-	    
-	  }
+	
 	
 }
 
