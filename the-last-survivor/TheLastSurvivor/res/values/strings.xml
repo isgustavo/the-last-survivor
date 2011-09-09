@@ -16,6 +16,11 @@
     <string name="lg_twitter_01">Username or </string>
     <string name="lg_twitter_02">e-mail Twitter</string>
     
+    <string name="trophies">Trophies</string>
+    
+    <string name="removeProfile">Alert: This action will result in loss of all \ndata on The Last Survivor</string>
+    <string name="alert">Alert</string>
+    
     <string name="lista">LISTA</string>
     
     
@@ -30,9 +35,6 @@
     
     <string name="t04">Hability with weapons.</string>
     <string name="tObjective04">Get all weapons single game.</string>
-   
-   	<string name="t05">The best!</string>
-    <string name="tObjective05">Improve your rank position for the first time.</string>
 
 	<string name="t06">Space Drift!</string>
     <string name="tObjective06">Remain for 2 minutes without colide with an asteroid.</string>

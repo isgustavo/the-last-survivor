@@ -65,7 +65,7 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
         		        android:layout_x="50dp" android:layout_y="230dp">
         	    </Button>
         	    
-        	    <Button android:id="@+id/rankTrophies" 
+        	    <Button android:id="@+id/buttonRank" 
         				android:background="@drawable/rank_button"
         		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
         		        android:layout_x="150dp" android:layout_y="230dp">

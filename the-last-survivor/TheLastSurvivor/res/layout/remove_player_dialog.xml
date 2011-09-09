@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    
+ <!-- 	<br.com.thelastsurvivor.util.FT2FontTextView 
+	         android:id="@+id/textremoveProfile" android:text="@string/removeProfile" 
+	         android:textSize="23dp" android:textColor="@android:color/white"
+	         android:layout_width="fill_parent" android:layout_height="fill_parent"
+             lht:ttf_name="FT2FONT.TTF"
+           android:layout_x="3dp" android:layout_y="13dp">
+   </br.com.thelastsurvivor.util.FT2FontTextView>
+  -->
+ 	<Button android:layout_height="wrap_content" 
+      		android:layout_width="wrap_content"
+      		android:background="@drawable/button_ok_image" 
+      		android:id="@+id/buttonOk"
+      		android:layout_x="30dp" android:layout_y="50dp">
+    </Button>
+    
+    <Button android:layout_height="wrap_content" 
+      		android:layout_width="wrap_content"
+      		android:background="@drawable/button_remove_image" 
+      		android:id="@+id/buttonRemove"
+      		android:layout_x="150dp" android:layout_y="50dp">
+    </Button>
+    
+</AbsoluteLayout>

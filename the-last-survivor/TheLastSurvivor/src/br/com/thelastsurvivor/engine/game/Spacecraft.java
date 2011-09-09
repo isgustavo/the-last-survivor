@@ -4,18 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.pm.FeatureInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawControllable;
 import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;

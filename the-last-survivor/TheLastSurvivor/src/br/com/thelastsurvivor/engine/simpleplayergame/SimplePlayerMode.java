@@ -4,13 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.game.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
-import br.com.thelastsurvivor.view.particle.Explosion;
 
 public class SimplePlayerMode extends EngineGame {
 	

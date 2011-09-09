@@ -1,20 +1,18 @@
 package br.com.thelastsurvivor.activity;
 
-import java.security.KeyStore.LoadStoreParameter;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.MultiGameActivity;
 import br.com.thelastsurvivor.activity.game.SimpleGameActivity;
 import br.com.thelastsurvivor.activity.player.AlterationPlayerActivity;
+import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.activity.trophies.TrophiesActivity;
 import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
@@ -52,8 +50,8 @@ public class MainMenuActivity extends Activity{
 		Button buttonTrophies = (Button)findViewById(R.id.buttonTrophies);  
 		buttonTrophies.setOnClickListener(buttonTrophiesListener); 
 		
-		Button rankTrophies = (Button)findViewById(R.id.rankTrophies);  
-		rankTrophies.setOnClickListener(rankTrophiesListener); 
+		Button buttonRank = (Button)findViewById(R.id.buttonRank);  
+		buttonRank.setOnClickListener(rankListener); 
 		
 		Button buttonOption = (Button)findViewById(R.id.buttonOption);  
 		buttonOption.setOnClickListener(buttonOptionListener); 
@@ -103,39 +101,26 @@ public class MainMenuActivity extends Activity{
    
 	private OnClickListener buttonMultiModeListener = new OnClickListener() {  
 		public void onClick(View v) {  
-			AlertDialog.Builder alerta = new AlertDialog.Builder(
-					MainMenuActivity.this);
-			alerta.setIcon(null);
-			alerta.setTitle("MULTIPLAYER GAME");
-			alerta.setNeutralButton("OK", null);
-			alerta.show();
+			
+			Intent i = new Intent(MainMenuActivity.this, MultiGameActivity.class);
+			startActivity(i);
 		}  
 	};  
   
 	private OnClickListener buttonTrophiesListener = new OnClickListener() {  
 		public void onClick(View v) {  
-			/*AlertDialog.Builder alerta = new AlertDialog.Builder(
-					MainMenuActivity.this);
-			alerta.setIcon(null);
-			alerta.setTitle("YOU TROPHIES GAME");
-			alerta.setNeutralButton("OK", null);
-			alerta.show();*/
 			
 			Intent i = new Intent(MainMenuActivity.this, TrophiesActivity.class);
-	        //	Intent i = new Intent(MainMenuActivity.this, Principal.class);
-	        	
-				startActivity(i);
+			
+			startActivity(i);
 		}  
 	};  
  
-	private OnClickListener rankTrophiesListener = new OnClickListener() {  
+	private OnClickListener rankListener = new OnClickListener() {  
 		public void onClick(View v) {  
-			AlertDialog.Builder alerta = new AlertDialog.Builder(
-					MainMenuActivity.this);
-			alerta.setIcon(null);
-			alerta.setTitle("YOU RACK GAME");
-			alerta.setNeutralButton("OK", null);
-			alerta.show();
+			Intent i = new Intent(MainMenuActivity.this, RankActivity.class);
+			
+			startActivity(i);
 		}  
 	};  
 

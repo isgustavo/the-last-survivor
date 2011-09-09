@@ -2,11 +2,11 @@ package br.com.thelastsurvivor.activity.player;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,6 +19,8 @@ import br.com.thelastsurvivor.provider.player.PlayerProvider;
 public class AlterationPlayerActivity extends Activity{
 
 	//private BackgroundView view;
+	private static final int REMOVE_DIALOG = 0;
+	
 	private Player player;
 	
 	private EditText nickname;
@@ -49,6 +51,9 @@ public class AlterationPlayerActivity extends Activity{
 		final Button button = (Button) findViewById(R.id.buttonOk);
 		button.setOnClickListener(buttonListener);
 		
+		final Button buttonRemove = (Button) findViewById(R.id.buttonRemove);
+		buttonRemove.setOnClickListener(buttonRemoveListener);
+		
 		this.i = new Intent(this, MainMenuActivity.class);
 		
 	}
@@ -76,7 +81,7 @@ public class AlterationPlayerActivity extends Activity{
         public void onClick(View v) {  
 
         	if (getNickname().getText().toString().equals("")) {
-        		Log.d("BUTTON",""+getNickname().getText());
+        	
 				AlertDialog.Builder alert = new AlertDialog.Builder(AlterationPlayerActivity.this);
 				alert.setIcon(null);
 				alert.setTitle("Nickname is necessary");
@@ -91,6 +96,21 @@ public class AlterationPlayerActivity extends Activity{
 			}
      
         }  
+	};
+	
+	private OnClickListener buttonRemoveListener = new OnClickListener() {  
+		
+        public void onClick(View v) {  
+        	showDialog(0);
+			//AlertDialog.Builder alert = new AlertDialog.Builder(AlterationPlayerActivity.this);
+			//alert.setIcon(null);
+			//alert.setTitle(R.string.removeProfile);
+			//alert.setNeutralButton("OK", null);
+			//alert.show();
+			
+			
+			
+        }
 	};
 	
 	public boolean updatePlayer(Player player) {
@@ -115,8 +135,27 @@ public class AlterationPlayerActivity extends Activity{
 	public EditText getLgTwitter() {
 		return lgTwitter;
 	}
-	
-	
+	Button buttonOk;
+	Button buttonRemove;
+	 
+	@Override
+	 protected Dialog onCreateDialog(int id) {
+	  // TODO Auto-generated method stub
+	  Dialog dialog = null;;
+	     switch(id) {
+	     case REMOVE_DIALOG:
+		      dialog = new Dialog(this); 
+		      dialog.setContentView(R.layout.remove_player_dialog);
+		      dialog.setTitle(R.string.removeProfile);
+		      dialog.setTitle(R.string.removeProfile);
+		
+		      buttonOk = (Button)dialog.findViewById(R.id.buttonOk);
+		      buttonRemove = (Button)dialog.findViewById(R.id.buttonRemove);
+	      
+	     break;
+	     }
+	     return dialog;
+	 }  
 	
 	
 }

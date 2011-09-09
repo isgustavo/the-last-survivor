@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.CameraGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;

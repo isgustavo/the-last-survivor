@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 
-public class TrophiesActivity extends ListActivity{
+public class TrophiesActivity extends Activity{
 	
 //	private List<Trophies> trophies; 
 	private MyAudioPlayer audioPlayer;
@@ -22,9 +25,12 @@ public class TrophiesActivity extends ListActivity{
 		audioPlayer = new MyAudioPlayer(this, R.raw.sol);
 		audioPlayer.start();
 		
-		setContentView(R.layout.trophies_list);
+		setContentView(R.layout.trophies_player_view);
 		
-		getTrophies();
+		ImageView image = (ImageView)findViewById(R.id.trophies_1);
+		image.setAlpha(70);
+		
+		//getTrophies();
 	}
 
 //	private void init() {
@@ -141,7 +147,7 @@ public class TrophiesActivity extends ListActivity{
 		
 		int[] to = new int[] {R.id.trophie_name, R.id.trophie_objective};
 
-		setListAdapter(new SimpleAdapter(this,list, R.layout.trophies_row, from, to));
+		//setListAdapter(new SimpleAdapter(this,list, R.layout.trophies_row, from, to));
 
 		
 //		setListAdapter(new ArrayAdapter(this,R.id.trophie_name,R.layout.trophies_row, from));

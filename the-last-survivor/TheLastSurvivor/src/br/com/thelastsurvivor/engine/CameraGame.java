@@ -1,6 +1,5 @@
 package br.com.thelastsurvivor.engine;
 
-import br.com.thelastsurvivor.util.Vector2D;
 
 public class CameraGame {
 
