@@ -17,34 +17,21 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
      
 <FrameLayout android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    
- <!--    <ImageView android:id="@+id/imageView1"
-    	 android:layout_width="wrap_content" 
-    	 android:layout_height="wrap_content" 
-    	 android:src="@drawable/layout_menu_image">
-    </ImageView>
--->
 
 
            <AbsoluteLayout 
     			android:orientation="vertical"
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
-        		
-        		<br.com.thelastsurvivor.util.FT2FontTextView 
-	   				android:id="@+id/app_name" android:text="@string/app_name" 
-	   				android:textSize="40dp" android:textColor="@android:color/white"
-	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-	   				android:layout_x="10dp" android:layout_y="15dp">
-    			</br.com.thelastsurvivor.util.FT2FontTextView>
     			
-     <!-- 			<br.com.thelastsurvivor.util.FT2FontTextView 
-	   				android:id="@+id/app_name" android:text="@string/app_last_name" 
-	   				android:textSize="50dp" android:textColor="@android:color/white"
-	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-	   				android:layout_x="10dp" android:layout_y="50dp">
-    			</br.com.thelastsurvivor.util.FT2FontTextView>
-      -->			
+    			
+    			<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/text_menu_image"
+    	 			android:layout_x="3dp" android:layout_y="13dp">
+				</ImageView>
+        		
     			<br.com.thelastsurvivor.util.FT2FontTextView 
 	   				android:id="@+id/user_name"  
 	   				android:textSize="25dp" android:textColor="@android:color/white"

@@ -17,6 +17,7 @@ import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawControllable;
+import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
 import br.com.thelastsurvivor.engine.util.EOrientation;
@@ -24,8 +25,6 @@ import br.com.thelastsurvivor.util.Vector2D;
 
 public class Spacecraft implements IDrawControllable {
 	
-	private static final int SPEED = 6;
-
 	private Context context;
 	
 	private Bitmap image;
@@ -37,10 +36,18 @@ public class Spacecraft implements IDrawControllable {
 	
 	private Vector2D position;
 	private Vector2D sensorPosition;
+	
 	private EOrientation orientation;
 	private Boolean orientationChange;
 
-	Integer rotacao = 0;
+	private Boolean left;
+	private Boolean right;
+	
+	private Boolean down;
+	private Boolean up; 
+	
+	
+	private Double  angle = 0.0;
 	private Matrix matrix;
 	
 	private List<IWeaponBehavior> shoots;
@@ -57,7 +64,6 @@ public class Spacecraft implements IDrawControllable {
 	@Override
 	public void init() {
 		
-		//this.position = new Vector2D(200,200);
 		this.sensorPosition = new Vector2D(0,0);
 		this.orientation = EOrientation.up;
 		this.orientationChange = false;
@@ -66,6 +72,11 @@ public class Spacecraft implements IDrawControllable {
 		
 		this.alertImage = this.context.getResources().getDrawable(R.drawable.alert_image);
 		this.alertFlag = false;
+		
+		this.left = false;
+		this.right = false;
+		this.up = false;
+		this.down = false;
 		
         this.matrix = new Matrix();
 		this.matrix.setRotate(0);
@@ -78,54 +89,40 @@ public class Spacecraft implements IDrawControllable {
     	
 	}
 	
-	
-	boolean left = false;
-	boolean right = false;
-	
 	@Override
 	public void updateOrientation(Float orientationX, Float orientationY){
 	
 		this.sensorPosition.setX(((orientationX.intValue())*10));
 		this.sensorPosition.setY(((orientationY.intValue())*10));
-		
-		
-	      
+
 	}
 	
-	boolean down = false;
-	boolean up = false; 
-	
+
 	@Override
 	public void update() {
 		
 		this.alertFlag = false;
 		
-		//controlUpdate();
-		
-		if (this.sensorPosition.getX() > 20 ) {
-			Log.d("LEFT", "LEFT");
-	    	
+		if (this.sensorPosition.getX() > 7 ) {
 	    	right = true;
 	 
-	    }else if(this.sensorPosition.getX() < -20 ) {
-	    	Log.d("right", "right");
+	    }else if(this.sensorPosition.getX() < -7 ) {
 	    	left = true;
 	    }
 		
-		
-		if(this.sensorPosition.getY() > 20){
+		if(this.sensorPosition.getY() > 7){
 			down = true;
-		}else if(this.sensorPosition.getY() < -20){
+		}else if(this.sensorPosition.getY() < -7){
 			up = true;
 		}
 		
 		
-		newControlUpdate();
+		this.newControlUpdate();
 	
-		left = false;
-		right = false;
-		down = false;
-		up = false;
+		this.left = false;
+		this.right = false;
+		this.down = false;
+		this.up = false;
 		
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
 		this.drawableImage = newImage;
@@ -140,7 +137,6 @@ public class Spacecraft implements IDrawControllable {
 				shoot.update();
 			}
 			
-			//clean list new shoots
 			this.shoots.clear();
 		}
 		
@@ -159,810 +155,45 @@ public class Spacecraft implements IDrawControllable {
 		
 	}
 	
-	 static int width = 320;          // Dimensions of the graphics area.
-	  static int height =  480;
-
-	        
-	
-	  Double  angle = 0.0;             
-	 
-	  Double  x = 200.0, y= 200.0;             
-	  Double  deltaX =  200.0, deltaY = 200.0;    
-	    
-	  static final int DELAY = 20;    
-	  static final int FPS   =                 // the resulting frame rate.
-			    Math.round(100/ DELAY);
-	
-	  static final double SHIP_ANGLE_STEP = Math.PI / FPS;
-
-	  private Double getPositiveNumber(Double number){
-		  if(number < 0){
-			  return number *(-1.0);
-		  }
-		  return number;
-	  }
-	  
-	  private Double getNegativeNumber(Double number){
-		  if(number > 0){
-			  return number * (-1.0);
-		  }
-		  return number;
-	  }
-	  
-	  public void advance() {
-
-
-		    // Update the rotation and position of the sprite based on the delta
-		    // values. If the sprite moves off the edge of the screen, it is wrapped
-		    // around to the other side and TRUE is returnd.
-
-		   //this.angle += this.deltaAngle;
-		    if (this.angle < 0)
-		      this.angle += 2 * Math.PI;
-		    if (this.angle > 2 * Math.PI)
-		      this.angle -= 2 * Math.PI;
-		  
-		    this.x += this.deltaX;
-		   
-		    this.y += this.deltaY;
-		    
-		    
-		  }
-	  
 	private void newControlUpdate(){
-		
-		double dx = 0, dy = 0, speed;
-		
+			
 	    if (left) {
+	    	if(this.angle == 360){
+	    		this.angle = 0.0;
+	    	}else{
+	    		if(this.angle == 0){
+	    			this.angle = 360.0;
+	    		}
+	    		this.angle -= 5;
+	    	}
+	    		
+
+	    }else if(right) {
 	    	if(this.angle == 350){
 	    		this.angle = 0.0;
 	    	}else{
 	    		this.angle += 5;
 	    	}
 	    		
-
-	    }else if(right) {
-	    	this.angle = 0.0;
-    	}else{
-    		this.angle += 5 ;
-    	}
-    		
-	    
-	  if(angle == 0){
-		  dx = 5 * Math.cos(angle);
-		  dy = 5 * Math.sin(angle);
-	  }else if(angle > 0 && angle < 90){
-		  dx = 5 * Math.cos(angle);
-		  dy = 5 * Math.sin(angle);
-	  }else if(angle == 90){
-		  dx = 5 * Math.cos(angle);
-		  dy = 5 * Math.sin(angle);
-	  }else if(angle > 90 && angle < 180){
-		  dx = 5 * Math.cos(angle);
-		  dy = 5 * Math.sin(angle);
-	  }else if(angle == 180){
-		  dx = 5 * Math.sin(angle);
-		  dy = 5 * Math.cos(angle);
-	  }else if(angle > 180 && angle < 270){
-		  dx = 5 * Math.sin(angle);
-		  dy = 5 * Math.cos(angle);
-	  }else if(angle == 270){
-		  dx = 5 * Math.sin(angle);
-		  dy = 5 * Math.cos(angle);
-	  }else if(angle > 270 && angle < 360){
-		  dx = 5 * Math.sin(angle);
-		  dy = 5 * Math.cos(angle);
-	  }
-	    
-	  /* dx = 5 * -Math.sin(angle);
-	    dy = 5 * Math.cos(angle);*/
-	/*    if (down) {
-	      deltaX += dx;
-	      deltaY += dy;
-	      
-	    }*/
+	    }  
 	   
 	   if (up) {
-		   if(angle == 0 ){
-			   deltaY -= getPositiveNumber(dy);
-		   }
-	       if(angle > 0 && angle < 90){
-	    		 deltaX += getPositiveNumber(dx);
-	 	         deltaY -= getPositiveNumber(dy);
-	 	   }else if(angle > 90 && angle < 180){
-	 	    	 deltaX += getPositiveNumber(dx);
-	 	         deltaY += getPositiveNumber(dy);
-	 	   }else if(angle == 90){
-	 		   	 deltaX += getPositiveNumber(dx);
-	 	   }else if(angle > 180 && angle < 270){
-	 	    	 deltaX -= getPositiveNumber(dx);
-	 	         deltaY += getPositiveNumber(dy);
-	 	   }else if(angle == 180){
-	 		  deltaY += getPositiveNumber(dy);
-		    }else if(angle > 270 && angle < 360){
-		    	 deltaX -= getPositiveNumber(dx);
-	 	         deltaY -= getPositiveNumber(dy);
-		    }else if(angle == 270){
-		    	  deltaX -= getPositiveNumber(dx);
-		    }
-	    }
+		   Orientation.getNewPosition(angle, this.position);
+		
+	   }
 	   
-	   
-	    this.x = this.deltaX;
+	    this.matrix.setRotate(angle.floatValue());
+   		this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+           this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		   
-	    this.y = this.deltaY;
-
-	   
-	    
-	    
-		
-		
-	      this.matrix.setRotate(angle.floatValue());
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-	    
-	    	
-	    		this.position.setX((int) Math.round(x));
-		    	this.position.setY((int) Math.round(y));
-		
-		Log.d("X", ""+this.position.getX());
-		Log.d("Y", ""+this.position.getY());
-		
-
-		
-/*			Double dx, dy, speed;
-			
-		if (this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)) {
-	      this.rotacao--;
-	      
-	      if(angle == 360 ){
-	    	  angle = 0.0;
-	      }else{
-	    	  angle += 1;
-	      }
-	      if (this.angle > 2 * Math.PI)
-	    	  this.angle -= (int)(2 * Math.PI);
-	      
-	      this.matrix.setRotate( this.angle.floatValue());
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		}
-	    if (this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)) {
-	    	 this.rotacao++;
-	    	 if(angle == 360 ){
-		    	  angle = 0.0;
-		      }else{
-		    	  angle -= 1;
-		      }
-	      if (this.angle < 0)
-	    	  this.angle += (int)(2 * Math.PI);
-	      
-	      this.matrix.setRotate( this.angle.floatValue());
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-	    }
-
-		// Fire thrusters if up or down cursor key is down.
-
-	    dx = 10 * -Math.sin(angle);
-	    dy = 10 * Math.cos(angle);
-	    
-	    //advance();
-	    
-	    if (((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0)) {
-	     deltaX += dx;
-	     deltaY += dy;
-	    	
-	    	this.position.addX(deltaX.intValue());
-	     this.position.addY(deltaY.intValue());
-	    }
-	    
-	   //advance();
-	    
-	    
-	    
-	   /* if (down) {
-	        ship.deltaX -= dx;
-	        ship.deltaY -= dy;
-	    }
-		*/	    
-			    
-			
-		/*	if (this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)) {
-				
-				if(this.rotacao-10 == 360){
-					this.rotacao = 0;
-				}else{
-					this.rotacao = 23;
-				}
-				angle = this.rotacao.doubleValue();
-				this.matrix.setRotate(this.rotacao);
-				this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-			            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			    	
-				
-			    angle += SHIP_ANGLE_STEP;
-			    if (angle > 2 * Math.PI)
-			       angle -= 2 * Math.PI;
-			}
-			if (this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)) {
-				if(this.rotacao+10 == 360){
-					this.rotacao = 0;
-				}else{
-					this.rotacao = 23;
-				}
-			    	angle = this.rotacao.doubleValue();
-			    	this.matrix.setRotate(this.rotacao);
-			    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-				            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-				    	
-			    	
-			    	angle -= SHIP_ANGLE_STEP;
-			      if (angle < 0)
-			        angle += 2 * Math.PI;
-	         }
-
-			    // Fire thrusters if up or down cursor key is down.
-			Log.d("AnGLE", "."+angle);
-			    dx = SHIP_SPEED_STEP * -(Math.sin(angle)*10);
-			    dy = SHIP_SPEED_STEP *  (Math.cos(angle)*10);
-			    if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0) {
-			    	
-			    	
-			    	if(angle == 0){
-			    		 this.position.addY(-dy.intValue());
-			    	}else if(angle > 0 && angle < 90){
-			    		 this.position.addX(dx.intValue());
-				    	 this.position.addY(dy.intValue());
-			    	}else if(angle == 90){
-			    		this.position.addX(-dx.intValue());
-			    	}else if(angle > 90 && angle < 180){
-			    		 this.position.addX(-dx.intValue());
-				    	 this.position.addY(-dy.intValue());
-			    	}else if(angle == 180){
-			    		this.position.addY(-dy.intValue());
-			    	}else if(angle > 180 && angle < 270){
-			    		this.position.addX(dx.intValue());
-				    	this.position.addY(-dy.intValue());
-			    	}else if( angle == 270){
-			    		this.position.addX(dx.intValue());
-			    	}else{
-			    		this.position.addX(dx.intValue());
-				    	this.position.addY(dy.intValue());
-			    	}
-			    	
-			    	
-			    	/* this.position.addX(dx.intValue());
-			    	 this.position.addY(dy.intValue());
-			    	 Log.d("UPX", "."+dx.intValue());
-			    	 Log.d("UPY", "."+dy.intValue());
-			    }
-			 //   if ((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0) {
-			 //   	 this.position.addX(-dx.intValue());
-			 //   	 this.position.addY(-dy.intValue());
-			//    	 Log.d("DOWN", ".");
-			 //   }
-
-			    // Don't let ship go past the speed limit.
-			   
-			    if (((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0)
-			    	|| ((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0)) {
-			      
-			     speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-			      if (speed > MAX_SHIP_SPEED) {
-			        dx = MAX_SHIP_SPEED * -Math.sin(angle);
-			        dy = MAX_SHIP_SPEED *  Math.cos(angle);
-			        if (((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0))
-			          this.position.setX(dx.intValue());
-			        else
-			        	this.position.setX(-dx.intValue());
-			        if (((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0))
-			        	this.position.setY(dy.intValue());
-			        else
-			        	this.position.setY(-dy.intValue());
-			      }
-			    }
-*/
-			
-/*			this.angle += this.rotacao;
-			    if (this.angle < 0)
-			      this.angle += 2 * Math.PI;
-			    if (this.angle > 2 * Math.PI)
-			      this.angle -= 2 * Math.PI;
-			   
-			    this.position.addX(this.deltaX.intValue());
-			//    if (this.position.getX() < -width / 2) {
-			//    	this.position.addX(width);
-			    
-			//    }
-			//    if (this.position.getX() > width / 2) {
-			//    	this.position.addX(-width);
-			      
-			//    }
-			    this.position.addY(-this.deltaY.intValue());
-			//    if (this.position.getY() < -height / 2) {
-			//    	this.position.addY(height);
-			    
-			//    }
-			//    if (this.position.getY() > height / 2) {
-			//    	this.position.addY(-height);
-			     
-			//    }
-			    
-			  
-			
-			*/
-			
-			
-			
-	/*	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-	    		
-			if(this.rotacao == 0){
-				this.position.addY(-SPEED);
-			}else if(this.rotacao > 0 && this.rotacao <= 15){	
-				this.position.addX(SPEED+2);
-				this.position.addY(-SPEED-12);
-			}else if(this.rotacao > 15 && this.rotacao <= 30){
-				this.position.addX(SPEED);
-				this.position.addY(-SPEED-6);
-			}else if(this.rotacao > 45 && this.rotacao < 90){
-				this.position.addX(SPEED+2);
-				this.position.addY(-SPEED);
-			}else if(this.rotacao == 90){
-				this.position.addX(SPEED);	
-			}else if(this.rotacao > 90 && this.rotacao < 135){
-				this.position.addX(SPEED);
-				this.position.addY(SPEED+2);
-			}else if(this.rotacao > 135 && this.rotacao < 190){
-				this.position.addX(SPEED+2);
-				this.position.addY(SPEED);
-			}
-	    }
-	    */
-		
-		
-
-	/*		
-		}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)){
-			
-			this.rotacao++;
-			Log.d("rotacao", "."+this.rotacao);
-			this.matrix.setRotate(this.rotacao);
-			this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			
-			
-		}*/
-	}
-	
-	private void controlUpdate(){
-		
-		switch (this.orientation.getOrientation()) {
-		case 1:
-			if((this.sensorPosition.getX() < 10 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
-				
-				this.matrix.setRotate(0);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-		    		this.position.addY(-SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.up;
-			
-			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
-				
-				this.matrix.setRotate(++rotacao);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-			    	this.position.addY(-SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.up_right;
-		    	
-			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() < 0){
-				
-				this.matrix.setRotate(315);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		
-		    		this.position.addX(-SPEED);
-		    		this.position.addY(-SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.up_left;
-			}else{
-				 if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
-						
-					this.matrix.setRotate(180);
-			    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-			        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			    	
-			    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-			    		this.position.addY(SPEED);
-			    	}
-
-			    	this.orientation = EOrientation.down;
-				 }
-				/*if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-		    		this.position.addY(-SPEED);
-		    	}
-				this.alertFlag = true;*/
-			}
-		break;
-
-		case 2:
-			if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
-				this.matrix.setRotate(--rotacao);
-				//this.matrix.setRotate(0);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-		    		this.position.addY(-SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.up;
-		    	
-			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
-				this.matrix.setRotate(++rotacao);
-				//this.matrix.setRotate(45);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-			    	this.position.addY(-SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.up_right;
-		    	
-			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
-				this.matrix.setRotate(++rotacao);
-				//this.matrix.setRotate(90);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-		    	}
-
-
-		    	this.orientation = EOrientation.right;
-			}else{
-				if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-			    	this.position.addY(-SPEED);
-		    	}
-				this.alertFlag = true;
-			}
-			
-		break;
-		
-		case 3:
-			if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() > 0){
-				this.matrix.setRotate(--rotacao);
-				//this.matrix.setRotate(45);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-			    	this.position.addY(-SPEED);
-		    	}
-
-
-		    	this.orientation = EOrientation.up_right;
-		    	
-			}else if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)){
-				this.matrix.setRotate(++rotacao);
-				//this.matrix.setRotate(90);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.right;
-			
-			}else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() > 0){
-				
-				this.matrix.setRotate(135);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-		    		this.position.addY(SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.down_right;
-			}else {
-				if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-					this.position.addX(SPEED);
-				}
-	    		this.alertFlag = true;
-	    	}
-			
-		break;	
-		
-		case 4:
-			if(this.sensorPosition.getX() > 0 && (this.sensorPosition.getY() < 10 && this.sensorPosition.getY() > -3)){
-				
-				this.matrix.setRotate(90);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-		    	}
-
-
-		    	this.orientation = EOrientation.right;
-		    	
-			}else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() > 0){
-				
-				this.matrix.setRotate(135);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-		    		this.position.addY(SPEED);
-		    	}
-		    	this.orientation = EOrientation.down_right;
-			
-			}else if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
-					
-				this.matrix.setRotate(180);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-		    		this.position.addY(SPEED);
-		    		
-		    	}
-		    	
-		    	this.orientation = EOrientation.down;
-			}else{
-				if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-	    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-					this.position.addX(SPEED);
-					this.position.addY(SPEED);
-				}
-	    		this.alertFlag = true;
-	    	}
-			 
-			 
-			
-		break;
-		
-		case 5:
-			if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() > 0){
-				
-				this.matrix.setRotate(135);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-		    			this.position.getX() <= EngineGame.getSCREEN_SIZE_WIDTH_RIGHT()){
-		    		this.position.addX(SPEED);
-		    		this.position.addY(SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.down_right;
-		    	
-			}else  if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
-				
-				this.matrix.setRotate(180);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-		    		this.position.addY(SPEED);
-		    	}
-
-		    	this.orientation = EOrientation.down;
-		    	
-			 }else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() < 0){
-				
-				this.matrix.setRotate(225);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		this.position.addX(-SPEED);
-		    		this.position.addY(SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.down_left;
-		    	
-			}else{
-				if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-					this.position.addY(SPEED);
-				}
-	    		this.alertFlag = true;
-	    	}
-			
-		break;
-		
-		case 6:
-			if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() > 0){
-				
-				this.matrix.setRotate(180);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
-		    		this.position.addY(SPEED);
-		    	}
-
-
-		    	this.orientation = EOrientation.down;
-		    	
-		 }else if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() < 0){
-			 
-				this.matrix.setRotate(225);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		this.position.addX(-SPEED);
-		    		this.position.addY(SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.down_left;
-		    	
-			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
-				
-				this.matrix.setRotate(270);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		this.position.addX(-SPEED);
-		    	}
-		    	
-		    	
-		    	this.orientation = EOrientation.left;
-		    	
-			}else{
-				if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-	    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-					this.position.addX(-SPEED);
-					this.position.addY(SPEED);
-				}
-	    		this.alertFlag = true;
-	    	}
-
-		break;
-		
-		
-		case 7:
-			if(this.sensorPosition.getY() > 0 && this.sensorPosition.getX() < 0){
-				
-				this.matrix.setRotate(225);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() <= EngineGame.getSCREEN_SIZE_HEIGHT_DOWN() &&
-		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		this.position.addX(-SPEED);
-		    		this.position.addY(SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.down_left;
-		    	
-			}else if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
-				
-				this.matrix.setRotate(270);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		this.position.addX(-SPEED);
-		    	}
-		    	this.orientation = EOrientation.left;
-			
-			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() < 0){
-				
-				this.matrix.setRotate(315);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		
-		    		this.position.addX(-SPEED);
-		    		this.position.addY(-SPEED);
-		    	}
-		    	
-		    	this.orientation = EOrientation.up_left;
-		    	
-			}else{
-				if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-					this.position.addX(-SPEED);
-				}
-	    		this.alertFlag = true;
-	    	}
-		break;
-		
-		
-		case 8:
-			if(this.sensorPosition.getX() < 0 && (this.sensorPosition.getY() < 3 && this.sensorPosition.getY() > -3)){
-				
-				this.matrix.setRotate(270);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		this.position.addX(-SPEED);
-		    	}
-
-		    	this.orientation = EOrientation.left;
-			
-			}else if(this.sensorPosition.getY() < 0 && this.sensorPosition.getX() < 0){
-				
-				this.matrix.setRotate(315);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-		    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-		    		
-		    		this.position.addX(-SPEED);
-		    		this.position.addY(-SPEED);
-		    	}
-		    	this.orientation = EOrientation.up_left;
-		    	
-			}else if((this.sensorPosition.getX() < 3 && this.sensorPosition.getX() > -3) && this.sensorPosition.getY() < 0){
-				
-				this.matrix.setRotate(0);
-		    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-		            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		    	
-		    	if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP()){
-		    		this.position.addY(-SPEED);
-		    	}
-		    	this.orientation = EOrientation.up;
-			}else{
-				if(this.position.getY() >= EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-	    			this.position.getX() >= EngineGame.getSCREEN_SIZE_WIDTH_LEFT()){
-					this.position.addX(-SPEED);
-					this.position.addY(-SPEED);
-				}
-	    		this.alertFlag = true;
-	    	}
-		break;
-		
-		default:
-		break;
-		}
 		
 	}
 	
+
 	
 	public void newShoot(){
 		
-		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.orientation);
+		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.image);
 	
 		
 	    shoots.add(shoot);

@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.util.Constant;
 import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -23,16 +24,20 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
 	
+	private Bitmap spacecraft;
+	
 	private Vector2D position;
-	private EOrientation orientation;
+	private Double angle;
 	
 	private Matrix matrix;
 	private Boolean isAlive;
 	
-	public SimpleShoot(Context context, Vector2D position, EOrientation orientation){
+	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
 		this.context = context;
 		this.position = position;
-		this.orientation = orientation;
+		this.angle = angle;
+		
+		this.spacecraft = spacecraft;
 		
 		init();
 	}
@@ -55,45 +60,13 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 
 	
 	private void firstPosition(){
-		switch (this.orientation.getOrientation()) {
-		case 1:
-			this.position.setX(this.position.getX()+20);
-			this.position.setY(this.position.getY()-15);
-		break;
 		
-		case 2:
-			this.position.setX(this.position.getX()+43);
-			this.position.setY(this.position.getY());
-		break;
+		Orientation.getNewPosition(this.angle, position);
+		
+		this.position.addX((this.spacecraft.getWidth()/2));
+		this.position.addY((this.spacecraft.getHeight()/2));
+		
 
-		case 3:
-			this.position.setX(this.position.getX()+40);
-			this.position.setY(this.position.getY()+20);
-		break;
-
-		case 4:
-			this.position.setX(this.position.getX()+40);
-			this.position.setY(this.position.getY()+40);
-		break;
-			
-		case 5:
-			this.position.setX(this.position.getX()+19);
-			this.position.setY(this.position.getY()+40);
-		break;
-			
-		case 6:
-			this.position.setX(this.position.getX());
-			this.position.setY(this.position.getY()+40);
-		break;
-			
-		case 7:
-			this.position.setX(this.position.getX()-19);
-			this.position.setY(this.position.getY()+20);
-		break;
-			
-		default:
-		break;
-		}
 	}
 	
 	
@@ -107,7 +80,19 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	}
 	
 	private void controlUpdate(){
-		switch (this.orientation.getOrientation()) {
+		
+		Orientation.getNewPosition(this.angle, this.position);
+		
+		
+		
+		
+		
+		this.matrix.setRotate(this.angle.floatValue());
+    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+    	
+		
+	/*	switch (this.orientation.getOrientation()) {
 		case 1:
 			this.matrix.setRotate(0);
 	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
@@ -174,7 +159,7 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		break;
 		default:
 			break;
-		}
+		}*/
 	
 		
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);

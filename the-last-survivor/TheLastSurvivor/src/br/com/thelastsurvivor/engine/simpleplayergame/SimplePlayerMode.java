@@ -17,11 +17,7 @@ public class SimplePlayerMode extends EngineGame {
 	//private Vector2D camera;
 
 	private Drawable image;
-	
-	
-	
-	
-	
+
 	public SimplePlayerMode(Context context, Vibrator vibrator, Display display) {
 		super(context, vibrator, display);
 		
@@ -47,6 +43,16 @@ public class SimplePlayerMode extends EngineGame {
 		
 		spacecraft.update();
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		switch (this.spacecraft.getOrientation().getOrientation()) {
 		
 		case 1:
