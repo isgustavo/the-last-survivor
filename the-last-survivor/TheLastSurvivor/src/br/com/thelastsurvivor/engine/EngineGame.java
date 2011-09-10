@@ -8,8 +8,8 @@ import android.graphics.Canvas;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
-import br.com.thelastsurvivor.engine.game.Spacecraft;
 import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
+import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
 import br.com.thelastsurvivor.view.particle.Explosion;
 

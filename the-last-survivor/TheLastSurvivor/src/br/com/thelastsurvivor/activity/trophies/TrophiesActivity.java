@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 

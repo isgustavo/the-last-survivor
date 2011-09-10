@@ -1,9 +1,9 @@
 package br.com.thelastsurvivor.activity.rank;
 
 
-import br.com.thelastsurvivor.R;
 import android.app.Activity;
 import android.os.Bundle;
+import br.com.thelastsurvivor.R;
 
 public class RankActivity extends Activity{
 

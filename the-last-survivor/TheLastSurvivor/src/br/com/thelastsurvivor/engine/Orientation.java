@@ -3,6 +3,7 @@ package br.com.thelastsurvivor.engine;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public final class Orientation {
+	
 
 	public static void getNewPosition(Double angle, Vector2D position){
 		switch((int)Math.round(angle)){

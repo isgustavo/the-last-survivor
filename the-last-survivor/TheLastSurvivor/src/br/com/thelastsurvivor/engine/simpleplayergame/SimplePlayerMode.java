@@ -7,7 +7,7 @@ import android.os.Vibrator;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
-import br.com.thelastsurvivor.engine.game.Spacecraft;
+import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimplePlayerMode extends EngineGame {
