@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
+import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -60,7 +61,7 @@ public class Explosion {
 		this.cleanListParticules();
 	}
 
-	public void update(EOrientation orientation) {
+	public void update(Spacecraft spacecraft) {
 		
 		//for (int i = 0; i < 1; i++) {
 			//Particle p = new Particle(new Vector2D(200,200));
@@ -71,7 +72,7 @@ public class Explosion {
 		if (this.isAlive) {
 			for (Particle particle : particles) {
 				if(particle.isAlive()){
-					particle.update(orientation);
+					particle.update(spacecraft);
 				}
 			}
 			this.cleanListParticules();

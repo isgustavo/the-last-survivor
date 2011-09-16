@@ -11,6 +11,5 @@ public interface IDrawBehavior{
 	public void draw(Canvas c);
 
 	public Vector2D getPosition();
-	public void update(EOrientation orientation);
 	
 }

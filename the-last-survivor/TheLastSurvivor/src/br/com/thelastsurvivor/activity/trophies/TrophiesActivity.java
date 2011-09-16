@@ -19,20 +19,61 @@ public class TrophiesActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		audioPlayer = new MyAudioPlayer(this, R.raw.sol);
-		audioPlayer.start();
+		//audioPlayer = new MyAudioPlayer(this, R.raw.sol);
+		//audioPlayer.start();
 		
 		setContentView(R.layout.trophies_player_view);
 		
-		ImageView image = (ImageView)findViewById(R.id.trophies_1);
-		image.setAlpha(70);
+		init();
+		
 		
 		//getTrophies();
 	}
 
-//	private void init() {
-//		this.trophies = new ArrayList<Trophies>();
-//	}
+	private void init() {
+		ImageView image1 = (ImageView)findViewById(R.id.trophies_1);
+		image1.setAlpha(70);
+		
+		ImageView image2 = (ImageView)findViewById(R.id.trophies_2);
+		image2.setAlpha(70);
+		
+		ImageView image3 = (ImageView)findViewById(R.id.trophies_3);
+		image3.setAlpha(70);
+		
+		ImageView image4 = (ImageView)findViewById(R.id.trophies_4);
+		image4.setAlpha(70);
+		
+		ImageView image5 = (ImageView)findViewById(R.id.trophies_5);
+		image5.setAlpha(70);
+		
+		ImageView image6 = (ImageView)findViewById(R.id.trophies_6);
+		image6.setAlpha(70);
+		
+		ImageView image7 = (ImageView)findViewById(R.id.trophies_7);
+		image7.setAlpha(70);
+		
+		ImageView image8 = (ImageView)findViewById(R.id.trophies_8);
+		image8.setAlpha(70);
+		
+		ImageView image9 = (ImageView)findViewById(R.id.trophies_9);
+		image9.setAlpha(70);
+		
+		ImageView image10 = (ImageView)findViewById(R.id.trophies_10);
+		image10.setAlpha(70);
+		
+		ImageView image11 = (ImageView)findViewById(R.id.trophies_11);
+		image11.setAlpha(70);
+		
+		ImageView image12 = (ImageView)findViewById(R.id.trophies_12);
+		image12.setAlpha(70);
+		
+		ImageView image13 = (ImageView)findViewById(R.id.trophies_13);
+		image13.setAlpha(70);
+		
+		ImageView image14 = (ImageView)findViewById(R.id.trophies_14);
+		image14.setAlpha(70);
+		
+	}
 
 	private void getTrophies() {
 	
@@ -71,11 +112,6 @@ public class TrophiesActivity extends Activity{
 		item = new HashMap<String, String>();
 		item.put("name", getString(R.string.t04));
 		item.put("objective", getString(R.string.tObjective04));
-		list.add(item);
-		
-		item = new HashMap<String, String>();
-		item.put("name", getString(R.string.t05));
-		item.put("objective", getString(R.string.tObjective05));
 		list.add(item);
 		
 		item = new HashMap<String, String>();

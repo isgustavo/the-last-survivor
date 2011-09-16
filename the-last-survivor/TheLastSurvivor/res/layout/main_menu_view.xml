@@ -43,7 +43,7 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 	   				android:id="@+id/lg_twitter"  
 	   				android:textSize="15dp" android:textColor="#4ed3ff"
 	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-	   				android:layout_x="260dp" android:layout_y="40dp">
+	   				android:layout_x="300dp" android:layout_y="40dp">
     			</br.com.thelastsurvivor.util.FT2FontTextView>
         		
 		

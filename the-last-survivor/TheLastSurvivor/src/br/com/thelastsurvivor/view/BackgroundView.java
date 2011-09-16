@@ -42,7 +42,7 @@ public class BackgroundView extends SurfaceView implements SurfaceHolder.Callbac
 		this.setFocusable(true);
 
 
-		image = this.getResources().getDrawable(R.drawable.layout_menu_image);
+		//image = this.getResources().getDrawable(R.drawable.layout_menu_image);
 		
 		this.viewThread = new ViewThread(getHolder(), this);
 		this.explosion = new Explosion(EXPLOSION_SIZE);

@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.Orientation;
+import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -21,10 +23,19 @@ public class Asteroid implements IDrawBehavior{
 	private Integer speed = 1;
 	private Integer MAX_SPEED = 6;
 	
+	Spacecraft spacecraft;
+	
 	
 	public Asteroid(Context context, Display display){
 		this.context = context;
 		
+		
+		init();
+	}
+	
+	public Asteroid(Context context, Spacecraft spacecraft){
+		this.context = context;
+		this.spacecraft = spacecraft;
 		
 		init();
 	}
@@ -117,75 +128,36 @@ public class Asteroid implements IDrawBehavior{
 		}		
 	}
 
-	@Override
-	public void update(EOrientation orientation) {
-		switch (orientation.getOrientation()) {
-		case 1:
-			
-			this.position.addY(MAX_SPEED);
-		break;
 
-		case 2:
-			
-			this.position.addX(-MAX_SPEED);
-			this.position.addY(MAX_SPEED);
-			
-		break;
-		
-		case 3:
-			
-			this.position.addX(-MAX_SPEED);
-			
-		break;	
-		
-		case 4:
-			
-			this.position.addX(-MAX_SPEED);
-			this.position.addY(-MAX_SPEED);
-			
-		break;
-		
-		case 5:
-			
-			this.position.addY(-MAX_SPEED);
-		break;
-		
-		case 6:
-			
-			this.position.addX(MAX_SPEED);
-			this.position.addY(-MAX_SPEED);
-		break;
-		
-		
-		case 7:
-			
-			this.position.addX(MAX_SPEED);
-		break;
-		
-		
-		case 8:
-			
-			this.position.addX(MAX_SPEED);
-			this.position.addY(MAX_SPEED);
-		break;
-		default:
-			break;
-		}
-		
-		this.update();
-	}
-		
-
-	
 	@Override
 	public void update() {
 
 		this.ramdomRoute();
 		
+		
+		if (spacecraft.getUp()) {
+			 if(spacecraft.getAngle() >= 270 || spacecraft.getAngle() <= 90){
+				  
+				   Double invertAngle;
+				   
+				   if(spacecraft.getAngle() >= 270){
+					   invertAngle = (360 - spacecraft.getAngle()) + 90;
+					   
+				   }else{
+					   invertAngle = spacecraft.getAngle()+180;
+				   }
+				   
+				   Orientation.getNewPosition(invertAngle, this.position); 
+				   
+			   }else{
+				   Orientation.getNewPosition(spacecraft.getAngle(), this.position);
+			   }
+		}
+		} 
 		//this.position.addX(camera.getX());
 		//this.position.addY(camera.getY());
 		
-	}
+	
 
 	@Override
 	public void draw(Canvas c) {

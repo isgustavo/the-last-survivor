@@ -6,6 +6,17 @@
     <string name="nickname">Apelido</string>
     <string name="lg_twitter">Nome de usuário ou e-mail do Twitter</string>
     
+    <string name="app_alterarion_player">Altera perfil</string>
+    
+    <string name="lg_twitter_01">Login do Twitter </string>
+    <string name="lg_twitter_02"></string>
+    
+    <string name="trophies">Troféus</string>
+    
+    <string name="removeProfile">Alerta: Essa ação resultará na perda de todos os dados em O último Sobrevivente</string>
+    <string name="alert">Alerta</string>
+    
+      
     
     <string name="t01">O início!</string>
     <string name="tObjective01">Finalizar uma partida simples.</string>
@@ -19,9 +30,6 @@
     <string name="t04">Habilidade com armas.</string>
     <string name="tObjective04">conseguir todas as marmas do jogo em um partida simples.</string>
    
-   	<string name="t05">O melhor!</string>
-    <string name="tObjective05">Conseguir melhorar sua posição no rank pela primeira vez.</string>
-
 	<string name="t06">Drift do espaço!</string>
     <string name="tObjective06">Permanecer 2 minutos sem colidir com asteróides.</string>
 	  

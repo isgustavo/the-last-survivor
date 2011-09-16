@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+ 
+ <br.com.thelastsurvivor.view.BackgroundView
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:id="@+id/surfaceView" /> 
+					
+<HorizontalScrollView android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:scrollbars="none">
+
+     
+<FrameLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+
+           <AbsoluteLayout 
+    			android:orientation="vertical"
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent">
+    			
+    			
+    			<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/the_last_survivor_image"
+    	 			android:layout_x="0dp" android:layout_y="0dp">
+				</ImageView>
+        		
+    			
+      </AbsoluteLayout>  
+ </FrameLayout> 
+</HorizontalScrollView> 
+
+</AbsoluteLayout>

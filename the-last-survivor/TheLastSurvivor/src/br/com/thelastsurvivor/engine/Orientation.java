@@ -307,6 +307,10 @@ public final class Orientation {
 		    	position.addY(-17);
 		   break;
 		   
+		   case 360:
+			   position.addY(-18);
+		   break;
+		   
 		   }
 		   
 	   }

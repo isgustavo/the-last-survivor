@@ -13,12 +13,12 @@ import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
 import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
-import br.com.thelastsurvivor.view.BackgroundView;
+
 
 
 public class CadastrePlayerActivity extends Activity {
 
-	private BackgroundView view;
+	//private BackgroundView view;
 	
 	private EditText nickname;
 	private EditText lgTwitter;
@@ -33,7 +33,7 @@ public class CadastrePlayerActivity extends Activity {
 		
 		setContentView(R.layout.cadastre_player_view);
 		
-		this.view = (BackgroundView)findViewById(R.id.surfaceView);
+		//this.view = (BackgroundView)findViewById(R.id.surfaceView);
 
 		this.setNickname((EditText) findViewById(R.id.editNickName));
 		this.setLgTwitter((EditText) findViewById(R.id.editLGTwitter));

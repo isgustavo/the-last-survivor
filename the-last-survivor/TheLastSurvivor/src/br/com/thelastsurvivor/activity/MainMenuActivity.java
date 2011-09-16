@@ -8,21 +8,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.game.MultiGameActivity;
-import br.com.thelastsurvivor.activity.game.SimpleGameActivity;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
+import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.activity.player.AlterationPlayerActivity;
 import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.activity.trophies.TrophiesActivity;
 import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.util.FT2FontTextView;
-import br.com.thelastsurvivor.view.BackgroundView;
 
 public class MainMenuActivity extends Activity{
 		/** Called when the activity is first created. */
 	
 	private Player player;
-	private BackgroundView view;
+	//private BackgroundView view;
 	
 	private FT2FontTextView nickname;
 	private FT2FontTextView lgTwitter;

@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.activity.game;
+package br.com.thelastsurvivor.activity.game.multiplayermode;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

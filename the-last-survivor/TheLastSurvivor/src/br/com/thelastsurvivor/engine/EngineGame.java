@@ -26,73 +26,66 @@ public abstract class EngineGame{
 	
 	private static int SCREEN_SIZE_HEIGHT = 800;
 	private static int SCREEN_SIZE_WIDTH = 800;
-	
 			
 	private static int SCREEN_SIZE_HEIGHT_UP;
 	private static int SCREEN_SIZE_WIDTH_RIGHT;
 	private static int SCREEN_SIZE_HEIGHT_DOWN;
 	private static int SCREEN_SIZE_WIDTH_LEFT;
 	
-	private List<IDrawBehavior> updateList;
+	public List<IDrawBehavior> updateList;
 	private List<IDrawBehavior> drawableList;
-	 
-
-	
 
 	public EngineGame(Context context, Vibrator vibrator, Display display) {
 		this.context = context;
 		this.vibrator = vibrator;
 		this.display = display;
 		
-/*		Log.d("iEngineGamet","iEngineGame");
-		
-		
-		
-		Log.d("cameraY","CAMERAY");
-		
-		SCREEN_SIZE_HEIGHT_UP = ( display.getHeight() - ((display.getHeight()*85)/100));
-		SCREEN_SIZE_WIDTH_RIGHT = (( display.getWidth()*80)/100);
-		SCREEN_SIZE_HEIGHT_DOWN = (( display.getHeight()*80)/100);
-		SCREEN_SIZE_WIDTH_LEFT = ( display.getWidth() - (( display.getWidth()*85)/100));
-		
-		this.drawableList = new ArrayList<IDrawBehavior>();
-		this.drawableList.add(new Asteroid(this.context, this.display)); */
-		
 		this.init();
 	}
 
 
 	public void init(){
-		Log.d("initEngineGame","initEngineGame");
 		
 		this.camera = new CameraGame(200,display.getWidth(), 200, display.getHeight());
 		this.explosion = new Explosion(200);
 		
-		Log.d("cameraY","CAMERAY");
-		
-		SCREEN_SIZE_HEIGHT_UP = ( display.getHeight() - ((display.getHeight()*85)/100));
-		SCREEN_SIZE_WIDTH_RIGHT = (( display.getWidth()*80)/100);
-		SCREEN_SIZE_HEIGHT_DOWN = (( display.getHeight()*75)/100);
-		SCREEN_SIZE_WIDTH_LEFT = ( display.getWidth() - (( display.getWidth()*85)/100));
-		
+	/*	SCREEN_SIZE_HEIGHT_UP = ( display.getHeight() - ((display.getHeight()*95)/100));
+		SCREEN_SIZE_WIDTH_RIGHT = (( display.getWidth()*90)/100);
+		SCREEN_SIZE_HEIGHT_DOWN = (( display.getHeight()*95)/100);
+		SCREEN_SIZE_WIDTH_LEFT = ( display.getWidth() - (( display.getWidth()*99)/100));
+	 */	
 		this.updateList = new ArrayList<IDrawBehavior>();
 		this.drawableList = new ArrayList<IDrawBehavior>();
 
-		this.updateList.add(new Asteroid(this.context, this.display));
 	}
 	
 	
+
 	public void update(){
 		
-		
+		if (this.explosion != null && this.explosion.isAlive) {
+			this.explosion.update(this.getSpacecraft());
+		}
 	
+		Vector2D newPositionCamera = new Vector2D(0,0);
+		
+		if(this.spacecraft.getUp()){
+			
+			Orientation.getNewPosition(this.spacecraft.getAngle(), newPositionCamera);
+			
+			
+		}else if(this.spacecraft.getDown()){
+			Orientation.getNewPosition(this.spacecraft.getAngle(), newPositionCamera);
+		}
+		
+		
+		this.spacecraft.scoll(newPositionCamera);
 		
 		this.drawableList.clear();
 		
 		for (IDrawBehavior object : this.updateList) {
-			Log.d("LOG", "UPDATE");
 			
-			object.update(this.spacecraft.getOrientation());
+			object.update();
 			
 			if(this.isDrawable(object.getPosition())){
 				this.drawableList.add(object);
@@ -100,34 +93,29 @@ public abstract class EngineGame{
 			
 		}
 		
+		if(this.isDrawable(this.spacecraft.getPosition())){
+			this.drawableList.add(this.spacecraft);
+		}
+		
 		
 	}
 	
 	public void draw(Canvas c) {
-		
-		
-		for (IDrawBehavior asteroid : drawableList) {
-			Log.d("LOG", "DRAW");
-			
-			asteroid.draw(c);
+
+		for (IDrawBehavior object : drawableList) {
+
+			object.draw(c);
 		}
 		
 		if (explosion != null) {
  			explosion.draw(c);
  		}
-		
+
 	}
 
 	
 	protected boolean isDrawable(Vector2D position){
-		Log.d("this.camera.getRelativeBeginningSizeWidth()","."+this.camera.getRelativeBeginningSizeWidth());
-		Log.d("position.getX()","."+position.getX());
-		Log.d("this.camera.getRelativeFinalSizeWidth()","."+this.camera.getRelativeFinalSizeWidth());
 		
-		
-		Log.d("this.camera.getRelativeBeginningSizeHeight()","."+this.camera.getRelativeBeginningSizeHeight());
-		Log.d("position.getY()","."+position.getY());
-		Log.d("this.camera.getRelativeFinalSizeHeight()","."+this.camera.getRelativeFinalSizeHeight());
 		
 		
 		if(this.camera.getRelativeBeginningSizeWidth() < position.getX() &&
@@ -194,6 +182,16 @@ public abstract class EngineGame{
 
 	public static void setSCREEN_SIZE_WIDTH(int sCREEN_SIZE_WIDTH) {
 		SCREEN_SIZE_WIDTH = sCREEN_SIZE_WIDTH;
+	}
+
+
+	public Spacecraft getSpacecraft() {
+		return spacecraft;
+	}
+
+
+	public CameraGame getCamera() {
+		return camera;
 	}
 	
 	

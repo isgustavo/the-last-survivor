@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.activity.game;
+package br.com.thelastsurvivor.activity.game.simplemode;
 
 import android.app.Activity;
 import android.content.Context;

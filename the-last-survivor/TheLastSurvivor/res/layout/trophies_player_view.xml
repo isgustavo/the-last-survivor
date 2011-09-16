@@ -41,112 +41,103 @@
     			<ImageView android:id="@+id/trophies_1"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
+    	 			android:src="@drawable/trophies_01"
     	 			android:layout_x="30dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_2"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
+    	 			android:src="@drawable/trophies_02"
     	 			android:layout_x="130dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_3"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_03"
+    	 			android:layout_x="230dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_4"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="230dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_04"
+    	 			android:layout_x="330dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_5"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="330dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_05"
+    	 			android:layout_x="430dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_6"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="430dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_06"
+    	 			android:layout_x="530dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_7"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="530dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_07"
+    	 			android:layout_x="630dp" android:layout_y="60dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_8"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="120dp">
+    	 			android:src="@drawable/trophies_08"
+    	 			android:layout_x="30dp" android:layout_y="200dp">
 				</ImageView>
 				
-				<ImageView android:id="@+id/trophies_2"
+				<ImageView android:id="@+id/trophies_9"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_09"
+    	 			android:layout_x="130dp" android:layout_y="200dp">
 				</ImageView>
 				
 				
-				<ImageView android:id="@+id/trophies_2"
+				<ImageView android:id="@+id/trophies_10"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_10"
+    	 			android:layout_x="230dp" android:layout_y="200dp">
 				</ImageView>
 				
-				<ImageView android:id="@+id/trophies_2"
+				<ImageView android:id="@+id/trophies_11"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_11"
+    	 			android:layout_x="330dp" android:layout_y="200dp">
 				</ImageView>
 				
-				<ImageView android:id="@+id/trophies_2"
+				<ImageView android:id="@+id/trophies_12"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_12"
+    	 			android:layout_x="430dp" android:layout_y="200dp">
 				</ImageView>
 				
-				<ImageView android:id="@+id/trophies_2"
+				<ImageView android:id="@+id/trophies_13"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_13"
+    	 			android:layout_x="530dp" android:layout_y="200dp">
 				</ImageView>
 				
-				<ImageView android:id="@+id/trophies_2"
+				<ImageView android:id="@+id/trophies_14"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
+    	 			android:src="@drawable/trophies_14"
+    	 			android:layout_x="630dp" android:layout_y="200dp">
 				</ImageView>
 				
-				<ImageView android:id="@+id/trophies_2"
-    	 			android:layout_width="fill_parent" 
-    	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/trophies_button_image"
-    	 			android:layout_x="130dp" android:layout_y="60dp">
-				</ImageView>
 				
-    			
-    			
-    			
     		</AbsoluteLayout>
 </FrameLayout>
 

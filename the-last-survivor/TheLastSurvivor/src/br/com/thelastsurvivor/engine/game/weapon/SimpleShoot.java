@@ -201,11 +201,7 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	}
 
 
-	@Override
-	public void update(EOrientation orientation) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.player.PlayerActivity;
 import br.com.thelastsurvivor.view.TheLastSurvivorView;
 
@@ -23,7 +24,7 @@ public class TheLastSurvivorActivity extends Activity {
 		
 		this.init();
 
-		this.setContentView(view);
+		this.setContentView(R.layout.the_last_survivor_view);
 
 		new Handler().postDelayed(new Runnable() {
 
@@ -42,8 +43,7 @@ public class TheLastSurvivorActivity extends Activity {
 	}
 	
 	public void init(){
-    	view = new TheLastSurvivorView(this);
-		
+	
 		final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 	    this.wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "");
 	    this.wakeLock.acquire(); 
