@@ -7,18 +7,15 @@ public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private String identifier;
-	private String lgTwitter;
+	private String nickname;
 
-	public Player(String identifier, String lgTwitter) {
-		this.identifier = identifier;
-		this.lgTwitter = lgTwitter;
+	public Player(String nickname) {
+		this.nickname = nickname;
 	}
 	
-	public Player(Integer id, String identifier, String lgTwitter) {
+	public Player(Integer id, String nickname) {
 		this.id = id;
-		this.identifier = identifier;
-		this.lgTwitter = lgTwitter;
+		this.nickname = nickname;
 	}
 
 	public Integer getId() {
@@ -29,20 +26,12 @@ public class Player implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdentifier() {
-		return identifier;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
-
-	public String getLgTwitter() {
-		return lgTwitter;
-	}
-
-	public void setLgTwitter(String lgTwitter) {
-		this.lgTwitter = lgTwitter;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 }

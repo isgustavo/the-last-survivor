@@ -3,10 +3,43 @@
     
     <string name="app_name">O último sobrevivente</string>
     
-    <string name="nickname">Apelido</string>
     <string name="lg_twitter">Nome de usuário ou e-mail do Twitter</string>
     
+    
+    <string name="profile">perfil</string>
+    <string name="erro_profile">Nickname é necessário!</string>
+    
+    <string name="cadastre_palyer_1">
+    	Oi, este e um pequeno cadastro para o seu   		
+    </string>
+    
+    <string name="cadastre_palyer_2">
+    	perfil em O Último sobrevivente, você pode    
+    </string>
+    
+    <string name="cadastre_palyer_3">
+    	criar um novo nickname aqui, mas nos preferimos
+    </string>
+    
+    <string name="cadastre_palyer_4">
+    	que utilize seu nickename do seu perfil do twitter
+    </string>
+    
+    <string name="cadastre_palyer_5">
+    	para uma melhor interação com os outros jogadores
+    </string>
+    
+    <string name="cadastre_palyer_6">
+    	e com a comunidade.
+    </string>
+    
+    
     <string name="app_alterarion_player">Altera perfil</string>
+    
+    <string name="info_alteration_player">Você pode alterar seu nickname a qualquer momento ou 
+    excluir seu perfil em O Último sobrevivente, mas essa ação resultará na perca de todos os 
+    seus dados salvos relativo ao jogo.</string>
+    
     
     <string name="lg_twitter_01">Login do Twitter </string>
     <string name="lg_twitter_02"></string>

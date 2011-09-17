@@ -20,7 +20,7 @@ public class TrophiesProvider extends TheLastSurvivorProvider implements BaseCol
 	static{
 		getMatcher().addURI(TheLastSurvivorProvider.AUTHORITY, TrophiesProvider.NAME_TABLE, Constant.IS_TROPHIES);
 		
-		getProjection().put(TrophiesProvider.ID, TrophiesProvider.ID);
+		//getProjection().put(TrophiesProvider.ID, TrophiesProvider.ID);
 		//getProjection().put(TrophiesProvider.IS_ACHIEVED, TrophiesProvider.IS_ACHIEVED);
 
 	}

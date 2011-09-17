@@ -25,32 +25,24 @@ public class TheLastSurvivorProvider extends ContentProvider {
              "vnd.android.cursor.dir/" + AUTHORITY; 
 
 	private static final String DATABASE_NAME = "LastSurvivorDatabase.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private SQLiteHelper helper;
 
-	// private static final String TAG = "TheLastSurvivorProvider";
 
 	private static final UriMatcher matcher;
-	private static HashMap<String, String> projection;
+	//private static HashMap<String, String> projection;
 	
-	/*public static final String NAME_TABLE = "player";
-	public static final int IS_PLAYERS = 1;
-
-	public static final String ID = "id";
-	public static final String IDENTIFIER_PLAYER = "identifier";
-	public static final String LGTWITTER = "lg_twitter";
-*/
 	
 	static {
 		matcher = new UriMatcher(UriMatcher.NO_MATCH);
 		
 		
-		projection = new HashMap<String, String>();
+		//projection = new HashMap<String, String>();
 		
 	}
 
-	public static HashMap<String, String> projection() {
+/*	public static HashMap<String, String> projection() {
 		return projection;
 	}
 
@@ -64,7 +56,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
 
 	public static void setProjection(HashMap<String, String> projection) {
 		TheLastSurvivorProvider.projection = projection;
-	}
+	}*/
 
 	public static UriMatcher getMatcher() {
 		return matcher;
@@ -75,12 +67,6 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		Log.d("TheLastSurvivorProvider", "01");
 		helper = new SQLiteHelper(getContext(), DATABASE_NAME, DATABASE_VERSION);
 
-		// Log.d("TheLastSurvivorProvider", "01");
-		// helper = new
-		// SQLiteHelper(getContext(),DATABASE_NAME,DATABASE_VERSION);
-		// Log.d("TheLastSurvivorProvider", "02");
-		// persistence = helper.getReadableDatabase();
-		// Log.d("TheLastSurvivorProvider", "03");
 		return true;
 	}
 
@@ -93,10 +79,10 @@ public class TheLastSurvivorProvider extends ContentProvider {
             Cursor cursor;  
             switch (matcher.match(uri)) {  
                 
-            	case PlayerProvider.IS_PLAYERS:  
+            	case Constant.IS_PLAYER:  
                    
                     builder.setTables(PlayerProvider.NAME_TABLE);  
-                    //builder.setProjectionMap(projection);  
+                    
                 break;  
                 
                 case Constant.IS_TROPHIES:  
@@ -125,7 +111,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		
 		switch (matcher.match(uri)) {
 		
-		case PlayerProvider.IS_PLAYERS:
+		case Constant.IS_PLAYER: 
 		
 			SQLiteDatabase db = helper.getWritableDatabase();
 			long rowId = db.insert(PlayerProvider.NAME_TABLE, null, values);
@@ -153,7 +139,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		
 		switch (matcher.match(uri)) {
 		
-		case PlayerProvider.IS_PLAYERS:
+		case Constant.IS_PLAYER: 
 			SQLiteDatabase db = helper.getWritableDatabase();
 			int romId = db.update(PlayerProvider.NAME_TABLE,values, selection, null);
 		
@@ -177,7 +163,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
 	@Override
 	public String getType(Uri uri) {
 		switch (matcher.match(uri)) {  
-        case PlayerProvider.IS_PLAYERS:  
+        case Constant.IS_PLAYER: 
             return CONTENT_TYPE;  
         default:  
             throw new IllegalArgumentException(  

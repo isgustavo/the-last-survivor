@@ -18,13 +18,11 @@ import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class AlterationPlayerActivity extends Activity{
 
-	//private BackgroundView view;
 	private static final int REMOVE_DIALOG = 0;
 	
 	private Player player;
 	
 	private EditText nickname;
-	private EditText lgTwitter;
 	
 	private Intent i;
 	
@@ -44,10 +42,8 @@ public class AlterationPlayerActivity extends Activity{
 		loadPlayer();
 		
 		this.nickname = (EditText)findViewById(R.id.editNickName);
-		this.nickname.setText(this.player.getIdentifier());
-		this.lgTwitter = (EditText) findViewById(R.id.editLGTwitter);
-		this.lgTwitter.setText(this.player.getLgTwitter());
-		
+		this.nickname.setText(this.player.getNickname());
+	
 		final Button button = (Button) findViewById(R.id.buttonOk);
 		button.setOnClickListener(buttonListener);
 		
@@ -63,16 +59,10 @@ public class AlterationPlayerActivity extends Activity{
 
 		Cursor c = this.getContentResolver().query(PlayerProvider.CONTENT_URI, 
 				null, null , null, null);
-		try{
-			while(c.moveToNext()){
-				//Log.d("COUNT", ""+c.getColumnCount());
-				this.player = new Player(c.getInt(0),c.getString(1), c.getString(2));
-			}
-			
-		}catch(IllegalStateException e){
-			this.player = new Player(c.getInt(0),c.getString(1), "");
-		}
 	
+			while(c.moveToNext()){
+				this.player = new Player(c.getInt(0),c.getString(1));
+			}
 		
 	}
 	
@@ -88,7 +78,7 @@ public class AlterationPlayerActivity extends Activity{
 				alert.setNeutralButton("OK", null);
 				alert.show();
 			}else{
-				if(updatePlayer(new Player(getPlayer().getId(), getNickname().getText().toString(), getLgTwitter().getText().toString()))){
+				if(updatePlayer(new Player(getPlayer().getId(), getNickname().getText().toString()/*, getLgTwitter().getText().toString())*/))){
 				   startActivity(i);
 
 				   AlterationPlayerActivity.this.finish();
@@ -116,8 +106,7 @@ public class AlterationPlayerActivity extends Activity{
 	public boolean updatePlayer(Player player) {
 		ContentValues values = new ContentValues();
 
-		values.put(PlayerProvider.IDENTIFIER_PLAYER, player.getIdentifier());
-		values.put(PlayerProvider.LGTWITTER, player.getLgTwitter());
+		values.put(PlayerProvider.IDENTIFIER_PLAYER, player.getNickname());
 
 		getContentResolver().update(PlayerProvider.CONTENT_URI, values, PlayerProvider.ID +" = "+ player.getId(), null);
 		
@@ -132,9 +121,6 @@ public class AlterationPlayerActivity extends Activity{
 		return nickname;
 	}
 
-	public EditText getLgTwitter() {
-		return lgTwitter;
-	}
 	Button buttonOk;
 	Button buttonRemove;
 	 

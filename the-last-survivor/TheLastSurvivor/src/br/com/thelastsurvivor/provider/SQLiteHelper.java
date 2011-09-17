@@ -18,8 +18,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 		db.execSQL("CREATE TABLE " + PlayerProvider.NAME_TABLE + " ( "
 				+ PlayerProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR, "
-				+ PlayerProvider.LGTWITTER + " VARCHAR ); ");
+				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR ); ");
 		
 		db.execSQL(" CREATE TABLE "+ TrophiesProvider.NAME_TABLE + "( "
 				+ TrophiesProvider.ID + " INTEGER PRIMARY KEY, " 
@@ -67,8 +66,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 		db.execSQL("CREATE TABLE " + PlayerProvider.NAME_TABLE + " ( "
 				+ PlayerProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR, "
-				+ PlayerProvider.LGTWITTER + " VARCHAR ); ");
+				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR ); ");
 		
 		db.execSQL(" CREATE TABLE "+ TrophiesProvider.NAME_TABLE + "( "
 				+ TrophiesProvider.ID + " INTEGER PRIMARY KEY, " 
@@ -103,8 +101,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ " VALUES (14, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (15, null ); ");*/
-
+				+ " VALUES (15, null ); ");
+*/
 	}
 
 }

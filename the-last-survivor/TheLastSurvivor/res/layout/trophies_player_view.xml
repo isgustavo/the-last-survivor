@@ -91,14 +91,14 @@
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_08"
-    	 			android:layout_x="30dp" android:layout_y="200dp">
+    	 			android:layout_x="30dp" android:layout_y="180dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_9"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_09"
-    	 			android:layout_x="130dp" android:layout_y="200dp">
+    	 			android:layout_x="130dp" android:layout_y="180dp">
 				</ImageView>
 				
 				
@@ -106,35 +106,35 @@
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_10"
-    	 			android:layout_x="230dp" android:layout_y="200dp">
+    	 			android:layout_x="230dp" android:layout_y="180dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_11"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_11"
-    	 			android:layout_x="330dp" android:layout_y="200dp">
+    	 			android:layout_x="330dp" android:layout_y="180dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_12"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_12"
-    	 			android:layout_x="430dp" android:layout_y="200dp">
+    	 			android:layout_x="430dp" android:layout_y="180dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_13"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_13"
-    	 			android:layout_x="530dp" android:layout_y="200dp">
+    	 			android:layout_x="530dp" android:layout_y="180dp">
 				</ImageView>
 				
 				<ImageView android:id="@+id/trophies_14"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/trophies_14"
-    	 			android:layout_x="630dp" android:layout_y="200dp">
+    	 			android:layout_x="630dp" android:layout_y="180dp">
 				</ImageView>
 				
 				

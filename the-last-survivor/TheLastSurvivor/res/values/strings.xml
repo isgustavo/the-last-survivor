@@ -8,13 +8,37 @@
     <string name="app_name_for">For</string>
     <string name="app_name_players">Players</string>
     
-    <string name="cadastre_palyer">This is the small registration of your profile in The Last Survivor,
-    			you can using one new nickname, but us prefer you use your twitter nickname for one best 
-    			interaction with other players and the community.
+    <string name="profile">profile</string>
+    <string name="erro_profile">Nickname is necessary!</string>
+    
+    <string name="cadastre_palyer_1">
+    	Hello, this is small registration of your  		
     </string>
     
+    <string name="cadastre_palyer_2">
+    	profile in The Last Survivor, you can    
+    </string>
+    
+    <string name="cadastre_palyer_3">
+    	using one new nickname, but us prefer  
+    </string>
+    
+    <string name="cadastre_palyer_4">
+    	 you use your twitter nickname for one   
+    </string>
+    
+    <string name="cadastre_palyer_5">
+    	best interaction with other players and 
+    </string>
+    
+    <string name="cadastre_palyer_6">
+    	the community.
+    </string>
     
     <string name="app_alterarion_player">Alterarion Profile</string>
+    
+    <string name="info_alteration_player"></string>
+    
     
     <string name="nickname">Nickname</string>
     <string name="lg_twitter">Username or e-mail Twitter</string>
@@ -24,7 +48,7 @@
     
     <string name="trophies">Trophies</string>
     
-    <string name="removeProfile">Alert: This action will result in loss of all \ndata on The Last Survivor</string>
+    <string name="removeProfile">Alert: This action will result in loss of all data on The Last Survivor</string>
     <string name="alert">Alert</string>
     
     <string name="lista">LIST</string>

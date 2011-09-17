@@ -48,28 +48,6 @@
 				          android:layout_x="180dp" android:layout_y="67dp">
 				</EditText>
 				
-				<br.com.thelastsurvivor.util.FT2FontTextView 
-				         android:id="@+id/textLGTwitter" android:text="@string/lg_twitter_01" 
-				         android:textSize="23dp" android:textColor="@android:color/white"
-				         android:layout_width="fill_parent" android:layout_height="wrap_content"
-			             lht:ttf_name="FT2FONT.TTF"
-			             android:layout_x="30dp" android:layout_y="117dp">
-			   </br.com.thelastsurvivor.util.FT2FontTextView>
-			   
-			   <br.com.thelastsurvivor.util.FT2FontTextView 
-				         android:id="@+id/textLGTwitter" android:text="@string/lg_twitter_02" 
-				         android:textSize="23dp" android:textColor="@android:color/white"
-				         android:layout_width="fill_parent" android:layout_height="wrap_content"
-			             lht:ttf_name="FT2FONT.TTF"
-			             android:layout_x="30dp" android:layout_y="137dp">
-			   </br.com.thelastsurvivor.util.FT2FontTextView>
-				
-				
-				<EditText android:layout_height="40dp" android:layout_width="300dp" 
-				          android:textSize="17dp" android:id="@+id/editLGTwitter"
-				          android:layout_x="180dp" android:layout_y="117dp">
-				</EditText>
-				
 				<Button android:layout_height="wrap_content" 
 			      		android:layout_width="wrap_content"
 			      		android:background="@drawable/button_ok_image" 
