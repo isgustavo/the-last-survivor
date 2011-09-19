@@ -1,40 +1,42 @@
 package br.com.thelastsurvivor.model.trophies;
 
 import java.io.Serializable;
-
-import android.graphics.drawable.Drawable;
+import java.util.Date;
 
 public class Trophies implements Serializable{
 	
-	private String name;
-	private String objective;
-	private Boolean isAchieved;
-	private Drawable image;
+	private static final long serialVersionUID = 1L;
+	
+	
+	private Integer id;
+	private Date dateAchieved;
+	
+	
+	public Trophies(Integer id, Date date) {
+		this.id = id;
+		this.dateAchieved = date;
+	}
+	
+	
+	public Trophies(int id) {
+		this.id = id;
+	}
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getObjective() {
-		return objective;
-	}
-	public void setObjective(String objective) {
-		this.objective = objective;
-	}
-	public Boolean isAchieved() {
-		return isAchieved;
-	}
-	public Drawable getImage() {
-		return image;
-	}
-	public void setImage(Drawable image) {
-		this.image = image;
-	}
-	
-	
-	
-	
 
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Date getDateAchieved() {
+		return dateAchieved;
+	}
+	public void setDateAchieved(Date dateAchieved) {
+		this.dateAchieved = dateAchieved;
+	}
+
+	
+	
+	
 }

@@ -25,18 +25,17 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     			android:layout_height="fill_parent">
     			
     			
-    			<ImageView android:id="@+id/imageView1"
-    	 			android:layout_width="fill_parent" 
-    	 			android:layout_height="wrap_content" 
-    	 			android:src="@drawable/text_menu_image"
-    	 			android:layout_x="3dp" android:layout_y="13dp">
-				</ImageView>
-        		
+    			<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/app_name" android:text="@string/app_name" 
+						android:textSize="25dp" android:textColor="@android:color/white"
+						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+						android:layout_x="6dp" android:layout_y="6dp">
+			 	</br.com.thelastsurvivor.util.FT2FontTextView>
     			<br.com.thelastsurvivor.util.FT2FontTextView 
 	   				android:id="@+id/user_name"  
-	   				android:textSize="25dp" android:textColor="@android:color/white"
+	   				android:textSize="15dp" android:textColor="@android:color/white"
 	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-	   				android:layout_x="350dp" android:layout_y="10dp">
+	   				android:layout_x="330dp" android:layout_y="10dp">
     			</br.com.thelastsurvivor.util.FT2FontTextView>
     			
     			

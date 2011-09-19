@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.graphics.Canvas;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
-import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class Explosion {

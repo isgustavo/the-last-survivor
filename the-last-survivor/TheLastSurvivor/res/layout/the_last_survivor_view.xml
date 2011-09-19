@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -23,7 +23,6 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     			android:orientation="vertical"
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
-    			
     			
     			<ImageView android:id="@+id/imageView1"
     	 			android:layout_width="fill_parent" 

@@ -8,10 +8,10 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.util.Constant;
-import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
@@ -46,8 +46,7 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	@Override
 	public void init() {
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
-		//this.image = this.context.getResources().getDrawable(R.drawable.simple_shoot);
-		
+
 		this.firstPosition();	
 		this.isAlive = true;
 		
@@ -83,95 +82,25 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		
 		Orientation.getNewPosition(this.angle, this.position);
 		
-		
-		
-		
-		
 		this.matrix.setRotate(this.angle.floatValue());
     	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
             this.image.getWidth(), this.image.getHeight(), this.matrix, true);
     	
-		
-	/*	switch (this.orientation.getOrientation()) {
-		case 1:
-			this.matrix.setRotate(0);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addY(-SPEED_SHOOT);
-		break;
-
-		case 2:
-			this.matrix.setRotate(45);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addX(SPEED_SHOOT);
-			this.position.addY(-SPEED_SHOOT);
-			
-		break;
-		
-		case 3:
-			this.matrix.setRotate(90);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addX(SPEED_SHOOT);
-			
-		break;	
-		
-		case 4:
-			this.matrix.setRotate(135);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addX(SPEED_SHOOT);
-			this.position.addY(SPEED_SHOOT);
-			
-		break;
-		
-		case 5:
-			this.matrix.setRotate(180);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addY(SPEED_SHOOT);
-		break;
-		
-		case 6:
-			this.matrix.setRotate(225);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addX(-SPEED_SHOOT);
-			this.position.addY(SPEED_SHOOT);
-		break;
-		
-		
-		case 7:
-			this.matrix.setRotate(270);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addX(-SPEED_SHOOT);
-		break;
-		
-		
-		case 8:
-			this.matrix.setRotate(315);
-	    	this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-	            this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-			this.position.addX(-SPEED_SHOOT);
-			this.position.addY(-SPEED_SHOOT);
-		break;
-		default:
-			break;
-		}*/
 	
-		
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
 		this.drawableImage = newImage;
 	}
 
 	
 	private void checkOutShootsOfTheGameSpace(){
-		if(!(Constant.LIMIT_LEFT < this.position.getX() && this.position.getX() < Constant.LIMIT_RIGHT
-				&& Constant.LIMIT_UP < this.position.getY() && this.position.getY() < Constant.LIMIT_DOWN)){
+		if(-40 > position.getX() &&
+				position.getX() > EngineGame.getCamera().getX()+40){
+			this.isAlive = false;
+		}else if(-40 > position.getY() &&
+				position.getY() > EngineGame.getCamera().getY()+40){
 			this.isAlive = false;
 		}
+
 		
 	}
 	

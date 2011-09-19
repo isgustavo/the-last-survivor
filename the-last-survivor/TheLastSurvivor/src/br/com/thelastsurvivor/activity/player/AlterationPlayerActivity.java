@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
 import br.com.thelastsurvivor.model.player.Player;
@@ -18,9 +20,8 @@ import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class AlterationPlayerActivity extends Activity{
 
-	private static final int REMOVE_DIALOG = 0;
-	
 	private Player player;
+	private AlterationPlayerActivity activity;
 	
 	private EditText nickname;
 	
@@ -40,6 +41,7 @@ public class AlterationPlayerActivity extends Activity{
 	public void init(){
 		
 		loadPlayer();
+		this.activity = this;
 		
 		this.nickname = (EditText)findViewById(R.id.editNickName);
 		this.nickname.setText(this.player.getNickname());
@@ -67,18 +69,15 @@ public class AlterationPlayerActivity extends Activity{
 	}
 	
 	private OnClickListener buttonListener = new OnClickListener() {  
-		
         public void onClick(View v) {  
 
         	if (getNickname().getText().toString().equals("")) {
-        	
-				AlertDialog.Builder alert = new AlertDialog.Builder(AlterationPlayerActivity.this);
-				alert.setIcon(null);
-				alert.setTitle("Nickname is necessary");
-				alert.setNeutralButton("OK", null);
-				alert.show();
+				
+        		Toast.makeText(activity,R.string.erro_profile , 
+                        Toast.LENGTH_SHORT).show();
+        		
 			}else{
-				if(updatePlayer(new Player(getPlayer().getId(), getNickname().getText().toString()/*, getLgTwitter().getText().toString())*/))){
+				if(updatePlayer(new Player(getNickname().getText().toString()))){
 				   startActivity(i);
 
 				   AlterationPlayerActivity.this.finish();
@@ -86,32 +85,47 @@ public class AlterationPlayerActivity extends Activity{
 			}
      
         }  
+	};	
+	
+	private android.content.DialogInterface.OnClickListener removeProfile = new android.content.DialogInterface.OnClickListener(){
+		@Override
+		public void onClick(DialogInterface arg0, int arg1) {
+			
+			removePlayer();
+			
+			
+			
+		}
 	};
 	
 	private OnClickListener buttonRemoveListener = new OnClickListener() {  
 		
         public void onClick(View v) {  
-        	showDialog(0);
-			//AlertDialog.Builder alert = new AlertDialog.Builder(AlterationPlayerActivity.this);
-			//alert.setIcon(null);
-			//alert.setTitle(R.string.removeProfile);
-			//alert.setNeutralButton("OK", null);
-			//alert.show();
-			
-			
-			
+			AlertDialog.Builder alert = new AlertDialog.Builder(AlterationPlayerActivity.this);
+			alert.setIcon(null);
+			alert.setTitle(R.string.removeProfile);
+			alert.setPositiveButton(R.string.remove_confirm, removeProfile);
+			alert.setNeutralButton(R.string.remove_back, null);
+			alert.show();
         }
 	};
+	
 	
 	public boolean updatePlayer(Player player) {
 		ContentValues values = new ContentValues();
 
-		values.put(PlayerProvider.IDENTIFIER_PLAYER, player.getNickname());
+		values.put(PlayerProvider.ID, player.getId());
 
 		getContentResolver().update(PlayerProvider.CONTENT_URI, values, PlayerProvider.ID +" = "+ player.getId(), null);
 		
 		return true;
 	}
+	
+	public void removePlayer(){
+		
+		getContentResolver().delete(PlayerProvider.CONTENT_URI, PlayerProvider.ID +" = "+ player.getId(), null);
+	}
+	
 
 	public Player getPlayer(){
 		return player;
@@ -120,28 +134,5 @@ public class AlterationPlayerActivity extends Activity{
 	public EditText getNickname() {
 		return nickname;
 	}
-
-	Button buttonOk;
-	Button buttonRemove;
-	 
-	@Override
-	 protected Dialog onCreateDialog(int id) {
-	  // TODO Auto-generated method stub
-	  Dialog dialog = null;;
-	     switch(id) {
-	     case REMOVE_DIALOG:
-		      dialog = new Dialog(this); 
-		      dialog.setContentView(R.layout.remove_player_dialog);
-		      dialog.setTitle(R.string.removeProfile);
-		      dialog.setTitle(R.string.removeProfile);
-		
-		      buttonOk = (Button)dialog.findViewById(R.id.buttonOk);
-		      buttonRemove = (Button)dialog.findViewById(R.id.buttonRemove);
-	      
-	     break;
-	     }
-	     return dialog;
-	 }  
-	
 	
 }

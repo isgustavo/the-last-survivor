@@ -10,12 +10,10 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.CameraGame;
 import br.com.thelastsurvivor.engine.EngineGame;
-import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.IDrawControllable;
 import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
@@ -29,9 +27,6 @@ public class Spacecraft implements IDrawControllable {
 	private Bitmap image;
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
-	
-	private Drawable alertImage;
-	private Boolean alertFlag;
 	
 	private Vector2D position;
 	private Vector2D sensorPosition;
@@ -67,8 +62,6 @@ public class Spacecraft implements IDrawControllable {
 		
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
 		
-		this.alertImage = this.context.getResources().getDrawable(R.drawable.alert_image);
-		this.alertFlag = false;
 		
 		this.left = false;
 		this.right = false;
@@ -97,6 +90,19 @@ public class Spacecraft implements IDrawControllable {
 	@Override
 	public void update() {
 		
+		
+		this.sensorControlUpdate();
+		this.controlUpdate();
+			
+		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
+		this.drawableImage = newImage;
+		
+		this.controlShoots();
+
+		
+	}
+	
+	public void sensorControlUpdate(){
 		this.left = false;
 		this.right = false;
 		this.down = false;
@@ -114,40 +120,9 @@ public class Spacecraft implements IDrawControllable {
 		}
 		
 		
-		this.newControlUpdate();
-			
-		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
-		this.drawableImage = newImage;
-
-		if(this.shootsDrawables != null){
-			
-			this.getShootsDrawables();
-			
-			this.shootsDrawables.addAll(shoots);
-			
-			for (IWeaponBehavior shoot : shootsDrawables) {
-				shoot.update();
-			}
-			
-			this.shoots.clear();
-		}
-		
 	}
 	
-	private void getShootsDrawables(){
-		List<IWeaponBehavior> shoots = new ArrayList<IWeaponBehavior>();
-		for(IWeaponBehavior shoot : this.shootsDrawables){
-			if(shoot.isAlive()){
-				shoots.add(shoot);
-			}
-		}
-		
-		this.shootsDrawables.clear();
-		this.shootsDrawables.addAll(shoots);
-		
-	}
-	
-	private void newControlUpdate(){
+	private void controlUpdate(){
 			
 	    if (left) {
 	    	if(this.angle == 360){
@@ -202,6 +177,9 @@ public class Spacecraft implements IDrawControllable {
 		   }
 	    }
 	   
+	    
+	    
+	    
 	    this.matrix.setRotate(angle.floatValue());
    		this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
         this.image.getWidth(), this.image.getHeight(), this.matrix, true);
@@ -209,40 +187,46 @@ public class Spacecraft implements IDrawControllable {
 		
 	}
 	
-
-	
-	public void newShoot(){
-		
-		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.image);
-	
-		
-	    shoots.add(shoot);
-	  
-		
-	}
-
-
-	public void scoll(CameraGame camera){
-		this.position.addX(-camera.getBeginningSizeHeight());
-	}
 	
 	
-	public void scoll(Vector2D camera){
-		
-		if(this.position.getY() > EngineGame.getSCREEN_SIZE_HEIGHT_UP() &&
-				this.position.getX() > EngineGame.getSCREEN_SIZE_WIDTH_LEFT() &&
-				this.position.getX() < EngineGame.getSCREEN_SIZE_WIDTH_RIGHT() &&
-				this.position.getY() < EngineGame.getSCREEN_SIZE_HEIGHT_DOWN()){
+	public void controlShoots(){
+		if(this.shootsDrawables != null){
 			
-			this.position.addX(-(camera.getX()/2));
-			this.position.addY(-(camera.getY()/2));
-		}else{
-			this.position.addX(-camera.getX());
-			this.position.addY(-camera.getY());
+			this.getShootsDrawables();
 			
+			this.shootsDrawables.addAll(shoots);
+			
+			for (IWeaponBehavior shoot : shootsDrawables) {
+				shoot.update();
+			}
+			
+			this.shoots.clear();
 		}
 		
 	}
+	
+	private void getShootsDrawables(){
+		List<IWeaponBehavior> shoots = new ArrayList<IWeaponBehavior>();
+		for(IWeaponBehavior shoot : this.shootsDrawables){
+			if(shoot.isAlive()){
+				shoots.add(shoot);
+			}
+		}
+		
+		this.shootsDrawables.clear();
+		this.shootsDrawables.addAll(shoots);
+		
+	}
+	
+	public void newShoot(){
+		
+		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.image);	
+	    shoots.add(shoot);
+	}
+
+	
+
+	
 	
 	@Override
 	public void draw(Canvas c) {
@@ -262,11 +246,7 @@ public class Spacecraft implements IDrawControllable {
 			}
 		}
 	    
-	    if(this.alertFlag){
-	    	this.alertImage.setBounds(100, 100, 400, 200 );
-	    	
-	    	this.alertImage.draw(c);
-	    }
+	   
 	    
 	    
 	}
@@ -303,6 +283,11 @@ public class Spacecraft implements IDrawControllable {
 
 	public Boolean getUp() {
 		return up;
+	}
+
+	@Override
+	public boolean isAlive() {
+		return true;
 	}
 
 	

@@ -12,16 +12,11 @@ public class TrophiesProvider extends TheLastSurvivorProvider implements BaseCol
 	
 	public static final String NAME_TABLE = "trophies";
 	
-	
 	public static final String ID = "id";
-	//public static final String IS_ACHIEVED = "is_achieved";
 	public static final String DATE_ACHIEVED = "date_achieved";
 	
 	static{
 		getMatcher().addURI(TheLastSurvivorProvider.AUTHORITY, TrophiesProvider.NAME_TABLE, Constant.IS_TROPHIES);
-		
-		//getProjection().put(TrophiesProvider.ID, TrophiesProvider.ID);
-		//getProjection().put(TrophiesProvider.IS_ACHIEVED, TrophiesProvider.IS_ACHIEVED);
 
 	}
 	

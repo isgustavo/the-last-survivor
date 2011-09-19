@@ -3,10 +3,8 @@ package br.com.thelastsurvivor.view.particle;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
-import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class Particle {

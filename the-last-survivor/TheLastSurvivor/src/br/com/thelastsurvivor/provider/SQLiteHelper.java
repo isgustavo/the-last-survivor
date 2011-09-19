@@ -52,8 +52,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ " VALUES (13, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ " VALUES (14, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (15, null ); ");
+		
 				
 
 	}
@@ -62,47 +61,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		
 		
-	/*	db.execSQL("Drop table");
+	//	db.execSQL("Drop table");
 
-		db.execSQL("CREATE TABLE " + PlayerProvider.NAME_TABLE + " ( "
-				+ PlayerProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ PlayerProvider.IDENTIFIER_PLAYER + " VARCHAR ); ");
 		
-		db.execSQL(" CREATE TABLE "+ TrophiesProvider.NAME_TABLE + "( "
-				+ TrophiesProvider.ID + " INTEGER PRIMARY KEY, " 
-				+ TrophiesProvider.DATE_ACHIEVED +" INTEGER ); ");
-		
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (1, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (2, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (3, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (4, null); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (5, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (6, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (7, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (8, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (9, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (10, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (11, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (12, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (13, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (14, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (15, null ); ");
-*/
+
 	}
 
 }

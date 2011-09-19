@@ -16,7 +16,7 @@ public class TheLastSurvivorActivity extends Activity {
 	private static final Integer SPLASH_DURATION = 1000;
 	private WakeLock wakeLock;
  
-	private TheLastSurvivorView view;
+	//private TheLastSurvivorView view;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

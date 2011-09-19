@@ -5,10 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
-import br.com.thelastsurvivor.engine.util.EOrientation;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class Asteroid implements IDrawBehavior{
@@ -44,11 +44,35 @@ public class Asteroid implements IDrawBehavior{
 	public void init() {
 		
 		
-		this.position = new Vector2D(200,200);
+		
+		this.position = ramdonOrigin();
 		
 		this.drawableImage = ramdomImageAteroid();
 		this.route = (int) (Math.random()*10);
 			
+	}
+	
+	private Vector2D ramdonOrigin(){
+		
+		
+		int origin = (int) (Math.random()*2);
+		if(origin == 1){
+			int side = (int)(Math.random()*2);
+			int position = (int)(Math.random()*EngineGame.getCamera().getY());
+			if(side == 1){
+				return new Vector2D(-40,position);
+			}else{
+				return new Vector2D(EngineGame.getCamera().getX(),position);
+			}
+		}else{
+			int side = (int)(Math.random()*2);
+			int position = (int)(Math.random()*EngineGame.getCamera().getX());
+			if(side == 1){
+				return new Vector2D(position,-40);
+			}else{
+				return new Vector2D(EngineGame.getCamera().getY(),position);
+			}
+		}
 	}
 
 	private void ramdomRoute() {
@@ -128,6 +152,19 @@ public class Asteroid implements IDrawBehavior{
 		}		
 	}
 
+	@Override
+	public boolean isAlive() {
+		if(-40 >= position.getX() &&
+				position.getX() >= EngineGame.getCamera().getX()+40){
+			return false;
+		}else if(-40 >= position.getY() &&
+				position.getY() >= EngineGame.getCamera().getY()+40){
+			return false;
+		}
+		return true;
+	}
+
+	
 
 	@Override
 	public void update() {

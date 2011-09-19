@@ -1,56 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">O último sobrevivente</string>
+    <string name="app_name">O Último Sobrevivente</string>
+
+ 	<string name="app_first_name">O Último</string>
+    <string name="app_last_name">Sobrevivente</string>
     
-    <string name="lg_twitter">Nome de usuário ou e-mail do Twitter</string>
-    
-    
-    <string name="profile">perfil</string>
+
+<!-- Cadastro do Perfil -->  
+    <string name="profile">Perfil</string>
     <string name="erro_profile">Nickname é necessário!</string>
     
     <string name="cadastre_palyer_1">
-    	Oi, este e um pequeno cadastro para o seu   		
+    	Oi, este é um pequeno cadastro necessário     		
     </string>
     
     <string name="cadastre_palyer_2">
-    	perfil em O Último sobrevivente, você pode    
+    	para o seu perfil em O Último sobrevivente,     
     </string>
     
     <string name="cadastre_palyer_3">
-    	criar um novo nickname aqui, mas nos preferimos
+    	você pode criar um novo nickname aqui,
     </string>
     
     <string name="cadastre_palyer_4">
-    	que utilize seu nickename do seu perfil do twitter
+    	 mas nos preferimos que utilize seu 
     </string>
     
     <string name="cadastre_palyer_5">
-    	para uma melhor interação com os outros jogadores
+    	nickename do seu perfil do twitter 
     </string>
     
     <string name="cadastre_palyer_6">
-    	e com a comunidade.
+    	para uma melhor interação com os 
     </string>
     
+    <string name="cadastre_palyer_7">
+    	outros jogadores e com a comunidade.
+    </string>
     
-    <string name="app_alterarion_player">Altera perfil</string>
+
+<!-- Auteração do Perfil -->
     
-    <string name="info_alteration_player">Você pode alterar seu nickname a qualquer momento ou 
-    excluir seu perfil em O Último sobrevivente, mas essa ação resultará na perca de todos os 
-    seus dados salvos relativo ao jogo.</string>
+    <string name="alteration_palyer_1">
+    	Oi,você pode alterar seu nickname a     		
+    </string>
     
+    <string name="alteration_palyer_2">
+    	qualquer momento ou excluir seu     
+    </string>
     
-    <string name="lg_twitter_01">Login do Twitter </string>
-    <string name="lg_twitter_02"></string>
+    <string name="alteration_palyer_3">
+    	perfil em O Último sobrevivente,
+    </string>
     
+    <string name="alteration_palyer_4">
+    	 mas essa ação resultará na perca 
+    </string>
+    
+    <string name="alteration_palyer_5">
+    	de todos os seus dados salvos
+    </string>
+    
+    <string name="alteration_palyer_6">
+    	relativo ao jogo. 
+    </string>
+   
+    <string name="removeProfile">Seu perfil será excluido e o aplicativo encerrado.</string>    
+   
+    <string name="remove_confirm">Confirmar remoção do perfil</string>
+    <string name="remove_back">Não remover perfil</string>
+
+
+<!-- Trofeu -->
     <string name="trophies">Troféus</string>
-    
-    <string name="removeProfile">Alerta: Essa ação resultará na perda de todos os dados em O último Sobrevivente</string>
-    <string name="alert">Alerta</string>
-    
-      
-    
+
     <string name="t01">O início!</string>
     <string name="tObjective01">Finalizar uma partida simples.</string>
     

@@ -2,12 +2,9 @@ package br.com.thelastsurvivor.engine.simpleplayergame;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.view.Display;
-import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
-import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -31,9 +28,9 @@ public class SimplePlayerMode extends EngineGame {
 
 		//this.image = this.context.getResources().getDrawable(R.drawable.spacecraft_image);
 		
-		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(this.camera.getBeginningSizeWidth(),this.camera.getBeginningSizeHeight()));
+		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(200,200));
 		
-		this.updateList.add(new Asteroid(this.context, this.getSpacecraft()));
+		
 
 	}
 	
@@ -41,20 +38,36 @@ public class SimplePlayerMode extends EngineGame {
 	@Override
 	public void update(){
 				
-		this.spacecraft.update();
 
+		this.spacecraft.update();
+		this.verificationNewSpacecraftPositionScreen();
+		
 		super.update();
 		
-		//this.spacecraft.scoll(this.getCamera());
 		
 		
 	}
+	
+	public void verificationNewSpacecraftPositionScreen(){
+		if(-40 > this.spacecraft.getPosition().getY()){
+			this.spacecraft.getPosition().setY(this.camera.getY());
+		}else if(this.spacecraft.getPosition().getY() > this.camera.getY()+40){
+			this.spacecraft.getPosition().setY(0);
+		}
+	
+		if(-40 > this.spacecraft.getPosition().getX()){
+			this.spacecraft.getPosition().setX(this.camera.getX());
+		}else if(this.spacecraft.getPosition().getX() > this.camera.getX()+40){
+			this.spacecraft.getPosition().setX(0);
+		}
+	}
+	
 	
 	@Override
 	public void draw(Canvas c) {
 		
 		
-		//this.spacecraft.draw(c);
+		this.spacecraft.draw(c);
 	    
 	 
  		super.draw(c);

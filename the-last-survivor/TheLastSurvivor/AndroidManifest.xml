@@ -11,9 +11,6 @@
    
     <provider android:name=".provider.TheLastSurvivorProvider"
               android:authorities="br.com.thelastsurvivor.provider.thelastsurvivorprovider" />
-              
- <!--    <provider android:name=".provider.player.PlayerProvider"
-              android:authorities="br.com.thelastsurvivor.provider.thelastsurvivorprovider.player" />  -->
         
     <activity android:name=".activity.TheLastSurvivorActivity"
               android:label="@string/app_name"
