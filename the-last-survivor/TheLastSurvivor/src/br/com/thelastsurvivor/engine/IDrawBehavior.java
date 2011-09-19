@@ -10,6 +10,11 @@ public interface IDrawBehavior{
 	public void draw(Canvas c);
 
 	public boolean isAlive();
+	
+	public Integer getSizeWidth();
+	public Integer getSizeHeight();
+	
 	public Vector2D getPosition();
+	void setAlive(boolean alive);
 	
 }

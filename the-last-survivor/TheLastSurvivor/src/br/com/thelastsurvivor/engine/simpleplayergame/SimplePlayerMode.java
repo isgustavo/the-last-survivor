@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.os.Vibrator;
 import android.view.Display;
 import br.com.thelastsurvivor.engine.EngineGame;
+import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
+import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimplePlayerMode extends EngineGame {
@@ -28,7 +30,7 @@ public class SimplePlayerMode extends EngineGame {
 
 		//this.image = this.context.getResources().getDrawable(R.drawable.spacecraft_image);
 		
-		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(200,200));
+		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(400,200));
 		
 		
 
@@ -43,6 +45,8 @@ public class SimplePlayerMode extends EngineGame {
 		this.verificationNewSpacecraftPositionScreen();
 		
 		super.update();
+		
+		this.verificationCollisionShoot();
 		
 		
 		
@@ -62,6 +66,23 @@ public class SimplePlayerMode extends EngineGame {
 		}
 	}
 	
+	public void verificationCollisionShoot(){
+		
+		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
+			for(IDrawBehavior asteroid : this.asteroidsDrawables){
+				if((asteroid.getPosition().getX() < shoot.getPosition().getX() &&
+						shoot.getPosition().getX() < asteroid.getPosition().getX()+asteroid.getSizeWidth()) &&
+						(asteroid.getPosition().getY() < shoot.getPosition().getY() &&
+								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
+					shoot.setAlive(false);
+					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
+						asteroid.setAlive(false);
+					}
+				}
+			}
+		}
+
+	}
 	
 	@Override
 	public void draw(Canvas c) {

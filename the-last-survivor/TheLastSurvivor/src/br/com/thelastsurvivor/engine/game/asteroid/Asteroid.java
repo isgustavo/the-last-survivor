@@ -1,7 +1,10 @@
 package br.com.thelastsurvivor.engine.game.asteroid;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
@@ -16,6 +19,12 @@ public class Asteroid implements IDrawBehavior{
 	private Context context;
 	
 	private Drawable drawableImage;
+	private Integer sizeWidth;
+	private Integer sizeHeight;
+	
+	private Integer life;
+	
+	private Boolean isAlive;
 	private Integer typeImage;
 	
 	private Vector2D position;
@@ -46,6 +55,7 @@ public class Asteroid implements IDrawBehavior{
 		
 		
 		this.position = ramdonOrigin();
+		this.isAlive = true;
 		
 		this.drawableImage = ramdomImageAteroid();
 		this.route = (int) (Math.random()*10);
@@ -129,22 +139,58 @@ public class Asteroid implements IDrawBehavior{
 		typeImage = (int) (Math.random()*5);
 		switch(typeImage){
 		case 0:
-			return this.context.getResources().getDrawable(R.drawable.asteroids_1_image); 
+			Bitmap image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image);
+			this.sizeHeight = image.getHeight();
+			this.sizeWidth = image.getWidth();
+			
+			this.life = 1;
+			
+			return new BitmapDrawable(image);//this.context.getResources().getDrawable(R.drawable.asteroids_1_image); 
 		
 		case 1:
-			return this.context.getResources().getDrawable(R.drawable.asteroids_2_image); 
+			Bitmap image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image);
+			this.sizeHeight = image2.getHeight();
+			this.sizeWidth = image2.getWidth();
+			
+			this.life = 1;
+			
+			return new BitmapDrawable(image2);
 		
 		case 2:
-			return this.context.getResources().getDrawable(R.drawable.asteroids_3_image); 
+			Bitmap image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
+			this.sizeHeight = image3.getHeight();
+			this.sizeWidth = image3.getWidth();
+			
+			this.life = 1;
+			
+			return new BitmapDrawable(image3); 
 		
 		case 3:
-			return this.context.getResources().getDrawable(R.drawable.asteroids_4_image); 
+			Bitmap image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_4_image);
+			this.sizeHeight = image4.getHeight();
+			this.sizeWidth = image4.getWidth();
+			
+			this.life = 2;
+			
+			return new BitmapDrawable(image4); 
 		
 		case 4:
-			return this.context.getResources().getDrawable(R.drawable.asteroids_5_image); 
+			Bitmap image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
+			this.sizeHeight = image5.getHeight();
+			this.sizeWidth = image5.getWidth();
+			
+			this.life = 3;
+			
+			return new BitmapDrawable(image5);
 		
 		case 5:
-			return this.context.getResources().getDrawable(R.drawable.asteroids_6_image); 
+			Bitmap image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image);
+			this.sizeHeight = image6.getHeight();
+			this.sizeWidth = image6.getWidth();
+			
+			this.life = 3;
+			
+			return new BitmapDrawable(image6);
 		
 		default: 
 			return null;
@@ -154,14 +200,22 @@ public class Asteroid implements IDrawBehavior{
 
 	@Override
 	public boolean isAlive() {
-		if(-40 >= position.getX() &&
-				position.getX() >= EngineGame.getCamera().getX()+40){
-			return false;
-		}else if(-40 >= position.getY() &&
-				position.getY() >= EngineGame.getCamera().getY()+40){
-			return false;
+		if(this.isAlive){
+			if(-40 >= position.getX() &&
+					position.getX() >= EngineGame.getCamera().getX()+40){
+				return false;
+			}else if(-40 >= position.getY() &&
+					position.getY() >= EngineGame.getCamera().getY()+40){
+				return false;
+			}
+			return true;
 		}
-		return true;
+		return this.isAlive;
+	}
+	
+	@Override
+	public void setAlive(boolean alive){
+		this.isAlive = alive;
 	}
 
 	
@@ -247,6 +301,26 @@ public class Asteroid implements IDrawBehavior{
 
 	public Vector2D getPosition() {
 		return position;
+	}
+
+	public Integer getSizeWidth() {
+		return sizeWidth;
+	}
+
+	public Integer getSizeHeight() {
+		return sizeHeight;
+	}
+
+	public Integer getLife() {
+		return life;
+	}
+
+	public void setLife(Integer life) {
+		this.life = life;
+	}
+	
+	public void addLife(Integer life) {
+		this.life += life;
 	}
 
 	

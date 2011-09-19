@@ -420,6 +420,6 @@ public class TrophiesActivity extends Activity{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		audioPlayer.fechar();
+		//audioPlayer.fechar();
 	}
 }

@@ -29,7 +29,7 @@ public abstract class EngineGame{
 	
 	
 	private List<IDrawBehavior> asteroids;
-	private List<IDrawBehavior> asteroidsDrawables;
+	protected List<IDrawBehavior> asteroidsDrawables;
 	
 	public List<IDrawBehavior> updateList;
 	private List<IDrawBehavior> drawableList;
@@ -136,6 +136,17 @@ public abstract class EngineGame{
 		
 		this.asteroidsDrawables.clear();
 		this.asteroidsDrawables.addAll(asteroids);
+		
+	}
+	
+	public boolean isAsteroidDestroyed(Asteroid asteroid, IWeaponBehavior shoot){
+		
+		asteroid.addLife(-shoot.getPower());
+		
+		if(asteroid.getLife() == 0){
+			return true;
+		}
+		return false;
 		
 	}
 	

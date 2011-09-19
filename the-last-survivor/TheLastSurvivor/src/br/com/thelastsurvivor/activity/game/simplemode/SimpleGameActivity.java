@@ -15,6 +15,7 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.TextView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
@@ -44,30 +45,6 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	  
 	}
 	
-	@Override
-	public void onPause() {
-        super.onPause();
-        
-        this.manager.unregisterListener(this); 
-	}
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        
-        this.manager.registerListener(this, 
-            accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-    
-    @Override
-    protected void onDestroy() {
-    	super.onDestroy();
-    	this.audioPlayer.fechar();
-    	
-    	this.wakeLock.release();
-    }
-	    
-
 	public void init(){
 		
 		this.audioPlayer = new MyAudioPlayer(this, R.raw.singleplayer_soundtrack);
@@ -95,6 +72,32 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     	this.view = new EngineGameView(this,engine);
 	}
 
+	
+	@Override
+	public void onPause() {
+        super.onPause();
+        
+        this.manager.unregisterListener(this); 
+	}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        
+        this.manager.registerListener(this, 
+            accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	this.audioPlayer.fechar();
+    	
+    	this.wakeLock.release();
+    }
+	    
+
+	
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {}
 
@@ -143,15 +146,11 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
-		//Long nowTime = System.nanoTime();
-		
-		//if(nowTime > beforeTime+1000000000L){
+	
 			this.engine.getSpacecraft().newShoot();
 			
 			
-		//}
 		
-		//beforeTime = nowTime;
 		return true;
 	}
 

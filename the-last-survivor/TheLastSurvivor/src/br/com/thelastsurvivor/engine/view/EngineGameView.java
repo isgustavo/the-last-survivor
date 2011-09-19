@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.GameLoopThread;
 
@@ -11,19 +13,17 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 
 	private Long lastUpdate;
     private Long sleepTime;
-	
-    //engineGame
-    
+
     private SurfaceHolder surfaceHolder;
     private Context context;
+    
+
     
     private EngineGame engine;
     private GameLoopThread gameLoop;
 	
 	public EngineGameView(Context context, EngineGame engine) {
 		super(context);
-		// TODO Auto-generated constructor stub
-		Log.d("EngineGameView", "01");
 		
 		this.context = context;
 		this.engine = engine;
@@ -41,12 +41,9 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
 		
-		Log.d("EngineGameView", "02");
-		//this.surfaceHolder.addCallback(this);
-		gameLoop = new GameLoopThread(surfaceHolder, context, engine);
-		//gameLoop = new GameLoopThread(this);
 		
-		//Thread thread = new Thread(gameLoop);
+		gameLoop = new GameLoopThread(surfaceHolder, context, engine);
+		
 		setFocusable(true);
 	}
 
@@ -55,13 +52,12 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0) {
-		Log.d("EngineGameView", "03");
 		if(this.gameLoop.state == GameLoopThread.PAUSED){
-            //When game is opened again in the Android OS
+          
 			this.gameLoop = new GameLoopThread(getHolder(), context, engine);
 			this.gameLoop.start();
         }else{
-            //creating the game Thread for the first time
+            
         	this.gameLoop.start();
         }
     

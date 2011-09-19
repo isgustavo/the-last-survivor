@@ -23,8 +23,12 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	private Bitmap image;
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
+	private Integer sizeWidth;
+	private Integer sizeHeight;
 	
 	private Bitmap spacecraft;
+	
+	private Integer power;
 	
 	private Vector2D position;
 	private Double angle;
@@ -46,7 +50,12 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	@Override
 	public void init() {
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
-
+		
+		this.power = 1;
+		
+		this.sizeHeight = image.getHeight();
+		this.sizeWidth = image.getWidth();
+		
 		this.firstPosition();	
 		this.isAlive = true;
 		
@@ -122,17 +131,33 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		return this.isAlive;
 	}
 
+	@Override
+	public void setAlive(boolean alive){
+		this.isAlive = alive;
+	}
 
 	@Override
 	public Vector2D getPosition() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.position;
 	}
 
 
-	
-	
-	
+	@Override
+	public Integer getSizeWidth() {
+		return this.sizeWidth;
+	}
 
-	
+
+	@Override
+	public Integer getSizeHeight() {
+		return this.sizeHeight;
+	}
+
+
+	public Integer getPower() {
+		return power;
+	}
+
+
 }

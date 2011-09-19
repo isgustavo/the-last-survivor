@@ -124,7 +124,8 @@ public class Spacecraft implements IDrawControllable {
 	
 	private void controlUpdate(){
 			
-	    if (left) {
+	 
+		if (left) {
 	    	if(this.angle == 360){
 	    		this.angle = 0.0;
 	    	}else{
@@ -192,7 +193,7 @@ public class Spacecraft implements IDrawControllable {
 	public void controlShoots(){
 		if(this.shootsDrawables != null){
 			
-			this.getShootsDrawables();
+			this.shootsDrawables();
 			
 			this.shootsDrawables.addAll(shoots);
 			
@@ -205,7 +206,7 @@ public class Spacecraft implements IDrawControllable {
 		
 	}
 	
-	private void getShootsDrawables(){
+	private void shootsDrawables(){
 		List<IWeaponBehavior> shoots = new ArrayList<IWeaponBehavior>();
 		for(IWeaponBehavior shoot : this.shootsDrawables){
 			if(shoot.isAlive()){
@@ -217,17 +218,13 @@ public class Spacecraft implements IDrawControllable {
 		this.shootsDrawables.addAll(shoots);
 		
 	}
-	
+
 	public void newShoot(){
 		
 		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.image);	
 	    shoots.add(shoot);
 	}
 
-	
-
-	
-	
 	@Override
 	public void draw(Canvas c) {
 
@@ -251,26 +248,13 @@ public class Spacecraft implements IDrawControllable {
 	    
 	}
 	
-	public void drawDrif(Canvas c){
-		
-		
-		
-		this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
-	    		this.position.getX()+this.resizedBitmap.getWidth(), 
-	    			this.position.getY()+this.resizedBitmap.getHeight());
-		
-		 this.drawableImage.draw(c);
-		 
+	@Override
+	public boolean isAlive() {
+		return true;
 	}
-
-
+	
 	public Vector2D getPosition() {
 		return position;
-	}
-
-	
-	public Boolean getOrientationChange() {
-		return orientationChange;
 	}
 
 	public Double getAngle() {
@@ -285,10 +269,29 @@ public class Spacecraft implements IDrawControllable {
 		return up;
 	}
 
-	@Override
-	public boolean isAlive() {
-		return true;
+	public List<IWeaponBehavior> getShootsDrawables() {
+		return shootsDrawables;
 	}
+
+	@Override
+	public Integer getSizeWidth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getSizeHeight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setAlive(boolean alive) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 	
 	
