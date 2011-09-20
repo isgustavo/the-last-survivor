@@ -16,6 +16,7 @@ public class SimplePlayerMode extends EngineGame {
 	//private Vector2D camera;
 
 	//private Drawable image;
+	private Integer points;
 
 	public SimplePlayerMode(Context context, Vibrator vibrator, Display display) {
 		super(context, vibrator, display);
@@ -99,6 +100,11 @@ public class SimplePlayerMode extends EngineGame {
 
 	public Spacecraft getSpacecraft() {
 		return spacecraft;
+	}
+
+
+	public Integer getPoints() {
+		return points;
 	}
 
 

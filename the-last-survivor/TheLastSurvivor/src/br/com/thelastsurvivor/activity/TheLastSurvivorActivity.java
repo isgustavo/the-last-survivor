@@ -9,7 +9,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.player.PlayerActivity;
-import br.com.thelastsurvivor.view.TheLastSurvivorView;
 
 public class TheLastSurvivorActivity extends Activity {
 

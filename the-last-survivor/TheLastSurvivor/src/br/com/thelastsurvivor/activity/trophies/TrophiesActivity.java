@@ -1,24 +1,17 @@
 package br.com.thelastsurvivor.activity.trophies;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.player.CadastrePlayerActivity;
-import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.model.trophies.Trophies;
-import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.MyAudioPlayer;

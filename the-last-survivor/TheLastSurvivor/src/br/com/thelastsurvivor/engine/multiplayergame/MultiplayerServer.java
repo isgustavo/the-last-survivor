@@ -2,7 +2,6 @@ package br.com.thelastsurvivor.engine.multiplayergame;
 
 import java.io.IOException;
 
-import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;

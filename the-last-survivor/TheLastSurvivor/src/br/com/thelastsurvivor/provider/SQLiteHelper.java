@@ -1,10 +1,20 @@
 package br.com.thelastsurvivor.provider;
 
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
+import br.com.thelastsurvivor.model.game.Game;
+import br.com.thelastsurvivor.model.game.Shoot;
+import br.com.thelastsurvivor.provider.game.AsteroidProvider;
+import br.com.thelastsurvivor.provider.game.GameProvider;
+import br.com.thelastsurvivor.provider.game.ShootProvider;
+import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
+import br.com.thelastsurvivor.util.Vector2D;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
@@ -24,6 +34,37 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ TrophiesProvider.ID + " INTEGER PRIMARY KEY, " 
 				+ TrophiesProvider.DATE_ACHIEVED +" INTEGER ); ");
 		
+		db.execSQL(" CREATE TABLE "+ GameProvider.NAME_TABLE + "( "
+				+ GameProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ GameProvider.ID_PLAYER + " INTEGER, "	
+				+ GameProvider.DATE_PAUSE +" VARCHAR, " 
+				+ GameProvider.TIME_PAUSE +" INTEGER, " 
+				+ GameProvider.POINTS +" INTEGER ); "); 
+		
+		db.execSQL(" CREATE TABLE "+ SpacecraftProvider.NAME_TABLE + "( "
+				+ SpacecraftProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ SpacecraftProvider.ID_GAME + " INTEGER, "	
+				+ SpacecraftProvider.POS_X +" INTEGER, " 
+				+ SpacecraftProvider.POS_Y +" INTEGER, " 
+				+ SpacecraftProvider.ANGLE +" REAL ); "); 
+		
+		db.execSQL(" CREATE TABLE "+ ShootProvider.NAME_TABLE + "( "
+				+ ShootProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ ShootProvider.ID_SPACECRAFT + " INTEGER, "	
+				+ ShootProvider.POS_X +" INTEGER, " 
+				+ ShootProvider.POS_Y +" INTEGER, " 
+				+ ShootProvider.ANGLE +" REAL, "
+				+ ShootProvider.TYPE +" INTEGER ); ");
+		
+		db.execSQL(" CREATE TABLE "+ AsteroidProvider.NAME_TABLE + "( "
+				+ AsteroidProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ AsteroidProvider.ID_GAME + " INTEGER, "	
+				+ AsteroidProvider.POS_X +" INTEGER, " 
+				+ AsteroidProvider.POS_Y +" INTEGER, " 
+				+ AsteroidProvider.ROUTE +" INTEGER, "
+				+ AsteroidProvider.TYPE +" INTEGER ); ");
+		
+
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ " VALUES (1, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 

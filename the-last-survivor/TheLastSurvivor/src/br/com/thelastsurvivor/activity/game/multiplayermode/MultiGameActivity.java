@@ -1,7 +1,5 @@
 package br.com.thelastsurvivor.activity.game.multiplayermode;
 
-import java.util.UUID;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;

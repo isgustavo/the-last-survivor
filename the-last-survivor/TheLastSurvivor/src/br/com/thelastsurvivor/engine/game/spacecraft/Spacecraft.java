@@ -13,8 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.CameraGame;
-import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawControllable;
 import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
@@ -31,6 +29,8 @@ public class Spacecraft implements IDrawControllable {
 	
 	private Vector2D position;
 	private Vector2D sensorPosition;
+	
+	private Integer life;
 	
 	private Boolean orientationChange;
 
@@ -228,7 +228,7 @@ public class Spacecraft implements IDrawControllable {
 	@Override
 	public void draw(Canvas c) {
 
-		Log.d("TIRO", "."+shootsDrawables.size());
+		
 		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
 		 
 	/*		  this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
@@ -290,6 +290,23 @@ public class Spacecraft implements IDrawControllable {
 	public void setAlive(boolean alive) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Integer getLife() {
+		return this.life;
+	}
+
+	@Override
+	public Integer getTypeImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getRoute() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

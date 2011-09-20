@@ -11,12 +11,12 @@ import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.Orientation;
-import br.com.thelastsurvivor.engine.util.Constant;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	
-	private static final int SPEED_SHOOT = 6;
+	private final int TYPE_SHOOT = 1;
+	private final int power = 1;
 	
 	private Context context;
 	
@@ -27,8 +27,6 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	private Integer sizeHeight;
 	
 	private Bitmap spacecraft;
-	
-	private Integer power;
 	
 	private Vector2D position;
 	private Double angle;
@@ -50,8 +48,6 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	@Override
 	public void init() {
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
-		
-		this.power = 1;
 		
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();
@@ -162,6 +158,31 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 
 	public Integer getPower() {
 		return power;
+	}
+
+
+	@Override
+	public Integer getLife() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Integer getTypeImage() {
+		return this.TYPE_SHOOT;
+	}
+
+
+	@Override
+	public Integer getRoute() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Double getAngle() {
+		return angle;
 	}
 
 

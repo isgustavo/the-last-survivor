@@ -40,7 +40,22 @@
     </string>
     
 
-<!-- Auteração do Perfil -->
+<!-- Novo Perfil -->
+	
+	<string name="cadastre_new_palyer_1">
+    	Oi! Esse seu aparelho pode possuir
+    </string>
+    <string name="cadastre_new_palyer_2">
+    	até 3 perfis direfentes em O ÚLTIMO  
+    </string>
+    <string name="cadastre_new_palyer_3">
+    	SOBREVIVENTE, evitando que alguem
+	</string>
+	<string name="cadastre_new_palyer_4">
+    	estrague seu jogo perfeito salvo. 
+	</string>
+	
+<!-- Alteração do Perfil -->
     
     <string name="alteration_palyer_1">
     	Oi! Você pode alterar seu nickname a     		

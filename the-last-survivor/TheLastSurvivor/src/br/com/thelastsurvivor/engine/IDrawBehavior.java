@@ -17,4 +17,9 @@ public interface IDrawBehavior{
 	public Vector2D getPosition();
 	void setAlive(boolean alive);
 	
+	public Integer getLife() ;
+	public Integer getTypeImage() ;
+	public Double getAngle();
+	public Integer getRoute() ;
+	
 }

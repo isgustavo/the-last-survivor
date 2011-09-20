@@ -1,11 +1,8 @@
 package br.com.thelastsurvivor.engine.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TextView;
-import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.GameLoopThread;
 
@@ -16,8 +13,6 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 
     private SurfaceHolder surfaceHolder;
     private Context context;
-    
-
     
     private EngineGame engine;
     private GameLoopThread gameLoop;
@@ -95,6 +90,13 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 
 	public void setSleepTime(Long sleepTime) {
 		this.sleepTime = sleepTime;
+	}
+
+	public GameLoopThread getGameLoop() {
+		return gameLoop;
+	}
+	public EngineGame getEngine() {
+		return engine;
 	}
 	
 	

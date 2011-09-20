@@ -319,6 +319,20 @@ public class Asteroid implements IDrawBehavior{
 		this.life += life;
 	}
 
+	public Integer getTypeImage() {
+		return typeImage;
+	}
+
+	public Integer getRoute() {
+		return route;
+	}
+
+	@Override
+	public Double getAngle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	

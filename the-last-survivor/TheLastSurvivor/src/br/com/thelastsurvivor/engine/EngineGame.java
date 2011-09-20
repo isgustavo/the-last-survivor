@@ -115,7 +115,7 @@ public abstract class EngineGame{
 	private void controlAsteroids(){
 		if(this.asteroidsDrawables != null){
 			
-			this.getAsteroidsDrawables();
+			this.asteroidsDrawables();
 			
 			this.asteroidsDrawables.addAll(asteroids);
 			
@@ -127,7 +127,7 @@ public abstract class EngineGame{
 		}
 	}
 	
-	private void getAsteroidsDrawables(){
+	private void asteroidsDrawables(){
 		List<IDrawBehavior> asteroids = new ArrayList<IDrawBehavior>();
 		for(IDrawBehavior asteroid : this.asteroidsDrawables){
 			if(asteroid.isAlive()){
@@ -153,7 +153,7 @@ public abstract class EngineGame{
 	
 	public void draw(Canvas c) {
 
-		Log.d("NUMERO", "."+asteroidsDrawables.size());
+		//Log.d("NUMERO", "."+asteroidsDrawables.size());
 		for (IDrawBehavior object : asteroidsDrawables) {
 
 			object.draw(c);
@@ -193,6 +193,12 @@ public abstract class EngineGame{
 		this.drawableList = drawableList;
 	}
 
+	
+
+	public List<IDrawBehavior> getAsteroidsDrawables() {
+		return asteroidsDrawables;
+	}
+
 
 	public Context getContext() {
 		return context;
@@ -205,6 +211,11 @@ public abstract class EngineGame{
 
 	public Spacecraft getSpacecraft() {
 		return spacecraft;
+	}
+
+
+	public Integer getStartTime() {
+		return startTime;
 	}
 
 

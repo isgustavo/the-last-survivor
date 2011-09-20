@@ -2,7 +2,6 @@ package br.com.thelastsurvivor.activity.player;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,6 +50,9 @@ public class AlterationPlayerActivity extends Activity{
 		
 		final Button buttonRemove = (Button) findViewById(R.id.buttonRemove);
 		buttonRemove.setOnClickListener(buttonRemoveListener);
+		
+		final Button buttonAdd = (Button) findViewById(R.id.buttonAdd);
+		buttonAdd.setOnClickListener(buttonAddListener);
 		
 		this.i = new Intent(this, MainMenuActivity.class);
 		
@@ -107,6 +109,17 @@ public class AlterationPlayerActivity extends Activity{
 			alert.setPositiveButton(R.string.remove_confirm, removeProfile);
 			alert.setNeutralButton(R.string.remove_back, null);
 			alert.show();
+        }
+	};
+	
+	private OnClickListener buttonAddListener = new OnClickListener() {  
+		
+        public void onClick(View v) {  
+			
+        	
+        	Intent i = new Intent(AlterationPlayerActivity.this, CadastreNewPlayerActivity.class);
+        	
+			startActivity(i);
         }
 	};
 	

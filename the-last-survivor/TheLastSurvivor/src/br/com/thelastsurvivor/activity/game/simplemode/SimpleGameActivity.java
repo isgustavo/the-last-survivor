@@ -1,6 +1,11 @@
 package br.com.thelastsurvivor.activity.game.simplemode;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,13 +18,21 @@ import android.os.Vibrator;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import android.widget.TextView;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
+import br.com.thelastsurvivor.model.game.Asteroid;
+import br.com.thelastsurvivor.model.game.Game;
+import br.com.thelastsurvivor.model.game.Shoot;
+import br.com.thelastsurvivor.model.game.Spacecraft;
+import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
+import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimpleGameActivity extends Activity implements SensorEventListener, OnGestureListener{
 	
@@ -153,7 +166,74 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		return true;
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+	    if(keyCode == KeyEvent.KEYCODE_BACK) {
 
+	    	this.view.getGameLoop().state = 2;
+	    	
+	    	Game game = this.preparesGameToSave();
+	    	
+	    	this.save(game);
+	    	
+	    	
+            //finish();
+            return true;
+	    }
+	    return false;
+	}
+	
+	public Game preparesGameToSave(){
+		Spacecraft spacecraft = getSpacecraftGame();
+		List<Asteroid> asteroids = getAsteroidsGame();
+			
+		return new Game(new Date(), this.view.getEngine().getStartTime(), 
+				((SimplePlayerMode)this.view.getEngine()).getPoints(),
+				spacecraft, asteroids);
+		
+	}
+	
+
+	private Spacecraft getSpacecraftGame(){
+
+		Vector2D position = this.view.getEngine().getSpacecraft().getPosition();
+		Integer life = this.view.getEngine().getSpacecraft().getLife();
+		Double angle = this.view.getEngine().getSpacecraft().getAngle();
+		List<Shoot> shoots = getShootsGame(); 
+		
+		return new Spacecraft(position, life, angle, shoots);
+		
+	}
+	
+	private List<Shoot> getShootsGame(){
+		
+		List<Shoot> shoots = new ArrayList<Shoot>();
+		
+		for(IDrawBehavior shoot : this.view.getEngine().getSpacecraft().getShootsDrawables()){
+			shoots.add(new Shoot(shoot.getPosition(), shoot.getAngle(), shoot.getTypeImage()));
+		}
+		
+		return shoots;
+
+	}
+	
+	private List<Asteroid> getAsteroidsGame(){
+		
+		List<Asteroid> asteroids = new ArrayList<Asteroid>();
+		
+		
+		for(IDrawBehavior asteroid : this.view.getEngine().getAsteroidsDrawables()){
+			asteroids.add(new Asteroid(asteroid.getPosition(), asteroid.getRoute(), asteroid.getLife(), asteroid.getTypeImage()));
+		}
+		
+		return asteroids;
+		
+	}
+	
+	private void save(Game game){
+		
+		
+	}
 	
 
 }

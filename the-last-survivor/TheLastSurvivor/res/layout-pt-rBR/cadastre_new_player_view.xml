@@ -26,87 +26,81 @@
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/profile" 
-						android:textSize="16dp" android:textColor="#4ed3ff"
+						android:textSize="15dp" android:textColor="#4ed3ff"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="385dp" android:layout_y="15dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
     		
 				
 				<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_1" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_1" 
+						android:textSize="13dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="25dp" android:layout_y="60dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_2" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_2" 
+						android:textSize="13dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="24dp" android:layout_y="80dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_3" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_3" 
+						android:textSize="13dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="25dp" android:layout_y="100dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_4" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_4" 
+						android:textSize="13dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="25dp" android:layout_y="120dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_5" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_5" 
+						android:textSize="13dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="25dp" android:layout_y="140dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_6" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_6" 
+						android:textSize="13dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="25dp" android:layout_y="160dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-				
-				
 				<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/app_name" android:text="@string/cadastre_palyer_7" 
+						android:textSize="13dp" android:textColor="@android:color/white"
+						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+						android:layout_x="25dp" android:layout_y="180dp">
+			 	</br.com.thelastsurvivor.util.FT2FontTextView>
+				
+    			
+    			<br.com.thelastsurvivor.util.FT2FontTextView 
 					   android:id="@+id/textNickName" android:text="@string/nickname" 
 					   android:textSize="15dp" android:textColor="@android:color/white"
 					   android:layout_width="fill_parent" android:layout_height="wrap_content" 
 					   lht:ttf_name="FT2FONT.TTF"
-					   android:layout_x="25dp" android:layout_y="200dp">
+					   android:layout_x="22dp" android:layout_y="225dp">
 			    </br.com.thelastsurvivor.util.FT2FontTextView>
     
 			    <EditText android:layout_height="40dp" android:layout_width="300dp" 
 				          android:textSize="17dp"
 				          android:id="@+id/editNickName" 
 				          android:inputType="textPersonName" 
-				          android:layout_x="140dp" android:layout_y="190dp">
+				          android:layout_x="125dp" android:layout_y="210dp">
 				</EditText>
-				
 				
 				<Button android:layout_height="wrap_content" 
 			      		android:layout_width="wrap_content"
 			      		android:background="@drawable/button_ok_image" 
 			      		android:id="@+id/buttonOk"
-			      		android:layout_x="260dp" android:layout_y="230dp">
+			      		android:layout_x="230dp" android:layout_y="250dp">
 			    </Button>
-			    
-			    <Button android:layout_height="wrap_content" 
-			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_remove_image" 
-			      		android:id="@+id/buttonRemove"
-			      		android:layout_x="360dp" android:layout_y="230dp">
-			    </Button>
-			    
-			    <Button android:layout_height="wrap_content" 
-			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_remove_image" 
-			      		android:id="@+id/buttonAdd"
-			      		android:layout_x="460dp" android:layout_y="230dp">
-			    </Button>
-
+		
+    			
  		</AbsoluteLayout>
  </FrameLayout>
  </AbsoluteLayout>  
+
+	
