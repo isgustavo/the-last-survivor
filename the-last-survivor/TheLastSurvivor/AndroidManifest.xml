@@ -37,7 +37,7 @@
         </intent-filter>
     </activity>
     
-    <activity android:name=".activity.game.miltiplayermode.MultiGameActivity"
+    <activity android:name=".activity.game.multiplayermode.MultiGameActivity"
   			  android:screenOrientation="landscape"
   			  android:launchMode="singleTask"
   			  android:alwaysRetainTaskState="true">

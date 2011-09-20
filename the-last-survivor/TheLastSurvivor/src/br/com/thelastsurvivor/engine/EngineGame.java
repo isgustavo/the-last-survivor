@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
@@ -152,6 +153,7 @@ public abstract class EngineGame{
 	
 	public void draw(Canvas c) {
 
+		Log.d("NUMERO", "."+asteroidsDrawables.size());
 		for (IDrawBehavior object : asteroidsDrawables) {
 
 			object.draw(c);

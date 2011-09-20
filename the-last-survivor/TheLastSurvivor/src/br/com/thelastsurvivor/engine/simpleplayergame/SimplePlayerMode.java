@@ -53,15 +53,15 @@ public class SimplePlayerMode extends EngineGame {
 	}
 	
 	public void verificationNewSpacecraftPositionScreen(){
-		if(-40 > this.spacecraft.getPosition().getY()){
+		if(-10 > this.spacecraft.getPosition().getY()){
 			this.spacecraft.getPosition().setY(this.camera.getY());
-		}else if(this.spacecraft.getPosition().getY() > this.camera.getY()+40){
+		}else if(this.spacecraft.getPosition().getY() > this.camera.getY()+10){
 			this.spacecraft.getPosition().setY(0);
 		}
 	
-		if(-40 > this.spacecraft.getPosition().getX()){
+		if(-10 > this.spacecraft.getPosition().getX()){
 			this.spacecraft.getPosition().setX(this.camera.getX());
-		}else if(this.spacecraft.getPosition().getX() > this.camera.getX()+40){
+		}else if(this.spacecraft.getPosition().getX() > this.camera.getX()+10){
 			this.spacecraft.getPosition().setX(0);
 		}
 	}

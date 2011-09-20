@@ -43,7 +43,7 @@
 <!-- Auteração do Perfil -->
     
     <string name="alteration_palyer_1">
-    	Oi,você pode alterar seu nickname a     		
+    	Oi! Você pode alterar seu nickname a     		
     </string>
     
     <string name="alteration_palyer_2">
@@ -51,11 +51,11 @@
     </string>
     
     <string name="alteration_palyer_3">
-    	perfil em O Último sobrevivente,
+    	perfil em "O Último sobrevivente".
     </string>
     
     <string name="alteration_palyer_4">
-    	 mas essa ação resultará na perca 
+    	 Mas essa ação resultará na perca 
     </string>
     
     <string name="alteration_palyer_5">
@@ -63,7 +63,7 @@
     </string>
     
     <string name="alteration_palyer_6">
-    	relativo ao jogo. 
+    	relativos ao jogo. 
     </string>
    
     <string name="removeProfile">Seu perfil será excluido e o aplicativo encerrado.</string>    
@@ -71,7 +71,45 @@
     <string name="remove_confirm">Confirmar remoção do perfil</string>
     <string name="remove_back">Não remover perfil</string>
 
+<!-- Jogo Multiplayer -->
 
+	<string name="multiplayer">Multiplayer</string>
+
+	<string name="not_bluetooth">Aparelho não suporta Bluetooth.</string>
+	<string name="bluetooth_confirm">Você deve ativar o Bluetooth pra continuar.</string>
+	
+	<string name="multiplayer_mode_1">
+    	Oi! Você deverá escolher qual seu  
+    </string>
+    <string name="multiplayer_mode_2">
+    	tipo de conexão. Escolhendo o tipo 
+    </string>
+    <string name="multiplayer_mode_3">
+    	SERVIDOR você deverá aceitar torna 
+    </string>
+    <string name="multiplayer_mode_4">
+    	seu aparelho visível para outros 
+    </string>
+    <string name="multiplayer_mode_5">
+    	 aparelhos. Escolhendo o tipo CLIENTE 
+    </string>
+    <string name="multiplayer_mode_6">
+    	 seu aparelho irá realizar busca por
+    </string>
+    <string name="multiplayer_mode_7">
+    	um servidor. Aconsenhamos que o
+    </string>
+    <string name="multiplayer_mode_8">
+    	aparelho com maior capacidade de 
+    </string>
+    <string name="multiplayer_mode_9">
+    	 Hardware sejá o escolhido como
+    </string>
+    <string name="multiplayer_mode_10">
+    	 SERVIDOR. 
+	</string>
+	
+	
 <!-- Trofeu -->
     <string name="trophies">Troféus</string>
 
@@ -120,7 +158,7 @@
     
     <string name="no_trophies">Sem Troféus ainda.</string>
     
-    
+
     
     
 </resources>

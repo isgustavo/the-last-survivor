@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.CameraGame;
@@ -89,7 +90,6 @@ public class Spacecraft implements IDrawControllable {
 
 	@Override
 	public void update() {
-		
 		
 		this.sensorControlUpdate();
 		this.controlUpdate();
@@ -228,6 +228,7 @@ public class Spacecraft implements IDrawControllable {
 	@Override
 	public void draw(Canvas c) {
 
+		Log.d("TIRO", "."+shootsDrawables.size());
 		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
 		 
 	/*		  this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  

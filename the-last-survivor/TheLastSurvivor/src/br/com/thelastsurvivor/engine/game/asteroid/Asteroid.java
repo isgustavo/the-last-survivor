@@ -10,7 +10,6 @@ import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
-import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -61,6 +60,14 @@ public class Asteroid implements IDrawBehavior{
 		this.route = (int) (Math.random()*10);
 			
 	}
+	
+	@Override
+	public void update() {
+
+		this.ramdomRoute();
+		this.checkOutAsteroidsOfTheGameSpace();
+	}
+
 	
 	private Vector2D ramdonOrigin(){
 		
@@ -198,18 +205,36 @@ public class Asteroid implements IDrawBehavior{
 		}		
 	}
 
+	
+	private void checkOutAsteroidsOfTheGameSpace(){
+		
+		if(-40 > this.getPosition().getY()){
+			this.isAlive = false;
+		}else if(this.getPosition().getY() > EngineGame.getCamera().getY()+40){
+			this.isAlive = false;
+		}
+	
+		if(-40 > this.getPosition().getX()){
+			this.isAlive = false;
+		}else if(this.getPosition().getX() > EngineGame.getCamera().getX()+40){
+			this.isAlive = false;
+		}
+		
+		
+	}
+	
 	@Override
 	public boolean isAlive() {
-		if(this.isAlive){
-			if(-40 >= position.getX() &&
-					position.getX() >= EngineGame.getCamera().getX()+40){
+	/*	if(this.isAlive){
+			if(-10 >= position.getX() &&
+					position.getX() >= EngineGame.getCamera().getX()+10){
 				return false;
-			}else if(-40 >= position.getY() &&
-					position.getY() >= EngineGame.getCamera().getY()+40){
+			}else if(-10 >= position.getY() &&
+					position.getY() >= EngineGame.getCamera().getY()+10){
 				return false;
 			}
 			return true;
-		}
+		}*/
 		return this.isAlive;
 	}
 	
@@ -220,36 +245,7 @@ public class Asteroid implements IDrawBehavior{
 
 	
 
-	@Override
-	public void update() {
-
-		this.ramdomRoute();
-		
-		
-		if (spacecraft.getUp()) {
-			 if(spacecraft.getAngle() >= 270 || spacecraft.getAngle() <= 90){
-				  
-				   Double invertAngle;
-				   
-				   if(spacecraft.getAngle() >= 270){
-					   invertAngle = (360 - spacecraft.getAngle()) + 90;
-					   
-				   }else{
-					   invertAngle = spacecraft.getAngle()+180;
-				   }
-				   
-				   Orientation.getNewPosition(invertAngle, this.position); 
-				   
-			   }else{
-				   Orientation.getNewPosition(spacecraft.getAngle(), this.position);
-			   }
-		}
-		} 
-		//this.position.addX(camera.getX());
-		//this.position.addY(camera.getY());
-		
 	
-
 	@Override
 	public void draw(Canvas c) {
 		

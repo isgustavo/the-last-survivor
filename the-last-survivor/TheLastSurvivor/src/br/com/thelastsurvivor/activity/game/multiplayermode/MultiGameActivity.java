@@ -1,5 +1,6 @@
 package br.com.thelastsurvivor.activity.game.multiplayermode;
 
+import br.com.thelastsurvivor.R;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -21,46 +22,37 @@ public class MultiGameActivity extends Activity{
        
        init();
        
-       if(this.adaptader == null){
-    	   Toast.makeText(this,"Aparelho não suporta Bluetooth", 
-	                Toast.LENGTH_LONG).show();
-	       finish();
-       }else if(!this.adaptader.isEnabled()){
-    	   Intent enableBtIntent = 
-    		   new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-    	   startActivityForResult(enableBtIntent, BT_ACTIVATE);
-       }
-       
-      
-	  
+       setContentView(R.layout.multigame_mode_view);
+
 	}
 	
 	
 	public void init(){
 		
 		this.adaptader = BluetoothAdapter.getDefaultAdapter();
+		
+		//verifica se aparelho tem suporte ao bluetooth
+		if(this.adaptader == null){
+	    	   Toast.makeText(this,R.string.not_bluetooth, Toast.LENGTH_LONG).show();
+		       finish();
+		       
+		//verifica se bluetooth esta ativo, se não estive solicita ativação       
+	    }else if(!this.adaptader.isEnabled()){
+	    	   Intent enableBtIntent =  new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+	    	   startActivityForResult(enableBtIntent, BT_ACTIVATE);
+	    }
 	}
 	
-	protected void onActivityResult(
-	         int requestCode, int resultCode, Intent data) {
+	//metodo chamado para tratar o resultado do dialogo de ativação
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	     super.onActivityResult(requestCode, resultCode, data);
 
 	     if (requestCode == BT_ACTIVATE) {
-	      if (RESULT_OK != resultCode) {
-	         Toast.makeText(this, 
-	               "Você deve ativar o Bluetooth pra continuar",
-	               Toast.LENGTH_SHORT).show();
-	         finish();
-	       }
-
-     } else if (requestCode == BT_VISIBLE){
-	       if (resultCode == BT_TEMPO_DESCOBERTA) {
-	         //iniciaThreadServidor();
-	      } else {
-	        Toast.makeText(this, 
-	              "Para iniciar o servidor, seu aparelho"+
-	              "deve estar visível.", Toast.LENGTH_SHORT).show();
-       }
-     }
-	   }
+	    	 //verifica se bluetooth foi ativado
+	    	 if (RESULT_OK != resultCode) {
+	    		 Toast.makeText(this, R.string.bluetooth_confirm,Toast.LENGTH_SHORT).show();
+	    		 finish();
+	    	 }
+	     }
+	 }
 }

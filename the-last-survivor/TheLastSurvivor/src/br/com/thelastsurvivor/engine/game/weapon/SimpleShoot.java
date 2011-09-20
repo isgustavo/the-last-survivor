@@ -102,14 +102,19 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 
 	
 	private void checkOutShootsOfTheGameSpace(){
-		if(-40 > position.getX() &&
-				position.getX() > EngineGame.getCamera().getX()+40){
+		
+		if(-10 > this.getPosition().getY()){
 			this.isAlive = false;
-		}else if(-40 > position.getY() &&
-				position.getY() > EngineGame.getCamera().getY()+40){
+		}else if(this.getPosition().getY() > EngineGame.getCamera().getY()+10){
 			this.isAlive = false;
 		}
-
+	
+		if(-10 > this.getPosition().getX()){
+			this.isAlive = false;
+		}else if(this.getPosition().getX() > EngineGame.getCamera().getX()+10){
+			this.isAlive = false;
+		}
+		
 		
 	}
 	
