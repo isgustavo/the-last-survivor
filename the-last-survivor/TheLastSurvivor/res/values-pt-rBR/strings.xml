@@ -12,11 +12,11 @@
     <string name="erro_profile">Nickname é necessário!</string>
     
     <string name="cadastre_palyer_1">
-    	Oi, este é um pequeno cadastro necessário     		
+    	Oi! Este é um pequeno cadastro necessário     		
     </string>
     
     <string name="cadastre_palyer_2">
-    	para o seu perfil em O Último sobrevivente,     
+    	para o seu perfil em O ÚLTIMO SOBREVIVENTE,     
     </string>
     
     <string name="cadastre_palyer_3">
@@ -51,7 +51,7 @@
     </string>
     
     <string name="alteration_palyer_3">
-    	perfil em "O Último sobrevivente".
+    	perfil em O ÚLTIMO SOBREVIVENTE.
     </string>
     
     <string name="alteration_palyer_4">
@@ -77,6 +77,10 @@
 
 	<string name="not_bluetooth">Aparelho não suporta Bluetooth.</string>
 	<string name="bluetooth_confirm">Você deve ativar o Bluetooth pra continuar.</string>
+	<string name="server_confirm">Escolha um tipo de conexão.</string>
+	<string name="show_progress">Aguardando por conexões...</string>
+	
+	
 	
 	<string name="multiplayer_mode_1">
     	Oi! Você deverá escolher qual seu  

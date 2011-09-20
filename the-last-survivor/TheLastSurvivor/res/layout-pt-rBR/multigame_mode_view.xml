@@ -109,7 +109,7 @@
 			    <Button android:layout_height="wrap_content" 
 			      		android:layout_width="wrap_content"
 			      		android:background="@drawable/cliente_image" 
-			      		android:id="@+id/server_image"
+			      		android:id="@+id/client_image"
 			      		android:layout_x="320dp" android:layout_y="255dp">
 			    </Button>
 			    
