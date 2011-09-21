@@ -12,23 +12,23 @@
     <string name="erro_profile">Nickname é necessário!</string>
     
     <string name="cadastre_palyer_1">
-    	Oi! Este é um pequeno cadastro necessário     		
+    	Oi! Este é um cadastro necessário para   		
     </string>
     
     <string name="cadastre_palyer_2">
-    	para o seu perfil em O ÚLTIMO SOBREVIVENTE,     
+    	seu perfil em O ÚLTIMO SOBREVIVENTE.    
     </string>
     
     <string name="cadastre_palyer_3">
-    	você pode criar um novo nickname aqui,
+    	Aqui você pode criar um novo nickname
     </string>
     
     <string name="cadastre_palyer_4">
-    	 mas nos preferimos que utilize seu 
+    	 mas preferimos que utilize seu 
     </string>
     
     <string name="cadastre_palyer_5">
-    	nickename do seu perfil do twitter 
+    	nickename usado como perfil no twitter, 
     </string>
     
     <string name="cadastre_palyer_6">
@@ -98,10 +98,10 @@
 	
 	
 	<string name="multiplayer_mode_1">
-    	Oi! Você deverá escolher qual seu  
+    	Oi! Você deverá escolher qual será  
     </string>
     <string name="multiplayer_mode_2">
-    	tipo de conexão. Escolhendo o tipo 
+    	seu tipo de conexão. Escolhendo o tipo 
     </string>
     <string name="multiplayer_mode_3">
     	SERVIDOR você deverá aceitar torna 
@@ -122,7 +122,7 @@
     	aparelho com maior capacidade de 
     </string>
     <string name="multiplayer_mode_9">
-    	 Hardware sejá o escolhido como
+    	 Hardware seja o escolhido como
     </string>
     <string name="multiplayer_mode_10">
     	 SERVIDOR. 
