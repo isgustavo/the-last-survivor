@@ -31,8 +31,6 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 	
 	public void init(){
 		
-		
-		
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
 		

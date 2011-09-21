@@ -2,6 +2,9 @@ package br.com.thelastsurvivor.engine.simpleplayergame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.view.Display;
 import br.com.thelastsurvivor.engine.EngineGame;
@@ -87,6 +90,18 @@ public class SimplePlayerMode extends EngineGame {
 	
 	@Override
 	public void draw(Canvas c) {
+		
+		
+
+		
+		Paint titlePaint = new Paint();
+		titlePaint.setTypeface(Typeface.DEFAULT_BOLD);
+		titlePaint.setColor(Color.BLUE);
+		
+		
+		
+		c.drawText("Pontos", 0, 15, titlePaint);
+	
 		
 		
 		this.spacecraft.draw(c);

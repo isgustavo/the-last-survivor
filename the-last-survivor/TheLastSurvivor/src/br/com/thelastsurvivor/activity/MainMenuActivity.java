@@ -20,6 +20,9 @@ import br.com.thelastsurvivor.util.FT2FontTextView;
 
 public class MainMenuActivity extends Activity{
 	
+	private static final int SIMPLE_GAME_CODE = 1;
+	
+	
 	private Player player;
 
 	private FT2FontTextView nickname;
@@ -72,8 +75,10 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonSimpleGameListener = new OnClickListener() {  
         public void onClick(View v) {  
         	
+        	
         	Intent i = new Intent(MainMenuActivity.this, SavedGameActivity.class);
         	
+			
 			startActivity(i);
      
         }  
@@ -138,4 +143,5 @@ public class MainMenuActivity extends Activity{
     	super.onDestroy();
     	 	
     }
+	
 }

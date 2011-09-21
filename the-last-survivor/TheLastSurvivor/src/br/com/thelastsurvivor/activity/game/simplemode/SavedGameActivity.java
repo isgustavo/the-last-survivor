@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.Toast;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
 import br.com.thelastsurvivor.activity.player.CadastrePlayerActivity;
 import br.com.thelastsurvivor.model.game.Game;
@@ -14,7 +16,9 @@ import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 
 public class SavedGameActivity extends Activity {
-
+	
+	public static final int EXIT_GAME = 0;
+	
 	private List<Game> games;
 	
 	@Override
@@ -29,7 +33,7 @@ public class SavedGameActivity extends Activity {
 		} else {
 	
 			Intent i = new Intent(this, SimpleGameActivity.class);
-			startActivity(i);
+			startActivityForResult(i, EXIT_GAME);
 		}
 		
 		//setContentView(R.layout.list);
@@ -65,5 +69,15 @@ public class SavedGameActivity extends Activity {
 		this.games = games;
 	}
 	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	     super.onActivityResult(requestCode, resultCode, data);
+
+	     if (requestCode == EXIT_GAME) {
+	    	
+	    	 if (RESULT_OK != resultCode) {
+	    		 finish();
+	    	 }
+	     }
+	 }
 	
 }

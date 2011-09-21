@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,10 +21,17 @@ import android.os.Vibrator;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.View.OnClickListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.MainMenuActivity;
+import br.com.thelastsurvivor.activity.TheLastSurvivorActivity;
+import br.com.thelastsurvivor.activity.player.PlayerActivity;
+import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
@@ -50,6 +58,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     private WakeLock wakeLock;
     private Long beforeTime;
     Context context;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -171,24 +180,52 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		return true;
 	}
 	
-	
+	Dialog dialog;
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 	    if(keyCode == KeyEvent.KEYCODE_BACK) {
 
 	    	this.view.getGameLoop().state = 2;
 	    	
-	    	final Dialog dialog = new Dialog(this);
-	   
+	    	dialog = new Dialog(this, R.style.PauseGameDialogTheme);
 			dialog.setContentView(R.layout.pause_game_view);
-		
-			dialog.setCancelable(true);
-	 
+			
+			Button buttonBack = (Button)dialog.findViewById(R.id.buttonBack);
+			buttonBack.setOnClickListener(buttonBackListener);  
+			
+			Button exitGame = (Button)dialog.findViewById(R.id.buttonExit);
+			exitGame.setOnClickListener(buttonExitListener);  
+			
 			dialog.show();
 	    	
+			
             return true;
 	    }
 	    return false;
 	}
+	
+	private OnClickListener buttonBackListener = new OnClickListener() {  
+		public void onClick(View v) {  
+			
+			dialog.cancel();
+			
+			view.getGameLoop().state = 1;
+			view.getGameLoop().run();
+			
+			dialog.cancel();
+		}
+	};  
+	
+	private OnClickListener buttonExitListener = new OnClickListener() {  
+		public void onClick(View v) {  
+			
+			//Intent i = new Intent(SimpleGameActivity.this,
+			//		MainMenuActivity.class);
+			SimpleGameActivity.this.setResult(SavedGameActivity.EXIT_GAME);         
+
+			SimpleGameActivity.this.finish();
+		}
+	};  
+	
 	
 	public Game preparesGameToSave(){
 		Spacecraft spacecraft = getSpacecraftGame();
@@ -241,6 +278,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		
 	}
+	
+	
 	
 
 }

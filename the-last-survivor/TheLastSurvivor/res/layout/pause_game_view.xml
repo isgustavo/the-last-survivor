@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    
+    		
+		<Button android:layout_height="wrap_content" 
+	      		android:layout_width="wrap_content"
+	      	    android:text="BACK"
+	      		android:id="@+id/buttonBack"
+	      		android:layout_x="50dp" android:layout_y="50dp">
+	    </Button>
+	    <Button android:layout_height="wrap_content" 
+	      		android:layout_width="wrap_content"
+	      	 	android:text="SAVE"
+	      		android:id="@+id/buttonSave"
+	      		android:layout_x="150dp" android:layout_y="50dp">
+	    </Button>
+	    <Button android:layout_height="wrap_content" 
+	      		android:layout_width="wrap_content"
+	       		android:text="EXIT"
+	      		android:id="@+id/buttonExit"
+	      		android:layout_x="250dp" android:layout_y="50dp">
+	    </Button>
+
+ </AbsoluteLayout>  
