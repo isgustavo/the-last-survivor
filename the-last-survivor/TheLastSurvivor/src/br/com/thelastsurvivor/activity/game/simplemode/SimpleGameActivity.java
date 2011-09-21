@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -47,7 +49,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     
     private WakeLock wakeLock;
     private Long beforeTime;
-    
+    Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,6 +61,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	}
 	
 	public void init(){
+		
+		context = this.getApplicationContext();
 		
 		this.audioPlayer = new MyAudioPlayer(this, R.raw.singleplayer_soundtrack);
 		this.audioPlayer.start();
@@ -167,17 +171,20 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		return true;
 	}
 	
+	
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 	    if(keyCode == KeyEvent.KEYCODE_BACK) {
 
 	    	this.view.getGameLoop().state = 2;
 	    	
-	    	Game game = this.preparesGameToSave();
+	    	final Dialog dialog = new Dialog(this);
+	   
+			dialog.setContentView(R.layout.pause_game_view);
+		
+			dialog.setCancelable(true);
+	 
+			dialog.show();
 	    	
-	    	this.save(game);
-	    	
-	    	
-            //finish();
             return true;
 	    }
 	    return false;

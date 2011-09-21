@@ -36,6 +36,14 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+    <activity android:name=".activity.game.simplemode.SavedGameActivity"
+  			  android:screenOrientation="landscape"
+  			  android:launchMode="singleTask"
+  			  android:alwaysRetainTaskState="true">
+     	<intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
     
     <activity android:name=".activity.game.multiplayermode.MultiGameActivity"
   			  android:screenOrientation="landscape"

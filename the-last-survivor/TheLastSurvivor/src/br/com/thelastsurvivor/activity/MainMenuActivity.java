@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
+import br.com.thelastsurvivor.activity.game.simplemode.SavedGameActivity;
 import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.activity.player.AlterationPlayerActivity;
 import br.com.thelastsurvivor.activity.rank.RankActivity;
@@ -71,7 +72,7 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonSimpleGameListener = new OnClickListener() {  
         public void onClick(View v) {  
         	
-        	Intent i = new Intent(MainMenuActivity.this, SimpleGameActivity.class);
+        	Intent i = new Intent(MainMenuActivity.this, SavedGameActivity.class);
         	
 			startActivity(i);
      

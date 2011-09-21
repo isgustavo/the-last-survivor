@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.provider.util.Constant;
@@ -65,8 +66,13 @@ public class TheLastSurvivorProvider extends ContentProvider {
             case Constant.IS_TROPHIES:  
                 builder.setTables(TrophiesProvider.NAME_TABLE);  
                
-             break;
+            break;
+            
+            case Constant.IS_GAME:
+            	builder.setTables(GameProvider.NAME_TABLE);
   
+            break;
+            
             default:  
                 throw new IllegalArgumentException(  
                       "URI desconhecida " + uri);  
