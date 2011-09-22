@@ -35,7 +35,9 @@ public class Spacecraft implements IDrawControllable {
 	private Boolean orientationChange;
 
 	private Boolean left;
+	private Boolean flagLeft;
 	private Boolean right;
+	private Boolean flagRight;
 	
 	private Boolean down;
 	private Boolean up; 
@@ -65,7 +67,9 @@ public class Spacecraft implements IDrawControllable {
 		
 		
 		this.left = false;
+		this.flagLeft = false;
 		this.right = false;
+		this.flagRight = false;
 		this.up = false;
 		this.down = false;
 		
@@ -109,14 +113,18 @@ public class Spacecraft implements IDrawControllable {
 		this.up = false;
 		
 		
-		if (this.sensorPosition.getX() > 20 ) {
+		if (this.sensorPosition.getX() > 15 ) {
 	    	right = true;
-	    }else if(this.sensorPosition.getX() < -20) {
+	    }else if(this.sensorPosition.getX() < -15) {
 	    	left = true;
-	    }else if(this.sensorPosition.getY() > 15){
-			down = true;
-		}else if(this.sensorPosition.getY() < -10){
+	    }else if(this.sensorPosition.getY() < -10){
 			up = true;
+		}else{
+			 if(this.angle >= 270 || this.angle <= 90){
+				 flagLeft = false;
+			 }else{
+				 flagLeft = true;
+			 }
 		}
 		
 		
@@ -125,28 +133,43 @@ public class Spacecraft implements IDrawControllable {
 	private void controlUpdate(){
 			
 	 
-		if (left) {
+		if (this.left) {
 	    	if(this.angle == 360){
 	    		this.angle = 0.0;
 	    	}else{
 	    		if(this.angle == 0){
 	    			this.angle = 360.0;
 	    		}
-	    		this.angle -= 5;
+	    		
+	    		if(flagLeft){
+	    			this.angle += 5;
+	    		}else{
+	    			this.angle -= 5;
+	    		}
+	    		
 	    	}
 	    }else if(right) {
 	    	if(this.angle == 350){
 	    		this.angle = 0.0;
 	    	}else{
-	    		this.angle += 5;
+	    		if(flagLeft){
+	    			this.angle -= 5;
+	    		}else{
+	    			this.angle += 5;
+	    		}
+	    		
 	    	}
 	    		
 	    }else if (this.up) {
 			   if(this.angle >= 270 || this.angle <= 90){
 				   Orientation.getNewPosition(this.angle, this.position);
+				   
+				   
 			   }else{
 				   Orientation.getNewPosition(angle, this.position);
+				   
 			   }
+	    }
 			   
 			/*   else{
 				   Double invertAngle;
@@ -159,7 +182,7 @@ public class Spacecraft implements IDrawControllable {
 			   
 				   Orientation.getNewPosition(invertAngle, this.position);
 			   }*/
-	     }else if(this.down){
+	/*     }else if(this.down){
 		   if(this.angle >= 270 || this.angle <= 90){
 			  
 			   Double invertAngle;
@@ -176,7 +199,7 @@ public class Spacecraft implements IDrawControllable {
 		   }else{
 			   Orientation.getNewPosition(angle, this.position);
 		   }
-	    }
+	    }*/
 	   
 	    
 	    

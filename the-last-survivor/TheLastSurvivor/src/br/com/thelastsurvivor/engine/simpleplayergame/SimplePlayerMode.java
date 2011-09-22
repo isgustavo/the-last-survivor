@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.view.Display;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
@@ -19,6 +20,11 @@ public class SimplePlayerMode extends EngineGame {
 	//private Vector2D camera;
 
 	//private Drawable image;
+	
+	Paint paint;
+	Typeface font; 
+	 
+	 String test;
 	private Integer points;
 
 	public SimplePlayerMode(Context context, Vibrator vibrator, Display display) {
@@ -34,10 +40,15 @@ public class SimplePlayerMode extends EngineGame {
 
 		//this.image = this.context.getResources().getDrawable(R.drawable.spacecraft_image);
 		
-		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(400,200));
+		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(200,200));
 		
+		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		font = Typeface.createFromAsset(getContext().getAssets(),"fonts/FT2FONT.TTF");
 		
+		paint.setTextSize(12);
 
+		
+		test = context.getString(R.string.cadastre_new_palyer_1);
 	}
 	
 
@@ -94,23 +105,33 @@ public class SimplePlayerMode extends EngineGame {
 		
 
 		
-		Paint titlePaint = new Paint();
+		/*Paint titlePaint = new Paint();
 		titlePaint.setTypeface(Typeface.DEFAULT_BOLD);
 		titlePaint.setColor(Color.BLUE);
+		*/
 		
 		
-		
-		c.drawText("Pontos", 0, 15, titlePaint);
+		//c.drawText("Pontos", 0, 15, titlePaint);
 	
 		
 		
 		this.spacecraft.draw(c);
 	    
-	 
+		//c.drawColor(Color.BLACK);
+		paint.setColor(Color.WHITE);
+        drawFont(c, 15 , test );
+        
  		super.draw(c);
 	 
 
 	}
+	
+	void drawFont(Canvas c, int y, String name){
+
+    	 paint.setTypeface(font);
+         c.drawText(name, 300, y, paint);
+
+    }
 
 
 	public Spacecraft getSpacecraft() {

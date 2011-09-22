@@ -108,7 +108,7 @@ public final class Orientation {
 			    position.addX(13);
 		    	position.addY(5);
 		   break;
-		   case 1220:
+		   case 120:
 			    position.addX(12);
 		    	position.addY(6);
 		   break;

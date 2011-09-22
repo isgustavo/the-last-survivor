@@ -184,7 +184,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 	    if(keyCode == KeyEvent.KEYCODE_BACK) {
 
-	    	this.view.getGameLoop().state = 2;
+	    	//this.view.getGameLoop().state = 2;
 	    	
 	    	dialog = new Dialog(this, R.style.PauseGameDialogTheme);
 			dialog.setContentView(R.layout.pause_game_view);
@@ -218,8 +218,6 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	private OnClickListener buttonExitListener = new OnClickListener() {  
 		public void onClick(View v) {  
 			
-			//Intent i = new Intent(SimpleGameActivity.this,
-			//		MainMenuActivity.class);
 			SimpleGameActivity.this.setResult(SavedGameActivity.EXIT_GAME);         
 
 			SimpleGameActivity.this.finish();
