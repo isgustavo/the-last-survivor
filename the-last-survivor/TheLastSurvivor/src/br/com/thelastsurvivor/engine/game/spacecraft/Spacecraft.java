@@ -10,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.IDrawControllable;
@@ -328,6 +327,12 @@ public class Spacecraft implements IDrawControllable {
 
 	@Override
 	public Integer getRoute() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getPower() {
 		// TODO Auto-generated method stub
 		return null;
 	}

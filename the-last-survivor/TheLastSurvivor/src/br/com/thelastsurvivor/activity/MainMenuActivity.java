@@ -10,7 +10,6 @@ import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.activity.game.simplemode.SavedGameActivity;
-import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.activity.player.AlterationPlayerActivity;
 import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.activity.trophies.TrophiesActivity;

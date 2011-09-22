@@ -25,6 +25,7 @@ public class Asteroid implements IDrawBehavior{
 	
 	private Boolean isAlive;
 	private Integer typeImage;
+	private Integer power;
 	
 	private Vector2D position;
 	private Integer route;
@@ -48,6 +49,13 @@ public class Asteroid implements IDrawBehavior{
 		init();
 	}
 	
+	public Asteroid(Context context, Vector2D origin){
+		this.context = context;
+		this.position = origin;
+		
+		init2();
+	}
+	
 	@Override
 	public void init() {
 		
@@ -61,13 +69,27 @@ public class Asteroid implements IDrawBehavior{
 			
 	}
 	
+	
+	public void init2() {
+		
+		
+		
+		//this.position = ramdonOrigin();
+		this.isAlive = true;
+		
+		this.drawableImage = ramdomImageAteroid();
+		this.route = (int) (Math.random()*10);
+			
+	}
+	
 	@Override
 	public void update() {
 
 		this.ramdomRoute();
-		this.checkOutAsteroidsOfTheGameSpace();
+		//this.checkOutAsteroidsOfTheGameSpace();
 	}
 
+	
 	
 	private Vector2D ramdonOrigin(){
 		
@@ -151,7 +173,7 @@ public class Asteroid implements IDrawBehavior{
 			this.sizeWidth = image.getWidth();
 			
 			this.life = 1;
-			
+			power = 1;
 			return new BitmapDrawable(image);//this.context.getResources().getDrawable(R.drawable.asteroids_1_image); 
 		
 		case 1:
@@ -160,7 +182,7 @@ public class Asteroid implements IDrawBehavior{
 			this.sizeWidth = image2.getWidth();
 			
 			this.life = 1;
-			
+			power = 1;
 			return new BitmapDrawable(image2);
 		
 		case 2:
@@ -169,7 +191,7 @@ public class Asteroid implements IDrawBehavior{
 			this.sizeWidth = image3.getWidth();
 			
 			this.life = 1;
-			
+			power = 1;
 			return new BitmapDrawable(image3); 
 		
 		case 3:
@@ -178,7 +200,7 @@ public class Asteroid implements IDrawBehavior{
 			this.sizeWidth = image4.getWidth();
 			
 			this.life = 2;
-			
+			power = 2;
 			return new BitmapDrawable(image4); 
 		
 		case 4:
@@ -187,7 +209,7 @@ public class Asteroid implements IDrawBehavior{
 			this.sizeWidth = image5.getWidth();
 			
 			this.life = 3;
-			
+			power = 3;
 			return new BitmapDrawable(image5);
 		
 		case 5:
@@ -196,7 +218,7 @@ public class Asteroid implements IDrawBehavior{
 			this.sizeWidth = image6.getWidth();
 			
 			this.life = 3;
-			
+			power = 3;
 			return new BitmapDrawable(image6);
 		
 		default: 
@@ -206,7 +228,7 @@ public class Asteroid implements IDrawBehavior{
 	}
 
 	
-	private void checkOutAsteroidsOfTheGameSpace(){
+/*	private void checkOutAsteroidsOfTheGameSpace(){
 		
 		if(-40 > this.getPosition().getY()){
 			this.isAlive = false;
@@ -221,7 +243,7 @@ public class Asteroid implements IDrawBehavior{
 		}
 		
 		
-	}
+	}*/
 	
 	@Override
 	public boolean isAlive() {
@@ -331,6 +353,10 @@ public class Asteroid implements IDrawBehavior{
 	public Double getAngle() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer getPower() {
+		return power;
 	}
 
 	

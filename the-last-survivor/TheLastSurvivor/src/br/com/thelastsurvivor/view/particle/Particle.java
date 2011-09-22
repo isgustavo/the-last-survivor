@@ -92,7 +92,7 @@ public class Particle {
 			
 			// extract alpha 
 			Integer alpha = this.color >>> 24;
-
+	    	
 			alpha -= randomSizedimension(0,4).intValue();								// fade by 5
 			if (alpha <= 0) {						// if reached transparency kill the particle
 				this.isAlive = false;

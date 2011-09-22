@@ -102,6 +102,16 @@
 
     <string name="no_trophies">No Trophies yet.</string>
     
-    
+<!-- MESSAGE GAME -->
+
+	<string name="init_game">Start Game!</string>
+	<string name="destroyed_asteroid">Destroyed asteroid: Score </string>
+
+
+
+
+
+
+
     
 </resources>

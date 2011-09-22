@@ -17,14 +17,6 @@ import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimplePlayerMode extends EngineGame {
 	
-	//private Vector2D camera;
-
-	//private Drawable image;
-	
-	Paint paint;
-	Typeface font; 
-	 
-	 String test;
 	private Integer points;
 
 	public SimplePlayerMode(Context context, Vibrator vibrator, Display display) {
@@ -37,18 +29,9 @@ public class SimplePlayerMode extends EngineGame {
 	@Override
 	public void init() {
 		super.init();
-
-		//this.image = this.context.getResources().getDrawable(R.drawable.spacecraft_image);
 		
 		this.spacecraft = new Spacecraft(this.getContext(), this.getDisplay(), new Vector2D(200,200));
-		
-		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		font = Typeface.createFromAsset(getContext().getAssets(),"fonts/FT2FONT.TTF");
-		
-		paint.setTextSize(12);
 
-		
-		test = context.getString(R.string.cadastre_new_palyer_1);
 	}
 	
 
@@ -101,38 +84,17 @@ public class SimplePlayerMode extends EngineGame {
 	
 	@Override
 	public void draw(Canvas c) {
-		
-		
 
-		
-		/*Paint titlePaint = new Paint();
-		titlePaint.setTypeface(Typeface.DEFAULT_BOLD);
-		titlePaint.setColor(Color.BLUE);
-		*/
-		
-		
-		//c.drawText("Pontos", 0, 15, titlePaint);
-	
-		
 		
 		this.spacecraft.draw(c);
 	    
-		//c.drawColor(Color.BLACK);
-		paint.setColor(Color.WHITE);
-        drawFont(c, 15 , test );
-        
+		
  		super.draw(c);
 	 
 
 	}
 	
-	void drawFont(Canvas c, int y, String name){
-
-    	 paint.setTypeface(font);
-         c.drawText(name, 300, y, paint);
-
-    }
-
+	
 
 	public Spacecraft getSpacecraft() {
 		return spacecraft;

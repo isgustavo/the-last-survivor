@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import br.com.thelastsurvivor.engine.IDrawBehavior;
-import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
-
 public class Game implements Serializable{
 
 	private static final long serialVersionUID = 1L;

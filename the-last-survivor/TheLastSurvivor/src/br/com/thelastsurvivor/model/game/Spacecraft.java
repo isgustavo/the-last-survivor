@@ -3,7 +3,6 @@ package br.com.thelastsurvivor.model.game;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class Spacecraft implements Serializable{
