@@ -100,6 +100,7 @@ public abstract class EngineGame{
 		
 		currentTime();
 		updateNewAsteroid();
+		this.verificationAsteroidCollisions();
 		updateAsteroids();
 		updateMessages();
 		
@@ -117,6 +118,7 @@ public abstract class EngineGame{
 		int seconds = (int) (millis / 1000);
 	    
 		this.startTime = seconds / 60;
+		Log.d("TIME","."+this.startTime);
 	}
 	
 	private void updateNewAsteroid(){
@@ -163,46 +165,30 @@ public abstract class EngineGame{
 			
 			this.asteroids.clear();
 			
-			this.verificationAsteroidCollisions();
+			
 		}
 		
 		
 	}
 	
-	private void asteroidSituation(List<IDrawBehavior> newAsteroid, Asteroid asteroid, Asteroid asteroid2){
+	private void asteroidSituation(List<IDrawBehavior> newAsteroid, Asteroid asteroid){
 		switch (asteroid.getTypeImage()) {
-		case 0:
-			asteroid.setAlive(false);
-		break;
-		case 1:
-			asteroid.setAlive(false);
-		break;
-		case 2:
-			asteroid.setAlive(false);
-		break;
 		case 3:
-			((Asteroid)asteroid).addLife(-asteroid2.getPower());
-			if(asteroid.getLife() == 0){
-				asteroid.setAlive(false);
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition()));
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition()));
-			}
+				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),2));
+				
+			
 		break;
 		case 4:
-			((Asteroid)asteroid).addLife(-asteroid2.getPower());
-			if(asteroid.getLife() == 0){
-				asteroid.setAlive(false);
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition()));
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition()));
-			}
+			
+				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),3));
+				
+			
 		break;
 		case 5:
-			((Asteroid)asteroid).addLife(-asteroid2.getPower());
-			if(asteroid.getLife() == 0){
-				asteroid.setAlive(false);
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition()));
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition()));
-			}
+			
+				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),3));
+				
+			
 		break;
 
 		default:
@@ -214,27 +200,43 @@ public abstract class EngineGame{
 		
 		List<IDrawBehavior> newAsteroid = new ArrayList<IDrawBehavior>();
 		
-		for (IDrawBehavior asteroid : this.asteroidsDrawables) {
-			for(IDrawBehavior asteroid2 : this.asteroidsDrawables){
-				if(!asteroid.equals(asteroid2)){
-					if((asteroid.getPosition().getX() < asteroid2.getPosition().getX() &&
-							asteroid2.getPosition().getX() < asteroid.getPosition().getX()+asteroid.getSizeWidth()) &&
-							(asteroid.getPosition().getY() < asteroid2.getPosition().getY() &&
-									asteroid2.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
-						
-						asteroidSituation(newAsteroid, (Asteroid)asteroid, (Asteroid)asteroid2);
-						asteroidSituation(newAsteroid, (Asteroid)asteroid2, (Asteroid)asteroid);
-						
+		
+		for(int x= 0; x < this.asteroidsDrawables.size(); x++){
+			Asteroid asteroid1 = (Asteroid)this.asteroidsDrawables.get(x);
+			
+			for(int y = x; y < this.asteroidsDrawables.size(); y++){
+				Asteroid asteroid2 = (Asteroid)this.asteroidsDrawables.get(y);
+				if(this.asteroidsDrawables.get(x) != this.asteroidsDrawables.get(y)){
+					if(asteroid1.getPosition().getX()+(asteroid1.getSizeWidth()-5) > asteroid2.getPosition().getX() &&
+					   asteroid1.getPosition().getX() < asteroid2.getPosition().getX()+(asteroid2.getSizeWidth()-5)&&
+					   asteroid1.getPosition().getY()+(asteroid1.getSizeHeight()-5) > asteroid2.getPosition().getY() &&
+					   asteroid1.getPosition().getY() < asteroid2.getPosition().getY()+(asteroid2.getSizeHeight()-5)){
+					
+					asteroidSituation(newAsteroid, asteroid1);
+					asteroidSituation(newAsteroid, asteroid2);
+
+					this.asteroidsDrawables.get(x).setAlive(false);
+					this.asteroidsDrawables.get(y).setAlive(false);
+					//asteroidSituation(newAsteroid, asteroid2, asteroid1);
 					
 					}
-					newAsteroid.add(asteroid);
 				}
 				
 			}
+			
 		}
 		
-		this.asteroidsDrawables.clear();
-		this.asteroidsDrawables.addAll(newAsteroid);
+	
+			
+			
+			this.asteroidsDrawables.addAll(newAsteroid);
+		
+		
+	//if(newAsteroid.size() != 0){
+	//	this.asteroidsDrawables.clear();
+	//	this.asteroidsDrawables.addAll(newAsteroid);
+	//}
+		
 	
 	}
 	
@@ -273,6 +275,7 @@ public abstract class EngineGame{
 	}
 	
 	private void asteroidsDrawables(){
+		Log.d("INIT", "."+this.asteroidsDrawables.size());
 		List<IDrawBehavior> asteroids = new ArrayList<IDrawBehavior>();
 		for(IDrawBehavior asteroid : this.asteroidsDrawables){
 			if(asteroid.isAlive()){
@@ -282,7 +285,7 @@ public abstract class EngineGame{
 		
 		this.asteroidsDrawables.clear();
 		this.asteroidsDrawables.addAll(asteroids);
-		
+		Log.d("FINI", "."+this.asteroidsDrawables.size());
 	}
 	
 	public boolean isAsteroidDestroyed(Asteroid asteroid, IWeaponBehavior shoot){
@@ -313,7 +316,7 @@ public abstract class EngineGame{
 	
 	public void draw(Canvas c) {
 		
-		for (IDrawBehavior object : asteroidsDrawables) {
+		for (IDrawBehavior object : this.asteroidsDrawables) {
 
 			object.draw(c);
 		}
@@ -340,13 +343,13 @@ public abstract class EngineGame{
    	 	
    	 	switch (message.getPosition()) {
 		case 1:
-			c.drawText(message.getText(), 40, 280, message.getPaint());
+			c.drawText(message.getText(), 10, 240, message.getPaint());
 		break;
 		case 2:
-			c.drawText(message.getText(), 40, 290, message.getPaint());
+			c.drawText(message.getText(), 10, 250, message.getPaint());
 		break;
 		case 3:
-			c.drawText(message.getText(), 40, 300, message.getPaint());
+			c.drawText(message.getText(), 10, 260, message.getPaint());
 		break;
 		
 		}

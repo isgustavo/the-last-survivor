@@ -49,9 +49,10 @@ public class Asteroid implements IDrawBehavior{
 		init();
 	}
 	
-	public Asteroid(Context context, Vector2D origin){
+	public Asteroid(Context context, Vector2D origin, Integer type){
 		this.context = context;
 		this.position = origin;
+		this.typeImage = type;
 		
 		init2();
 	}
@@ -77,7 +78,8 @@ public class Asteroid implements IDrawBehavior{
 		//this.position = ramdonOrigin();
 		this.isAlive = true;
 		
-		this.drawableImage = ramdomImageAteroid();
+		this.drawableImage = this.imageAsteroid(this.typeImage);
+		
 		this.route = (int) (Math.random()*10);
 			
 	}
@@ -164,8 +166,7 @@ public class Asteroid implements IDrawBehavior{
 		
 	}
 
-	private Drawable ramdomImageAteroid() {
-		typeImage = (int) (Math.random()*5);
+	private Drawable imageAsteroid(Integer type){
 		switch(typeImage){
 		case 0:
 			Bitmap image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image);
@@ -225,6 +226,10 @@ public class Asteroid implements IDrawBehavior{
 			return null;
 
 		}		
+	}
+	private Drawable ramdomImageAteroid() {
+		typeImage = (int) (Math.random()*5);
+		return imageAsteroid(typeImage);
 	}
 
 	
