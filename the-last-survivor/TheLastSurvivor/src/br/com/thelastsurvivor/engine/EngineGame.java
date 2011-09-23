@@ -173,24 +173,25 @@ public abstract class EngineGame{
 	
 	private void asteroidSituation(List<IDrawBehavior> newAsteroid, Asteroid asteroid){
 		switch (asteroid.getTypeImage()) {
+		case 1:
+		case 12:
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),0,));
+		break;
 		case 3:
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),2));
-				
-			
+		case 6:
+		case 9:
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),1,));
 		break;
 		case 4:
-			
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),3));
-				
-			
+		case 7:
+		case 10:
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),1,));
 		break;
 		case 5:
+		case 8:
+		case 11:
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),4,));
 			
-				newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),3));
-				
-			
-		break;
-
 		default:
 			break;
 		}

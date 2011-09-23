@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.EngineGame;
@@ -30,7 +31,7 @@ public class Asteroid implements IDrawBehavior{
 	private Vector2D position;
 	private Integer route;
 	private Integer speed = 1;
-	private Integer MAX_SPEED = 6;
+	//private Integer MAX_SPEED = 6;
 	
 	Spacecraft spacecraft;
 	
@@ -49,11 +50,11 @@ public class Asteroid implements IDrawBehavior{
 		init();
 	}
 	
-	public Asteroid(Context context, Vector2D origin, Integer type){
+	public Asteroid(Context context, Vector2D origin, Integer type, Integer route){
 		this.context = context;
 		this.position = origin;
 		this.typeImage = type;
-		
+		this.route = route;
 		init2();
 	}
 	
@@ -66,7 +67,7 @@ public class Asteroid implements IDrawBehavior{
 		this.isAlive = true;
 		
 		this.drawableImage = ramdomImageAteroid();
-		this.route = (int) (Math.random()*10);
+		this.route = (int) (Math.random()*4);
 			
 	}
 	
@@ -80,8 +81,7 @@ public class Asteroid implements IDrawBehavior{
 		
 		this.drawableImage = this.imageAsteroid(this.typeImage);
 		
-		this.route = (int) (Math.random()*10);
-			
+		//this.route = (int) (Math.random()*4);
 	}
 	
 	@Override
@@ -92,39 +92,46 @@ public class Asteroid implements IDrawBehavior{
 	}
 
 	
-	
+	/**       0
+	 *      ------
+	 *    1 |    |3
+	 *      ------
+	 *        2
+	 * @return
+	 */
 	private Vector2D ramdonOrigin(){
 		
 		
-		int origin = (int) (Math.random()*2);
-		if(origin == 1){
-			int side = (int)(Math.random()*2);
-			int position = (int)(Math.random()*EngineGame.getCamera().getY());
-			if(side == 1){
-				return new Vector2D(-40,position);
-			}else{
-				return new Vector2D(EngineGame.getCamera().getX(),position);
-			}
-		}else{
-			int side = (int)(Math.random()*2);
-			int position = (int)(Math.random()*EngineGame.getCamera().getX());
-			if(side == 1){
-				return new Vector2D(position,-40);
-			}else{
-				return new Vector2D(EngineGame.getCamera().getY(),position);
-			}
+		int origin = (int) (Math.random()*4);
+		int position = 0;
+		switch (origin) {
+		case 0:
+			position = (int)(Math.random()*EngineGame.getCamera().getX());
+			return new Vector2D(position,-40);
+		case 1:
+			position = (int)(Math.random()*EngineGame.getCamera().getY());
+			return new Vector2D(-40,position);
+		case 2:
+			position = (int)(Math.random()*EngineGame.getCamera().getX());
+			return new Vector2D(position,EngineGame.getCamera().getY()+40);
+		case 3:
+			position = (int)(Math.random()*EngineGame.getCamera().getY());
+			return new Vector2D(EngineGame.getCamera().getX()+40,position);
+		
 		}
+		return null;
+		
 	}
 
 	private void ramdomRoute() {
 		switch(route){
 		case 0:
 			this.position.addX(speed); 
-			this.position.addY(-speed);
+			this.position.addY(speed);
 		break;
 		case 1:
 			this.position.addX(speed); 
-			this.position.addY(speed);
+			this.position.addY(-speed);
 		break;
 		case 2:
 			this.position.addX(-speed); 
@@ -133,35 +140,7 @@ public class Asteroid implements IDrawBehavior{
 		case 3:
 			this.position.addX(-speed); 
 			this.position.addY(-speed);
-		break;
-		case 4:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
-		case 5:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
-		case 6:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
-		case 7:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
-		case 8:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
-		case 9:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
-		case 10:
-			this.position.addX(-speed); 
-			this.position.addY(-speed);
-		break;
+		break; 
 		}
 		
 	}
@@ -178,6 +157,7 @@ public class Asteroid implements IDrawBehavior{
 			return new BitmapDrawable(image);//this.context.getResources().getDrawable(R.drawable.asteroids_1_image); 
 		
 		case 1:
+		case 12:
 			Bitmap image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image);
 			this.sizeHeight = image2.getHeight();
 			this.sizeWidth = image2.getWidth();
@@ -196,6 +176,8 @@ public class Asteroid implements IDrawBehavior{
 			return new BitmapDrawable(image3); 
 		
 		case 3:
+		case 6:
+		case 9:
 			Bitmap image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_4_image);
 			this.sizeHeight = image4.getHeight();
 			this.sizeWidth = image4.getWidth();
@@ -205,6 +187,8 @@ public class Asteroid implements IDrawBehavior{
 			return new BitmapDrawable(image4); 
 		
 		case 4:
+		case 7:
+		case 10:
 			Bitmap image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
 			this.sizeHeight = image5.getHeight();
 			this.sizeWidth = image5.getWidth();
@@ -214,6 +198,8 @@ public class Asteroid implements IDrawBehavior{
 			return new BitmapDrawable(image5);
 		
 		case 5:
+		case 8:
+		case 11:
 			Bitmap image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image);
 			this.sizeHeight = image6.getHeight();
 			this.sizeWidth = image6.getWidth();
@@ -228,40 +214,13 @@ public class Asteroid implements IDrawBehavior{
 		}		
 	}
 	private Drawable ramdomImageAteroid() {
-		typeImage = (int) (Math.random()*5);
+		typeImage = (int) (Math.random()*13);
 		return imageAsteroid(typeImage);
 	}
 
 	
-/*	private void checkOutAsteroidsOfTheGameSpace(){
-		
-		if(-40 > this.getPosition().getY()){
-			this.isAlive = false;
-		}else if(this.getPosition().getY() > EngineGame.getCamera().getY()+40){
-			this.isAlive = false;
-		}
-	
-		if(-40 > this.getPosition().getX()){
-			this.isAlive = false;
-		}else if(this.getPosition().getX() > EngineGame.getCamera().getX()+40){
-			this.isAlive = false;
-		}
-		
-		
-	}*/
-	
 	@Override
 	public boolean isAlive() {
-	/*	if(this.isAlive){
-			if(-10 >= position.getX() &&
-					position.getX() >= EngineGame.getCamera().getX()+10){
-				return false;
-			}else if(-10 >= position.getY() &&
-					position.getY() >= EngineGame.getCamera().getY()+10){
-				return false;
-			}
-			return true;
-		}*/
 		return this.isAlive;
 	}
 	
@@ -283,6 +242,7 @@ public class Asteroid implements IDrawBehavior{
 		    			this.position.getY()+12); 
 		break;
 		case 1:
+		case 12:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 		    		this.position.getX()+26, 
 		    			this.position.getY()+23);
@@ -293,17 +253,23 @@ public class Asteroid implements IDrawBehavior{
 		    			this.position.getY()+15);
 		break;
 		case 3:
+		case 6:
+		case 9:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 		    		this.position.getX()+49, 
 		    			this.position.getY()+47);
 		break;
 		case 4:
+		case 7:
+		case 10:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 		    		this.position.getX()+62, 
 		    			this.position.getY()+56);
 		break;
 		
 		case 5:
+		case 8:
+		case 11:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 		    		this.position.getX()+49, 
 		    			this.position.getY()+43);
@@ -311,13 +277,7 @@ public class Asteroid implements IDrawBehavior{
 
 		}		
 		
-		
-		
-		
-		//Log.d("orieX",""+this.position.getX());
-		//Log.d("orieY",""+this.position.getY());
-	    
-	    
+	
 	    this.drawableImage.draw(c);
 		
 	}
