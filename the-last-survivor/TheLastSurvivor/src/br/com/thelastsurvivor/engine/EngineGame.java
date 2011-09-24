@@ -39,6 +39,7 @@ public abstract class EngineGame{
 	
 	private List<IDrawBehavior> asteroids;
 	protected List<IDrawBehavior> asteroidsDrawables;
+	protected List<IWeaponBehavior> shootsEffect;
 	
 	public List<IDrawBehavior> updateList;
 	private List<IDrawBehavior> drawableList;
@@ -61,6 +62,7 @@ public abstract class EngineGame{
 	
 		this.updateList = new ArrayList<IDrawBehavior>();
 		this.drawableList = new ArrayList<IDrawBehavior>();
+		this.shootsEffect = new ArrayList<IWeaponBehavior>();
 		
 		this.asteroids = new ArrayList<IDrawBehavior>();
 		this.asteroidsDrawables = new ArrayList<IDrawBehavior>();
@@ -103,6 +105,7 @@ public abstract class EngineGame{
 		this.verificationAsteroidCollisions();
 		updateAsteroids();
 		updateMessages();
+		updateEffectShoots();
 		
 		if (this.explosion != null && this.explosion.isAlive) {
 			this.explosion.update(this.getSpacecraft());
@@ -175,26 +178,41 @@ public abstract class EngineGame{
 		switch (asteroid.getTypeImage()) {
 		case 1:
 		case 12:
-			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),0,));
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),0,this.getInvertRoute(asteroid.getRoute())));
 		break;
 		case 3:
 		case 6:
 		case 9:
-			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),1,));
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),1,this.getInvertRoute(asteroid.getRoute())));
 		break;
 		case 4:
 		case 7:
 		case 10:
-			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),1,));
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),1,this.getInvertRoute(asteroid.getRoute())));
 		break;
 		case 5:
 		case 8:
 		case 11:
-			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),4,));
+			newAsteroid.add(new Asteroid(this.context, asteroid.getPosition(),4,this.getInvertRoute(asteroid.getRoute())));
 			
 		default:
 			break;
 		}
+	}
+	
+	private Integer getInvertRoute(Integer route){
+		
+		switch (route) {
+		case 0:
+			return 3;
+		case 1:
+			return 2;
+		case 2:
+			return 1;
+		case 3:
+			return 0;
+		}
+		return null;
 	}
 	
 	private void verificationAsteroidCollisions(){
@@ -276,7 +294,7 @@ public abstract class EngineGame{
 	}
 	
 	private void asteroidsDrawables(){
-		Log.d("INIT", "."+this.asteroidsDrawables.size());
+		
 		List<IDrawBehavior> asteroids = new ArrayList<IDrawBehavior>();
 		for(IDrawBehavior asteroid : this.asteroidsDrawables){
 			if(asteroid.isAlive()){
@@ -286,7 +304,20 @@ public abstract class EngineGame{
 		
 		this.asteroidsDrawables.clear();
 		this.asteroidsDrawables.addAll(asteroids);
-		Log.d("FINI", "."+this.asteroidsDrawables.size());
+		
+	}
+	
+	private void updateEffectShoots(){
+		List<IWeaponBehavior> effects = new ArrayList<IWeaponBehavior>();
+		for(IWeaponBehavior shoot : this.shootsEffect){
+			if(shoot.isAlive()){
+				shoot.update();
+				effects.add(shoot);
+			}
+		}
+		
+		this.shootsEffect.clear();
+		this.shootsEffect.addAll(effects);
 	}
 	
 	public boolean isAsteroidDestroyed(Asteroid asteroid, IWeaponBehavior shoot){
@@ -329,6 +360,10 @@ public abstract class EngineGame{
 		for (MessageGameUtil message : this.messages) {
 			drawFont(c, message);
 		}
+		
+		for (IWeaponBehavior effect : this.shootsEffect) {
+			effect.draw(c);
+		}
 
 
 	}
@@ -336,11 +371,7 @@ public abstract class EngineGame{
 	void drawFont(Canvas c, MessageGameUtil message){
 
    	 	message.getPaint().setTypeface(this.font);
-   	 	message.
-   	 	getPaint().
-   	 	setAlpha(
-   	 			message.
-   	 			getAlfa());
+   	 	message.getPaint().setAlpha(message.getAlfa());
    	 	
    	 	switch (message.getPosition()) {
 		case 1:

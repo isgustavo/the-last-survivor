@@ -101,31 +101,16 @@
     	Oi! Você deverá escolher qual será  
     </string>
     <string name="multiplayer_mode_2">
-    	seu tipo de conexão. Escolhendo o tipo 
+    	seu tipo de conexão. Aconsenhamos que o
     </string>
     <string name="multiplayer_mode_3">
-    	SERVIDOR você deverá aceitar torna 
-    </string>
-    <string name="multiplayer_mode_4">
-    	seu aparelho visível para outros 
-    </string>
-    <string name="multiplayer_mode_5">
-    	 aparelhos. Escolhendo o tipo CLIENTE 
-    </string>
-    <string name="multiplayer_mode_6">
-    	 seu aparelho irá realizar busca por
-    </string>
-    <string name="multiplayer_mode_7">
-    	um servidor. Aconsenhamos que o
-    </string>
-    <string name="multiplayer_mode_8">
     	aparelho com maior capacidade de 
     </string>
-    <string name="multiplayer_mode_9">
+    <string name="multiplayer_mode_4">
     	 Hardware seja o escolhido como
     </string>
-    <string name="multiplayer_mode_10">
-    	 SERVIDOR. 
+    <string name="multiplayer_mode_5">
+    	 ESPAÇO. 
 	</string>
 	
 	

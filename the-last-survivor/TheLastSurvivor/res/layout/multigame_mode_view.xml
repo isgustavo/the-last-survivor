@@ -62,31 +62,7 @@
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="25dp" android:layout_y="140dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/multiplayer_mode_6" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="160dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/multiplayer_mode_7" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="180dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/multiplayer_mode_8" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="200dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/multiplayer_mode_9" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="220dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-				
+			 	
 				
 				
 

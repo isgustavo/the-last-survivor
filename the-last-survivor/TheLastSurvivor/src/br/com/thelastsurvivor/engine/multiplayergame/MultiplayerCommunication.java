@@ -30,7 +30,6 @@ public class MultiplayerCommunication implements Runnable{
 	
 	@Override
 	public void run() {
-		name = client.getRemoteDevice().getName();
 		         try {
 					is = new DataInputStream(client.getInputStream());
 					os = new DataOutputStream(client.getOutputStream());

@@ -1,5 +1,8 @@
 package br.com.thelastsurvivor.engine.simpleplayergame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +15,7 @@ import br.com.thelastsurvivor.engine.EngineGame;
 import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
+import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -66,6 +70,7 @@ public class SimplePlayerMode extends EngineGame {
 	
 	public void verificationCollisionShoot(){
 		
+		
 		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
 			for(IDrawBehavior asteroid : this.asteroidsDrawables){
 				if((asteroid.getPosition().getX() < shoot.getPosition().getX() &&
@@ -73,6 +78,7 @@ public class SimplePlayerMode extends EngineGame {
 						(asteroid.getPosition().getY() < shoot.getPosition().getY() &&
 								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
 					shoot.setAlive(false);
+					this.shootsEffect.add(new EffectShoot(this.context, shoot.getPosition()));
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
 						asteroid.setAlive(false);
 					}
