@@ -1,5 +1,6 @@
 package br.com.thelastsurvivor.engine.game.spacecraft;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,16 +11,18 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.view.Display;
+import android.util.Log;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.IDrawControllable;
-import br.com.thelastsurvivor.engine.Orientation;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
+import br.com.thelastsurvivor.engine.simple.IDrawControllable;
+import br.com.thelastsurvivor.engine.simple.Orientation;
+import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class Spacecraft implements IDrawControllable {
+public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	
+	private String name;
 	private Context context;
 	
 	private Bitmap image;
@@ -27,35 +30,140 @@ public class Spacecraft implements IDrawControllable {
 	private Drawable drawableImage;
 	
 	private Vector2D position;
-	private Vector2D sensorPosition;
+	private Vector2D sensorPosition = new Vector2D(0,0);
 	
 	private Integer life;
 	
 	private Boolean orientationChange;
 
-	private Boolean left;
+	private Boolean left = false;
 	private Boolean flagLeft;
-	private Boolean right;
+	private Boolean right = false;
 	private Boolean flagRight;
 	
-	private Boolean down;
-	private Boolean up; 
+	private Boolean down = false;
+	private Boolean up = false; 
+	
+	private Integer color;
 	
 	
 	private Double angle = 0.0;
 	private Matrix matrix;
 	
-	private List<IWeaponBehavior> shoots;
-	private List<IWeaponBehavior> shootsDrawables;
+	private Boolean newShoot = false;
+	private List<IWeaponBehavior> shoots = new ArrayList<IWeaponBehavior>();
+	private List<IWeaponBehavior> shootsDrawables = new ArrayList<IWeaponBehavior>();
 	
-	public Spacecraft(Context context, Display display, Vector2D position){
+	public Spacecraft(String name){
+		
+		this.name = name;
+	}
+	
+	public Spacecraft(Context context, Vector2D position){
 		this.context = context;
 		this.position = position;
 		
 		
 		init();
 	}
-
+	
+	public Spacecraft(Context context, Vector2D position, Double angle, String name){
+		this.context = context;
+		this.position = position;
+		this.angle = angle;
+		this.name = name;
+		init();
+	}
+	
+	public Spacecraft(Vector2D position, Double angle, String name){
+		this.position = position;
+		this.angle = angle;
+		this.name = name;
+		
+	}
+	
+	
+	
+	/*inicia nave no cliente draw */
+	public Spacecraft(Context context, Vector2D position, Double angle, Integer color){
+		this.context = context;
+		this.position = position;
+		this.angle = angle;
+		this.color = color;
+		this.newShoot = false;
+		
+		initImageSpacecraft();
+		
+	}
+	
+	public Spacecraft(Context context, Vector2D position, Integer color){
+		this.context = context;
+		this.position = position;
+		this.color = color;
+		
+		initImageSpacecraft();
+		
+	}
+	
+	
+	/*Inicar nave do cliente no servidor*/
+	public Spacecraft(Context context, String name, Integer numberClient, Integer color){
+		this.context = context;
+		this.name = name;
+		getStartingPositionClient(numberClient);
+		this.color = color;
+		this.newShoot = false;
+		
+		initImageSpacecraft();
+	}
+	
+	public void initImageSpacecraft(){
+		
+		switch(this.color){
+		case 1:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		break;
+		case 2:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		break;
+		case 3:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		break;
+		case 4:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		break;
+		}
+		
+		this.matrix = new Matrix();
+		this.matrix.setRotate(angle.floatValue());
+		
+		this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
+		
+	}
+	
+	public void getStartingPositionClient(Integer number){
+		switch (number) {
+		case 0:
+			//spacecrafts.add(new Spacecraft(context, new Vector2D(200, 50), new Double(180.0), name, colorClient));
+			//return protocol.protocolSendsInitSpacecraftClient(name, colorClient);
+			this.position = new Vector2D(200,50);
+			this.angle = new Double(180.0);
+		break;
+		case 1:
+			//spacecrafts.add(new Spacecraft(context, new Vector2D(350, 100), new Double(270.0), name, colorClient));
+			//return protocol.protocolSendsInitSpacecraftClient(name, colorClient);
+			this.position = new Vector2D(350,100);
+			this.angle = new Double(270.0);
+			break;
+		case 2:
+			//spacecrafts.add(new Spacecraft(context, new Vector2D(50, 100), new Double(90.0), name, colorClient));
+			//return protocol.protocolSendsInitSpacecraftClient(name, colorClient);
+			this.position = new Vector2D(50,100);
+			this.angle = new Double(90.0);
+		break;
+		}
+	}
+	
 	@Override
 	public void init() {
 		
@@ -73,7 +181,7 @@ public class Spacecraft implements IDrawControllable {
 		this.down = false;
 		
         this.matrix = new Matrix();
-		this.matrix.setRotate(0);
+		this.matrix.setRotate(angle.floatValue());
 		
     	this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
     	
@@ -82,9 +190,22 @@ public class Spacecraft implements IDrawControllable {
     	
 	}
 	
+	public void initClient(){
+		this.sensorPosition = new Vector2D(0,0);
+		this.orientationChange = false;
+		
+		this.left = false;
+		this.right = false;
+		this.up = false;
+		this.down = false;
+		
+	}
+	
 	@Override
 	public void updateOrientation(Float orientationX, Float orientationY){
 	
+		Log.d("UPDATE ORIENTATION", "X"+orientationX+"Y"+orientationY);
+		
 		this.sensorPosition.setX(((orientationX.intValue())*10));
 		this.sensorPosition.setY(((orientationY.intValue())*10));
 
@@ -103,6 +224,24 @@ public class Spacecraft implements IDrawControllable {
 		this.controlShoots();
 
 		
+	}
+	
+	public void updateSensor(){
+		this.sensorControlUpdate();
+	}
+	
+	public void updateClient(){
+		this.controlUpdate();
+		
+		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
+		this.drawableImage = newImage;
+		
+		this.controlShoots();
+		
+		this.left = false;
+		this.right = false;
+		this.down = false;
+		this.up = false;
 	}
 	
 	public void sensorControlUpdate(){
@@ -126,7 +265,7 @@ public class Spacecraft implements IDrawControllable {
 			 }
 		}
 		
-		
+		Log.d("sensorCOltrol", ""+this.sensorPosition.getY()+""+this.sensorPosition.getX()+""+this.left+""+this.right+""+this.down+""+this.up);
 	}
 	
 	private void controlUpdate(){
@@ -140,7 +279,7 @@ public class Spacecraft implements IDrawControllable {
 	    			this.angle = 360.0;
 	    		}
 	    		
-	    		if(flagLeft){
+	    		if(flagLeft != null && flagLeft){
 	    			this.angle += 5;
 	    		}else{
 	    			this.angle -= 5;
@@ -151,7 +290,7 @@ public class Spacecraft implements IDrawControllable {
 	    	if(this.angle == 350){
 	    		this.angle = 0.0;
 	    	}else{
-	    		if(flagLeft){
+	    		if(flagLeft != null && flagLeft){
 	    			this.angle -= 5;
 	    		}else{
 	    			this.angle += 5;
@@ -242,7 +381,7 @@ public class Spacecraft implements IDrawControllable {
 	}
 
 	public void newShoot(){
-		
+		newShoot = true;
 		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.image);	
 	    shoots.add(shoot);
 	}
@@ -250,15 +389,12 @@ public class Spacecraft implements IDrawControllable {
 	@Override
 	public void draw(Canvas c) {
 
+		 Log.d("DRAW", "Spqcefraft");
+
 		
 		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
 		 
-	/*		  this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
-			    		this.position.getX()+this.resizedBitmap.getWidth(), 
-			    			this.position.getY()+this.resizedBitmap.getHeight());
-				  
-			 
-		   this.drawableImage.draw(c);*/
+	
 	    
 		   if(!this.shootsDrawables.isEmpty()){
 			for (IWeaponBehavior shoot : this.shootsDrawables) {
@@ -335,6 +471,64 @@ public class Spacecraft implements IDrawControllable {
 	public Integer getPower() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void setPosition(Vector2D position) {
+		this.position = position;
+	}
+
+	public void setAngle(Double angle) {
+		this.angle = angle;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getColor() {
+		return color;
+	}
+
+	public Boolean getLeft() {
+		return left;
+	}
+
+	public Boolean getRight() {
+		return right;
+	}
+
+	public Boolean getNewShoot() {
+		this.newShoot = !newShoot;
+		
+		return !newShoot;
+	}
+
+	public List<IWeaponBehavior> getShoots() {
+		return shoots;
+	}
+
+	public void setLeft(Boolean left) {
+		this.left = left;
+	}
+
+	public void setRight(Boolean right) {
+		this.right = right;
+	}
+
+	public void setDown(Boolean down) {
+		this.down = down;
+	}
+
+	public void setUp(Boolean up) {
+		this.up = up;
 	}
 
 	

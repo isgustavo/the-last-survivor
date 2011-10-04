@@ -4,17 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.EngineGame;
-import br.com.thelastsurvivor.engine.IDrawBehavior;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
+import br.com.thelastsurvivor.engine.simple.EngineGame;
+import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class Asteroid implements IDrawBehavior{
+public class Asteroid implements  IDraw, IDrawBehavior{
 
 	private Context context;
 	
@@ -55,7 +56,52 @@ public class Asteroid implements IDrawBehavior{
 		this.position = origin;
 		this.typeImage = type;
 		this.route = route;
+		
 		init2();
+	}
+	
+	public Asteroid(Context context, Vector2D origin, Integer type){
+		this.context = context;
+		this.position = origin;
+		this.typeImage = type;
+		
+		asteroidClient();
+	}
+	
+	public void asteroidClient(){
+		switch(this.typeImage){
+		
+		case 0:
+			this.drawableImage = new BitmapDrawable(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image));
+		break;
+		
+		case 1:
+		case 12:
+			this.drawableImage = new BitmapDrawable(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image));
+		break;
+		
+		case 2:
+			this.drawableImage = new BitmapDrawable(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image));
+		break;
+		
+		case 3:
+		case 6:
+		case 9:
+			this.drawableImage = new BitmapDrawable(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_4_image));
+		break;
+		
+		case 4:
+		case 7:
+		case 10:
+			this.drawableImage = new BitmapDrawable(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image));
+		break;
+		case 5:
+		case 8:
+		case 11:
+			this.drawableImage = new BitmapDrawable(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image));
+		break;
+		}
+		
 	}
 	
 	@Override

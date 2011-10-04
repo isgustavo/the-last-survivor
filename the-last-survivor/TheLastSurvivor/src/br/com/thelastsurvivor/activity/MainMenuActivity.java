@@ -87,6 +87,12 @@ public class MainMenuActivity extends Activity{
 		public void onClick(View v) {  
 			
 			Intent i = new Intent(MainMenuActivity.this, MultiGameActivity.class);
+			
+			Bundle s = new Bundle();
+		    s.putString("id_player",player.getNickname());
+		    
+		    i.putExtra("playerBundle",s);
+
 			startActivity(i);
 		}  
 	};  
@@ -134,8 +140,6 @@ public class MainMenuActivity extends Activity{
 		super.onStop();
 		
 	}
-
-	
 
 	@Override
     protected void onDestroy() {

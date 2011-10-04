@@ -1,5 +1,6 @@
-package br.com.thelastsurvivor.engine;
+package br.com.thelastsurvivor.engine.multiplayer;
 
+import br.com.thelastsurvivor.engine.util.IInitUpdateDraw;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,7 +12,7 @@ public class GameLoopThread extends Thread{
 	private SurfaceHolder holder;
 	//private Handler handler;
 	private Context context;
-	private EngineGame engine;
+	private IInitUpdateDraw engine;
 	
 	private Paint blackScreen;
 	
@@ -27,7 +28,7 @@ public class GameLoopThread extends Thread{
 	public final static int RUNNING = 1;
 	public final static int PAUSED = 2;
 	
-	public GameLoopThread(SurfaceHolder holder, Context context, EngineGame engine){
+	public GameLoopThread(SurfaceHolder holder, IInitUpdateDraw engine){
 		
 		this.holder = holder;
 		//this.handler = handler;

@@ -1,6 +1,8 @@
 package br.com.thelastsurvivor.util;
 
-public class Vector2D {
+import java.io.Serializable;
+
+public class Vector2D implements Serializable {
 	
 	private Integer x;
 	private Integer y;
@@ -14,6 +16,12 @@ public class Vector2D {
 	public Vector2D(Integer x, Integer y){
 		this.x = x;
 		this.y = y;
+		
+	}
+	
+	public Vector2D(String x, String y){
+		this.x = Integer.parseInt(x);
+		this.y = Integer.parseInt(y);
 		
 	}
 	

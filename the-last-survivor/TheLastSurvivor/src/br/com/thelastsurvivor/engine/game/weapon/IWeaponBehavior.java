@@ -1,6 +1,6 @@
 package br.com.thelastsurvivor.engine.game.weapon;
 
-import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
 
 public interface IWeaponBehavior extends IDrawBehavior{
 	

@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine;
+package br.com.thelastsurvivor.engine.simple;
 
 import java.util.ArrayList;
 import java.util.List;

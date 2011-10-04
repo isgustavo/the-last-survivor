@@ -25,7 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
 import br.com.thelastsurvivor.model.game.Asteroid;

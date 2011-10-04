@@ -101,7 +101,7 @@
     	Oi! Você deverá escolher qual será  
     </string>
     <string name="multiplayer_mode_2">
-    	seu tipo de conexão. Aconsenhamos que o
+    	seu tipo de conexão. Aconselhamos que o
     </string>
     <string name="multiplayer_mode_3">
     	aparelho com maior capacidade de 
@@ -112,6 +112,27 @@
     <string name="multiplayer_mode_5">
     	 ESPAÇO. 
 	</string>
+	
+	
+	<string name="wait">Carregando!</string>
+	<string name="color">Qual sua cor?</string>
+	
+	<string name="features_mode_1">
+    	Oi! Em instantes você deverá escolher 
+    </string>
+    <string name="features_mode_2">
+    	uma cor paa jogar. Quando mais
+    </string>
+    <string name="features_mode_3">
+    	de um jogador escolhem a mesma 
+    </string>
+    <string name="features_mode_4">
+    	 cor os mesmo jogaram em modo 
+    </string>
+    <string name="features_mode_5">
+    	 cooperativo. 
+	</string>
+	
 	
 	
 <!-- Trofeu -->
@@ -162,6 +183,8 @@
     
     <string name="no_trophies">Sem Troféus ainda.</string>
     
+
+
 
     
     

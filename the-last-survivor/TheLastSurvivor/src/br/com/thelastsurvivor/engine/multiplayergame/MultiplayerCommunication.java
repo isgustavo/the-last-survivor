@@ -1,56 +1,136 @@
 package br.com.thelastsurvivor.engine.multiplayergame;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
+import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 
-public class MultiplayerCommunication implements Runnable{
+public class MultiplayerCommunication extends Thread{
 
-	private DataInputStream is;
-	private DataOutputStream os;
+	private MultiGameActivity activity;
 	
-	String name;
-	List<BluetoothSocket> clients;
-	BluetoothSocket client;
+	//private DataInputStream is;
+	private ObjectInputStream obis;
+	//private DataOutputStream os;
+	private ObjectOutputStream obos;
 	
-	public MultiplayerCommunication(){
-		this.clients = new ArrayList<BluetoothSocket>();
-	}
-	
-	public void startCommunication(BluetoothSocket client){
-		this.clients.add(client);
-		
-		this.run();
-	}
-	
+	private BluetoothSocket socket;
 	
 	@Override
 	public void run() {
-		         try {
-					is = new DataInputStream(client.getInputStream());
-					os = new DataOutputStream(client.getOutputStream());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		        
-	        
+		
+			try {
+				//Log.d("RUN", "RUN");
+				//is = new DataInputStream(socket.getInputStream());
+				obis = new ObjectInputStream(socket.getInputStream());
+				obos = new ObjectOutputStream(socket.getOutputStream());
+				//os = new DataOutputStream(socket.getOutputStream());
+				
+				//Log.d("RUN", "RUN");
+				
+				//Log.d("LOG............................", "RUN"+socket.getRemoteDevice().getName());
+				
+				while (true) {
+					//Log.d("LOG", "WHILE");
+		            //String string = is.readUTF();
+		            
+		          /* Log.d("LOG", "UFT");
+		            if(string.equalsIgnoreCase("1")){
+		            	Log.d("LOG", "IF");
+		            	activity.getEngine().s// aqui utiliza a autlaização direta na lista de coisas desenlhavei 
+		            }*/
+		            
+		            
+		            try {
+						if(obis.readObject() instanceof Spacecraft){
+							 Spacecraft spacecraft = (Spacecraft) obis.readObject(); 
+							// activity.startGameClient(spacecraft);
+						}
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+		        }
+			} catch (IOException e) {
+				Log.d("LOG", "EXEC");
+				e.printStackTrace();
+			}
+		 
 	}
 	
-	 public void stopCommunication(){
-		        try {
-		          is.close();
-		       } catch (IOException e) {
-		          e.printStackTrace();
-		       }
-		       try {
-		         os.close();
-		      } catch (IOException e) {
-		       e.printStackTrace();
-		       }
+	
+	public void startCommunication(final BluetoothSocket socket, MultiGameActivity activity){
+		//Log.d("startCommunication", "startCommunication");
+		this.activity = activity;
+		this.socket = socket;
+		//Log.d("start", "start");
+		start();
+	}
+	
+	
+	public void stopCommunication(){
+		
+		//Log.d("LOG", "STOP");
+		try {
+	       //is.close();
+	       this.obis.close();
+	    } catch (IOException e) {
+	       e.printStackTrace();
 	    }
+	    try {
+	      //os.close();
+	    	this.obos.close();
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	}
 
+
+/*	public DataInputStream getIs() {
+		return is;
+	}
+
+
+	public void setIs(DataInputStream is) {
+		this.is = is;
+	}
+
+
+	public DataOutputStream getOs() {
+		return os;
+	}
+
+
+	public void setOs(DataOutputStream os) {
+		this.os = os;
+	}
+*/
+
+	public ObjectInputStream getObis() {
+		return obis;
+	}
+
+
+	public void setObis(ObjectInputStream obis) {
+		this.obis = obis;
+	}
+
+
+	public ObjectOutputStream getObos() {
+		return obos;
+	}
+
+
+	public void setObos(ObjectOutputStream obos) {
+		this.obos = obos;
+	}
+	
+	
+	
+	
 }

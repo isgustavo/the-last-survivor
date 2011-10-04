@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine;
+package br.com.thelastsurvivor.engine.simple;
 
 
 public class CameraGame {

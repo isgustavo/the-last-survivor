@@ -9,10 +9,11 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.IDrawBehavior;
+import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class EffectShoot implements IDrawBehavior, IWeaponBehavior {
+public class EffectShoot implements IDraw, IDrawBehavior, IWeaponBehavior {
 
 	private Context context;
 	private Vector2D positionShoot;
@@ -51,6 +52,26 @@ public class EffectShoot implements IDrawBehavior, IWeaponBehavior {
 		this.matrix = new Matrix();
 		
 		
+	}
+	
+	public EffectShoot(Context context, Vector2D position, Integer alfa){
+		this.context = context;
+		this.positionShoot = position;
+		this.alpha = alfa;
+
+		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		this.paint.setColor(Color.WHITE);
+		
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.shoot_effect_image);
+		
+		this.sizeHeight = image.getHeight();
+		this.sizeWidth = image.getWidth();
+		
+		isAlive = true;
+		
+		this.matrix = new Matrix();
+		
+		this.paint.setAlpha(this.alpha);
 	}
 	
 	
@@ -153,6 +174,12 @@ public class EffectShoot implements IDrawBehavior, IWeaponBehavior {
 	}
 	public static Double randomSizedimension(Integer min, Integer max) {
 		return (min + Math.random() * (max - min + 1));
+	}
+
+
+
+	public Integer getAlpha() {
+		return alpha;
 	}
 	
 	

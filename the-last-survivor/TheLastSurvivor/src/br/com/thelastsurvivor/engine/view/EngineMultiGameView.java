@@ -3,10 +3,11 @@ package br.com.thelastsurvivor.engine.view;
 import android.content.Context;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import br.com.thelastsurvivor.engine.simple.EngineGame;
-import br.com.thelastsurvivor.engine.simple.GameLoopThread;
+import br.com.thelastsurvivor.engine.multiplayer.GameLoopThread;
+import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
+import br.com.thelastsurvivor.engine.util.IInitUpdateDraw;
 
-public class EngineGameView extends SurfaceView implements SurfaceHolder.Callback {
+public class EngineMultiGameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	private Long lastUpdate;
     private Long sleepTime;
@@ -14,24 +15,38 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
     private SurfaceHolder surfaceHolder;
     private Context context;
     
-    private EngineGame engine;
+    private IInitUpdateDraw engine;
     private GameLoopThread gameLoop;
 	
-	public EngineGameView(Context context, EngineGame engine) {
+	public EngineMultiGameView(Context context, IInitUpdateDraw engine) {
 		super(context);
 		
 		this.context = context;
 		this.engine = engine;
+		
+		
 		init();
 	}
-
+	
+	/*public EngineMultiGameView(IInitUpdateDraw engine) {
+		super(engine.getContext());
+		
+		//this.context = context;
+		this.engine = engine;
+		init();
+	}*/
+	
+	
 	public void init(){
 		
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
 		
+		if(engine instanceof EngineGameClient){
+			((EngineGameClient)engine).setHolder(surfaceHolder);
+		}
 		
-		gameLoop = new GameLoopThread(surfaceHolder, context, engine);
+		gameLoop = new GameLoopThread(surfaceHolder, engine);
 		
 		setFocusable(true);
 	}
@@ -43,7 +58,7 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 	public void surfaceCreated(SurfaceHolder arg0) {
 		if(this.gameLoop.state == GameLoopThread.PAUSED){
           
-			this.gameLoop = new GameLoopThread(getHolder(), context, engine);
+			this.gameLoop = new GameLoopThread(getHolder(), engine);
 			this.gameLoop.start();
         }else{
             
@@ -89,12 +104,5 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
 	public GameLoopThread getGameLoop() {
 		return gameLoop;
 	}
-	public EngineGame getEngine() {
-		return engine;
-	}
 	
-	
-	
-	
-
 }

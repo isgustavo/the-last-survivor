@@ -8,12 +8,13 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.EngineGame;
-import br.com.thelastsurvivor.engine.IDrawBehavior;
-import br.com.thelastsurvivor.engine.Orientation;
+import br.com.thelastsurvivor.engine.simple.EngineGame;
+import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.simple.Orientation;
+import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
+public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	
 	private final int TYPE_SHOOT = 1;
 	private final int power = 1;
@@ -33,6 +34,7 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 	
 	private Matrix matrix;
 	private Boolean isAlive;
+	private Integer color;
 	
 	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
 		this.context = context;
@@ -42,6 +44,39 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		this.spacecraft = spacecraft;
 		
 		init();
+	}
+	
+	public SimpleShoot(Context context, Vector2D position, Double angle, Integer color){
+		this.context = context;
+		this.position = position;
+		this.angle = angle;
+		this.color = color;
+		
+		spaceClient();
+	}
+	
+	public void spaceClient(){
+		
+		switch(this.color){
+		case 1:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		break;
+		case 2:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		break;
+		case 3:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		break;
+		case 4:
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		break;
+		}
+		
+		this.matrix = new Matrix();
+		this.matrix.setRotate(angle.floatValue());
+		
+		this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
+		
 	}
 	
 	
@@ -70,7 +105,6 @@ public class SimpleShoot implements IDrawBehavior, IWeaponBehavior{
 		this.position.addX((this.spacecraft.getWidth()/2));
 		this.position.addY((this.spacecraft.getHeight()/2));
 		
-
 	}
 	
 	

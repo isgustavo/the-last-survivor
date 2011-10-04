@@ -2,20 +2,18 @@ package br.com.thelastsurvivor.engine.multiplayergame;
 
 import java.io.IOException;
 
-import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 
-public class MultiplayerClient implements Runnable{
+public class MultiplayerClient extends Thread{
 
 	private MultiGameActivity activity;
 	BluetoothDevice device;
+	
+	MultiplayerCommunication serverConnected;
 	BluetoothSocket serverSocket;
 	
-	public MultiplayerClient(BluetoothDevice device, MultiGameActivity activity) {
-		this.device = device;
-		this.activity = activity;
-	}
 	
 	
 	@Override
@@ -23,22 +21,37 @@ public class MultiplayerClient implements Runnable{
 		try {
 			serverSocket = device.createRfcommSocketToServiceRecord(MultiGameActivity._UUID);
 			serverSocket.connect();
-			activity.addSocket(serverSocket);
+			
+			
+			//activity.setSocketServer(serverSocket);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		
 		
 	}
 	
-	
+	public void startClient(BluetoothDevice device, MultiGameActivity activity){
+		this.device = device;
+		this.activity = activity;
+		this.serverConnected = new MultiplayerCommunication();
+		
+		start();
+	}
+
 	public void stopClient(){
-		 try {
+		try {
 			 serverSocket.close();
-			       } catch (Exception e) {
-			         e.printStackTrace();
-		       }
+			 
+			 serverConnected = null;
+			 
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 }
+	}
+
+	public MultiplayerCommunication getServerConnected() {
+		return serverConnected;
 	}
 	
 	

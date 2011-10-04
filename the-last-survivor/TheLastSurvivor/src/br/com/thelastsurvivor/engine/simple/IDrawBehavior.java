@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine;
+package br.com.thelastsurvivor.engine.simple;
 
 import android.graphics.Canvas;
 import br.com.thelastsurvivor.util.Vector2D;
