@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine.game.asteroid;
+package br.com.thelastsurvivor.engine.simpleplayergame.asteroid;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,9 +8,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.simple.EngineGame;
 import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 

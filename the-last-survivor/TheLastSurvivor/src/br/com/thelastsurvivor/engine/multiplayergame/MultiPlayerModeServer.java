@@ -3,12 +3,10 @@ package br.com.thelastsurvivor.engine.multiplayergame;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayer.EngineGame;
-import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class MultiPlayerModeServer extends EngineGame {

@@ -46,6 +46,32 @@ public class Particle {
 		
 	}
 	
+	public void update(br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft spacecraft){
+		
+		
+		 if (spacecraft.getUp()) {
+			 if(spacecraft.getAngle() >= 270 || spacecraft.getAngle() <= 90){
+				  
+				   Double invertAngle;
+				   
+				   if(spacecraft.getAngle() >= 270){
+					   invertAngle = (360 - spacecraft.getAngle()) + 90;
+					   
+				   }else{
+					   invertAngle = spacecraft.getAngle()+180;
+				   }
+				   
+				   Orientation.getNewPosition(invertAngle, this.position); 
+				   
+			   }else{
+				   Orientation.getNewPosition(spacecraft.getAngle(), this.position);
+			   }
+			   
+	     }
+	     
+		this.update();
+	}
+	
 	public void update(Spacecraft spacecraft){
 		
 		

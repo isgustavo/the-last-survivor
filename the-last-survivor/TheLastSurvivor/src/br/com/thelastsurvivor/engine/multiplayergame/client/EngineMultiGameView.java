@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import br.com.thelastsurvivor.engine.multiplayer.GameLoopThread;
-import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.util.IInitUpdateDraw;
 
 public class EngineMultiGameView extends SurfaceView implements SurfaceHolder.Callback {

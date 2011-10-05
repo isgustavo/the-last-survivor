@@ -80,6 +80,26 @@ public class Explosion {
 		this.cleanListParticules();
 	}
 	
+	public void update(br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft spacecraft) {
+		
+		//for (int i = 0; i < 1; i++) {
+			//Particle p = new Particle(new Vector2D(200,200));
+			//this.particles[i] = p;
+	 		this.particles.add(new Particle());
+	 	//}
+		
+		if (this.isAlive) {
+			for (Particle particle : particles) {
+				if(particle.isAlive()){
+					particle.update(spacecraft);
+				}
+			}
+			this.cleanListParticules();
+		}
+		
+		this.cleanListParticules();
+	}
+	
 	public void updateInGame(Vector2D camera) {
 		
 		//for (int i = 0; i < 1; i++) {

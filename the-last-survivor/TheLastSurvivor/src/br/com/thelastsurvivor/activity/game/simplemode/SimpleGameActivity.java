@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.simple.EngineGame;
 import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
@@ -44,7 +45,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     private MyAudioPlayer audioPlayer;
     
     private EngineGameView view;
-    private SimplePlayerMode engine;
+    private EngineGame engine;
     
     private WakeLock wakeLock;
     private Long beforeTime;
@@ -84,7 +85,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
         
         this.beforeTime = 0L;
 		
-		this.engine = new SimplePlayerMode(this, vibrator, display);
+		this.engine = new EngineGame(this, vibrator, display);
 		
     	this.view = new EngineGameView(this,engine);
 	}
@@ -221,7 +222,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		List<Asteroid> asteroids = getAsteroidsGame();
 			
 		return new Game(new Date(), this.view.getEngine().getStartTime(), 
-				((SimplePlayerMode)this.view.getEngine()).getPoints(),
+				0,
 				spacecraft, asteroids);
 		
 	}

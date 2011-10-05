@@ -1,10 +1,10 @@
 package br.com.thelastsurvivor.engine.multiplayer;
 
-import br.com.thelastsurvivor.engine.util.IInitUpdateDraw;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
+import br.com.thelastsurvivor.engine.util.IInitUpdateDraw;
 
 public class GameLoopThread extends Thread{
 

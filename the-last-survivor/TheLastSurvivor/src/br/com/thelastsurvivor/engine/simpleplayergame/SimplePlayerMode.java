@@ -4,17 +4,17 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
 import android.view.Display;
-import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
-import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simple.EngineGame;
 import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.simpleplayergame.asteroid.Asteroid;
+import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimplePlayerMode extends EngineGame {
 	
-	private Integer points;
+	
 
 	public SimplePlayerMode(Context context, Vibrator vibrator, Display display) {
 		super(context, vibrator, display);
@@ -36,50 +36,15 @@ public class SimplePlayerMode extends EngineGame {
 	public void update(){
 				
 
-		this.spacecraft.update();
-		this.verificationNewSpacecraftPositionScreen();
-		
 		super.update();
 		
-		this.verificationCollisionShoot();
+		//this.verificationCollisionShoot();
 		
 		
 		
 	}
 	
-	public void verificationNewSpacecraftPositionScreen(){
-		if(-10 > this.spacecraft.getPosition().getY()){
-			this.spacecraft.getPosition().setY(this.camera.getY());
-		}else if(this.spacecraft.getPosition().getY() > this.camera.getY()+10){
-			this.spacecraft.getPosition().setY(0);
-		}
 	
-		if(-10 > this.spacecraft.getPosition().getX()){
-			this.spacecraft.getPosition().setX(this.camera.getX());
-		}else if(this.spacecraft.getPosition().getX() > this.camera.getX()+10){
-			this.spacecraft.getPosition().setX(0);
-		}
-	}
-	
-	public void verificationCollisionShoot(){
-		
-		
-		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
-			for(IDrawBehavior asteroid : this.asteroidsDrawables){
-				if((asteroid.getPosition().getX() < shoot.getPosition().getX() &&
-						shoot.getPosition().getX() < asteroid.getPosition().getX()+asteroid.getSizeWidth()) &&
-						(asteroid.getPosition().getY() < shoot.getPosition().getY() &&
-								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
-					shoot.setAlive(false);
-					this.shootsEffect.add(new EffectShoot(this.context, shoot.getPosition()));
-					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
-						asteroid.setAlive(false);
-					}
-				}
-			}
-		}
-
-	}
 	
 	@Override
 	public void draw(Canvas c) {
@@ -100,9 +65,6 @@ public class SimplePlayerMode extends EngineGame {
 	}
 
 
-	public Integer getPoints() {
-		return points;
-	}
 
 
 }
