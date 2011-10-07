@@ -128,9 +128,9 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	 
 		
 		if (this.left) {
-    		this.angle -= 5;
+    		this.angle -= 10;
 	    }else if(this.right){
-	    	this.angle += 5;
+	    	this.angle += 10;
 	    }
 		
 		if (this.up) {

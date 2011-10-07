@@ -30,7 +30,7 @@ public class MultiplayerServer extends Thread {
 	public void run() {
 		
 		try{
-			serverSocket = adaptader.listenUsingRfcommWithServiceRecord(MultiGameActivity.SERVICE, MultiGameActivity._UUID);
+			//serverSocket = adaptader.listenUsingRfcommWithServiceRecord(MultiGameActivity.SERVICE, MultiGameActivity._UUID);
 			
 			while(true){
 				BluetoothSocket clientSocket = serverSocket.accept();

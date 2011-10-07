@@ -316,8 +316,8 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		case 8:
 		case 11:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
-		    		this.position.getX()+49, 
-		    			this.position.getY()+43);
+		    		this.position.getX()+196, 
+		    			this.position.getY()+179);
 		break;
 
 		}		

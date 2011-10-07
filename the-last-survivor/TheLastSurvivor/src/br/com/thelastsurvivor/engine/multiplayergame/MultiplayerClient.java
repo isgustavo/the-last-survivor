@@ -19,7 +19,7 @@ public class MultiplayerClient extends Thread{
 	@Override
 	public void run() {
 		try {
-			serverSocket = device.createRfcommSocketToServiceRecord(MultiGameActivity._UUID);
+			//serverSocket = device.createRfcommSocketToServiceRecord(MultiGameActivity._UUID);
 			serverSocket.connect();
 			
 			

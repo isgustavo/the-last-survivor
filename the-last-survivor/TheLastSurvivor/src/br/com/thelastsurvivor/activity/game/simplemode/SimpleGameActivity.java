@@ -125,6 +125,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
             return;	
         
+
 		this.engine.getSpacecraft().updateOrientation((event.values[1]),(event.values[0]));   
 	}
 	

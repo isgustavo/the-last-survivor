@@ -58,10 +58,12 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		DialogInterface.OnCancelListener{
 
 	public static final String SERVICE = "LASTSURVIVOR";
-	public static final UUID _UUID =  UUID.fromString("db12d1e9-caba-84ef-398b-18211984abcd");
-	public static final UUID _UUID2 =  UUID.fromString("db12d1e9-caba-84ef-398b-18221984abcd");
-	public static final UUID _UUID3 =  UUID.fromString("db12d1e9-caba-84ef-398b-18231984abcd");
-	public static final UUID _UUID4 =  UUID.fromString("db12d1e9-caba-84ef-398b-18241984abcd");
+	
+	public static List<UUID> _UUID;
+	//public static final UUID _UUID =  UUID.fromString("db12d1e9-caba-84ef-398b-18211984abcd");
+	//public static final UUID _UUID2 =  UUID.fromString("db12d1e9-caba-84ef-398b-18221984abcd");
+	//public static final UUID _UUID3 =  UUID.fromString("db12d1e9-caba-84ef-398b-18231984abcd");
+	//public static final UUID _UUID4 =  UUID.fromString("db12d1e9-caba-84ef-398b-18241984abcd");
 
 	
 	private static final int BT_TIME = 30;
@@ -166,6 +168,18 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	     registerReceiver(meuReceiver, filter2);
 	     
 	     context = this.getApplicationContext();
+	     
+	     
+	     _UUID = new ArrayList<UUID>();
+	     _UUID.add(UUID.fromString("db12d1e9-caba-84ef-398b-18211984abcd"));
+	     _UUID.add(UUID.fromString("db12d1e9-caba-84ef-398b-18221984abcd"));
+	     _UUID.add(UUID.fromString("db12d1e9-caba-84ef-398b-18231984abcd"));
+	     _UUID.add(UUID.fromString("db12d1e9-caba-84ef-398b-18241984abcd"));
+	 	//public static final UUID _UUID =  UUID.fromString("db12d1e9-caba-84ef-398b-18211984abcd");
+	 	//public static final UUID _UUID2 =  UUID.fromString("db12d1e9-caba-84ef-398b-18221984abcd");
+	 	//public static final UUID _UUID3 =  UUID.fromString("db12d1e9-caba-84ef-398b-18231984abcd");
+	 	//public static final UUID _UUID4 =  UUID.fromString("db12d1e9-caba-84ef-398b-18241984abcd");
+	     
 			
 		   //this.audioPlayer = new MyAudioPlayer(this, R.raw.singleplayer_soundtrack);
 		   //this.audioPlayer.start();
@@ -311,6 +325,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		         public void run() {
 		           if (threadComunicacao == null)
 		        	   dialog.cancel();
+		           	   //trataSocketServer(clientSockets);
 		           	   getFeaturesGame();
 		         }
 		       }, tempo * 1000);
@@ -357,15 +372,19 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	     threadCliente.iniciar(dispositivosRemotos.get(which));
 	   }
 	   
-	   List<BluetoothSocket> clientsSocket;
+	   //List<BluetoothSocket> clientsSocket;
 	   //List<ThreadComunicacao> communicationSockets;
 	   
 	   private void trataSocketServer(final BluetoothSocket socket) {
 		     //waitDialog.dismiss();
-
-		     ThreadComunicacao threadComunicacao = new ThreadComunicacao();
-		     threadComunicacao.iniciar(socket);
-		     threadsComunicacao.add(threadComunicacao);
+		   //Log.d("trataSocketServer", "."+socket.size());
+		   //for (BluetoothSocket bluetoothSocket : socket) {
+			  // Log.d("bluetoothSocket", "."+bluetoothSocket.getRemoteDevice().getName());
+			     ThreadComunicacao threadComunicacao = new ThreadComunicacao();
+			     threadComunicacao.iniciar(socket);
+			     threadsComunicacao.add(threadComunicacao);
+		//}
+		     
 		     
 	   }
 	   
@@ -387,6 +406,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		   
 		   try {
 		   for (ThreadComunicacao communication : threadsComunicacao) {
+			   Log.d("COMMUNICATION", "."+communication.nome);
 			   		communication.os.writeUTF("featuresGame/");
 				
 		   }
@@ -468,7 +488,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	        	}else{
 	        		showWaitingCompleteFeatureGame();
 	        		try {
-						threadComunicacao.os.writeUTF("featureClient/"+namePlayer+"/"+BLUE+"/"+threadCliente.socket.getRemoteDevice().getName());
+						threadComunicacao.os.writeUTF("featureClient/"+namePlayer+"/"+BLUE+"/"+adaptador.getName());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -493,7 +513,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	        	}else{
 	        		showWaitingCompleteFeatureGame();
 	        		try {
-						threadComunicacao.os.writeUTF("featureClient/"+namePlayer+"/"+YELLOW+"/"+threadCliente.socket.getRemoteDevice().getName());
+						threadComunicacao.os.writeUTF("featureClient/"+namePlayer+"/"+YELLOW+"/"+adaptador.getName());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -519,7 +539,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	        	}else{
 	        		showWaitingCompleteFeatureGame();
 	        		try {                              
-						threadComunicacao.os.writeUTF("featureClient/"+namePlayer+"/"+GREEN+"/"+threadCliente.socket.getRemoteDevice().getName());
+						threadComunicacao.os.writeUTF("featureClient/"+namePlayer+"/"+GREEN+"/"+adaptador.getName());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -557,16 +577,11 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		   int numberClient = 0;
 		   List<Spacecraft> spacecraftsClient = new ArrayList<Spacecraft>();
 		  
-		   for (String valor : nameAndColor) {
-				Log.d("valor", ""+valor);
-			   }
 		   try {
 		   Log.d("MULTIGAMEACTIVITY", ".FOR");
+		   
 		   for (ThreadComunicacao communication : threadsComunicacao) {
-			   //spacecraftsClient.add(new Spacecraft(this, communication.nome,
-				//	   numberClient, colorClients.get(communication.nome)));
-			   
-			   
+			 
 			   for (String valor : nameAndColor) {
 				Log.d("valor", ""+valor);
 			   }
@@ -574,12 +589,15 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 			   Log.d("...", "nome"+communication.nome);
 			   
 			   if(nameAndColor.get(2).equalsIgnoreCase(communication.nome)){
+				   Log.d("nameAndColor.get(2)", "nome"+communication.nome);
 				   spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(0),
 						   numberClient, Integer.parseInt(nameAndColor.get(1))));
-			   }else if(nameAndColor.size() > 3 && nameAndColor.get(5).equalsIgnoreCase(communication.nome)){
+			   }else if(nameAndColor.size() >= 3 && nameAndColor.get(5).equalsIgnoreCase(communication.nome)){
+				   Log.d("nameAndColor.get(5)", "nome"+communication.nome);
 				   spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(3),
 						   numberClient, Integer.parseInt(nameAndColor.get(4))));
-			   }else if(nameAndColor.size() > 9 && nameAndColor.get(8).equalsIgnoreCase(communication.nome)){
+			   }else if(nameAndColor.size() >= 9 && nameAndColor.get(8).equalsIgnoreCase(communication.nome)){
+				   Log.d("nameAndColor.get(8)", "nome"+communication.nome);
 				   spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(6),
 						   numberClient, Integer.parseInt(nameAndColor.get(7))));
 			   }else if(nameAndColor.size() == 12 && nameAndColor.get(11).equalsIgnoreCase(communication.nome)){
@@ -591,8 +609,10 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 			  
 			   communication.os.writeUTF("startGameClient/");
 				
-			   startGameServer(spacecraftsClient);
+			   
 		   }
+		   
+		   startGameServer(spacecraftsClient);
 		   } catch (IOException e) {
 				e.printStackTrace();
 		   }
@@ -662,17 +682,24 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		   }
 	   
 	   
-	   
+	   //List<BluetoothSocket> clientSockets = new ArrayList<BluetoothSocket>();
 	   private class ThreadServidor extends Thread {
 		      BluetoothServerSocket serverSocket;
 		      BluetoothSocket clientSocket;
 		                
 		       public void run() {
 		          try {
-		           serverSocket = adaptador.listenUsingRfcommWithServiceRecord(SERVICE, _UUID);
+		           for (UUID uuid : _UUID) {
+		        	   serverSocket = adaptador.listenUsingRfcommWithServiceRecord(SERVICE, uuid);
+		        	   
+		        	   
+		        		   clientSocket = serverSocket.accept();
+		        		   trataSocketServer(clientSocket);
+		        	 
+			          
+		           }
 		           //clientSocket.add(serverSocket.accept());
-		           clientSocket = serverSocket.accept();
-		           trataSocketServer(clientSocket);
+		           
 		                              
 		         } catch (IOException e) {
 		            telaHandler.obtainMessage(MSG_DESCONECTOU, 
@@ -700,16 +727,26 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		      BluetoothSocket socket;
 
 		     public void run() {	
-		       try {
-		        BluetoothSocket socket = device.createRfcommSocketToServiceRecord(_UUID);
-		          socket.connect();
-		          trataSocket(socket);
-
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		            telaHandler.obtainMessage(MSG_DESCONECTOU, 
-		                  e.getMessage()+"[2]").sendToTarget();
-		         }
+		      
+		    	   for (UUID uuid : _UUID) {
+		    		   try {
+		    		   socket = device.createRfcommSocketToServiceRecord(uuid);
+		    		   
+		    		   Log.d("client", ".for");
+		    		   
+		    		   if(socket != null){
+		    			   Log.d("client", ".if");
+		    			   socket.connect();
+			    	       trataSocket(socket);
+			    	       break;
+		    		   }
+		    		   
+		    		   } catch (IOException e) {
+				            e.printStackTrace();
+				            telaHandler.obtainMessage(MSG_DESCONECTOU, 
+				                  e.getMessage()+"[2]").sendToTarget();
+				         }
+		    	   }
 		        }
 
 		       public void iniciar(BluetoothDevice device){

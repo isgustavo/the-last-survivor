@@ -5,14 +5,15 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
-import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageLife;
 import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.util.Vector2D;
 import br.com.thelastsurvivor.view.particle.Explosion;
@@ -74,15 +75,22 @@ public class EngineGame{
 		this.addMessage(new MessageGame(context, context.getString(R.string.init_game),3, 1000));
 
 	}
-	
+	boolean ff = true;
 	public void update(){
 		
 		currentTime();
-		spacecraft.update();
+		
+		
+	
+			spacecraft.update();
+		
+		
+		
+		ff = false;
 		verificationNewSpacecraftPositionScreen();
 		
 		updateNewAsteroid();
-		verificationAsteroidCollisions();
+		//verificationAsteroidCollisions();
 		updateAsteroids();
 		verificationSpacecraftCollisions();
 		verificationCollisionShoot();
@@ -110,6 +118,8 @@ public class EngineGame{
 		int seconds = (int) (millis / 1000);
 	    
 		this.startTime = (seconds / 60);
+		
+		Log.d("startTime","."+this.startTime);
 		//Log.d("TIME","."+this.startTime);
 	}
 	
@@ -173,11 +183,11 @@ public class EngineGame{
 					   asteroid1.getPosition().getY()+(asteroid1.getSizeHeight()-5) > asteroid2.getPosition().getY() &&
 					   asteroid1.getPosition().getY() < asteroid2.getPosition().getY()+(asteroid2.getSizeHeight()-5)){
 					
-						asteroidSituation(asteroid1);
-						asteroidSituation(asteroid2);
+						//asteroidSituation(asteroid1);
+						//asteroidSituation(asteroid2);
 
-						this.asteroidsDrawables.get(x).setAlive(false);
-						this.asteroidsDrawables.get(y).setAlive(false);
+						//this.asteroidsDrawables.get(x).setAlive(false);
+						//this.asteroidsDrawables.get(y).setAlive(false);
 					}
 				}
 				
@@ -189,6 +199,7 @@ public class EngineGame{
 	
 	public void verificationCollisionShoot(){
 		
+		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
 		
 		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
 			for(IDrawBehavior asteroid : this.asteroidsDrawables){
@@ -199,12 +210,17 @@ public class EngineGame{
 					shoot.setAlive(false);
 					this.spacecraft.addPoint(asteroid.getPower());
 					this.shootsEffect.add(new EffectShoot(this.context, shoot.getPosition()));
+					
+					//collisionAsteroid.add(new Asteroid(this.context, ((Asteroid) asteroid).getPosition(), 14, false));
+					
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
 						asteroid.setAlive(false);
 					}
 				}
 			}
 		}
+		
+		//this.asteroidsDrawables.addAll(collisionAsteroid);
 
 	}
 	
@@ -218,7 +234,7 @@ public class EngineGame{
 			   asteroid.getPosition().getY()+(asteroid.getSizeHeight()-5) > spacecraft.getPosition().getY() &&
 			   asteroid.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-5)){
 			
-				asteroidSituation(asteroid);
+				//asteroidSituation(asteroid);
 				spacecraft.addLife(-asteroid.getLife());
 				this.vibrator.vibrate(100);
 				String values = context.getString(R.string.life)+" : "+spacecraft.getLife()+" pt";
@@ -231,7 +247,7 @@ public class EngineGame{
 
 	}
 	
-	private void asteroidSituation(Asteroid asteroid){
+/*	private void asteroidSituation(Asteroid asteroid){
 		switch (asteroid.getTypeImage()) {
 		
 		case 1:
@@ -260,7 +276,7 @@ public class EngineGame{
 		break;
 		
 		}
-	}
+	}*/
 	
 	private void updateAsteroids(){
 		if(this.asteroidsDrawables != null){
@@ -337,7 +353,8 @@ public class EngineGame{
 	}
 	
 	private void addMessage(MessageGame newMessage){
-		this.messages.add(newMessage);
+		
+		
 		
 		List<MessageGame> newListMessage = new ArrayList<MessageGame>();
 		
@@ -350,6 +367,7 @@ public class EngineGame{
 		
 		
 		this.messages.clear();
+		this.messages.add(newMessage);
 		this.messages.addAll(newListMessage);
 	}	
 	
@@ -369,11 +387,14 @@ public class EngineGame{
 	
 	public void draw(Canvas c) {
 		
+		
+		
 		this.spacecraft.draw(c);
 		
 		if (explosion != null) {
  			explosion.draw(c);
  		}
+		
 		
 		for (IDrawBehavior object : this.asteroidsDrawables) {
 
