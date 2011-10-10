@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.audio.AudioGame;
 import br.com.thelastsurvivor.engine.simple.EngineGame;
 import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
@@ -154,7 +155,12 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	}
 
 	@Override
-	public void onLongPress(MotionEvent arg0) {}
+	public void onLongPress(MotionEvent arg0) {
+		while(true){
+		new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
+		this.engine.getSpacecraft().newShoot();		
+		}
+	}
 
 	@Override
 	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
@@ -166,9 +172,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
 	
-			this.engine.getSpacecraft().newShoot();
-			
-			
+		new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
+		this.engine.getSpacecraft().newShoot();		
 		
 		return true;
 	}
@@ -222,10 +227,14 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		Spacecraft spacecraft = getSpacecraftGame();
 		List<Asteroid> asteroids = getAsteroidsGame();
 			
-		return new Game(new Date(), this.view.getEngine().getStartTime(), 
+		return new Game(new Date(), 0, 
 				0,
 				spacecraft, asteroids);
 		
+		/*return new Game(new Date(), this.view.getEngine().getStartTime(), 
+				0,
+				spacecraft, asteroids);
+		*/
 	}
 	
 

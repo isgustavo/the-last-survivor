@@ -90,7 +90,8 @@
 <!-- Jogo Simpleplayer -->
 
 	 <string name="score">Pontuação: </string> 
-	  <string name="life">Vida: </string> 
+	 <string name="life">Vida: </string> 
+	 <string name="power_up">Nova Arma! </string> 
 
 <!-- Jogo Multiplayer -->
 

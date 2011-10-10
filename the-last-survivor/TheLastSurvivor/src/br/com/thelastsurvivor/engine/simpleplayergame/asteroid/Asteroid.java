@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -12,7 +13,6 @@ import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.simple.EngineGame;
 import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -20,6 +20,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 
 	private Context context;
 	
+	private Bitmap image;
 	private Drawable drawableImage;
 	private Integer sizeWidth;
 	private Integer sizeHeight;
@@ -32,13 +33,12 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	
 	private Vector2D position;
 	private Integer route;
+	private Integer angle;
 	private Integer speed = 1;
 	
 	public Integer color = Color.argb(255, 255, 255, 255);
 	public Integer timeEffect;
 	//private Integer MAX_SPEED = 6;
-	
-	Spacecraft spacecraft;
 	
 	
 	public Asteroid(Context context, Display display){
@@ -48,9 +48,8 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		init();
 	}
 	
-	public Asteroid(Context context, Spacecraft spacecraft){
+	public Asteroid(Context context){
 		this.context = context;
-		this.spacecraft = spacecraft;
 		
 		init();
 	}
@@ -78,14 +77,24 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		}
 		
 		if(typeImage == null){
-			this.drawableImage = ramdomImageAteroid();
+			ramdomImageAteroid();
 		}else{
-			this.drawableImage = imageAsteroid(typeImage);
+			imageAsteroid(typeImage);
 		}
 		
 		this.route = (int) (Math.random()*4);
-			
+		this.angle = (int) (Math.random()*360);
 		this.timeEffect = 1000;
+		
+		Matrix matrix = new Matrix();
+		matrix.setRotate(angle.floatValue());
+		
+		//BitmapDrawable b = 
+		
+   		this.drawableImage = new BitmapDrawable(Bitmap.createBitmap(this.image, 0, 0,
+   				this.image.getWidth(), this.image.getHeight(), matrix, true));
+		
+		
 	}
 	
 	@Override
@@ -107,28 +116,30 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		
 		
 		int origin = (int) (Math.random()*4);
-		int position = 0;
+		int position = 1;
 		switch (origin) {
 		case 0:
 			position = (int)(Math.random()*EngineGame.getCamera().getX());
-			return new Vector2D(position,-40);
+			return new Vector2D(position,-200);
+			
 		case 1:
 			position = (int)(Math.random()*EngineGame.getCamera().getY());
-			return new Vector2D(-40,position);
+			return new Vector2D(-200,position);
+			
 		case 2:
 			position = (int)(Math.random()*EngineGame.getCamera().getX());
-			return new Vector2D(position,EngineGame.getCamera().getY()+40);
+			return new Vector2D(position, EngineGame.getCamera().getY());
+			
 		case 3:
 			position = (int)(Math.random()*EngineGame.getCamera().getY());
-			return new Vector2D(EngineGame.getCamera().getX()+40,position);
-		
+			return new Vector2D(EngineGame.getCamera().getX(),position);
 		}
 		return null;
 		
 	}
 
 	private void ramdomRoute() {
-		switch(route){
+		switch(0){
 		case 0:
 			this.position.addX(speed); 
 			this.position.addY(speed);
@@ -149,76 +160,71 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		
 	}
 
-	private Drawable imageAsteroid(Integer type){
+	private void imageAsteroid(Integer type){
+		
 		switch(typeImage){
 		case 0:
-			Bitmap image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image);
-			this.sizeHeight = image.getHeight();
-			this.sizeWidth = image.getWidth();
-			
 			this.life = 3;
 			power = 1;
-			return new BitmapDrawable(image);//this.context.getResources().getDrawable(R.drawable.asteroids_1_image); 
+			
+			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image);
+			
+			this.sizeWidth = image.getWidth();
+			this.sizeHeight = image.getHeight();
+			
+		break;
 		
 		case 1:
 		case 3:
 		case 5:
-			Bitmap image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image);
-			this.sizeHeight = image2.getHeight();
-			this.sizeWidth = image2.getWidth();
-			
 			this.life =5;
 			power = 1;
-			return new BitmapDrawable(image2);
-		
+			
+			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image);
+			
+			this.sizeWidth = image.getWidth();
+			this.sizeHeight = image.getHeight();
+		break;
 		case 2:
 		case 4:
-			Bitmap image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
-			this.sizeHeight = image3.getHeight();
-			this.sizeWidth = image3.getWidth();
-			
 			this.life = 3;
 			power = 1;
-			return new BitmapDrawable(image3); 
+			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
+			
+			this.sizeWidth = image.getWidth();
+			this.sizeHeight = image.getHeight();	
 		
-		
+		break;
 		case 6:
 		case 8:
-			Bitmap image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
-			this.sizeHeight = image5.getHeight();
-			this.sizeWidth = image5.getWidth();
 			
 			this.life = 8;
 			power = 3;
-			return new BitmapDrawable(image5);
+			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
+			
+			this.sizeWidth = image.getWidth();
+			this.sizeHeight = image.getHeight();
 		
-		
+		break;
 		case 7:
 		case 9:
-			Bitmap image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image);
-			this.sizeHeight = image6.getHeight();
-			this.sizeWidth = image6.getWidth();
 			
 			this.life = 10;
 			power = 3;
-			return new BitmapDrawable(image6);
-		
-		case 14:
-			Log.d("ASTEROID", "14");
-			Bitmap image7 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_collision_image);
-			this.sizeHeight = image7.getHeight();
-			this.sizeWidth = image7.getWidth();
+			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image);
 			
-			return new BitmapDrawable(image7);
-			
+			this.sizeWidth = image.getWidth();
+			this.sizeHeight = image.getHeight();
+		break;
 		default: 
-			return null;
+		break;	
 
 		}		
 	}
-	private Drawable ramdomImageAteroid() {
+	
+	private void ramdomImageAteroid() {
 		typeImage = (int) (Math.random()*10);
-		return imageAsteroid(typeImage);
+		imageAsteroid(typeImage);
 	}
 
 	

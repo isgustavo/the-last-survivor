@@ -19,10 +19,7 @@ public class GameLoopThread extends Thread{
 	private long delay=50;
 	
 	public int state = 1;
-	
-	//public enum state {RUNNING, PAUSED};
 
-	//public StateGame state;
 	
 	public final static int RUNNING = 1;
 	public final static int PAUSED = 2;

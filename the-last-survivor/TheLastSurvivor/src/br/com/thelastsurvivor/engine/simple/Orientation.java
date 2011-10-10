@@ -79,7 +79,7 @@ public final class Orientation {
 		   break;
 		   case 85:
 			   position.addX(17);
-		    	position.addY(-1);
+		       position.addY(-1);
 		   break;
 		   
 		   

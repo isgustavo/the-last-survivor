@@ -12,10 +12,11 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
-import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
+import br.com.thelastsurvivor.engine.audio.AudioGame;
+import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
 import br.com.thelastsurvivor.engine.simple.IDrawControllable;
 import br.com.thelastsurvivor.engine.simple.Orientation;
+import br.com.thelastsurvivor.engine.simpleplayergame.weapon.ShootFactory;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -44,8 +45,8 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	private Matrix matrix;
 	
 	private Boolean newShoot = false;
-	private List<IWeaponBehavior> shoots = new ArrayList<IWeaponBehavior>();
-	private List<IWeaponBehavior> shootsDrawables = new ArrayList<IWeaponBehavior>();
+	private List<IDrawBehavior> shoots = new ArrayList<IDrawBehavior>();
+	private List<IDrawBehavior> shootsDrawables = new ArrayList<IDrawBehavior>();
 	
 	public Spacecraft(Context context, Vector2D position){
 		this.context = context;
@@ -75,9 +76,9 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		this.height = image.getHeight();
 		
     	this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
-
-    	this.shoots = new ArrayList<IWeaponBehavior>();
-    	this.shootsDrawables = new ArrayList<IWeaponBehavior>();
+    	
+    	this.shoots = new ArrayList<IDrawBehavior>();
+    	this.shootsDrawables = new ArrayList<IDrawBehavior>();
     	
 	}
 	
@@ -109,11 +110,14 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		this.right = false;
 		this.up = false;
 		
-		if (this.sensorPosition.getX() > 15 ) {
+		if (this.sensorPosition.getX() > 8) {
 	    	right = true;
-	    }else if(this.sensorPosition.getX() < -15) {
+	    }
+	    if(this.sensorPosition.getX() < -8) {
 	    	left = true;
-	    }else if(this.sensorPosition.getY() < -10){
+	    }
+	    
+	    if(this.sensorPosition.getY() < - 15){
 			up = true;
 		}
 	}
@@ -128,9 +132,9 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	 
 		
 		if (this.left) {
-    		this.angle -= 10;
+    		this.angle -= 5;
 	    }else if(this.right){
-	    	this.angle += 10;
+	    	this.angle += 5;
 	    }
 		
 		if (this.up) {
@@ -152,7 +156,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 			
 			this.shootsDrawables.addAll(shoots);
 			
-			for (IWeaponBehavior shoot : shootsDrawables) {
+			for (IDrawBehavior shoot : shootsDrawables) {
 				shoot.update();
 			}
 			
@@ -162,8 +166,8 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	}
 	
 	private void shootsDrawables(){
-		List<IWeaponBehavior> shoots = new ArrayList<IWeaponBehavior>();
-		for(IWeaponBehavior shoot : this.shootsDrawables){
+		List<IDrawBehavior> shoots = new ArrayList<IDrawBehavior>();
+		for(IDrawBehavior shoot : this.shootsDrawables){
 			if(shoot.isAlive()){
 				shoots.add(shoot);
 			}
@@ -175,9 +179,9 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	}
 
 	public void newShoot(){
-		
-		SimpleShoot shoot = new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.image);	
-	    shoots.add(shoot);
+	
+		shoots.addAll(ShootFactory.newShoot(this.context, new Vector2D(this.position.getX(),this.position.getY()), this.angle, this.image));	
+	    
 	}
 
 	@Override
@@ -186,7 +190,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
 
 	   if(!this.shootsDrawables.isEmpty()){
-			for (IWeaponBehavior shoot : this.shootsDrawables) {
+			for (IDrawBehavior shoot : this.shootsDrawables) {
 				shoot.draw(c);
 			}
 	   }
@@ -224,7 +228,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		return up;
 	}
 
-	public List<IWeaponBehavior> getShootsDrawables() {
+	public List<IDrawBehavior> getShootsDrawables() {
 		return shootsDrawables;
 	}
 
@@ -295,7 +299,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		return !newShoot;
 	}
 
-	public List<IWeaponBehavior> getShoots() {
+	public List<IDrawBehavior> getShoots() {
 		return shoots;
 	}
 
