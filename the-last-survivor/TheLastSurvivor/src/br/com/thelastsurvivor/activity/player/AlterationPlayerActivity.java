@@ -51,9 +51,6 @@ public class AlterationPlayerActivity extends Activity{
 		final Button buttonRemove = (Button) findViewById(R.id.buttonRemove);
 		buttonRemove.setOnClickListener(buttonRemoveListener);
 		
-		final Button buttonAdd = (Button) findViewById(R.id.buttonAdd);
-		buttonAdd.setOnClickListener(buttonAddListener);
-		
 		this.i = new Intent(this, MainMenuActivity.class);
 		
 	}
@@ -111,18 +108,6 @@ public class AlterationPlayerActivity extends Activity{
 			alert.show();
         }
 	};
-	
-	private OnClickListener buttonAddListener = new OnClickListener() {  
-		
-        public void onClick(View v) {  
-			
-        	
-        	Intent i = new Intent(AlterationPlayerActivity.this, CadastreNewPlayerActivity.class);
-        	
-			startActivity(i);
-        }
-	};
-	
 	
 	public boolean updatePlayer(Player player) {
 		ContentValues values = new ContentValues();

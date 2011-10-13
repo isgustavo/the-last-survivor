@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class PowerUp implements IDrawBehavior{

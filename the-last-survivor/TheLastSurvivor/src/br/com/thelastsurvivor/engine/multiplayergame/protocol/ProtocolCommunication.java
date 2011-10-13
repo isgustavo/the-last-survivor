@@ -5,12 +5,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
-import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
+import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.MessageGameUtil;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -142,7 +143,7 @@ public class ProtocolCommunication {
 	
 	
 	
-	public String protocolSendToClientsStatusGame(Spacecraft spacecraftServer, List<Spacecraft> spacecrafts, List<Asteroid> asteroids, 
+	public String protocolSendToClientsStatusGame(Spacecraft spacecraftServer, List<Spacecraft> spacecrafts, List<IDrawBehavior> asteroids, 
 			List<MessageGameUtil> messages, List<EffectShoot> effects){
 		
 		
@@ -179,7 +180,7 @@ public class ProtocolCommunication {
 			}
 		}
 		
-		for(Asteroid asteroid : asteroids){
+		for(IDrawBehavior asteroid : asteroids){
 			buffer += "a/"
 				   +  asteroid.getPosition().getX()+"/"
 				   +  asteroid.getPosition().getY()+"/"

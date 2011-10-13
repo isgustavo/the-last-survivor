@@ -1,5 +1,6 @@
-package br.com.thelastsurvivor.engine.simple;
+package br.com.thelastsurvivor.engine.simpleplayergame;
 
+import android.graphics.Bitmap;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public final class Orientation {

@@ -73,7 +73,7 @@ public class EngineGameClient implements IClient{
 	
 	@Override
 	public void drawGame(String[] message){
-		
+		Log.d("DRAW", "GAME CLIENT");
 		drawables.clear();
 		
 		Log.d("DRAW", "drawGame"+message);

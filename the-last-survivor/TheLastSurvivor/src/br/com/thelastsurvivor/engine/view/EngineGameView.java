@@ -3,8 +3,8 @@ package br.com.thelastsurvivor.engine.view;
 import android.content.Context;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import br.com.thelastsurvivor.engine.simple.EngineGame;
-import br.com.thelastsurvivor.engine.simple.GameLoopThread;
+import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
+import br.com.thelastsurvivor.engine.simpleplayergame.GameLoopThread;
 
 public class EngineGameView extends SurfaceView implements SurfaceHolder.Callback {
 

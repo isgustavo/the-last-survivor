@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import br.com.thelastsurvivor.engine.simple.GameLoopThread;
+import br.com.thelastsurvivor.engine.simpleplayergame.GameLoopThread;
 import br.com.thelastsurvivor.view.particle.Explosion;
 import br.com.thelastsurvivor.view.particle.ViewThread;
 

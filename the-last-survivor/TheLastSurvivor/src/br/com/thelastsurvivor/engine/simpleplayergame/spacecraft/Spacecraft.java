@@ -11,35 +11,36 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.audio.AudioGame;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.simple.IDrawControllable;
-import br.com.thelastsurvivor.engine.simple.Orientation;
+import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
 import br.com.thelastsurvivor.engine.simpleplayergame.weapon.ShootFactory;
-import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IDrawControllable;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class Spacecraft implements IDraw, IDrawControllable, Serializable {
+public class Spacecraft implements IDrawControllable, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Context context;
+	private Display display;
+	
+	private Bitmap image;
+	private Integer width;
+	private Integer height;
+	
+	private Bitmap resizedBitmap;
+	private Drawable drawableImage;
 	
 	private Integer life;
 	private Integer points;
 	private Vector2D position;
-	private Vector2D sensorPosition = new Vector2D(0,0);
-	
-	private Bitmap image;
-	private Bitmap resizedBitmap;
-	private Integer width;
-	private Integer height;
-	private Drawable drawableImage;
-	
-	private Boolean left = false;
-	private Boolean right = false;
-	private Boolean up = false; 
+	private Vector2D sensorPosition;
+
+	private Boolean left; 
+	private Boolean right; 
+	private Boolean up;  
 
 	private Double angle = 0.0;
 	private Matrix matrix;
@@ -48,9 +49,9 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	private List<IDrawBehavior> shoots = new ArrayList<IDrawBehavior>();
 	private List<IDrawBehavior> shootsDrawables = new ArrayList<IDrawBehavior>();
 	
-	public Spacecraft(Context context, Vector2D position){
+	public Spacecraft(Context context, Display display){
 		this.context = context;
-		this.position = position;
+		this.display = display;
 		
 		
 		init();
@@ -59,21 +60,24 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	@Override
 	public void init() {
 		
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		this.width = image.getWidth();
+		this.height = image.getHeight();
+		
+		this.position = new Vector2D((display.getWidth()/2)-width, 
+				(display.getHeight()/2)-height);
+		
 		this.sensorPosition = new Vector2D(0,0);
-		this.life = 500;
+		
+		this.life = 250;
 		this.points = 0;
 		
 		this.left = false;
 		this.right = false;
 		this.up = false;
 		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
-		
 		this.matrix = new Matrix();
 		this.matrix.setRotate(angle.floatValue());
-		
-		this.width = image.getWidth();
-		this.height = image.getHeight();
 		
     	this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
     	
@@ -83,15 +87,6 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	}
 	
 	
-	@Override
-	public void updateOrientation(Float orientationX, Float orientationY){
-	
-		this.sensorPosition.setX(((orientationX.intValue())*10));
-		this.sensorPosition.setY(((orientationY.intValue())*10));
-
-	}
-	
-
 	@Override
 	public void update() {
 		
@@ -103,6 +98,27 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		
 		this.controlShoots();
 	}
+	
+	@Override
+	public void draw(Canvas c) {
+
+		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
+
+	   if(!this.shootsDrawables.isEmpty()){
+			for (IDrawBehavior shoot : this.shootsDrawables) {
+				shoot.draw(c);
+			}
+	   }
+  
+	}
+	
+	@Override
+	public void updateOrientation(Float orientationX, Float orientationY){
+	
+		this.sensorPosition.setX(((orientationX.intValue())*10));
+		this.sensorPosition.setY(((orientationY.intValue())*10));
+
+	}
 
 	public void sensorControlUpdate(){
 		
@@ -113,11 +129,12 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		if (this.sensorPosition.getX() > 8) {
 	    	right = true;
 	    }
+		
 	    if(this.sensorPosition.getX() < -8) {
 	    	left = true;
 	    }
 	    
-	    if(this.sensorPosition.getY() < - 15){
+	    if(this.sensorPosition.getY() < -15){
 			up = true;
 		}
 	}
@@ -137,13 +154,15 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	    	this.angle += 5;
 	    }
 		
+		
+		
 		if (this.up) {
 			Orientation.getNewPosition(this.angle, this.position);
 	    }
 		
 	    this.matrix.setRotate(angle.floatValue());
    		this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-        this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+   								this.image.getWidth(), this.image.getHeight(), this.matrix, true);
 		   
 	}
 	
@@ -184,141 +203,47 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	    
 	}
 
-	@Override
-	public void draw(Canvas c) {
-
-		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
-
-	   if(!this.shootsDrawables.isEmpty()){
-			for (IDrawBehavior shoot : this.shootsDrawables) {
-				shoot.draw(c);
-			}
-	   }
-  
-	}
-	
-	
-	
-	public void addPoint(Integer point){
-		this.points += point;
-	}
-	
-	public void addLife(Integer life){
-		this.life += life;
-	}
-	
 	public Integer getPoints() {
 		return points;
 	}
 
-	@Override
-	public boolean isAlive() {
-		return true;
+	public void addPoint(Integer point){
+		this.points += point;
 	}
-	
+		
+	public Integer getLife() {
+		return life;
+	}
+
+	public void addLife(Integer life){
+		this.life += life;
+	}
+
 	public Vector2D getPosition() {
 		return position;
-	}
-
-	public Double getAngle() {
-		return angle;
-	}
-
-	public Boolean getUp() {
-		return up;
 	}
 
 	public List<IDrawBehavior> getShootsDrawables() {
 		return shootsDrawables;
 	}
 
-	@Override
-	public Integer getSizeWidth() {
-		return this.width;
+	public Integer getWidth() {
+		return width;
 	}
 
-	@Override
-	public Integer getSizeHeight() {
-		return this.height;
+	public Integer getHeight() {
+		return height;
 	}
 
-	@Override
-	public void setAlive(boolean alive) {
-		// TODO Auto-generated method stub
-		
+	public Boolean getUp() {
+		return up;
 	}
 
-	@Override
-	public Integer getLife() {
-		return this.life;
-	}
-
-	@Override
-	public Integer getTypeImage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getRoute() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getPower() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setPosition(Vector2D position) {
-		this.position = position;
-	}
-
-	public void setAngle(Double angle) {
-		this.angle = angle;
-	}
-
-	public void setContext(Context context) {
-		this.context = context;
+	public Double getAngle() {
+		return angle;
 	}
 
 	
-	
-	public Boolean getLeft() {
-		return left;
-	}
-
-	public Boolean getRight() {
-		return right;
-	}
-
-	public Boolean getNewShoot() {
-		this.newShoot = !newShoot;
-		
-		return !newShoot;
-	}
-
-	public List<IDrawBehavior> getShoots() {
-		return shoots;
-	}
-
-	public void setLeft(Boolean left) {
-		this.left = left;
-	}
-
-	public void setRight(Boolean right) {
-		this.right = right;
-	}
-
-
-
-	public void setUp(Boolean up) {
-		this.up = up;
-	}
-
-	
-
 	
 	
 }

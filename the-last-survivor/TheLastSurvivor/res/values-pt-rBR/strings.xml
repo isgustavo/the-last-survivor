@@ -92,6 +92,9 @@
 	 <string name="score">Pontuação: </string> 
 	 <string name="life">Vida: </string> 
 	 <string name="power_up">Nova Arma! </string> 
+	 
+	 <string name="pause_game">Jogo pausado</string> 
+	 <string name="time">Tempo de jogo: </string> 
 
 <!-- Jogo Multiplayer -->
 
@@ -99,6 +102,8 @@
 
 	<string name="not_bluetooth">Aparelho não suporta Bluetooth.</string>
 	<string name="bluetooth_confirm">Você deve ativar o Bluetooth pra continuar.</string>
+	<string name="bluetooth_server">Para iniciar o servidor, seu aparelho deve estar visível.</string>
+	<string name="no_client">Nenhum sobrevivente encontrado.</string>
 	<string name="server_confirm">Escolha um tipo de conexão.</string>
 	<string name="show_progress">Aguardando por conexões...</string>
 	

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
+import br.com.thelastsurvivor.activity.TheLastSurvivorActivity;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class PlayerActivity extends Activity {
@@ -23,6 +24,8 @@ public class PlayerActivity extends Activity {
 			Intent i = new Intent(this, CadastrePlayerActivity.class);
 			startActivity(i);
 		}
+		
+		PlayerActivity.this.finish();
 	}
 	
 	

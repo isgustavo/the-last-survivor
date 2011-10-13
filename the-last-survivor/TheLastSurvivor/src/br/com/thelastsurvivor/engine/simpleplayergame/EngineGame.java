@@ -1,15 +1,14 @@
-package br.com.thelastsurvivor.engine.simple;
+package br.com.thelastsurvivor.engine.simpleplayergame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.engine.game.weapon.EffectAsteroid;
 import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.EffectSpacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
@@ -17,6 +16,7 @@ import br.com.thelastsurvivor.engine.simpleplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp;
 import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 import br.com.thelastsurvivor.view.particle.Explosion;
 
@@ -27,28 +27,25 @@ public class EngineGame{
 	private Display display;
 	
 	private Long startTime;
-	
-	protected Spacecraft spacecraft;
-	
+	private Long start; 
+	private Long finish;
 	protected static Vector2D camera;
 	
-	protected Explosion explosion;
+	protected Spacecraft spacecraft;
 
-	protected List<MessageGame> messages;
-	protected List<MessageGame> messagesDrawables;
+	protected List<IWeaponBehavior> shootsEffect;
 	
 	private List<IDrawBehavior> asteroids;
 	protected List<IDrawBehavior> asteroidsDrawables;
 	
-	protected List<IWeaponBehavior> shootsEffect;
+	protected List<MessageGame> messages;
+	protected List<MessageGame> messagesDrawables;
 	
 	protected List<IDrawBehavior> powerUps;
 	
-	public List<IDrawBehavior> updateList;
-	private List<IDrawBehavior> drawableList;
+	protected Explosion explosion;
 
-	
-	
+
 	public EngineGame(Context context, Vibrator vibrator, Display display) {
 		this.context = context;
 		this.vibrator = vibrator;
@@ -57,22 +54,25 @@ public class EngineGame{
 		init();
 	}
 
-	 private TimerTask task; 
 	public void init(){
 		
-		this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200));
+		this.startTime = 0L;
+		this.start = 0L;
+		this.finish = 0L;
 		
 		this.camera = new Vector2D(display.getWidth(), display.getHeight());
-		this.startTime = 0L;
 		
+		this.spacecraft = new Spacecraft(this.getContext(), this.display); 
+
 		this.explosion = new Explosion(200);
 	
-		this.updateList = new ArrayList<IDrawBehavior>();
-		this.drawableList = new ArrayList<IDrawBehavior>();
 		this.shootsEffect = new ArrayList<IWeaponBehavior>();
 		
 		this.asteroids = new ArrayList<IDrawBehavior>();
 		this.asteroidsDrawables = new ArrayList<IDrawBehavior>();
+		
+		
+		//this.asteroidsDrawables.add(new Asteroid(context));
 		
 		this.messages = new ArrayList<MessageGame>();
 		this.messagesDrawables = new ArrayList<MessageGame>();
@@ -82,8 +82,7 @@ public class EngineGame{
 		this.powerUps = new ArrayList<IDrawBehavior>();
 	}
 	
-	Long start = 0L; 
-	Long finish = 0L;
+	
 	
 	public void update(){
 		if(start != 0L){
@@ -93,57 +92,61 @@ public class EngineGame{
 		start = System.currentTimeMillis(); 
 		
 	    spacecraft.update();
-	    Log.d("SPACECRAFT", "X"+spacecraft.getPosition().getX()+"Y"+spacecraft.getPosition().getY());
-	
 		verificationNewSpacecraftPositionScreen();
 		
 		updateNewAsteroid();
 		//verificationAsteroidCollisions();
 		updateAsteroids();
+		
 		verificationSpacecraftCollisions();
 		verificationCollisionShoot();
-		
-		
 		verificationSpacecraftCollisionsPowerUp();
-		updatePowerUps();
 		
-		
-		for(IDrawBehavior power : powerUps){
-			power.update();
-		}
+		//updatePowerUps();
+		updateEffectShoots();
 		
 		for (MessageGame message : this.messages) {
 			message.update();
 		}
-		
-		
-		
-		
-		updateEffectShoots();
-		
+
 		if (this.explosion != null && this.explosion.isAlive) {
 			this.explosion.update(this.getSpacecraft());
 		}
-		
-		
 	
 	}
 	
+	public void draw(Canvas c) {
+		
+		if (explosion != null) {
+ 			explosion.draw(c);
+ 		}
+
+		for(IDrawBehavior object : this.powerUps){
+			object.draw(c);
+		}
+		
+		for (IDrawBehavior object : this.asteroidsDrawables) {
+
+			object.draw(c);
+		}
+		
+		for (MessageGame message : this.messages) {
+			
+			message.draw(c);
+			
+		}
+		
+		for (IWeaponBehavior effect : this.shootsEffect) {
+			effect.draw(c);
+		}
+
+		this.spacecraft.draw(c);
+		
+	}
+
+	
 	private void currentTime(){
-		
 		this.startTime += finish - start;
-		
-		 //Timer timer = new Timer();  
-	     //timer.schedule(task, 0, 1000);  
-		
-		//long millis = System.currentTimeMillis() - this.startTime;
-	    
-		//int seconds = (int) (millis / 1000);
-	    
-		//this.startTime = (seconds / 60);
-		
-		//Log.d("startTime","."+(finish - start)+"...."+(int)((startTime)/60000)+"...."+this.startTime);
-		//Log.d("TIME","."+this.startTime);
 	}
 	
 	
@@ -167,19 +170,19 @@ public class EngineGame{
 		
 		switch ((int)(this.startTime/60000)) {
 		case 0:
-			isAsteroid = (int) (Math.random()*20);			
+			isAsteroid = (int) (Math.random()*100);			
 		break;
 		case 1:
-			isAsteroid = (int) (Math.random()*15);			
+			isAsteroid = (int) (Math.random()*80);			
 		break;
 		case 2:
-			isAsteroid = (int) (Math.random()*10);			
+			isAsteroid = (int) (Math.random()*60);			
 		break;
 		case 3:
-			isAsteroid = (int) (Math.random()*5);			
+			isAsteroid = (int) (Math.random()*40);			
 		break;
 		default:
-			isAsteroid = (int) (Math.random()*5);
+			isAsteroid = (int) (Math.random()*20);
 		}
 		
 		if(isAsteroid == 1){
@@ -190,41 +193,91 @@ public class EngineGame{
 	
 	private void verificationAsteroidCollisions(){
 
+		List<IDrawBehavior> asteroid = new ArrayList<IDrawBehavior>();
+		
 		for(int x= 0; x < this.asteroidsDrawables.size(); x++){
 			Asteroid asteroid1 = (Asteroid)this.asteroidsDrawables.get(x);
 			
 			for(int y = x; y < this.asteroidsDrawables.size(); y++){
 				Asteroid asteroid2 = (Asteroid)this.asteroidsDrawables.get(y);
 				
-				if(this.asteroidsDrawables.get(x).isAlive() &&
-						this.asteroidsDrawables.get(y).isAlive() &&
-							this.asteroidsDrawables.get(x) != this.asteroidsDrawables.get(y)){
-					
+				if(asteroid1.isAlive() && asteroid2.isAlive() && !asteroid1.equals(asteroid2)){
+
 					if(asteroid1.getPosition().getX()+(asteroid1.getSizeWidth()-5) > asteroid2.getPosition().getX() &&
 					   asteroid1.getPosition().getX() < asteroid2.getPosition().getX()+(asteroid2.getSizeWidth()-5)&&
 					   asteroid1.getPosition().getY()+(asteroid1.getSizeHeight()-5) > asteroid2.getPosition().getY() &&
 					   asteroid1.getPosition().getY() < asteroid2.getPosition().getY()+(asteroid2.getSizeHeight()-5)){
-					
-						this.shootsEffect.add(new EffectShoot(this.context,asteroidsDrawables.get(x).getPosition()));
-						//this.shootsEffect.add(new EffectShoot(this.context,asteroidsDrawables.get(x).getPosition()));
-						//this.shootsEffect.add(new EffectShoot(this.context, ));
-						//asteroidSituation(asteroid1);
-						//asteroidSituation(asteroid2);
 
-						//this.asteroidsDrawables.get(x).setAlive(false);
-						//this.asteroidsDrawables.get(y).setAlive(false);
+						this.asteroidsDrawables.get(x).setAlive(false);
+						this.asteroidsDrawables.get(y).setAlive(false);
+						asteroid.addAll(verificationAsteroidDestruction((Asteroid)this.asteroidsDrawables.get(x),(Asteroid)this.asteroidsDrawables.get(y)));
 					}
 				}
 				
 			}
 			
 		}
-
+		
+		asteroidsDrawables.addAll(asteroid);
+	}
+	
+	private List<IDrawBehavior> verificationAsteroidDestruction(Asteroid asteroid, Asteroid asteroid2){
+		
+		
+		List<IDrawBehavior> asteroidList = new ArrayList<IDrawBehavior>();
+		
+		asteroid.addLife(-asteroid2.getPower());
+		asteroid2.addLife(-asteroid.getPower());
+		
+		if(asteroid.getLife() <= 0){
+			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+					new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,
+								 asteroid.getPosition().getY()+asteroid.getSizeHeight()/2)));
+			//asteroid.setAlive(false);
+		}else{
+			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+					new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,
+								 asteroid.getPosition().getY()+asteroid.getSizeHeight()/2)));
+			if(asteroid.getTypeImage() != 0){
+				asteroidList.add(new Asteroid(context, 
+						new Vector2D(asteroid.getPosition().getX(),
+								     asteroid.getPosition().getY()),
+								     asteroid.getTypeImage()-1, true));
+			}else{
+				asteroid.setAlive(false);
+			}
+			
+			//asteroid.setAlive(false);
+		}
+		
+		if(asteroid2.getLife() <= 0){
+			
+			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+					new Vector2D(asteroid.getPosition().getX()+asteroid2.getSizeWidth()/2,
+								 asteroid.getPosition().getY()+asteroid2.getSizeHeight()/2)));
+			//asteroid2.setAlive(false);
+		}else{
+			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+					new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,
+								 asteroid.getPosition().getY()+asteroid.getSizeHeight()/2)));
+			if(asteroid.getTypeImage() != 0){
+				asteroidList.add(new Asteroid(context, 
+						new Vector2D(asteroid.getPosition().getX(),
+								     asteroid.getPosition().getY()),
+								     asteroid.getTypeImage()-1, true));
+			}else{
+				asteroid.setAlive(false);
+			}
+			//asteroid.setAlive(false);
+			
+		}
+		
+		return asteroidList;
 	}
 	
 	public void verificationCollisionShoot(){
 		
-		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
+		List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
 		
 		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
 			for(IDrawBehavior asteroid : this.asteroidsDrawables){
@@ -234,11 +287,19 @@ public class EngineGame{
 								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
 					shoot.setAlive(false);
 					this.spacecraft.addPoint(asteroid.getPower());
+					
 					this.shootsEffect.add(new EffectShoot(this.context, shoot.getPosition()));
 					
-					//collisionAsteroid.add(new Asteroid(this.context, ((Asteroid) asteroid).getPosition(), 14, false));
-					
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
+						if(asteroid.getTypeImage() != 0){
+							collisionAsteroid.add(new Asteroid(context, 
+									new Vector2D(asteroid.getPosition().getX(),
+											     asteroid.getPosition().getY()),
+											     asteroid.getTypeImage()-1, true));
+						}else{
+							asteroid.setAlive(false);
+						}
+						
 						verificationPowerUp((Asteroid)asteroid);
 						asteroid.setAlive(false);
 					}
@@ -246,7 +307,7 @@ public class EngineGame{
 			}
 		}
 		
-		//this.asteroidsDrawables.addAll(collisionAsteroid);
+		this.asteroidsDrawables.addAll(collisionAsteroid);
 
 	}
 	
@@ -256,9 +317,9 @@ public class EngineGame{
 			Asteroid asteroid = (Asteroid)this.asteroidsDrawables.get(x);
 					
 			if(asteroid.getPosition().getX()+(asteroid.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
-			   asteroid.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
+			   asteroid.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getWidth()-10)&&
 			   asteroid.getPosition().getY()+(asteroid.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
-			   asteroid.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
+			   asteroid.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getHeight()-10)){
 			
 				//asteroidSituation(asteroid);
 				spacecraft.addLife(-asteroid.getLife());
@@ -274,21 +335,58 @@ public class EngineGame{
 		}
 
 	}
-	
+
+	public void createEffectCollision(Asteroid asteroid, Asteroid asteroid2){
+		Integer x = 0; 
+		Integer y = 0;
+		
+		//Log.d("EFFECT", "COLLISION");
+		//Log.d("SPACECRAFT", "X"+asteroid.getPosition().getX()+"Y"+asteroid.getPosition().getY());
+		//Log.d("ASTEROID", "X"+asteroid2.getPosition().getX()+"Y"+asteroid2.getPosition().getY());
+		
+		for (int i = asteroid.getPosition().getX(); 
+				i < asteroid.getPosition().getX()+asteroid.getSizeWidth(); i++) {
+			if(i == asteroid2.getPosition().getX()){
+				x = i;
+				//Log.d("EFFECT", "X");
+				break;
+			}else if(i == asteroid2.getPosition().getX()+asteroid2.getSizeWidth()){
+				x = i;
+				break;
+			}
+		}
+		
+		for (int i = asteroid.getPosition().getY(); 
+				i < asteroid.getPosition().getY()+asteroid.getSizeHeight(); i++) {
+			if(i == asteroid2.getPosition().getY()){
+				y = i;
+				//Log.d("EFFECT", "Y");
+				break;
+			}else if(i == asteroid2.getPosition().getY()+asteroid2.getSizeWidth()){
+				y = i;
+				break;
+			}
+		}
+		
+		//Log.d("EFFECT", "X"+x+"Y"+y);
+		
+		this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(x,y)));
+
+	}
 	public void createEffectCollision(Asteroid asteroid){
 		
 		Integer x = 0; 
 		Integer y = 0;
 		
-		Log.d("EFFECT", "COLLISION");
-		Log.d("SPACECRAFT", "X"+spacecraft.getPosition().getX()+"Y"+spacecraft.getPosition().getY());
-		Log.d("ASTEROID", "X"+asteroid.getPosition().getX()+"Y"+asteroid.getPosition().getY());
+		//Log.d("EFFECT", "COLLISION");
+		//Log.d("SPACECRAFT", "X"+spacecraft.getPosition().getX()+"Y"+spacecraft.getPosition().getY());
+		//Log.d("ASTEROID", "X"+asteroid.getPosition().getX()+"Y"+asteroid.getPosition().getY());
 		
 		for (int i = spacecraft.getPosition().getX(); 
-				i < spacecraft.getPosition().getX()+spacecraft.getSizeWidth(); i++) {
+				i < spacecraft.getPosition().getX()+spacecraft.getWidth(); i++) {
 			if(i == asteroid.getPosition().getX()){
 				x = i;
-				Log.d("EFFECT", "X");
+				//Log.d("EFFECT", "X");
 				break;
 			}else if(i == asteroid.getPosition().getX()+asteroid.getSizeWidth()){
 				x = i;
@@ -297,10 +395,10 @@ public class EngineGame{
 		}
 		
 		for (int i = spacecraft.getPosition().getY(); 
-				i < spacecraft.getPosition().getY()+spacecraft.getSizeHeight(); i++) {
+				i < spacecraft.getPosition().getY()+spacecraft.getHeight(); i++) {
 			if(i == asteroid.getPosition().getY()){
 				y = i;
-				Log.d("EFFECT", "Y");
+				//Log.d("EFFECT", "Y");
 				break;
 			}else if(i == asteroid.getPosition().getY()+asteroid.getSizeWidth()){
 				y = i;
@@ -308,7 +406,7 @@ public class EngineGame{
 			}
 		}
 		
-		Log.d("EFFECT", "X"+x+"Y"+y);
+		//Log.d("EFFECT", "X"+x+"Y"+y);
 		
 		this.shootsEffect.add(new EffectSpacecraft(this.context, new Vector2D(x,spacecraft.getPosition().getY())));
 		
@@ -320,9 +418,9 @@ public class EngineGame{
 			PowerUp powerUp = (PowerUp)this.powerUps.get(x);
 					
 			if(powerUp.getPosition().getX()+(powerUp.getSizeWidth()-5) > spacecraft.getPosition().getX() &&
-				powerUp.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-5)&&
+				powerUp.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getWidth()-5)&&
 				powerUp.getPosition().getY()+(powerUp.getSizeHeight()-5) > spacecraft.getPosition().getY() &&
-				powerUp.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-5)){
+				powerUp.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getHeight()-5)){
 			
 				PowerUp.POWER_UP += 1;
 				//asteroidSituation(asteroid);
@@ -372,37 +470,7 @@ public class EngineGame{
 		
 	}
 	
-/*	private void asteroidSituation(Asteroid asteroid){
-		switch (asteroid.getTypeImage()) {
-		
-		case 1:
-		case 12:
-			asteroids.add(new Asteroid(this.context, asteroid.getPosition(),1,this.getInvertRoute(asteroid.getRoute())));
-		break;
-		
-		case 3:
-		case 6:
-		case 9:
-			asteroids.add(new Asteroid(this.context, asteroid.getPosition(),2,this.getInvertRoute(asteroid.getRoute())));
-		break;
-		
-		case 4:
-		case 7:
-		case 10:
-			asteroids.add(new Asteroid(this.context, asteroid.getPosition(),2,this.getInvertRoute(asteroid.getRoute())));
-		break;
-		
-		case 5:
-		case 8:
-		case 11:
-			asteroids.add(new Asteroid(this.context, asteroid.getPosition(),4,this.getInvertRoute(asteroid.getRoute())));
-			
-		default:
-		break;
-		
-		}
-	}*/
-	
+
 	private void updateAsteroids(){
 		if(this.asteroidsDrawables != null){
 			
@@ -412,11 +480,11 @@ public class EngineGame{
 			
 			for (IDrawBehavior asteroid : this.asteroidsDrawables) {
 				asteroid.update();
-				//verificationNewPositionScreen(asteroid);
+				verificationNewPositionScreen(asteroid);
 			}
 			
 			this.asteroids.clear();
-
+			//Log.d("SIZEupdateAsteroids", "."+this.asteroidsDrawables.size());
 		}
 	}
 	
@@ -431,7 +499,7 @@ public class EngineGame{
 		
 		this.asteroidsDrawables.clear();
 		this.asteroidsDrawables.addAll(asteroids);
-		
+		//Log.d("SIZEasteroidsDrawables", "."+this.asteroidsDrawables.size());
 	}
 	
 	private Integer getInvertRoute(Integer route){
@@ -468,7 +536,12 @@ public class EngineGame{
 		asteroid.addLife(-shoot.getPower());
 		
 		if(asteroid.getLife() == 0){
-			String values = context.getString(R.string.score)+" : "+spacecraft.getPoints()+" pt";
+			
+			this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(asteroid.getPosition().getX(),asteroid.getPosition().getY())));
+			this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeHeight()/2,asteroid.getPosition().getY())));
+			this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,asteroid.getPosition().getY())));
+			
+			String values = context.getString(R.string.score)+" "+spacecraft.getPoints()+" pt";
 			
 			this.addMessage(new MessageGame(context, values, 3, 1000, "#00889C"));
 			return true;
@@ -497,15 +570,22 @@ public class EngineGame{
 	}	
 	
 	public void verificationNewPositionScreen(IDrawBehavior object){
-		if(-200 > object.getPosition().getY()){
-			object.getPosition().setY(this.camera.getY()+200);
-		}else if(object.getPosition().getY() > this.camera.getY()+200){
+		
+		int tolerance = 20;
+		
+		if(object instanceof Asteroid){
+			tolerance = ((Asteroid)object).getTypeImage() < 8 ? 20 : 200;
+		}
+		
+		if(-tolerance > object.getPosition().getY()){
+			object.getPosition().setY(this.camera.getY()+tolerance);
+		}else if(object.getPosition().getY() > this.camera.getY()+tolerance){
 			object.getPosition().setY(0);
 		}
 	
-		if(-200 > object.getPosition().getX()+200){
+		if(-tolerance > object.getPosition().getX()+tolerance){
 			object.getPosition().setX(this.camera.getX());
-		}else if(object.getPosition().getX() > this.camera.getX()+200){
+		}else if(object.getPosition().getX() > this.camera.getX()+tolerance){
 			object.getPosition().setX(0);
 		}
 	}
@@ -529,39 +609,7 @@ public class EngineGame{
 	
 	
 	
-	public void draw(Canvas c) {
-		
-		
-		
-		this.spacecraft.draw(c);
-		
-		if (explosion != null) {
- 			explosion.draw(c);
- 		}
-		
-		
-		for(IDrawBehavior object : this.powerUps){
-			object.draw(c);
-		}
-		
-		for (IDrawBehavior object : this.asteroidsDrawables) {
-
-			object.draw(c);
-		}
-		
-		for (MessageGame message : this.messages) {
-			
-			message.draw(c);
-			
-		}
-		
-		for (IWeaponBehavior effect : this.shootsEffect) {
-			effect.draw(c);
-		}
-
-		
-	}
-
+	
 	
 	protected boolean isDrawable(Vector2D position){
 		
@@ -579,19 +627,7 @@ public class EngineGame{
 	public Display getDisplay() {
 		return display;
 	}
-
-
-	public List<IDrawBehavior> getDrawableList() {
-		return drawableList;
-	}
-
-
-	public void setDrawableList(List<IDrawBehavior> drawableList) {
-		this.drawableList = drawableList;
-	}
-
 	
-
 	public List<IDrawBehavior> getAsteroidsDrawables() {
 		return asteroidsDrawables;
 	}
@@ -610,14 +646,12 @@ public class EngineGame{
 		return spacecraft;
 	}
 
-
-	//public Integer getStartTime() {
-	//	return startTime;
-	//}
-
-
 	public static Double randomSizedimension(Integer min, Integer max) {
 		return (min + Math.random() * (max - min + 1));
+	}
+	
+	public Long getTimeGame(){
+		return this.startTime/60000;
 	}
 	
 	

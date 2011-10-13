@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine.simpleplayergame.asteroid;
+package br.com.thelastsurvivor.engine.multiplayergame.asteroid;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,14 +10,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
+import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
+import br.com.thelastsurvivor.engine.multiplayergame.server.EngineGameServer;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class Asteroid implements  IDraw, IDrawBehavior{
 
-	private Context context;
+private Context context;
 	
 	private Bitmap image;
 	private Drawable drawableImage;
@@ -39,6 +40,15 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	public Integer timeEffect;
 	//private Integer MAX_SPEED = 6;
 	
+	Spacecraft spacecraft;
+	
+	
+	public Asteroid(Context context){
+		this.context = context;
+		
+		init();
+	}
+	
 	
 	public Asteroid(Context context, Display display){
 		this.context = context;
@@ -47,22 +57,34 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		init();
 	}
 	
-	public Asteroid(Context context){
+	public Asteroid(Context context, Spacecraft spacecraft){
 		this.context = context;
+		this.spacecraft = spacecraft;
 		
 		init();
 	}
 	
-	public Asteroid(Context context, Vector2D origin, Integer type, Boolean isAlive){
+	public Asteroid(Context context, Vector2D origin, Integer type, Integer route){
 		this.context = context;
 		this.position = origin;
 		this.typeImage = type;
-		this.isAlive = isAlive;
+		this.route = route;
 		
-		init();
-		
+		init2();
 	}
-
+	
+	public Asteroid(Context context, Vector2D origin, Integer type){
+		this.context = context;
+		this.position = origin;
+		this.typeImage = type;
+		
+		imageAsteroid(this.typeImage);
+		
+		this.drawableImage = new BitmapDrawable(Bitmap.createBitmap(this.image, 0, 0,
+   				this.image.getWidth(), this.image.getHeight(), null, true));	
+	}
+	
+	
 	
 	@Override
 	public void init() {
@@ -89,12 +111,21 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		Matrix matrix = new Matrix();
 		matrix.setRotate(angle.floatValue());
 		
-		//BitmapDrawable b = 
-		
    		this.drawableImage = new BitmapDrawable(Bitmap.createBitmap(this.image, 0, 0,
-   				this.image.getWidth(), this.image.getHeight(), matrix, true));
+   				this.image.getWidth(), this.image.getHeight(), matrix, true));	
+	}
+	
+	
+	public void init2() {
 		
 		
+		
+		//this.position = ramdonOrigin();
+		this.isAlive = true;
+		
+		//this.drawableImage = this.imageAsteroid(this.typeImage);
+		
+		//this.route = (int) (Math.random()*4);
 	}
 	
 	@Override
@@ -116,23 +147,21 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		
 		
 		int origin = (int) (Math.random()*4);
-		int position = 1;
+		int position = 0;
 		switch (origin) {
 		case 0:
-			position = (int)(Math.random()*EngineGame.getCamera().getX());
-			return new Vector2D(position,-200);
-			
+			position = (int)(Math.random()*EngineGameServer.getCamera().getX());
+			return new Vector2D(position,-40);
 		case 1:
-			position = (int)(Math.random()*EngineGame.getCamera().getY());
-			return new Vector2D(-200,position);
-			
+			position = (int)(Math.random()*EngineGameServer.getCamera().getY());
+			return new Vector2D(-40,position);
 		case 2:
-			position = (int)(Math.random()*EngineGame.getCamera().getX());
-			return new Vector2D(position, EngineGame.getCamera().getY());
-			
+			position = (int)(Math.random()*EngineGameServer.getCamera().getX());
+			return new Vector2D(position,EngineGameServer.getCamera().getY()+40);
 		case 3:
-			position = (int)(Math.random()*EngineGame.getCamera().getY());
-			return new Vector2D(EngineGame.getCamera().getX(),position);
+			position = (int)(Math.random()*EngineGameServer.getCamera().getY());
+			return new Vector2D(EngineGameServer.getCamera().getX()+40,position);
+		
 		}
 		return null;
 		
@@ -155,10 +184,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		case 3:
 			this.position.addX(-speed); 
 			this.position.addY(-speed);
-		break;
-		
-		case 4:
-			this.position.addX(+speed); 
+		break; 
 		}
 		
 	}
@@ -178,6 +204,8 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		break;
 		
 		case 1:
+		case 3:
+		case 5:
 			this.life =5;
 			power = 1;
 			
@@ -187,6 +215,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 			this.sizeHeight = image.getHeight();
 		break;
 		case 2:
+		case 4:
 			this.life = 3;
 			power = 1;
 			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
@@ -195,8 +224,9 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 			this.sizeHeight = image.getHeight();	
 		
 		break;
-		case 3:
-
+		case 6:
+		case 7:
+			
 			this.life = 8;
 			power = 3;
 			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
@@ -205,7 +235,8 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 			this.sizeHeight = image.getHeight();
 		
 		break;
-		case 4:
+		case 8:
+		case 9:
 			
 			this.life = 10;
 			power = 3;
@@ -221,7 +252,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	}
 	
 	private void ramdomImageAteroid() {
-		typeImage = (int) (Math.random()*5);
+		typeImage = (int) (Math.random()*10);
 		imageAsteroid(typeImage);
 	}
 
@@ -237,6 +268,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	}
 
 	
+
 	
 	@Override
 	public void draw(Canvas c) {
@@ -249,25 +281,29 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		break;
 		
 		case 1:
+		case 3:
+		case 5:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 					this.position.getX()+this.sizeWidth, 
 	    			this.position.getY()+this.sizeHeight);
 		break;
 		
 		case 2:
-			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
-					this.position.getX()+this.sizeWidth, 
-	    			this.position.getY()+this.sizeHeight);
-		break;
-		
-		case 3:
-
-			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
-					this.position.getX()+this.sizeWidth, 
-	    			this.position.getY()+this.sizeHeight);
-		break;
-		
 		case 4:
+			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
+					this.position.getX()+this.sizeWidth, 
+	    			this.position.getY()+this.sizeHeight);
+		break;
+		
+		case 6:
+		case 8:
+			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
+					this.position.getX()+this.sizeWidth, 
+	    			this.position.getY()+this.sizeHeight);
+		break;
+		
+		case 7:
+		case 9:
 			this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 		    		this.position.getX()+this.sizeWidth, 
 		    			this.position.getY()+this.sizeHeight);
@@ -322,11 +358,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		return power;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		return this.position.getX().equals(((Asteroid)o).getPosition().getX())  &&
-				this.position.getY().equals(((Asteroid)o).getPosition().getY());
-	}
+	
 	
 	
 	

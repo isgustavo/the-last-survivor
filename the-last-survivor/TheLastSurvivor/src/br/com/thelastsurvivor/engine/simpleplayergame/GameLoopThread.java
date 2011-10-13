@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine.simple;
+package br.com.thelastsurvivor.engine.simpleplayergame;
 
 import android.content.Context;
 import android.graphics.Canvas;

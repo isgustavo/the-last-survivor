@@ -10,11 +10,11 @@ import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.view.Display;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
-import br.com.thelastsurvivor.engine.game.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
+import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.IServer;
 import br.com.thelastsurvivor.engine.util.MessageGameUtil;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -28,14 +28,15 @@ public class EngineGameServer implements IServer{
 	protected Vibrator vibrator;
 	private Display display;
 	
-	private Integer startTime;
-	
 	protected Spacecraft spacecraft;
 	protected List<Spacecraft> spacecrafts;
 	protected List<Spacecraft> spacecraftsDrawables;
 	
-	protected List<Asteroid> asteroids;
+	private List<IDrawBehavior> asteroids;
+	protected List<IDrawBehavior> asteroidsDrawables;
+	
 	protected List<MessageGameUtil> messages;
+	
 	protected List<EffectShoot> effects;
 	
 	protected static Vector2D camera;
@@ -55,14 +56,11 @@ public class EngineGameServer implements IServer{
 	
 	
 	boolean flag = true;
-	/*
 	
-	private List<IDrawBehavior> asteroids;
-	protected List<IDrawBehavior> asteroidsDrawables;
-	protected List<IWeaponBehavior> shootsEffect;
+	private Long startTime;
+	private Long start; 
+	private Long finish;
 	
-	public List<IDrawBehavior> updateList;
-	private List<IDrawBehavior> drawableList;*/
 	
 	                                   
 	public EngineGameServer(Context context, MultiGameActivity activity, Vibrator vibrator, 
@@ -81,10 +79,19 @@ public class EngineGameServer implements IServer{
 	
 	@Override
 	public void init() {
+		this.startTime = 0L;
+		this.start = 0L;
+		this.finish = 0L;
+		
 		protocol = new ProtocolCommunication();
 		
+		this.camera = new Vector2D(display.getWidth(), display.getHeight());
+		
 		this.spacecraftsDrawables = new ArrayList<Spacecraft>();
-		this.asteroids = new ArrayList<Asteroid>();
+		
+		this.asteroids = new ArrayList<IDrawBehavior>();
+		this.asteroidsDrawables = new ArrayList<IDrawBehavior>();
+		
 		this.messages = new ArrayList<MessageGameUtil>();
 		this.effects = new ArrayList<EffectShoot>();
 		
@@ -93,9 +100,16 @@ public class EngineGameServer implements IServer{
 	
 	@Override
 	public void update() {
+		if(start != 0L){
+			finish = System.currentTimeMillis();	
+			currentTime();	
+		}
+		start = System.currentTimeMillis(); 
 		
 		this.spacecraft.update();
 		
+		updateNewAsteroid();
+		updateAsteroids();
 		this.spacecraftsDrawables.addAll(this.spacecrafts);
 		
 		for (Spacecraft spacecraft : this.spacecraftsDrawables) {
@@ -105,9 +119,65 @@ public class EngineGameServer implements IServer{
 		
 		
 		
-		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, asteroids, messages, effects));
+		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, asteroidsDrawables, messages, effects));
 		
 
+	}
+	
+	private void currentTime(){
+		this.startTime += finish - start;
+	}
+	
+	private void updateAsteroids(){
+		if(this.asteroidsDrawables != null){
+			
+			this.asteroidsDrawables();
+			
+			this.asteroidsDrawables.addAll(asteroids);
+			
+			for (IDrawBehavior asteroid : this.asteroidsDrawables) {
+				asteroid.update();
+				verificationNewPositionScreen(asteroid);
+			}
+			
+			this.asteroids.clear();
+			//Log.d("SIZEupdateAsteroids", "."+this.asteroidsDrawables.size());
+		}
+	}
+	
+	private void asteroidsDrawables(){
+		
+		List<IDrawBehavior> asteroids = new ArrayList<IDrawBehavior>();
+		for(IDrawBehavior asteroid : this.asteroidsDrawables){
+			if(asteroid.isAlive()){
+				asteroids.add(asteroid);
+			}
+		}
+		
+		this.asteroidsDrawables.clear();
+		this.asteroidsDrawables.addAll(asteroids);
+		//Log.d("SIZEasteroidsDrawables", "."+this.asteroidsDrawables.size());
+	}
+	
+	public void verificationNewPositionScreen(IDrawBehavior object){
+		
+		int tolerance = 20;
+		
+		if(object instanceof Asteroid){
+			tolerance = ((Asteroid)object).getTypeImage() < 8 ? 20 : 200;
+		}
+		
+		if(-tolerance > object.getPosition().getY()){
+			object.getPosition().setY(this.camera.getY()+tolerance);
+		}else if(object.getPosition().getY() > this.camera.getY()+tolerance){
+			object.getPosition().setY(0);
+		}
+	
+		if(-tolerance > object.getPosition().getX()+tolerance){
+			object.getPosition().setX(this.camera.getX());
+		}else if(object.getPosition().getX() > this.camera.getX()+tolerance){
+			object.getPosition().setX(0);
+		}
 	}
 	
 	@Override
@@ -139,6 +209,12 @@ public class EngineGameServer implements IServer{
 	@Override
 	public void draw(Canvas c) {
 		
+		
+		for (IDrawBehavior object : this.asteroidsDrawables) {
+
+			object.draw(c);
+		}
+		
 		this.spacecraft.draw(c);
 		
 		for (Spacecraft spacecraft : this.spacecraftsDrawables) {
@@ -148,7 +224,32 @@ public class EngineGameServer implements IServer{
 		this.spacecraftsDrawables.clear();
 	}
 
-	
+	private void updateNewAsteroid(){
+		
+		int isAsteroid = 0;
+		
+		switch ((int)(this.startTime/60000)) {
+		case 0:
+			isAsteroid = (int) (Math.random()*100);			
+		break;
+		case 1:
+			isAsteroid = (int) (Math.random()*80);			
+		break;
+		case 2:
+			isAsteroid = (int) (Math.random()*60);			
+		break;
+		case 3:
+			isAsteroid = (int) (Math.random()*40);			
+		break;
+		default:
+			isAsteroid = (int) (Math.random()*20);
+		}
+		
+		if(isAsteroid == 1){
+			this.asteroids.add(new Asteroid(this.context));
+		}
+		
+	}
 	
 	
 	public Context getContext() {
@@ -161,6 +262,11 @@ public class EngineGameServer implements IServer{
 
 	public Display getDisplay() {
 		return display;
+	}
+
+	
+	public static Vector2D getCamera() {
+		return camera;
 	}
 
 	@Override

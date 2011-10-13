@@ -2,7 +2,7 @@ package br.com.thelastsurvivor.engine.util;
 
 
 
-public interface IDrawControllable extends IDrawBehavior{
+public interface IDrawControllable extends IInitUpdateDraw{
 	
 	
 	

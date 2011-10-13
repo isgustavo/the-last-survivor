@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -123,6 +124,13 @@ public class MainMenuActivity extends Activity{
 		}  
 	};  
 	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+	    if(keyCode == KeyEvent.KEYCODE_BACK) {
+	    	MainMenuActivity.this.finish();
+	    	
+	    }
+		return false;
+	}
 	
 	@Override
 	protected void onRestart() {

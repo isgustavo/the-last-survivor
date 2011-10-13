@@ -24,16 +24,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.audio.AudioGame;
-import br.com.thelastsurvivor.engine.simple.EngineGame;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.simpleplayergame.SimplePlayerMode;
+import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
 import br.com.thelastsurvivor.model.game.Asteroid;
 import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
+import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -89,6 +90,10 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		this.engine = new EngineGame(this, vibrator, display);
 		
     	this.view = new EngineGameView(this,engine);
+    	
+    	WindowManager.LayoutParams lp = getWindow().getAttributes();
+    	lp.screenBrightness = 100 / 100.0f;
+    	getWindow().setAttributes(lp);
 	}
 
 	
@@ -156,10 +161,10 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 
 	@Override
 	public void onLongPress(MotionEvent arg0) {
-		while(true){
-		new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
-		this.engine.getSpacecraft().newShoot();		
-		}
+		
+			//new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
+			this.engine.getSpacecraft().newShoot();		
+		
 	}
 
 	@Override
@@ -172,7 +177,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
 	
-		new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
+		//new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
 		this.engine.getSpacecraft().newShoot();		
 		
 		return true;
@@ -187,8 +192,18 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	    	dialog = new Dialog(this, R.style.PauseGameDialogTheme);
 			dialog.setContentView(R.layout.pause_game_view);
 			
-			Button buttonBack = (Button)dialog.findViewById(R.id.buttonBack);
-			buttonBack.setOnClickListener(buttonBackListener);  
+			final FT2FontTextView scoreGame = (FT2FontTextView)dialog.findViewById(R.id.score_pause_game);
+			scoreGame.setText(context.getString(R.string.score)+" "+this.engine.getSpacecraft().getPoints()+" pt");
+			
+			final FT2FontTextView lifeGame = (FT2FontTextView)dialog.findViewById(R.id.life_pause_game);
+			lifeGame.setText(context.getString(R.string.life)+" "+this.engine.getSpacecraft().getLife()+" hp");
+			
+			final FT2FontTextView timeGame = (FT2FontTextView)dialog.findViewById(R.id.time_pause_game);
+			timeGame.setText(context.getString(R.string.time)+" "+this.engine.getTimeGame()+" min");
+			
+			
+			ImageView image = (ImageView)dialog.findViewById(R.id.imagebackgraund);
+			image.setAlpha(50);
 			
 			Button exitGame = (Button)dialog.findViewById(R.id.buttonExit);
 			exitGame.setOnClickListener(buttonExitListener);  
@@ -242,10 +257,10 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 
 		Vector2D position = this.view.getEngine().getSpacecraft().getPosition();
 		Integer life = this.view.getEngine().getSpacecraft().getLife();
-		Double angle = this.view.getEngine().getSpacecraft().getAngle();
+		//Double angle = this.view.getEngine().getSpacecraft().getAngle();
 		List<Shoot> shoots = getShootsGame(); 
 		
-		return new Spacecraft(position, life, angle, shoots);
+		return new Spacecraft(position, life, null, shoots);
 		
 	}
 	

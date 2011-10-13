@@ -9,10 +9,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
-import br.com.thelastsurvivor.engine.simple.EngineGame;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.simple.Orientation;
+import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
+import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
 import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
@@ -36,12 +36,12 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	private Boolean isAlive;
 	private Integer color;
 	
-	public SimpleShoot(Context context, Vector2D position, Double angle){
+	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
 		this.context = context;
 		this.position = position;
 		this.angle = angle;
 		
-		//this.spacecraft = spacecraft;
+		this.spacecraft = spacecraft;
 		
 		init();
 	}

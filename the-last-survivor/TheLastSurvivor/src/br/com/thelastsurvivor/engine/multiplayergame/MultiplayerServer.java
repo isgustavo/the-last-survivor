@@ -7,7 +7,6 @@ import java.util.List;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 
 public class MultiplayerServer extends Thread {
 
