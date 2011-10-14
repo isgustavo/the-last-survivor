@@ -15,7 +15,7 @@ public class EngineGameView extends SurfaceView implements SurfaceHolder.Callbac
     private Context context;
     
     private EngineGame engine;
-    private GameLoopThread gameLoop;
+    public GameLoopThread gameLoop;
 	
 	public EngineGameView(Context context, EngineGame engine) {
 		super(context);

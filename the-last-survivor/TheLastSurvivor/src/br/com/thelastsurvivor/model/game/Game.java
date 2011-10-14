@@ -11,40 +11,31 @@ public class Game implements Serializable{
 	private Integer id;
 	private Integer player;
 	private Date date;
-	private Integer runTime;
-	private Integer points;
+	private Long runTime;
 	private Spacecraft spacecraft;
 	private List<Asteroid> asteroids;
+	private List<PowerUp> powerUps;
+	private List<Effect> effects;
 	
+	public Game(Integer player, Date date, Long runTime,
+			Spacecraft spacecraft, List<Asteroid> asteroids,
+			List<PowerUp> powerUps, List<Effect> effects) {
+		
+		this.player = player;
+		this.date = date;
+		this.runTime = runTime;
+		this.spacecraft = spacecraft;
+		this.asteroids = asteroids;
+		this.powerUps = powerUps;
+		this.effects = effects;
+	}
 	
-	public Game(Integer id, Integer player, Date date, Integer runTime,
-			Integer points, Spacecraft spacecraft, List<Asteroid> asteroids) {
+	public Game(Integer id, Integer player, Date date, Long runTime) {
 		this.id = id;
 		this.player = player;
 		this.date = date;
 		this.runTime = runTime;
-		this.points = points;
-		this.spacecraft = spacecraft;
-		this.asteroids = asteroids;
-	}
-	
-	public Game(Date date, Integer runTime,
-			Integer points, Spacecraft spacecraft, List<Asteroid> asteroids) {
-		this.date = date;
-		this.runTime = runTime;
-		this.points = points;
-		this.spacecraft = spacecraft;
-		this.asteroids = asteroids;
-	}
-	
-	public Game(Integer id, Integer player, Date date, Integer runTime,
-			Integer points) {
-		this.id = id;
-		this.player = player;
-		this.date = date;
-		this.runTime = runTime;
-		this.points = points;
-	
+
 	}
 	
 	public Integer getId() {
@@ -65,35 +56,37 @@ public class Game implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Integer getRunTime() {
+	public Long getRunTime() {
 		return runTime;
 	}
-	public void setRunTime(Integer runTime) {
+	public void setRunTime(Long runTime) {
 		this.runTime = runTime;
 	}
-	
-	public Integer getPoints() {
-		return points;
-	}
-	public void setPoints(Integer points) {
-		this.points = points;
-	}
-
 	public Spacecraft getSpacecraft() {
 		return spacecraft;
 	}
-
 	public void setSpacecraft(Spacecraft spacecraft) {
 		this.spacecraft = spacecraft;
 	}
-
 	public List<Asteroid> getAsteroids() {
 		return asteroids;
 	}
-
 	public void setAsteroids(List<Asteroid> asteroids) {
 		this.asteroids = asteroids;
 	}
+	public List<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+	public void setPowerUps(List<PowerUp> powerUps) {
+		this.powerUps = powerUps;
+	}
+	public List<Effect> getEffects() {
+		return effects;
+	}
+	public void setEffects(List<Effect> effects) {
+		this.effects = effects;
+	}
+	
 	
 	
 	

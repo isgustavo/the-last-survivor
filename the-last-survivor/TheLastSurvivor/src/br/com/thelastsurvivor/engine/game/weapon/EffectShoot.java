@@ -96,32 +96,22 @@ public class EffectShoot implements IDraw, IDrawBehavior, IWeaponBehavior {
 		
 	}
 	
-	private void currentTime(){
-		long millis = System.currentTimeMillis() - this.startTime;
-	    
-		startTime = (int) (millis / 1000);
-	    
-		//this.startTime = (seconds / 60);
-		//Log.d("TIME","."+this.startTime);
-	}
-
-	Integer x = 0;
 	@Override
 	public void update() {
-		x++;
-		if(x < 2){
+		startTime++;
+		if(startTime < 2){
 			this.drawableImage = new BitmapDrawable(this.image4);
 			this.sizeHeight = image4.getHeight();
 			this.sizeWidth = image4.getWidth();
-		}else if(x < 3){
+		}else if(startTime < 3){
 			this.drawableImage = new BitmapDrawable(this.image3);
 			this.sizeHeight = image3.getHeight();
 			this.sizeWidth = image3.getWidth();
-		}else if(x < 4){
+		}else if(startTime < 4){
 			this.drawableImage = new BitmapDrawable(this.image2);
 			this.sizeHeight = image2.getHeight();
 			this.sizeWidth = image2.getWidth();
-		}else if(x == 5){
+		}else if(startTime == 5){
 			this.drawableImage = new BitmapDrawable(this.image1);
 			this.sizeHeight = image1.getHeight();
 			this.sizeWidth = image1.getWidth();
@@ -149,39 +139,36 @@ public class EffectShoot implements IDraw, IDrawBehavior, IWeaponBehavior {
 	@Override
 	public void draw(Canvas c) {
 		
-		if(x < 2){
+		if(startTime < 2){
 			c.drawBitmap(Bitmap.createBitmap(this.image4, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x < 3){
+		}else if(startTime < 3){
 			c.drawBitmap(Bitmap.createBitmap(this.image3, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x < 4){
+		}else if(startTime < 4){
 			c.drawBitmap(Bitmap.createBitmap(this.image2, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x == 5){
+		}else if(startTime == 5){
 			c.drawBitmap(Bitmap.createBitmap(this.image1, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
 		}
 		
 		
-	/*	
-		this.matrix.setRotate(0);
-		
-    	
-    	
-		c.drawBitmap(Bitmap.createBitmap(this.image, 0, 0,
-		        this.image.getWidth(), this.image.getHeight(), this.matrix, true),
-		        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		*/
 	}
 
 	@Override
 	public boolean isAlive() {
 		return this.isAlive;
+	}
+
+	
+	
+	public Integer getStartTime() {
+		return startTime;
 	}
 
 	@Override

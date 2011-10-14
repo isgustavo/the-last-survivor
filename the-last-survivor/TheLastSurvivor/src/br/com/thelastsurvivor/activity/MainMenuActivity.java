@@ -78,6 +78,11 @@ public class MainMenuActivity extends Activity{
         	
         	Intent i = new Intent(MainMenuActivity.this, SavedGameActivity.class);
         	
+        	Bundle s = new Bundle();
+		    s.putInt("id_player",player.getId());
+		    
+		    i.putExtra("playerBundle",s);
+		    
 			
 			startActivity(i);
      

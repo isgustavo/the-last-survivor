@@ -633,6 +633,14 @@ public class EngineGame{
 	}
 
 
+	public List<IDrawBehavior> getPowerUps() {
+		return powerUps;
+	}
+
+	public List<IWeaponBehavior> getShootsEffect() {
+		return shootsEffect;
+	}
+
 	public Context getContext() {
 		return context;
 	}
@@ -653,6 +661,11 @@ public class EngineGame{
 	public Long getTimeGame(){
 		return this.startTime/60000;
 	}
+	
+	public Long getRealTimeGame(){
+		return this.startTime;
+	}
+	
 	
 	
 }

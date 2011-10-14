@@ -13,15 +13,13 @@ public class ShootProvider extends TheLastSurvivorProvider implements BaseColumn
 	public static final String NAME_TABLE = "shoot";
 	
 	public static final String ID = "id";
-	public static final String ID_SPACECRAFT = "spacecraft";
+	public static final String ID_SPACECRAFT = "id_spacecraft";
 	public static final String POS_X = "pos_x";
 	public static final String POS_Y = "pos_y";
 	public static final String ANGLE = "angle";
-	public static final String TYPE = "type";
 
 	static{
-		getMatcher().addURI(TheLastSurvivorProvider.AUTHORITY, SpacecraftProvider.NAME_TABLE, Constant.IS_ASTEROID);
+		getMatcher().addURI(TheLastSurvivorProvider.AUTHORITY, ShootProvider.NAME_TABLE, Constant.IS_SHOOT);
 
 	}
 }
-

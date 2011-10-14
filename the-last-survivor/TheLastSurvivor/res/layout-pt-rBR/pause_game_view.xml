@@ -41,18 +41,23 @@
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 	
 	 	
-			 	
+	 	<Button android:layout_height="wrap_content"  
+	      		android:layout_width="wrap_content"
+	      		android:id="@+id/buttonBack"
+	      		android:background="@drawable/button_back_game_image" 
+	      		android:layout_x="90dp" android:layout_y="80dp">
+	    </Button>
 	    <Button android:layout_height="wrap_content"  
 	      		android:layout_width="wrap_content"
 	      		android:id="@+id/buttonSave"
 	      		android:background="@drawable/button_save_game_image" 
-	      		android:layout_x="140dp" android:layout_y="80dp">
+	      		android:layout_x="180dp" android:layout_y="80dp">
 	    </Button>
 	    <Button android:layout_height="wrap_content" 
 	      		android:layout_width="wrap_content"
 	      		android:id="@+id/buttonExit"
 	      		android:background="@drawable/button_exit_game_image" 
-	      		android:layout_x="250dp" android:layout_y="80dp">
+	      		android:layout_x="270dp" android:layout_y="80dp">
 	    </Button>
 
  </AbsoluteLayout>  

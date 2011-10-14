@@ -1,26 +1,34 @@
 package br.com.thelastsurvivor.activity.game.simplemode;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import br.com.thelastsurvivor.model.game.Asteroid;
+import br.com.thelastsurvivor.model.game.Effect;
 import br.com.thelastsurvivor.model.game.Game;
+import br.com.thelastsurvivor.model.game.PowerUp;
+import br.com.thelastsurvivor.model.game.Spacecraft;
 import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 
 public class SavedGameActivity extends Activity {
 	
-	public static final int EXIT_GAME = 0;
-	
+	//public static final int EXIT_GAME = 0;
+	private Integer idPlayer;
 	private List<Game> games;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Bundle s = this.getIntent().getExtras().getBundle("playerBundle");
+		this.idPlayer = s.getInt("id_player");
+		
 		
 		if (isThereGame()) {
 			
@@ -29,7 +37,15 @@ public class SavedGameActivity extends Activity {
 		} else {
 	
 			Intent i = new Intent(this, SimpleGameActivity.class);
-			startActivityForResult(i, EXIT_GAME);
+			
+			Bundle b = new Bundle();
+		    s.putInt("id_player",idPlayer);
+		    
+		    i.putExtra("playerBundle",b);
+		    
+			startActivity(i);
+			
+			SavedGameActivity.this.finish();
 		}
 		
 		//setContentView(R.layout.list);
@@ -48,11 +64,10 @@ public class SavedGameActivity extends Activity {
 			this.games = new ArrayList<Game>();
 			while(c.moveToNext()){
 				this.games.add(new Game(c.getInt(0),c.getInt(1), DateTimeUtil.stringToDate(c.getString(2)),
-						c.getInt(3), c.getInt(4)));
+						c.getLong(3)));
 			}
 		}
 		return true;
- 
 	}
 
 
@@ -65,7 +80,7 @@ public class SavedGameActivity extends Activity {
 		this.games = games;
 	}
 	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+/*	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	     super.onActivityResult(requestCode, resultCode, data);
 
 	     if (requestCode == EXIT_GAME) {
@@ -74,6 +89,6 @@ public class SavedGameActivity extends Activity {
 	    		 finish();
 	    	 }
 	     }
-	 }
+	 }*/
 	
 }

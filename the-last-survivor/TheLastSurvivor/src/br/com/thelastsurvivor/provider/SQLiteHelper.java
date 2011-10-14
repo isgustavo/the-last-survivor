@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
+import br.com.thelastsurvivor.provider.game.EffectProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
+import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
@@ -32,33 +34,49 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ GameProvider.ID + " INTEGER PRIMARY KEY, " 
 				+ GameProvider.ID_PLAYER + " INTEGER, "	
 				+ GameProvider.DATE_PAUSE +" VARCHAR, " 
-				+ GameProvider.TIME_PAUSE +" INTEGER, " 
-				+ GameProvider.POINTS +" INTEGER ); "); 
+				+ GameProvider.TIME_PAUSE +" INTEGER ); "); 
 		
 		db.execSQL(" CREATE TABLE "+ SpacecraftProvider.NAME_TABLE + "( "
 				+ SpacecraftProvider.ID + " INTEGER PRIMARY KEY, " 
 				+ SpacecraftProvider.ID_GAME + " INTEGER, "	
 				+ SpacecraftProvider.POS_X +" INTEGER, " 
 				+ SpacecraftProvider.POS_Y +" INTEGER, " 
-				+ SpacecraftProvider.ANGLE +" REAL ); "); 
+				+ SpacecraftProvider.ANGLE +" REAL," 
+				+ SpacecraftProvider.LIFE +" INTEGER, "
+				+ SpacecraftProvider.POINTS +" INTEGER ); "); 
 		
 		db.execSQL(" CREATE TABLE "+ ShootProvider.NAME_TABLE + "( "
 				+ ShootProvider.ID + " INTEGER PRIMARY KEY, " 
 				+ ShootProvider.ID_SPACECRAFT + " INTEGER, "	
 				+ ShootProvider.POS_X +" INTEGER, " 
 				+ ShootProvider.POS_Y +" INTEGER, " 
-				+ ShootProvider.ANGLE +" REAL, "
-				+ ShootProvider.TYPE +" INTEGER ); ");
+				+ ShootProvider.ANGLE +" REAL ); ");
 		
 		db.execSQL(" CREATE TABLE "+ AsteroidProvider.NAME_TABLE + "( "
 				+ AsteroidProvider.ID + " INTEGER PRIMARY KEY, " 
 				+ AsteroidProvider.ID_GAME + " INTEGER, "	
 				+ AsteroidProvider.POS_X +" INTEGER, " 
-				+ AsteroidProvider.POS_Y +" INTEGER, " 
+				+ AsteroidProvider.POS_Y +" INTEGER, "
+				+ AsteroidProvider.ANGLE +" REAL, "
+				+ AsteroidProvider.LIFE +" INTEGER, "
 				+ AsteroidProvider.ROUTE +" INTEGER, "
 				+ AsteroidProvider.TYPE +" INTEGER ); ");
 		
-
+		db.execSQL(" CREATE TABLE "+ EffectProvider.NAME_TABLE + "( "
+				+ EffectProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ EffectProvider.ID_GAME + " INTEGER, "	
+				+ EffectProvider.POS_X +" INTEGER, " 
+				+ EffectProvider.POS_Y +" INTEGER, " 
+				+ EffectProvider.TIME +" INTEGER ); ");
+		
+		db.execSQL(" CREATE TABLE "+ PowerUpProvider.NAME_TABLE + "( "
+				+ PowerUpProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ PowerUpProvider.ID_GAME + " INTEGER, "	
+				+ PowerUpProvider.POS_X +" INTEGER, " 
+				+ PowerUpProvider.POS_Y +" INTEGER, " 
+				+ PowerUpProvider.ROUTE +" INTEGER ); ");
+		
+		
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ " VALUES (1, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
@@ -96,7 +114,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		
 		
-	//	db.execSQL("Drop table");
+		//db.execSQL("Drop table");
 
 		
 

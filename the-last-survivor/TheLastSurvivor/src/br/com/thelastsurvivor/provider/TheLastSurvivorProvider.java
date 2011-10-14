@@ -8,7 +8,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import br.com.thelastsurvivor.engine.game.weapon.EffectSpacecraft;
+import br.com.thelastsurvivor.provider.game.AsteroidProvider;
+import br.com.thelastsurvivor.provider.game.EffectProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
+import br.com.thelastsurvivor.provider.game.PowerUpProvider;
+import br.com.thelastsurvivor.provider.game.ShootProvider;
+import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.provider.util.Constant;
@@ -73,6 +79,11 @@ public class TheLastSurvivorProvider extends ContentProvider {
   
             break;
             
+            case Constant.IS_SPACECRAFT:
+            	builder.setTables(SpacecraftProvider.NAME_TABLE);
+  
+            break;
+            
             default:  
                 throw new IllegalArgumentException(  
                       "URI desconhecida " + uri);  
@@ -87,23 +98,96 @@ public class TheLastSurvivorProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+		long rowId = 0;
+		SQLiteDatabase db;
 		
 		switch (matcher.match(uri)) {
 		
 		case Constant.IS_PLAYER: 
 		
-			SQLiteDatabase db = helper.getWritableDatabase();
-			long rowId = db.insert(PlayerProvider.NAME_TABLE, null, values);
+			db = helper.getWritableDatabase();
+			rowId = db.insert(PlayerProvider.NAME_TABLE, null, values);
 		
 			if (rowId > 0) {
-				Uri playerUri = ContentUris.withAppendedId(uri, rowId);		
-				getContext().getContentResolver().notifyChange(playerUri, null);			
-				return playerUri;
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
 			}
 			
 			
 		break;
+
+		case Constant.IS_GAME:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(GameProvider.NAME_TABLE, null, values);
 		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
+			
+		break;
+		
+		case Constant.IS_SPACECRAFT:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(SpacecraftProvider.NAME_TABLE, null, values);
+		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
+		
+		break;
+		
+		case Constant.IS_SHOOT:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(ShootProvider.NAME_TABLE, null, values);
+		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
+		
+		break;
+		
+		case Constant.IS_ASTEROID:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(AsteroidProvider.NAME_TABLE, null, values);
+		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
+		
+		break;
+		
+		case Constant.IS_POWER_UP:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(PowerUpProvider.NAME_TABLE, null, values);
+		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
+		
+		break;
+		
+		case Constant.IS_EFFECT:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(EffectProvider.NAME_TABLE, null, values);
+		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
+		
+		break;
 		
 		default:
 			

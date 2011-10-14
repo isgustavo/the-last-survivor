@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class Shoot implements Serializable{
+public class Effect  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Integer player;
+	private Integer game;
 	private Vector2D position;
-	private Double angle;
-	
-	public Shoot( Vector2D position, Double angle) {
+	private Integer time;
+
+	public Effect(Vector2D position, Integer time) {
 		this.position = position;
-		this.angle = angle;
+		this.time = time;
 	}
 	
 	public Integer getId() {
@@ -24,11 +24,11 @@ public class Shoot implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPlayer() {
-		return player;
+	public Integer getGame() {
+		return game;
 	}
-	public void setPlayer(Integer player) {
-		this.player = player;
+	public void setGame(Integer game) {
+		this.game = game;
 	}
 	public Vector2D getPosition() {
 		return position;
@@ -36,13 +36,16 @@ public class Shoot implements Serializable{
 	public void setPosition(Vector2D position) {
 		this.position = position;
 	}
-	public Double getAngle() {
-		return angle;
-	}
-	public void setAngle(Double angle) {
-		this.angle = angle;
+
+	public Integer getTime() {
+		return time;
 	}
 
-
+	public void setTime(Integer time) {
+		this.time = time;
+	}
 	
+	
+	
+
 }

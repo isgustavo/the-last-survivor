@@ -11,47 +11,46 @@ public class Spacecraft implements Serializable{
 
 	private Integer id;
 	private Integer game;
-	private Vector2D postion;
-	private Integer life;
+	private Vector2D position;
 	private Double angle;
+	private Integer life;
+	private Integer points;
+	
 	private List<Shoot> shoots;
-	
 
-	public Spacecraft(Integer id, Integer game, Vector2D postion,Integer life, Double angle, List<Shoot> shoots) {
-	
-		this.id = id;
-		this.game = game;
-		this.postion = postion;
-		this.life = life;
+
+	public Spacecraft(Vector2D position, Double angle,
+			Integer life, Integer points, List<Shoot> shoots) {
+
+		this.position = position;
 		this.angle = angle;
-		this.shoots.addAll(shoots);
-	}
-	
-	public Spacecraft(Vector2D postion,Integer life, Double angle, List<Shoot> shoots) {
-		
-		this.postion = postion;
 		this.life = life;
-		this.angle = angle;
-		this.shoots.addAll(shoots);
+		this.points = points;
+		this.shoots = shoots;
 	}
 	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Integer getGame() {
 		return game;
 	}
+
 	public void setGame(Integer game) {
 		this.game = game;
 	}
-	public Vector2D getPostion() {
-		return postion;
+
+	public Vector2D getPosition() {
+		return position;
 	}
-	public void setPostion(Vector2D postion) {
-		this.postion = postion;
+
+	public void setPosition(Vector2D position) {
+		this.position = position;
 	}
 
 	public Double getAngle() {
@@ -69,8 +68,24 @@ public class Spacecraft implements Serializable{
 	public void setLife(Integer life) {
 		this.life = life;
 	}
+
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+
+	public List<Shoot> getShoots() {
+		return shoots;
+	}
+
+	public void setShoots(List<Shoot> shoots) {
+		this.shoots = shoots;
+	}
 	
 	
 	
-	
+
 }
