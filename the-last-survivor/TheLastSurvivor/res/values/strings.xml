@@ -54,6 +54,22 @@
     <string name="lista">LIST</string>
     
     
+<!-- Simple mode -->
+    
+     <string name="score">Score: </string> 
+	 <string name="life">Life: </string> 
+	 <string name="power_up">new Weapon! </string> 
+	 
+	 <string name="pause_game">Pause game</string> 
+	 <string name="time">time in game: </string> 
+	 
+	 <string name="list_game">Save games</string>
+	 <string name="date_game">DATE: </string>
+	 <string name="time_game">TIME: </string>
+	 <string name="life_game">LIFE: </string>
+	 <string name="point_game">POINTS: </string>
+    
+    
 <!-- trophies -->    
     
     <string name="trophies">Trophies</string>

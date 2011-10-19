@@ -17,7 +17,7 @@ public class Game implements Serializable{
 	private List<PowerUp> powerUps;
 	private List<Effect> effects;
 	
-	public Game(Integer player, Date date, Long runTime,
+	public Game(Integer player, final Date date, final Long runTime,
 			Spacecraft spacecraft, List<Asteroid> asteroids,
 			List<PowerUp> powerUps, List<Effect> effects) {
 		
@@ -30,11 +30,12 @@ public class Game implements Serializable{
 		this.effects = effects;
 	}
 	
-	public Game(Integer id, Integer player, Date date, Long runTime) {
+	public Game(Integer id, Integer player, final Date date, final Long runTime,Spacecraft spacecraft) {
 		this.id = id;
 		this.player = player;
 		this.date = date;
 		this.runTime = runTime;
+		this.spacecraft = spacecraft;
 
 	}
 	

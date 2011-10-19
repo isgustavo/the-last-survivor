@@ -95,6 +95,8 @@
 	 
 	 <string name="pause_game">Jogo pausado</string> 
 	 <string name="time">Tempo de jogo: </string> 
+	 
+	 <string name="list_game">Jogos salvos</string>
 
 <!-- Jogo Multiplayer -->
 

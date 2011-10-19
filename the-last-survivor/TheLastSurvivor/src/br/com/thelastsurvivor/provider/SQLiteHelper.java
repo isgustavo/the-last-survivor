@@ -31,13 +31,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ TrophiesProvider.DATE_ACHIEVED +" INTEGER ); ");
 		
 		db.execSQL(" CREATE TABLE "+ GameProvider.NAME_TABLE + "( "
-				+ GameProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ GameProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ GameProvider.ID_PLAYER + " INTEGER, "	
 				+ GameProvider.DATE_PAUSE +" VARCHAR, " 
 				+ GameProvider.TIME_PAUSE +" INTEGER ); "); 
 		
 		db.execSQL(" CREATE TABLE "+ SpacecraftProvider.NAME_TABLE + "( "
-				+ SpacecraftProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ SpacecraftProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ SpacecraftProvider.ID_GAME + " INTEGER, "	
 				+ SpacecraftProvider.POS_X +" INTEGER, " 
 				+ SpacecraftProvider.POS_Y +" INTEGER, " 
@@ -46,14 +46,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ SpacecraftProvider.POINTS +" INTEGER ); "); 
 		
 		db.execSQL(" CREATE TABLE "+ ShootProvider.NAME_TABLE + "( "
-				+ ShootProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ ShootProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ ShootProvider.ID_SPACECRAFT + " INTEGER, "	
 				+ ShootProvider.POS_X +" INTEGER, " 
 				+ ShootProvider.POS_Y +" INTEGER, " 
 				+ ShootProvider.ANGLE +" REAL ); ");
 		
 		db.execSQL(" CREATE TABLE "+ AsteroidProvider.NAME_TABLE + "( "
-				+ AsteroidProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ AsteroidProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ AsteroidProvider.ID_GAME + " INTEGER, "	
 				+ AsteroidProvider.POS_X +" INTEGER, " 
 				+ AsteroidProvider.POS_Y +" INTEGER, "
@@ -63,14 +63,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ AsteroidProvider.TYPE +" INTEGER ); ");
 		
 		db.execSQL(" CREATE TABLE "+ EffectProvider.NAME_TABLE + "( "
-				+ EffectProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ EffectProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ EffectProvider.ID_GAME + " INTEGER, "	
 				+ EffectProvider.POS_X +" INTEGER, " 
 				+ EffectProvider.POS_Y +" INTEGER, " 
 				+ EffectProvider.TIME +" INTEGER ); ");
 		
 		db.execSQL(" CREATE TABLE "+ PowerUpProvider.NAME_TABLE + "( "
-				+ PowerUpProvider.ID + " INTEGER PRIMARY KEY, " 
+				+ PowerUpProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ PowerUpProvider.ID_GAME + " INTEGER, "	
 				+ PowerUpProvider.POS_X +" INTEGER, " 
 				+ PowerUpProvider.POS_Y +" INTEGER, " 

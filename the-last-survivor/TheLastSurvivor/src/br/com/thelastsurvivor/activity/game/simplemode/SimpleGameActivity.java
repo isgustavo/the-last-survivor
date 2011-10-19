@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -69,13 +70,16 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     private WakeLock wakeLock;
     private Long beforeTime;
     Context context;
+    private Dialog dialog;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle s = this.getIntent().getExtras().getBundle("playerBundle");
+		Bundle s = this.getIntent().getExtras().getBundle("idPlayerGame");
 		this.player = s.getInt("id_player");
+		
+		Log.d("ID PLAYER","."+player);
 		
         this.init();
 	    
@@ -204,7 +208,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		return true;
 	}
 	
-	Dialog dialog;
+	
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 	    if(keyCode == KeyEvent.KEYCODE_BACK) {
 
@@ -381,6 +385,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		values = new ContentValues();
 		
+		Log.d("SPACECRAFT GAME ID", "."+ game.getId());
+		
 		values.put(SpacecraftProvider.ID_GAME, game.getId());
 		values.put(SpacecraftProvider.POS_X, game.getSpacecraft().getPosition().getX());
 		values.put(SpacecraftProvider.POS_Y, game.getSpacecraft().getPosition().getY());				
@@ -390,7 +396,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		getContentResolver().insert(SpacecraftProvider.CONTENT_URI, values);
 		
-		setIdSpacecraft(game.getSpacecraft());
+		setIdSpacecraft(game);
 		
 		for (Shoot shoot : game.getSpacecraft().getShoots()) {
 			
@@ -449,21 +455,24 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	private void setIdGame(Game game){
 		
 		Cursor c = getContentResolver().query(GameProvider.CONTENT_URI, 
-				null,GameProvider.ID_PLAYER +"=" + player 
-					+" AND "+ GameProvider.DATE_PAUSE+ " = " +DateTimeUtil.DateToString(game.getDate()) 
-					+ " AND "+ GameProvider.TIME_PAUSE+ " = " + game.getRunTime(), null, null);
-		
+				null,GameProvider.ID_PLAYER +" = " + player 
+					+" AND "+ GameProvider.DATE_PAUSE+ " = '" +DateTimeUtil.DateToString(game.getDate())+"' " 
+					+ " AND "+ GameProvider.TIME_PAUSE+ " = " +game.getRunTime(), null, null);
+		Log.d("GAME ID","WHILE");
 			while(c.moveToNext()){
+				Log.d("GAME ID", "."+c.getInt(0));
 				game.setId(c.getInt(0));
 			}
+			
+			Log.d("RETURN GAME ID", "."+ game.getId());
 	}
 	
-	private void setIdSpacecraft(Spacecraft spacecraft){
+	private void setIdSpacecraft(Game game){
 		Cursor c = getContentResolver().query(SpacecraftProvider.CONTENT_URI, 
-				null,SpacecraftProvider.ID_GAME +"=" + spacecraft.getGame(), null, null);
+				null,SpacecraftProvider.ID_GAME + "= " +game.getId() , null, null);
 		
 			while(c.moveToNext()){
-				spacecraft.setId(c.getInt(0));
+				game.getSpacecraft().setId(c.getInt(0));
 			}
 		
 	}

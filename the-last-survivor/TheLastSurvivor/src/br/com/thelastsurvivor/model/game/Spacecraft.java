@@ -29,6 +29,14 @@ public class Spacecraft implements Serializable{
 		this.shoots = shoots;
 	}
 	
+	public Spacecraft(Vector2D position, Double angle,Integer life, Integer points) {
+
+		this.position = position;
+		this.angle = angle;
+		this.life = life;
+		this.points = points;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
