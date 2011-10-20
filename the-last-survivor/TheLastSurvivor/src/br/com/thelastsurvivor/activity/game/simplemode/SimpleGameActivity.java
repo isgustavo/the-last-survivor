@@ -15,7 +15,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
@@ -80,12 +79,12 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		Bundle s = this.getIntent().getExtras().getBundle("idPlayerGame");
 		this.player = s.getInt("id_player");
 		
-		Log.d("ID PLAYER","."+player);
+		//Log.d("ID PLAYER","."+player);
 		
         this.init();
 	    
         this.setContentView(view);
-	  
+
 	}
 	
 	public void init(){
@@ -97,7 +96,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		this.manager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
 		
-	    this.accelerometer = this.manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+		//this.accelerometer = this.manager.getSensorList(Sensor.TYPE_ACCELEROMETER);
+		this.accelerometer = this.manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 	    this.manager.registerListener (this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
 	      
 	    this.gestureScanner = new GestureDetector(this);

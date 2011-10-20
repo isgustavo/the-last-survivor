@@ -25,6 +25,8 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     			android:layout_height="fill_parent">
     			
     			
+    			
+    			
     			<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/app_first_name" 
 						android:textSize="24dp" android:textColor="@android:color/white"
@@ -33,8 +35,10 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/app_last_name" 
-						android:textSize="24dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+						android:textSize="200dp" android:textColor="@android:color/white"
+						android:layout_width="fill_parent" 
+						android:layout_height="fill_parent" 
+						lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="6dp" android:layout_y="34dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
     			<br.com.thelastsurvivor.util.FT2FontTextView 

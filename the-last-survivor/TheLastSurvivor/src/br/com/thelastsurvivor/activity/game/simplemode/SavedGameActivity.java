@@ -9,9 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,7 +33,8 @@ public class SavedGameActivity extends ListActivity {
 	private Integer idPlayer;
 	private Game game;
 	private List<Game> games;
-	
+	ListView listView;  
+
 	private Context context;
 	private Dialog dialog;
 	
@@ -48,15 +47,17 @@ public class SavedGameActivity extends ListActivity {
 		
 		context = SavedGameActivity.this;
 		
+		setContentView(R.layout.saved_game_view);
+		
+		listView = (ListView)findViewById(R.id.list);
+		
 		if (isThereGame()) {
+
+			 listView.setAdapter(new ListGameAdapter(games, context));
+			 listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
 			
-			setContentView(R.layout.saved_game_view);
-			
-			LayoutInflater inflater = (LayoutInflater) this.getSystemService(
-					Context.LAYOUT_INFLATER_SERVICE);
-			
-			
-			setListAdapter(new ListGameAdapter(SavedGameActivity.this, inflater, games));
+			//setListAdapter(new ListGameAdapter(SavedGameActivity.this, inflater, games));
 		} else{
 			
 			Intent i = new Intent(SavedGameActivity.this, SimpleGameActivity.class);
