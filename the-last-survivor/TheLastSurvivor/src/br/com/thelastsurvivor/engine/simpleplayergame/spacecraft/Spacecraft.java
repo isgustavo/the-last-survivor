@@ -69,7 +69,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		
 		this.sensorPosition = new Vector2D(0,0);
 		
-		this.life = 250;
+		this.life = 1;
 		this.points = 0;
 		
 		this.left = false;

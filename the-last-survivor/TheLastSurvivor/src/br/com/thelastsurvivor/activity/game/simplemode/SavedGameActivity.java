@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -48,8 +49,14 @@ public class SavedGameActivity extends ListActivity {
 		context = SavedGameActivity.this;
 		
 		if (isThereGame()) {
+			
 			setContentView(R.layout.saved_game_view);
-			setListAdapter(new ListGameAdapter(SavedGameActivity.this, games));
+			
+			LayoutInflater inflater = (LayoutInflater) this.getSystemService(
+					Context.LAYOUT_INFLATER_SERVICE);
+			
+			
+			setListAdapter(new ListGameAdapter(SavedGameActivity.this, inflater, games));
 		} else{
 			
 			Intent i = new Intent(SavedGameActivity.this, SimpleGameActivity.class);

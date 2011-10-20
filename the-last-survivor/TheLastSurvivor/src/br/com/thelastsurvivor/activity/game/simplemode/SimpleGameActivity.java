@@ -15,6 +15,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
@@ -119,6 +120,51 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     	lp.screenBrightness = 100 / 100.0f;
     	getWindow().setAttributes(lp);
 	}
+	
+	
+	public void endGame(){
+		
+		this.view.getGameLoop().state = 2;
+    	//Looper.prepare();
+    	
+    	//dialog = new Dialog(this, R.style.PauseGameDialogTheme){
+    		
+    		//public boolean onKeyDown(int keyCode, KeyEvent event){
+    		//		return false;
+    		//}
+
+    	//};
+    	
+		//dialog.setContentView(R.layout.result_game_view);
+		
+		//final FT2FontTextView scoreGame = (FT2FontTextView)dialog.findViewById(R.id.points_game);
+		//scoreGame.setText(" "+this.engine.getSpacecraft().getPoints()+" pt");
+	
+		//final FT2FontTextView timeGame = (FT2FontTextView)dialog.findViewById(R.id.time_game);
+		//timeGame.setText(" "+this.engine.getTimeGame()+" min");
+		//Log.d("LOG","ENDGAME");
+		//dialog.show();
+		
+		
+		
+		
+		//save result
+		
+		Intent i = new Intent(SimpleGameActivity.this, ResultGameActivity.class);
+		
+		Bundle s = new Bundle();
+	    s.putInt("id_player", player);
+	    s.putInt("points", this.engine.getSpacecraft().getPoints());
+	    s.putLong("time", this.engine.getTimeGame());
+	    
+	    i.putExtra("playerBundle",s);
+		
+		startActivity(i);
+		
+		SimpleGameActivity.this.finish();
+		
+		
+	}
 
 	
 	@Override
@@ -211,7 +257,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 	    if(keyCode == KeyEvent.KEYCODE_BACK) {
-
+	    	
 	    	this.view.getGameLoop().state = 2;
 	    	
 	    	dialog = new Dialog(this, R.style.PauseGameDialogTheme){

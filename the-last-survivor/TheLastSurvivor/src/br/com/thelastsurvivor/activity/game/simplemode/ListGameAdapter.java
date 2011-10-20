@@ -17,10 +17,12 @@ public class ListGameAdapter extends BaseAdapter{
 
 	private Context context;
 	private List<Game> games;
+	LayoutInflater inflater;
 	
-	public ListGameAdapter(Context context, List<Game> games){
+	public ListGameAdapter(Context context,LayoutInflater inflater, List<Game> games){
 		this.context = context;
 		this.games = games;
+		this.inflater = inflater;
 	}
 	
 	
@@ -29,8 +31,10 @@ public class ListGameAdapter extends BaseAdapter{
 		
 		Game game = games.get(position);
 		
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE);
+		
+		
+		//LayoutInflater inflater = LayoutInflater.from(context);
+		 
 		
 		View v = inflater.inflate(R.layout.game_list_view, null);
 		

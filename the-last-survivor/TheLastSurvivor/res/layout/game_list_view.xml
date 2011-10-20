@@ -43,7 +43,6 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 			android:layout_x="180dp" android:layout_y="35dp">
 		</br.com.thelastsurvivor.util.FT2FontTextView>
 		
-		
 		<br.com.thelastsurvivor.util.FT2FontTextView 
 			android:id="@+id/game_saved3" android:text="@string/life_game" 
 			android:textSize="15dp" android:textColor="#4ed3ff"
@@ -73,11 +72,5 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 	
 	
 	
-<!--  		<Button android:id="@+id/buttonRemoveGame" 
-  				android:background="@drawable/remove_game"
-  		        android:layout_height="wrap_content" android:layout_width="wrap_content" 
-  		        android:layout_x="410dp" android:layout_y="20dp">
-        </Button> 
--->		
-		
+
 </AbsoluteLayout>

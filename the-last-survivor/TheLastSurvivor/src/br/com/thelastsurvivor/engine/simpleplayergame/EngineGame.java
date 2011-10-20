@@ -6,8 +6,10 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.engine.game.weapon.EffectAsteroid;
 import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.EffectSpacecraft;
@@ -23,6 +25,7 @@ import br.com.thelastsurvivor.view.particle.Explosion;
 public class EngineGame{
 
 	protected Context context;
+	protected SimpleGameActivity activity;
 	protected Vibrator vibrator;
 	private Display display;
 	
@@ -44,10 +47,12 @@ public class EngineGame{
 	protected List<IDrawBehavior> powerUps;
 	
 	protected Explosion explosion;
+	
+	private Integer colorWhite;
 
-
-	public EngineGame(Context context, Vibrator vibrator, Display display) {
-		this.context = context;
+	public EngineGame(SimpleGameActivity activity, Vibrator vibrator, Display display) {
+		this.activity = activity;
+		this.context = activity;
 		this.vibrator = vibrator;
 		this.display = display;
 		
@@ -80,6 +85,8 @@ public class EngineGame{
 		
 		
 		this.powerUps = new ArrayList<IDrawBehavior>();
+		
+		this.colorWhite = 0;
 	}
 	
 	
@@ -91,31 +98,44 @@ public class EngineGame{
 		}
 		start = System.currentTimeMillis(); 
 		
-	    spacecraft.update();
-		verificationNewSpacecraftPositionScreen();
-		
-		updateNewAsteroid();
-		//verificationAsteroidCollisions();
-		updateAsteroids();
-		
-		verificationSpacecraftCollisions();
-		verificationCollisionShoot();
-		verificationSpacecraftCollisionsPowerUp();
-		
-		//updatePowerUps();
-		updateEffectShoots();
-		
-		for (MessageGame message : this.messages) {
-			message.update();
-		}
-
-		if (this.explosion != null && this.explosion.isAlive) {
-			this.explosion.update(this.getSpacecraft());
+		if(stillAAlive()){
+			
+		    spacecraft.update();
+			verificationNewSpacecraftPositionScreen();
+			
+			updateNewAsteroid();
+			//verificationAsteroidCollisions();
+			updateAsteroids();
+			
+			verificationSpacecraftCollisions();
+			verificationCollisionShoot();
+			verificationSpacecraftCollisionsPowerUp();
+			
+			//updatePowerUps();
+			updateEffectShoots();
+			
+			for (MessageGame message : this.messages) {
+				message.update();
+			}
+	
+			if (this.explosion != null && this.explosion.isAlive) {
+				this.explosion.update(this.getSpacecraft());
+			}
+			
 		}
 	
 	}
 	
 	public void draw(Canvas c) {
+
+		if(!stillAAlive()){
+			c.drawRGB(colorWhite++, colorWhite++, colorWhite++);
+			if(colorWhite > 200){
+				c.drawRGB(0, 0, 0);
+				activity.endGame();
+				return;
+			}
+		}
 		
 		if (explosion != null) {
  			explosion.draw(c);
@@ -141,6 +161,7 @@ public class EngineGame{
 		}
 
 		this.spacecraft.draw(c);
+
 		
 	}
 
@@ -148,6 +169,16 @@ public class EngineGame{
 	private void currentTime(){
 		this.startTime += finish - start;
 	}
+	
+	
+	public boolean stillAAlive(){
+		
+		if(this.spacecraft.getLife() > 0){
+			return true;
+		}
+		return false;
+	}
+	
 	
 	
 	public void verificationNewSpacecraftPositionScreen(){
