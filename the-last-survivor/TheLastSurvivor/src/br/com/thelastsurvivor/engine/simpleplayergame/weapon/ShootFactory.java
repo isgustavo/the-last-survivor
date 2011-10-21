@@ -34,7 +34,14 @@ public abstract class ShootFactory {
 		
 		case 1:
 			Log.d("1", "shoot");
-			temp = new Vector2D(position.getX(), position.getY());
+			
+			Orientation.getNewPositionShootRight(angle, position, spacecraft);
+			
+			//position.addX(position.getX());
+	     	//position.addY(position.getY());
+	     	
+	     	shoot.add(new SimpleShoot(context, position, angle, spacecraft));
+			//temp = new Vector2D(position.getX(), position.getY());
 			//Vector2D temp2 = new Vector2D();
 			//Orientation.getNewPosition(angle, position);
 			
@@ -48,13 +55,13 @@ public abstract class ShootFactory {
 			
 			//Log.d("1", ".."+position.getX()+".."+position.getY());
 			
-			temp.addX(spacecraft.getWidth());
-			temp.addY(spacecraft.getHeight()/2);
+			//temp.addX(spacecraft.getWidth());
+			//temp.addY(spacecraft.getHeight()/2);
 		       
-			Orientation.getNewPosition(angle, temp);
+			//Orientation.getNewPosition(angle, temp);
 			
 			
-			shoot.add(new SimpleShoot(context, temp, angle, spacecraft));
+			//shoot.add(new SimpleShoot(context, temp, angle, spacecraft));
 
 			return shoot;
 		

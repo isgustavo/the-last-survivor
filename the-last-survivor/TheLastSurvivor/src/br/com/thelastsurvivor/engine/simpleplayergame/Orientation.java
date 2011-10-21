@@ -316,5 +316,88 @@ public final class Orientation {
 		   
 	   }
 	
+	public static void getNewPositionShootRight(Double angle, Vector2D position, Bitmap spacecraft){
+		switch((int)Math.round(angle)){
+		   
+		   case 0:
+			   position.addX(spacecraft.getWidth());
+		   break;
+		   
+		   
+		   case 5:
+			   position.addX(spacecraft.getWidth()+1);
+		       position.addY(-17);
+		   break;
+		   case 10:
+			   position.addX(spacecraft.getWidth()+2);
+		    	position.addY(-16);
+		   break;
+		   case 15:
+			   position.addX(spacecraft.getWidth()+3);
+		       position.addY(-15);
+		   break;
+		   case 20:
+			   position.addX(spacecraft.getWidth()+4);
+		    	position.addY(-14);
+		   break;
+		   case 25:
+			   position.addX(spacecraft.getWidth()+5);
+		       position.addY(-13);
+		   break;
+		   case 30:
+			    position.addX(6);
+		    	position.addY(-12);
+		   break;
+		   case 35:
+			   position.addX(7);
+		       position.addY(-11);
+		   break;
+		   case 40:
+			    position.addX(8);
+		    	position.addY(-10);
+		   break;
+		   case 45:
+			   position.addX(9);
+		       position.addY(-9);
+		   break;
+		   case 50:
+			    position.addX(10);
+		    	position.addY(-8);
+		   break;
+		   case 55:
+			    position.addX(11);
+		    	position.addY(-7);
+		   break;
+		   case 60:
+			    position.addX(12);
+		    	position.addY(-6);
+		   break;
+		   case 65:
+			   position.addX(13);
+		       position.addY(-5);
+		   break;
+		   case 70:
+			    position.addX(14);
+		    	position.addY(-4);
+		   break;
+		   case 75:
+			   position.addX(15);
+		       position.addY(-3);
+		   break;
+		   case 80:
+			   position.addX(16);
+			   position.addY(-2);
+		   break;
+		   case 85:
+			   position.addX(17);
+		       position.addY(-1);
+		   break;
+		   
+		   
+		   case 90:
+			    position.addX(18);
+		   break;
+		}
+	}
 	
 }

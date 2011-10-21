@@ -154,6 +154,7 @@
 	
 <!-- Trofeu -->
     <string name="trophies">Troféus</string>
+    <string name="achieved">Conquistou o troféu:</string>
 
     <string name="t01">O início!</string>
     <string name="tObjective01">Finalizar uma partida simples.</string>

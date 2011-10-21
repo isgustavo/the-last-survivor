@@ -189,6 +189,8 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		
 		break;
 		
+		
+		
 		default:
 			
 			throw new IllegalArgumentException("URI desconhecida " + uri);
@@ -199,12 +201,25 @@ public class TheLastSurvivorProvider extends ContentProvider {
 
 	@Override
 	public int update(Uri uri, ContentValues values, String selection, String[] arg3) {
-		
+		SQLiteDatabase db;
+		int romId;
 		switch (matcher.match(uri)) {
 		
 		case Constant.IS_PLAYER: 
-			SQLiteDatabase db = helper.getWritableDatabase();
-			int romId = db.update(PlayerProvider.NAME_TABLE,values, selection, null);
+			 db = helper.getWritableDatabase();
+			romId = db.update(PlayerProvider.NAME_TABLE,values, selection, null);
+		
+			if (romId > 0) {
+				Uri playerUri = ContentUris.withAppendedId(uri, romId);		
+				getContext().getContentResolver().notifyChange(playerUri, null);			
+				return romId;
+			}
+			
+		break;
+		
+		case Constant.IS_TROPHIES: 
+			db = helper.getWritableDatabase();
+			romId = db.update(TrophiesProvider.NAME_TABLE,values, selection, null);
 		
 			if (romId > 0) {
 				Uri playerUri = ContentUris.withAppendedId(uri, romId);		

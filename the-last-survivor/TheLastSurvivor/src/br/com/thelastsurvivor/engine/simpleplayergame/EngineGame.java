@@ -1,12 +1,14 @@
 package br.com.thelastsurvivor.engine.simpleplayergame;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
@@ -19,6 +21,9 @@ import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp;
 import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
+import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
+import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.Vector2D;
 import br.com.thelastsurvivor.view.particle.Explosion;
 
@@ -30,6 +35,7 @@ public class EngineGame{
 	private Display display;
 	
 	private Long startTime;
+	private Long driftTime;
 	private Long start; 
 	private Long finish;
 	protected static Vector2D camera;
@@ -49,6 +55,7 @@ public class EngineGame{
 	protected Explosion explosion;
 	
 	private Integer colorWhite;
+	private List<Integer> listTrophies;
 
 	public EngineGame(SimpleGameActivity activity, Vibrator vibrator, Display display) {
 		this.activity = activity;
@@ -62,6 +69,7 @@ public class EngineGame{
 	public void init(){
 		
 		this.startTime = 0L;
+		this.driftTime = 0L;
 		this.start = 0L;
 		this.finish = 0L;
 		
@@ -87,6 +95,8 @@ public class EngineGame{
 		this.powerUps = new ArrayList<IDrawBehavior>();
 		
 		this.colorWhite = 0;
+		
+		this.listTrophies = getListTrophiesNotAchieved();
 	}
 	
 	
@@ -99,6 +109,8 @@ public class EngineGame{
 		start = System.currentTimeMillis(); 
 		
 		if(stillAAlive()){
+			
+			verificationTrophies();
 			
 		    spacecraft.update();
 			verificationNewSpacecraftPositionScreen();
@@ -168,6 +180,7 @@ public class EngineGame{
 	
 	private void currentTime(){
 		this.startTime += finish - start;
+		this.driftTime += finish - start;
 	}
 	
 	
@@ -179,6 +192,48 @@ public class EngineGame{
 		return false;
 	}
 	
+	public void verificationTrophies(){
+		
+		for (Integer trophies : listTrophies) {
+			switch (trophies) {
+			case 2:
+				if(this.spacecraft.getPoints() > 5000){
+					saveTrophieAchieved(2);
+					showTrophieAchieved(context.getString(R.string.t02));
+				}
+			break;
+			case 3:
+				if(this.spacecraft.getPoints() > 10000){
+					saveTrophieAchieved(3);
+					showTrophieAchieved(context.getString(R.string.t03));
+				}
+			break;
+			case 4:
+				if(PowerUp.POWER_UP == 3){
+					saveTrophieAchieved(4);
+					showTrophieAchieved(context.getString(R.string.t04));
+				}
+			break;
+			case 5:
+				if(getDriftTime() > 2){
+					saveTrophieAchieved(5);
+					showTrophieAchieved(context.getString(R.string.t06));
+				}
+			break;
+			
+			default:
+				break;
+			}
+		}
+		
+	}
+	
+	private void showTrophieAchieved(String trophie){
+		//sond
+		
+		String values = context.getString(R.string.achieved) + trophie;
+		this.addMessage(new MessageGame(context, values, 3, 1000, "#FF3300"));
+	}
 	
 	
 	public void verificationNewSpacecraftPositionScreen(){
@@ -362,6 +417,8 @@ public class EngineGame{
 				
 				createEffectCollision(asteroid);
 				this.asteroidsDrawables.get(x).setAlive(false);
+				
+				this.driftTime = 0L;
 			}
 		}
 
@@ -638,6 +695,20 @@ public class EngineGame{
 		return true;
 	}
 	
+	private List<Integer> getListTrophiesNotAchieved(){
+		
+		List<Integer> listTrophies = new ArrayList<Integer>();
+		
+		Cursor c = activity.getContentResolver().query(TrophiesProvider.CONTENT_URI, 
+				null, TrophiesProvider.DATE_ACHIEVED +" IS NULL " , null, null);
+		
+		while(c.moveToNext()){
+			listTrophies.add(c.getInt(0));
+		}
+		
+		return listTrophies;
+	}
+	
 	
 	
 	
@@ -654,6 +725,18 @@ public class EngineGame{
 		
 		return false;
 	}
+	
+	private void saveTrophieAchieved(Integer id){
+		
+		ContentValues values = new ContentValues();
+
+		values.put(TrophiesProvider.DATE_ACHIEVED, DateTimeUtil.DateToString(new Date()));	
+		
+		activity.getContentResolver().update(TrophiesProvider.CONTENT_URI, values, TrophiesProvider.ID +" = "+ id, null);
+			
+		
+	}
+
 	
 	public Display getDisplay() {
 		return display;
@@ -691,6 +774,10 @@ public class EngineGame{
 	
 	public Long getTimeGame(){
 		return this.startTime/60000;
+	}
+	
+	public Long getDriftTime(){
+		return this.driftTime/60000;
 	}
 	
 	public Long getRealTimeGame(){

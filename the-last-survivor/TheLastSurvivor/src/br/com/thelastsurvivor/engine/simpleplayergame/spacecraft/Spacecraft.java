@@ -200,7 +200,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	public void newShoot(){
 	
 		shoots.addAll(ShootFactory.newShoot(this.context, new Vector2D(this.position.getX(),this.position.getY()), this.angle, this.image));	
-	    
+	    angle += 5.0; 
 	}
 
 	public Integer getPoints() {
