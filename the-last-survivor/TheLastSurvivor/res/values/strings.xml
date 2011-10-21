@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">The Last Survivor</string>
     
-    <string name="app_first_name">The Last</string>
+    <string name="app_first_name">The</string>
+    <string name="app_middle_name">Last</string>
     <string name="app_last_name">Survivor</string>
     
     <string name="app_name_for">For</string>

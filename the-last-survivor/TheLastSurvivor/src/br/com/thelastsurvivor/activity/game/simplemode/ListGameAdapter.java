@@ -16,6 +16,7 @@ import br.com.thelastsurvivor.util.FT2FontTextView;
 public class ListGameAdapter extends BaseAdapter{
 
 	private Context context;
+	private SavedGameActivity actitivy;
 	private List<Game> games;
 	LayoutInflater inflater;
 	
@@ -25,38 +26,38 @@ public class ListGameAdapter extends BaseAdapter{
 		this.inflater = inflater;
 	}
 	
-	public ListGameAdapter(List<Game> games, Context context){
-		this.context = context;
+	public ListGameAdapter(List<Game> games,Context activity){
+		//this.context = context;
 		this.games = games;
-		this.inflater = LayoutInflater.from(context);
-
+		this.context = activity;
 	}
 	
 	
 	@Override
-	public View getView(int position, View v, ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		
 		Game game = games.get(position);
 		 
-		if(v != null){
-			v = inflater.inflate(R.layout.game_list_view, null);
-			
-			TextView idGame = (TextView) v.findViewById(R.id.game_saved_id);
-			idGame.setText(game.getId()+"");
-			idGame.setWillNotDraw(true);
-			
-			FT2FontTextView dateGame = (FT2FontTextView) v.findViewById(R.id.date_game);
-			dateGame.setText(game.getDate()+"");
-			
-			FT2FontTextView timeGame = (FT2FontTextView) v.findViewById(R.id.time_game);
-			timeGame.setText(game.getRunTime()+"");
-			
-			FT2FontTextView lifeGame = (FT2FontTextView) v.findViewById(R.id.life_game);
-			lifeGame.setText("life: " + game.getSpacecraft().getLife());
-			
-			FT2FontTextView pointsGame = (FT2FontTextView) v.findViewById(R.id.points_game);
-			pointsGame.setText("Point :"+ game.getSpacecraft().getPoints());
-		}
+		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+				
+		View v = inflater.inflate(R.layout.game_list_view, null);
+		
+		TextView idGame = (TextView) v.findViewById(R.id.game_saved_id);
+		idGame.setText(game.getId()+"");
+		idGame.setWillNotDraw(true);
+		
+		FT2FontTextView dateGame = (FT2FontTextView) v.findViewById(R.id.date_game);
+		dateGame.setText(game.getDate()+"");
+		
+		FT2FontTextView timeGame = (FT2FontTextView) v.findViewById(R.id.time_game);
+		timeGame.setText(game.getRunTime()+"");
+		
+		FT2FontTextView lifeGame = (FT2FontTextView) v.findViewById(R.id.life_game);
+		lifeGame.setText("life: " + game.getSpacecraft().getLife());
+		
+		FT2FontTextView pointsGame = (FT2FontTextView) v.findViewById(R.id.points_game);
+		pointsGame.setText("Point :"+ game.getSpacecraft().getPoints());
+	
 
 
 		

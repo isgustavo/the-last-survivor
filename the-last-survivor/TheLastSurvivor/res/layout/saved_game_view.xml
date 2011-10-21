@@ -50,11 +50,11 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
       </AbsoluteLayout>  
  </FrameLayout> 
 </HorizontalScrollView>
-<ListView android:layout_width="fill_parent" 
+<!-- <ListView android:layout_width="fill_parent" 
 	android:layout_height="wrap_content" 
-	android:id="@+id/list"
+	android:id="@android:id/list"
 	android:layout_x="0dp" android:layout_y="80dp">
-</ListView> 
+</ListView>  -->
 
 
 </AbsoluteLayout>

@@ -3,7 +3,8 @@
     
     <string name="app_name">O Último Sobrevivente</string>
 
- 	<string name="app_first_name">O Último</string>
+ 	<string name="app_first_name">O</string>
+ 	<string name="app_middle_name">Último</string>
     <string name="app_last_name">Sobrevivente</string>
     
 
@@ -12,11 +13,13 @@
     <string name="erro_profile">Nickname é necessário!</string>
     
     <string name="cadastre_palyer_1">
-    	Oi! Este é um cadastro necessário para   		
+    	<!-- Oi! Este é um cadastro necessário para    -->
+    	Oi! Qual será seu apelido em 	
     </string>
     
     <string name="cadastre_palyer_2">
-    	seu perfil em O ÚLTIMO SOBREVIVENTE.    
+    	<!-- seu perfil em O ÚLTIMO SOBREVIVENTE.  -->
+    	    O ÚLTIMO SOBREVIVENTE?
     </string>
     
     <string name="cadastre_palyer_3">

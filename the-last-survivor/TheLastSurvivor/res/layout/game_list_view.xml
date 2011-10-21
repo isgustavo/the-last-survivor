@@ -46,7 +46,8 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 		<br.com.thelastsurvivor.util.FT2FontTextView 
 			android:id="@+id/game_saved3" android:text="@string/life_game" 
 			android:textSize="15dp" android:textColor="#4ed3ff"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" 
+			lht:ttf_name="FT2FONT.TTF"
 			android:layout_x="280dp" android:layout_y="20dp">
 		</br.com.thelastsurvivor.util.FT2FontTextView>
 		<br.com.thelastsurvivor.util.FT2FontTextView 
