@@ -323,74 +323,197 @@ public final class Orientation {
 			   position.addX(spacecraft.getWidth());
 		   break;
 		   
-		   
 		   case 5:
-			   position.addX(spacecraft.getWidth()+1);
-		       position.addY(-17);
+			   position.addX((spacecraft.getWidth()/2)+14);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 10:
-			   position.addX(spacecraft.getWidth()+2);
-		    	position.addY(-16);
+			   position.addX((spacecraft.getWidth()/2)+14);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 15:
-			   position.addX(spacecraft.getWidth()+3);
-		       position.addY(-15);
+			   position.addX((spacecraft.getWidth()/2)+15);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 20:
-			   position.addX(spacecraft.getWidth()+4);
-		    	position.addY(-14);
+			   position.addX((spacecraft.getWidth()/2)+16);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 25:
-			   position.addX(spacecraft.getWidth()+5);
-		       position.addY(-13);
+			   position.addX((spacecraft.getWidth()/2)+17);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 30:
-			    position.addX(6);
-		    	position.addY(-12);
+			   position.addX((spacecraft.getWidth()/2)+18);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 35:
-			   position.addX(7);
-		       position.addY(-11);
+			   position.addX((spacecraft.getWidth()/2)+19);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 40:
-			    position.addX(8);
-		    	position.addY(-10);
+			   position.addX((spacecraft.getWidth()/2)+20);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 45:
-			   position.addX(9);
-		       position.addY(-9);
+			   position.addX((spacecraft.getWidth()/2)+21);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 50:
-			    position.addX(10);
-		    	position.addY(-8);
+			   position.addX((spacecraft.getWidth()/2)+22);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 55:
-			    position.addX(11);
-		    	position.addY(-7);
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-23);
 		   break;
 		   case 60:
-			    position.addX(12);
-		    	position.addY(-6);
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-24);
 		   break;
 		   case 65:
-			   position.addX(13);
-		       position.addY(-5);
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-25);
 		   break;
 		   case 70:
-			    position.addX(14);
-		    	position.addY(-4);
+			   position.addX((spacecraft.getWidth()/2)-26);
+		       position.addY((spacecraft.getHeight()/2));
 		   break;
 		   case 75:
-			   position.addX(15);
-		       position.addY(-3);
+			   position.addX(spacecraft.getWidth()+5);
+		       position.addY(18);
 		   break;
 		   case 80:
-			   position.addX(16);
-			   position.addY(-2);
+			   position.addX(spacecraft.getWidth()+6);
+			   position.addY(19);
 		   break;
 		   case 85:
-			   position.addX(17);
-		       position.addY(-1);
+			   position.addX(spacecraft.getWidth());
+		       position.addY(20);
+		   break;
+		   
+		   
+		   case 90:
+			    position.addX(18);
+		   break;
+		}
+	}
+	
+	public static void getNewPositionShootLeft(Double angle, Vector2D position, Bitmap spacecraft){
+		switch((int)Math.round(angle)){
+		   
+		   case 0:
+			   //position.addX(+2);
+		   break;
+		   
+		   case 5:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2));
+		   break;
+		   case 10:
+			   position.addX((spacecraft.getWidth()/2)-12);
+		       position.addY((spacecraft.getHeight()/2)-10);
+		   break;
+		   case 15:
+			   position.addX((spacecraft.getWidth()/2)-12);
+		       position.addY((spacecraft.getHeight()/2)-10);
+		   break;
+		   case 20:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-16);
+		   break;
+		   case 25:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-17);
+		   break;
+		   case 30:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-18);
+		   break;
+		   case 35:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-19);
+		   break;
+		   case 40:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 45:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 50:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   
+		  /* case 5:
+			   position.addX(1);
+		       position.addY(-2);
+		   break;
+		   case 10:
+			   position.addX(2);
+		    	position.addY(-3);
+		   break;
+		   case 15:
+			   position.addX(2);
+		       position.addY(-4);
+		   break;
+		   case 20:
+			   position.addX(3);
+		    	position.addY(-4);
+		   break;
+		   case 25:
+			   position.addX(4);
+		       position.addY(-4);
+		   break;
+		   case 30:
+			    position.addX(4);
+		    	position.addY(-4);
+		   break;
+		   case 35:
+			   position.addX(5);
+		       position.addY(-5);
+		   break;
+		   case 40:
+			   position.addX(6);
+		    	position.addY(-5);
+		   break;
+		   case 45:
+			   position.addX(6);
+		       position.addY(-5);
+		   break;
+		   case 50:
+			   position.addX(7);
+		    	position.addY(-6);
+		   break;*/
+		   case 55:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 60:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 65:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 70:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 75:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 80:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
+		   break;
+		   case 85:
+			   position.addX((spacecraft.getWidth()/2));
+		       position.addY((spacecraft.getHeight()/2)-20);
 		   break;
 		   
 		   

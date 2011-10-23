@@ -9,6 +9,7 @@ import android.util.Log;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
 import br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
+import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public abstract class ShootFactory {
@@ -34,6 +35,13 @@ public abstract class ShootFactory {
 		
 		case 1:
 			Log.d("1", "shoot");
+			
+			Vector2D positionLeft = new Vector2D(position);
+			
+			Orientation.getNewPositionShootLeft(angle, positionLeft, spacecraft);
+			shoot.add(new SimpleShoot(context, positionLeft, angle, spacecraft));
+			
+			
 			
 			Orientation.getNewPositionShootRight(angle, position, spacecraft);
 			
@@ -113,5 +121,10 @@ public abstract class ShootFactory {
 			return shoot;
 		}
 	
+	}
+	
+	
+	public static IDrawBehavior restartShoot(Context context, Shoot shoot){
+		return new SimpleShoot(context, shoot.getPosition(), shoot.getAngle());
 	}
 }

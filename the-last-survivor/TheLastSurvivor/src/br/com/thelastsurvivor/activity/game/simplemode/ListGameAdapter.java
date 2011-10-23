@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.model.game.Game;
@@ -56,7 +55,7 @@ public class ListGameAdapter extends BaseAdapter{
 		lifeGame.setText("life: " + game.getSpacecraft().getLife());
 		
 		FT2FontTextView pointsGame = (FT2FontTextView) v.findViewById(R.id.points_game);
-		pointsGame.setText("Point :"+ game.getSpacecraft().getPoints());
+		pointsGame.setText("Point :" + game.getSpacecraft().getPoints());
 	
 
 

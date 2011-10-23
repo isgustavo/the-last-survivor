@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.model.trophies.Trophies;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
+import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 
 public class TrophiesActivity extends Activity{
@@ -23,20 +28,15 @@ public class TrophiesActivity extends Activity{
 	
 	private MyAudioPlayer audioPlayer;
 
+	private Dialog dialog;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//audioPlayer = new MyAudioPlayer(this, R.raw.sol);
-		//audioPlayer.start();
-		
+	
 		setContentView(R.layout.trophies_player_view);
 		
 		init();
-		
-		
-		//getTrophies();
 	}
 
 	private void init() {
@@ -56,7 +56,37 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie1 = (Button)findViewById(R.id.trophies_1);
 				trophie1.setBackgroundDrawable(image);
-				trophie1.setOnClickListener(buttonListener1);
+				trophie1.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			image.setAlpha(70);
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_01));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.id.trophies_1));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						achieved.setText("-/-/-");
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+				
 			break;
 			case 2:
 				Drawable image2 = getResources().getDrawable(R.drawable.trophies_02);
@@ -233,11 +263,7 @@ public class TrophiesActivity extends Activity{
 		return trophies;
 	}
 	
-	private OnClickListener buttonListener1 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(1);
-        }  
-	};
+	
 	private OnClickListener buttonListener2 = new OnClickListener() {  
         public void onClick(View v) {  
         	renderedTrophies(2);

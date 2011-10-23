@@ -49,14 +49,21 @@ public class MyAudioPlayer implements OnCompletionListener{
 	}
 	
 	public void stop() {
-		player.stop();
-		statusAtual = PARADO;
+		if(player != null){
+			player.stop();
+			statusAtual = PARADO;
+		}
+		
+		
 	}
 	
 	public void fechar() {
 		stop();
-		player.release();
-		player = null;
+		if(player != null){
+			player.release();
+			player = null;
+		}
+		
 	}
 	
 	public void onCompletion(MediaPlayer mp) {

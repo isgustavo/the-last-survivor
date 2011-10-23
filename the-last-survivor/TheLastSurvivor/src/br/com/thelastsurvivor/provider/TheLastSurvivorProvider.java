@@ -8,9 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import br.com.thelastsurvivor.engine.game.weapon.EffectSpacecraft;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
-import br.com.thelastsurvivor.provider.game.EffectProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
@@ -83,6 +81,22 @@ public class TheLastSurvivorProvider extends ContentProvider {
             	builder.setTables(SpacecraftProvider.NAME_TABLE);
   
             break;
+            
+            case Constant.IS_SHOOT:
+            	builder.setTables(ShootProvider.NAME_TABLE);
+  
+            break;
+            
+            case Constant.IS_ASTEROID:
+            	builder.setTables(AsteroidProvider.NAME_TABLE);
+  
+            break;
+            
+            case Constant.IS_POWER_UP:
+            	builder.setTables(PowerUpProvider.NAME_TABLE);
+  
+            break;
+            
             
             default:  
                 throw new IllegalArgumentException(  
@@ -177,17 +191,7 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		
 		break;
 		
-		case Constant.IS_EFFECT:
-			db = helper.getWritableDatabase();
-			rowId = db.insert(EffectProvider.NAME_TABLE, null, values);
 		
-			if (rowId > 0) {
-				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
-				getContext().getContentResolver().notifyChange(uriId, null);			
-				return uriId;
-			}
-		
-		break;
 		
 		
 		
@@ -239,13 +243,39 @@ public class TheLastSurvivorProvider extends ContentProvider {
 
 	@Override
 	public int delete(Uri uri, String where, String[] arg2) {
-		
+		SQLiteDatabase db;
+		 
 		switch (matcher.match(uri)) {
 		  case Constant.IS_PLAYER: 
-			  SQLiteDatabase db = helper.getWritableDatabase();
+			  db = helper.getWritableDatabase();
 			  db.delete(PlayerProvider.NAME_TABLE, where, null);
-		 break;
-		 
+		  break;
+		  
+		  case Constant.IS_GAME: 
+			  db = helper.getWritableDatabase();
+			  db.delete(GameProvider.NAME_TABLE, where, null);
+		  break;
+		  
+		  case Constant.IS_SPACECRAFT: 
+			  db = helper.getWritableDatabase();
+			  db.delete(SpacecraftProvider.NAME_TABLE, where, null);
+		  break;
+		  
+		  case Constant.IS_SHOOT: 
+			  db = helper.getWritableDatabase();
+			  db.delete(ShootProvider.NAME_TABLE, where, null);
+		  break;
+		  
+		  case Constant.IS_ASTEROID: 
+			  db = helper.getWritableDatabase();
+			  db.delete(AsteroidProvider.NAME_TABLE, where, null);
+		  break;
+		
+		  
+		  case Constant.IS_POWER_UP: 
+			  db = helper.getWritableDatabase();
+			  db.delete(PowerUpProvider.NAME_TABLE, where, null);
+		  break;
 		  
 		  default:
 				

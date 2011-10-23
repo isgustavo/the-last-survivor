@@ -135,6 +135,12 @@
     	 			android:layout_x="100dp" android:layout_y="50dp">
 				</Button>
 				
+				<Button android:id="@+id/trophies_14"
+    	 			android:layout_width="94dp" 
+    	 			android:layout_height="123dp" 
+    	 			android:layout_x="100dp" android:layout_y="290dp">
+				</Button>
+				
 				
     		</AbsoluteLayout>
 </FrameLayout>

@@ -25,23 +25,40 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     			android:layout_height="fill_parent">
     			
     			
+    			<ImageView android:id="@+id/top_image"
+		 	 			android:layout_width="fill_parent" 
+		 	 			android:layout_height="fill_parent" 
+		 	 			android:src="@drawable/left_top_image"
+		 	 			android:layout_x="-200dp" android:layout_y="0dp">
+				</ImageView>
+    		
     			<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/app_first_name" 
-						android:textSize="25dp" android:textColor="@android:color/white"
+						android:textSize="29dp" android:textColor="@android:color/white"
+						android:textAppearance="?android:attr/textAppearanceLarge" 
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="6dp" android:layout_y="10dp">
+						android:layout_x="263dp" android:layout_y="15dp">
+			 	</br.com.thelastsurvivor.util.FT2FontTextView>
+			 	<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/app_name" android:text="@string/app_middle_name" 
+						android:textSize="29dp" android:textColor="@android:color/white"
+						android:textAppearance="?android:attr/textAppearanceLarge" 
+						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+						android:layout_x="303dp" android:layout_y="15dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/app_last_name" 
-						android:textSize="60dp" android:textColor="@android:color/white"
+						android:textSize="35dp" android:textColor="@android:color/white"
+						android:textAppearance="?android:attr/textAppearanceLarge" 
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="6dp" android:layout_y="60dp">
+						android:layout_x="124dp" android:layout_y="39dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
+			 	
     			<br.com.thelastsurvivor.util.FT2FontTextView 
 	   				android:id="@+id/user_name"  
-	   				android:textSize="15dp" android:textColor="@android:color/white"
+	   				android:textSize="15dp" android:textColor="#EE1693"
 	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-	   				android:layout_x="270dp" android:layout_y="20dp">
+	   				android:layout_x="312dp" android:layout_y="76dp">
     			</br.com.thelastsurvivor.util.FT2FontTextView>
     			
     			

@@ -15,6 +15,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
@@ -31,20 +32,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
-import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
-import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
+import br.com.thelastsurvivor.engine.audio.AudioGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.GameLoopThread;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
 import br.com.thelastsurvivor.model.game.Asteroid;
-import br.com.thelastsurvivor.model.game.Effect;
 import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.model.game.PowerUp;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
-import br.com.thelastsurvivor.provider.game.EffectProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
@@ -60,10 +58,13 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     private Sensor accelerometer;
     private GestureDetector gestureScanner;
     private Vibrator vibrator;
-    private MyAudioPlayer audioPlayer;
-    
+    private MyAudioPlayer audioBackgraund;
+   // MediaPlayer audio; 
+    private AudioGame audio;
     private EngineGameView view;
     private EngineGame engine;
+
+    private static final Integer NAG_SCREEN = 5;
     
     private Integer player;
     
@@ -71,29 +72,44 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     private Long beforeTime;
     Context context;
     private Dialog dialog;
+    private Handler handler;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle s = this.getIntent().getExtras().getBundle("idPlayerGame");
+		Bundle s = this.getIntent().getExtras().getBundle("startGame");
 		this.player = s.getInt("id_player");
+		
 		
 		//Log.d("ID PLAYER","."+player);
 		
-        this.init();
-	    
-        this.setContentView(view);
+		if(s.getSerializable("game") != null){
+			this.init((Game) s.getSerializable("game"));
+		}else{
+			this.init(null);	
+			
+		}
+
 
 	}
 	
-	public void init(){
+	public void init(Game game){
 		
 		context = this.getApplicationContext();
 		
-		this.audioPlayer = new MyAudioPlayer(this, R.raw.singleplayer_soundtrack);
-		this.audioPlayer.start();
+		handler = new Handler();
+		final Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 		
+		showWaitLoading(display, game);
+		
+		//this.audioPlayer = new MyAudioPlayer(this, R.raw.singleplayer_soundtrack);
+		//this.audioPlayer.start();
+		
+		audio.getInstance();
+		audio.initSounds(this);
+		audio.loadSounds();
+
 		this.manager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
 		
 		//this.accelerometer = this.manager.getSensorList(Sensor.TYPE_ACCELEROMETER);
@@ -108,20 +124,62 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
         
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         
-        final Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+    	if(game == null){
+    		this.beforeTime = 0L;
+    	}else{
+    		this.beforeTime = game.getRunTime();
+    	}
         
-        this.beforeTime = 0L;
-		
-		this.engine = new EngineGame(this, vibrator, display);
-		
-    	this.view = new EngineGameView(this,engine);
-    	
     	WindowManager.LayoutParams lp = getWindow().getAttributes();
     	lp.screenBrightness = 100 / 100.0f;
     	getWindow().setAttributes(lp);
 	}
 	
 	
+	private void showWaitLoading(final Display display, final Game game){
+		
+		dialog = new Dialog(this, R.style.PauseGameDialogTheme);
+		dialog.setContentView(R.layout.features_wait_player_view);
+		   
+		dialog.show();
+		if (NAG_SCREEN > 0){
+			handler.postDelayed(new Runnable() {
+				public void run() {
+					if(SimpleGameActivity.this.getAudio().playSound(2, 0, 1) != 0){
+						dialog.cancel();
+						
+						SimpleGameActivity.this.audioBackgraund = new MyAudioPlayer(SimpleGameActivity.this, R.raw.singleplayer_soundtrack);
+						SimpleGameActivity.this.audioBackgraund.start();
+						
+						if(game == null){
+							SimpleGameActivity.this.engine = new EngineGame(SimpleGameActivity.this, vibrator, display);
+							
+							SimpleGameActivity.this.view = new EngineGameView(SimpleGameActivity.this,engine);
+						
+							
+							
+						}else{
+							SimpleGameActivity.this.engine = new EngineGame(SimpleGameActivity.this, vibrator, display, game);
+							
+							SimpleGameActivity.this.view = new EngineGameView(SimpleGameActivity.this,engine);
+							
+							
+							
+						}
+						SimpleGameActivity.this.setContentView(view);
+						
+					}else{
+						dialog.cancel();
+						showWaitLoading(display, game);
+						
+					}
+	           	   	
+			   	}
+			}, NAG_SCREEN * 1000);
+		}
+	} 
+
+
 	public void endGame(){
 		
 		this.view.getGameLoop().state = 2;
@@ -186,7 +244,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
     protected void onDestroy() {
     	super.onDestroy();
     	
-    	this.audioPlayer.fechar();
+    	this.audioBackgraund.fechar();
     	//this.view.getGameLoop().destroy();
     	this.wakeLock.release();
     }
@@ -202,15 +260,20 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
             return;	
         
-
-		this.engine.getSpacecraft().updateOrientation((event.values[1]),(event.values[0]));   
+		if(this.engine != null){
+			this.engine.getSpacecraft().updateOrientation((event.values[1]),(event.values[0]));   
+		}
+		
 	}
 	
 	
     @Override
     public boolean onTouchEvent(MotionEvent event){
     	
+    	
     	return this.gestureScanner.onTouchEvent(event);
+    	
+    	
     	
     }
 	    
@@ -234,7 +297,10 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	public void onLongPress(MotionEvent arg0) {
 		
 			//new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
-			this.engine.getSpacecraft().newShoot();		
+		if(this.engine != null){
+			this.engine.getSpacecraft().newShoot();	
+		}
+				
 		
 	}
 
@@ -244,13 +310,20 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		return false;
 	}
-
+	
+	
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
 	
-		//new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS).start();
-		this.engine.getSpacecraft().newShoot();		
+		//final AudioGame audio = new AudioGame(context, R.raw.laser_single, AudioGame.NOT_REPEATS);
+		//audio.start();
 		
+		if(this.engine != null){
+			audio.playSound(2, 0, 1);
+			
+			this.engine.getSpacecraft().newShoot();	
+		}
+
 		return true;
 	}
 	
@@ -349,8 +422,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	
 	public Game preparesGameToSave(){
 		
-		return new Game(player, new Date(), engine.getRealTimeGame(),
-				getSpacecraftGame(), getAsteroidsGame(),getPowerUpsGame(), getEffectGame());
+		return new Game(player, new Date(), engine.getRealTimeGame(), br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp.POWER_UP,
+				getSpacecraftGame(), getAsteroidsGame(),getPowerUpsGame());
 		
 	}
 
@@ -405,18 +478,6 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 	}
 	
-	private List<Effect> getEffectGame(){
-		
-		List<Effect> effecs = new ArrayList<Effect>();
-		
-		for(IWeaponBehavior  effect : this.engine.getShootsEffect()){
-			 effecs.add(new Effect( effect.getPosition(), ((EffectShoot)effect).getStartTime()));
-		}
-		
-		return effecs;
-		
-	}
-	
 	private boolean save(Game game){
 		
 		ContentValues values = new ContentValues();
@@ -424,6 +485,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		values.put(GameProvider.ID_PLAYER, player);
 		values.put(GameProvider.DATE_PAUSE, DateTimeUtil.DateToString(game.getDate()));
 		values.put(GameProvider.TIME_PAUSE, game.getRunTime());
+		values.put(GameProvider.POWER_UP, game.getPowerUp());
 		
 		getContentResolver().insert(GameProvider.CONTENT_URI, values);
 		
@@ -483,16 +545,6 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 			getContentResolver().insert(PowerUpProvider.CONTENT_URI, values);
 		}
 		
-		for(Effect effect : game.getEffects()){
-			values = new ContentValues();
-			
-			values.put(EffectProvider.ID_GAME, game.getId());
-			values.put(EffectProvider.POS_X, effect.getPosition().getX());
-			values.put(EffectProvider.POS_Y, effect.getPosition().getY());
-			values.put(EffectProvider.TIME, effect.getTime());
-					
-			getContentResolver().insert(EffectProvider.CONTENT_URI, values);
-		}
 		
 		
 		return true;
@@ -522,5 +574,15 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 			}
 		
 	}
+
+	public AudioGame getAudio() {
+		return audio;
+	}
+
+	public MyAudioPlayer getAudioBackgraund() {
+		return audioBackgraund;
+	}
+	
+	
 
 }

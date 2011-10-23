@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
-import br.com.thelastsurvivor.activity.TheLastSurvivorActivity;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class PlayerActivity extends Activity {

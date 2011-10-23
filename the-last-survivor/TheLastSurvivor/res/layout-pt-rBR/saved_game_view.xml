@@ -44,25 +44,17 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 	   				android:layout_x="270dp" android:layout_y="20dp">
     			</br.com.thelastsurvivor.util.FT2FontTextView>
     			
-   				<ListView android:layout_width="fill_parent" 
-					android:layout_height="wrap_content" 
-					android:id="@android:id/list"
-					android:layout_x="0dp" android:layout_y="80dp">
-				</ListView> 
-				
-				
-				<Button android:layout_height="wrap_content" 
-			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_new_game_image" 
-			      		android:id="@+id/button_new_game"
-			      		android:layout_x="185dp" android:layout_y="250dp">
-			    </Button>
+   		
         	     
        
       </AbsoluteLayout>  
  </FrameLayout> 
 </HorizontalScrollView>
-
+<ListView android:layout_width="fill_parent" 
+	android:layout_height="wrap_content" 
+	android:id="@android:id/list"
+	android:layout_x="0dp" android:layout_y="80dp">
+</ListView>
 
 
 </AbsoluteLayout>

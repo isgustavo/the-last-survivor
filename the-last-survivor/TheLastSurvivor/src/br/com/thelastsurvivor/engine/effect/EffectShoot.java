@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine.game.weapon;
+package br.com.thelastsurvivor.engine.effect;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,14 +10,14 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
+public class EffectShoot implements IEffect {
 
 	private Context context;
 	private Vector2D positionShoot;
+	private TypeEffect type;
 	
 	private Bitmap image;
 	
@@ -25,10 +25,6 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 	private Bitmap image2;
 	private Bitmap image3;
 	private Bitmap image4;
-	private Bitmap image5;
-	private Bitmap image6;
-	private Bitmap image7;
-	private Bitmap image8;
 	
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
@@ -45,9 +41,10 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 	
 	private Integer startTime;
 	
-	public EffectSpacecraft(Context context, Vector2D position){
+	protected EffectShoot(Context context, Vector2D position, TypeEffect type){
 		this.context = context;
 		this.positionShoot = position;
+		this.type = type;
 		this.alpha = 0;
 
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -59,10 +56,6 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
 		this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
 		this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
-		this.image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_5_image);
-		this.image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_6_image);
-		this.image7 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_7_image);
-		this.image8 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_8_image);
 		
 		this.startTime = 0;
 		
@@ -76,15 +69,22 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 		
 	}
 	
-	public EffectSpacecraft(Context context, Vector2D position, Integer alfa){
+	public EffectShoot(Context context, Vector2D position, Integer time){
 		this.context = context;
 		this.positionShoot = position;
-		this.alpha = alfa;
+		this.alpha = 0;
 
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
 		
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.shoot_effect_image);
+		
+		this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
+		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
+		this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
+		this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
+		
+		this.startTime = time;
 		
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();
@@ -92,8 +92,6 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 		isAlive = true;
 		
 		this.matrix = new Matrix();
-		
-		this.paint.setAlpha(this.alpha);
 	}
 	
 	
@@ -104,48 +102,22 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 		
 	}
 	
-	private void currentTime(){
-		long millis = System.currentTimeMillis() - this.startTime;
-	    
-		startTime = (int) (millis / 1000);
-	    
-		//this.startTime = (seconds / 60);
-		//Log.d("TIME","."+this.startTime);
-	}
-
-	Integer x = 0;
 	@Override
 	public void update() {
-		x++;
-		if(x < 2){
-			this.drawableImage = new BitmapDrawable(this.image5);
-			this.sizeHeight = image5.getHeight();
-			this.sizeWidth = image5.getWidth();
-		}else if(x < 3){
-			this.drawableImage = new BitmapDrawable(this.image6);
-			this.sizeHeight = image6.getHeight();
-			this.sizeWidth = image6.getWidth();
-		}else if(x < 4){
-			this.drawableImage = new BitmapDrawable(this.image7);
-			this.sizeHeight = image7.getHeight();
-			this.sizeWidth = image7.getWidth();
-		}else if(x == 5){
-			this.drawableImage = new BitmapDrawable(this.image8);
-			this.sizeHeight = image8.getHeight();
-			this.sizeWidth = image8.getWidth();
-		}else if(x == 6){
+		startTime++;
+		if(startTime < 2){
 			this.drawableImage = new BitmapDrawable(this.image4);
 			this.sizeHeight = image4.getHeight();
 			this.sizeWidth = image4.getWidth();
-		}else if(x == 7){
+		}else if(startTime < 3){
 			this.drawableImage = new BitmapDrawable(this.image3);
 			this.sizeHeight = image3.getHeight();
 			this.sizeWidth = image3.getWidth();
-		}else if(x == 8){
+		}else if(startTime < 4){
 			this.drawableImage = new BitmapDrawable(this.image2);
 			this.sizeHeight = image2.getHeight();
 			this.sizeWidth = image2.getWidth();
-		}else if(x == 9){
+		}else if(startTime == 5){
 			this.drawableImage = new BitmapDrawable(this.image1);
 			this.sizeHeight = image1.getHeight();
 			this.sizeWidth = image1.getWidth();
@@ -173,50 +145,25 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 	@Override
 	public void draw(Canvas c) {
 		
-		if(x < 2){
-			c.drawBitmap(Bitmap.createBitmap(this.image5, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x < 3){
-			c.drawBitmap(Bitmap.createBitmap(this.image6, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x < 4){
-			c.drawBitmap(Bitmap.createBitmap(this.image7, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x == 5){
-			c.drawBitmap(Bitmap.createBitmap(this.image8, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x == 6){
+		if(startTime < 2){
 			c.drawBitmap(Bitmap.createBitmap(this.image4, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x == 7){
+		}else if(startTime < 3){
 			c.drawBitmap(Bitmap.createBitmap(this.image3, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x == 8){
+		}else if(startTime < 4){
 			c.drawBitmap(Bitmap.createBitmap(this.image2, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		}else if(x == 9){
+		}else if(startTime == 5){
 			c.drawBitmap(Bitmap.createBitmap(this.image1, 0, 0,
 			        this.sizeWidth, this.sizeHeight, this.matrix, true),
 			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
 		}
 		
 		
-	/*	
-		this.matrix.setRotate(0);
-		
-    	
-    	
-		c.drawBitmap(Bitmap.createBitmap(this.image, 0, 0,
-		        this.image.getWidth(), this.image.getHeight(), this.matrix, true),
-		        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
-		*/
 	}
 
 	@Override
@@ -224,59 +171,18 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 		return this.isAlive;
 	}
 
-	@Override
-	public Integer getSizeWidth() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getSizeHeight() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	
+	public Integer getStartTime() {
+		return startTime;
 	}
 
 	@Override
 	public Vector2D getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.positionShoot;
 	}
 
-	@Override
-	public void setAlive(boolean alive) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public Integer getLife() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getTypeImage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Double getAngle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getRoute() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getPower() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	public static Double randomSizedimension(Integer min, Integer max) {
 		return (min + Math.random() * (max - min + 1));
 	}
@@ -285,6 +191,17 @@ public class EffectSpacecraft implements IDraw, IDrawBehavior, IWeaponBehavior {
 
 	public Integer getAlpha() {
 		return alpha;
+	}
+
+	@Override
+	public Integer getTypeEffect() {
+		return Integer.parseInt(type.type);
+	}
+
+	@Override
+	public void setAlive(Boolean alive) {
+		this.isAlive = alive;
+		
 	}
 	
 	

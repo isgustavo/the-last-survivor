@@ -46,6 +46,14 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		init();
 	}
 	
+	public SimpleShoot(Context context, Vector2D position, Double angle){
+		this.context = context;
+		this.position = position;
+		this.angle = angle;
+		
+		init();
+	}
+	
 	@Override
 	public void init() {
 		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);

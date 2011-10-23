@@ -12,10 +12,12 @@ public class Effect  implements Serializable {
 	private Integer game;
 	private Vector2D position;
 	private Integer time;
+	private Integer type;
 
-	public Effect(Vector2D position, Integer time) {
+	public Effect(Vector2D position, Integer time, Integer type) {
 		this.position = position;
 		this.time = time;
+		this.type = type;
 	}
 	
 	public Integer getId() {
@@ -43,6 +45,14 @@ public class Effect  implements Serializable {
 
 	public void setTime(Integer time) {
 		this.time = time;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 	
 	

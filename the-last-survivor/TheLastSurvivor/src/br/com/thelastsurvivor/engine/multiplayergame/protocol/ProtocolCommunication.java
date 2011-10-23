@@ -5,8 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
+import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
-import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
 import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;

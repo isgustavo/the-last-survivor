@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import br.com.thelastsurvivor.provider.TheLastSurvivorProvider;
 import br.com.thelastsurvivor.provider.util.Constant;
-import br.com.thelastsurvivor.util.Vector2D;
 
 public class AsteroidProvider extends TheLastSurvivorProvider implements BaseColumns{
 

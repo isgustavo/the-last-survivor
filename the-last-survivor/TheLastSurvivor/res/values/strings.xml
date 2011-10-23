@@ -122,6 +122,7 @@
 <!-- MESSAGE GAME -->
 
 	<string name="init_game">Start Game!</string>
+	<string name="restart_game">Restart Game!</string>
 	<string name="destroyed_asteroid">Destroyed asteroid: Score </string>
 
 

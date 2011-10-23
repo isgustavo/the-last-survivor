@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.engine.game.weapon;
+package br.com.thelastsurvivor.engine.effect;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,14 +10,14 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class EffectAsteroid implements IDraw, IDrawBehavior, IWeaponBehavior {
+public class EffectSpacecraft implements IEffect {
 
 	private Context context;
 	private Vector2D positionShoot;
+	private TypeEffect type;
 	
 	private Bitmap image;
 	
@@ -45,9 +45,11 @@ public class EffectAsteroid implements IDraw, IDrawBehavior, IWeaponBehavior {
 	
 	private Integer startTime;
 	
-	public EffectAsteroid(Context context, Vector2D position){
+	protected EffectSpacecraft(Context context, Vector2D position, TypeEffect type){
 		this.context = context;
 		this.positionShoot = position;
+		this.type = type;
+		
 		this.alpha = 0;
 
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -59,9 +61,9 @@ public class EffectAsteroid implements IDraw, IDrawBehavior, IWeaponBehavior {
 		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
 		this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
 		this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
-		this.image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_9_image);
-		this.image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_11_image);
-		this.image7 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_10_image);
+		this.image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_5_image);
+		this.image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_6_image);
+		this.image7 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_7_image);
 		this.image8 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_8_image);
 		
 		this.startTime = 0;
@@ -76,7 +78,7 @@ public class EffectAsteroid implements IDraw, IDrawBehavior, IWeaponBehavior {
 		
 	}
 	
-	public EffectAsteroid(Context context, Vector2D position, Integer alfa){
+	public EffectSpacecraft(Context context, Vector2D position, Integer alfa){
 		this.context = context;
 		this.positionShoot = position;
 		this.alpha = alfa;
@@ -225,58 +227,27 @@ public class EffectAsteroid implements IDraw, IDrawBehavior, IWeaponBehavior {
 	}
 
 	@Override
-	public Integer getSizeWidth() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getSizeHeight() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Vector2D getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.positionShoot;
 	}
 
 	@Override
-	public void setAlive(boolean alive) {
-		// TODO Auto-generated method stub
+	public void setAlive(Boolean alive) {
+		this.isAlive = alive;
 		
 	}
-
+	
 	@Override
-	public Integer getLife() {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getStartTime() {
+		return this.startTime;
 	}
 
 	@Override
-	public Integer getTypeImage() {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getTypeEffect() {
+		return Integer.parseInt(type.type);
 	}
 
-	@Override
-	public Double getAngle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Integer getRoute() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getPower() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	public static Double randomSizedimension(Integer min, Integer max) {
 		return (min + Math.random() * (max - min + 1));
 	}
@@ -286,6 +257,7 @@ public class EffectAsteroid implements IDraw, IDrawBehavior, IWeaponBehavior {
 	public Integer getAlpha() {
 		return alpha;
 	}
+
 	
 	
 	

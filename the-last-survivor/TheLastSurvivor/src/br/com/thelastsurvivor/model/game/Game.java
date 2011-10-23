@@ -12,29 +12,30 @@ public class Game implements Serializable{
 	private Integer player;
 	private Date date;
 	private Long runTime;
+	private Integer powerUp;
 	private Spacecraft spacecraft;
 	private List<Asteroid> asteroids;
 	private List<PowerUp> powerUps;
-	private List<Effect> effects;
 	
-	public Game(Integer player, final Date date, final Long runTime,
+	public Game(Integer player, final Date date, final Long runTime, Integer powerUp,
 			Spacecraft spacecraft, List<Asteroid> asteroids,
-			List<PowerUp> powerUps, List<Effect> effects) {
+			List<PowerUp> powerUps) {
 		
 		this.player = player;
 		this.date = date;
 		this.runTime = runTime;
+		this.powerUp = powerUp;
 		this.spacecraft = spacecraft;
 		this.asteroids = asteroids;
 		this.powerUps = powerUps;
-		this.effects = effects;
 	}
 	
-	public Game(Integer id, Integer player, final Date date, final Long runTime,Spacecraft spacecraft) {
+	public Game(Integer id, Integer player, final Date date, final Long runTime,Integer powerUp, Spacecraft spacecraft) {
 		this.id = id;
 		this.player = player;
 		this.date = date;
 		this.runTime = runTime;
+		this.powerUp = powerUp;
 		this.spacecraft = spacecraft;
 
 	}
@@ -63,6 +64,15 @@ public class Game implements Serializable{
 	public void setRunTime(Long runTime) {
 		this.runTime = runTime;
 	}
+	
+	public Integer getPowerUp() {
+		return powerUp;
+	}
+
+	public void setPowerUp(Integer powerUp) {
+		this.powerUp = powerUp;
+	}
+
 	public Spacecraft getSpacecraft() {
 		return spacecraft;
 	}
@@ -81,14 +91,6 @@ public class Game implements Serializable{
 	public void setPowerUps(List<PowerUp> powerUps) {
 		this.powerUps = powerUps;
 	}
-	public List<Effect> getEffects() {
-		return effects;
-	}
-	public void setEffects(List<Effect> effects) {
-		this.effects = effects;
-	}
-	
-	
 	
 	
 }

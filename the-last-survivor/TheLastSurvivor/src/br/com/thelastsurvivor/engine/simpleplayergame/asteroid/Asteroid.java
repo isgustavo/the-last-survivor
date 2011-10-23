@@ -64,6 +64,21 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	}
 
 	
+	public Asteroid(Context context, Vector2D position, Integer life,
+			Double angle, Integer route, Integer type) {
+		
+		this.context = context;
+		this.position = position;
+		this.life = life;
+		this.angle = angle.intValue();
+		this.route = route;
+		this.typeImage = type;
+		
+		this.isAlive = true;
+		
+		init();
+	}
+
 	@Override
 	public void init() {
 		
@@ -82,14 +97,16 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 			imageAsteroid(typeImage);
 		}
 		
-		this.route = (int) (Math.random()*4);
-		this.angle = (int) (Math.random()*360);
-		this.timeEffect = 1000;
+		if(this.route == null){
+			this.route = (int) (Math.random()*4);
+		}
+		
+		if(this.angle == null){
+			this.angle = (int) (Math.random()*360);
+		}
 		
 		Matrix matrix = new Matrix();
 		matrix.setRotate(angle.floatValue());
-		
-		//BitmapDrawable b = 
 		
    		this.drawableImage = new BitmapDrawable(Bitmap.createBitmap(this.image, 0, 0,
    				this.image.getWidth(), this.image.getHeight(), matrix, true));
@@ -314,8 +331,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 
 	@Override
 	public Double getAngle() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.angle.doubleValue();
 	}
 
 	public Integer getPower() {

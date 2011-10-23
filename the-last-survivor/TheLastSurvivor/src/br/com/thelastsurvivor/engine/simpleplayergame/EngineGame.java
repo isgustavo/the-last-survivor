@@ -9,19 +9,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Canvas;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
-import br.com.thelastsurvivor.engine.game.weapon.EffectAsteroid;
-import br.com.thelastsurvivor.engine.game.weapon.EffectShoot;
-import br.com.thelastsurvivor.engine.game.weapon.EffectSpacecraft;
+import br.com.thelastsurvivor.engine.effect.EffectGameFactory;
+import br.com.thelastsurvivor.engine.effect.TypeEffect;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp;
 import br.com.thelastsurvivor.engine.simpleplayergame.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
-import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.engine.util.IEffect;
+import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -42,7 +43,7 @@ public class EngineGame{
 	
 	protected Spacecraft spacecraft;
 
-	protected List<IWeaponBehavior> shootsEffect;
+	protected List<IEffect> shootsEffect;
 	
 	private List<IDrawBehavior> asteroids;
 	protected List<IDrawBehavior> asteroidsDrawables;
@@ -64,6 +65,45 @@ public class EngineGame{
 		this.display = display;
 		
 		init();
+		
+		this.addMessage(new MessageGame(context, context.getString(R.string.init_game),3, 1000));
+		
+		
+	}
+	
+	public EngineGame(SimpleGameActivity activity, Vibrator vibrator, Display display, Game game) {
+		this.activity = activity;
+		this.context = activity;
+		this.vibrator = vibrator;
+		this.display = display;
+		
+		this.spacecraft = new Spacecraft(this.getContext(), this.display, game.getSpacecraft());
+		
+		if(game.getAsteroids().size() != 0){
+			this.asteroids = new ArrayList<IDrawBehavior>();
+			
+			for(br.com.thelastsurvivor.model.game.Asteroid asteroid : game.getAsteroids()){
+				this.asteroids.add(new Asteroid(this.context, asteroid.getPosition(), asteroid.getLife(),
+						asteroid.getAngle(), asteroid.getRoute(), asteroid.getType()));
+			}
+		}
+		
+		if(game.getPowerUps().size() != 0){
+			this.powerUps = new ArrayList<IDrawBehavior>();
+			
+			PowerUp.POWER_UP = game.getPowerUp();
+			
+			for(br.com.thelastsurvivor.model.game.PowerUp powerUp : game.getPowerUps()){
+				this.powerUps.add(new PowerUp(context, powerUp.getPosition(), powerUp.getRoute()));
+			}
+		}
+		
+		init();
+		
+		this.addMessage(new MessageGame(context, context.getString(R.string.restart_game),3, 1000));
+		
+		
+		
 	}
 
 	public void init(){
@@ -75,32 +115,34 @@ public class EngineGame{
 		
 		this.camera = new Vector2D(display.getWidth(), display.getHeight());
 		
-		this.spacecraft = new Spacecraft(this.getContext(), this.display); 
-
-		this.explosion = new Explosion(200);
-	
-		this.shootsEffect = new ArrayList<IWeaponBehavior>();
+		if(this.spacecraft == null){
+			this.spacecraft = new Spacecraft(this.getContext(), this.display); 
+		}
 		
-		this.asteroids = new ArrayList<IDrawBehavior>();
+		if(this.asteroids == null){
+			this.asteroids = new ArrayList<IDrawBehavior>();
+		}
 		this.asteroidsDrawables = new ArrayList<IDrawBehavior>();
 		
+		this.explosion = new Explosion(200);
+	
+		if(this.shootsEffect == null){
+			this.shootsEffect = new ArrayList<IEffect>();
+		}
 		
-		//this.asteroidsDrawables.add(new Asteroid(context));
-		
+		if(this.powerUps == null){
+			this.powerUps = new ArrayList<IDrawBehavior>();
+
+		}
+
 		this.messages = new ArrayList<MessageGame>();
 		this.messagesDrawables = new ArrayList<MessageGame>();
-		this.addMessage(new MessageGame(context, context.getString(R.string.init_game),3, 1000));
-		
-		
-		this.powerUps = new ArrayList<IDrawBehavior>();
 		
 		this.colorWhite = 0;
 		
 		this.listTrophies = getListTrophiesNotAchieved();
 	}
-	
-	
-	
+		
 	public void update(){
 		if(start != 0L){
 			finish = System.currentTimeMillis();	
@@ -134,6 +176,11 @@ public class EngineGame{
 				this.explosion.update(this.getSpacecraft());
 			}
 			
+		}else{
+			activity.getAudioBackgraund().fechar();
+			
+			activity.getAudio().playSound(3, 0, 1);
+
 		}
 	
 	}
@@ -168,7 +215,7 @@ public class EngineGame{
 			
 		}
 		
-		for (IWeaponBehavior effect : this.shootsEffect) {
+		for (IEffect effect : this.shootsEffect) {
 			effect.draw(c);
 		}
 
@@ -197,13 +244,13 @@ public class EngineGame{
 		for (Integer trophies : listTrophies) {
 			switch (trophies) {
 			case 2:
-				if(this.spacecraft.getPoints() > 5000){
+				if(this.spacecraft.getPoints() > 1000){
 					saveTrophieAchieved(2);
 					showTrophieAchieved(context.getString(R.string.t02));
 				}
 			break;
 			case 3:
-				if(this.spacecraft.getPoints() > 10000){
+				if(this.spacecraft.getPoints() > 5000){
 					saveTrophieAchieved(3);
 					showTrophieAchieved(context.getString(R.string.t03));
 				}
@@ -316,12 +363,12 @@ public class EngineGame{
 		asteroid2.addLife(-asteroid.getPower());
 		
 		if(asteroid.getLife() <= 0){
-			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft, this.context, 
 					new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,
 								 asteroid.getPosition().getY()+asteroid.getSizeHeight()/2)));
 			//asteroid.setAlive(false);
 		}else{
-			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft, this.context, 
 					new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,
 								 asteroid.getPosition().getY()+asteroid.getSizeHeight()/2)));
 			if(asteroid.getTypeImage() != 0){
@@ -338,12 +385,12 @@ public class EngineGame{
 		
 		if(asteroid2.getLife() <= 0){
 			
-			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft, this.context, 
 					new Vector2D(asteroid.getPosition().getX()+asteroid2.getSizeWidth()/2,
 								 asteroid.getPosition().getY()+asteroid2.getSizeHeight()/2)));
 			//asteroid2.setAlive(false);
 		}else{
-			this.shootsEffect.add(new EffectSpacecraft(this.context, 
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft,this.context, 
 					new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,
 								 asteroid.getPosition().getY()+asteroid.getSizeHeight()/2)));
 			if(asteroid.getTypeImage() != 0){
@@ -373,10 +420,11 @@ public class EngineGame{
 								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
 					shoot.setAlive(false);
 					this.spacecraft.addPoint(asteroid.getPower());
-					
-					this.shootsEffect.add(new EffectShoot(this.context, shoot.getPosition()));
+					Log.d("EFFECT", "FECTURE");
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
 					
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
+						activity.getAudio().playSound(3, 0, 1);
 						if(asteroid.getTypeImage() != 0){
 							collisionAsteroid.add(new Asteroid(context, 
 									new Vector2D(asteroid.getPosition().getX(),
@@ -458,7 +506,7 @@ public class EngineGame{
 		
 		//Log.d("EFFECT", "X"+x+"Y"+y);
 		
-		this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(x,y)));
+		this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(x,y)));
 
 	}
 	public void createEffectCollision(Asteroid asteroid){
@@ -496,7 +544,7 @@ public class EngineGame{
 		
 		//Log.d("EFFECT", "X"+x+"Y"+y);
 		
-		this.shootsEffect.add(new EffectSpacecraft(this.context, new Vector2D(x,spacecraft.getPosition().getY())));
+		this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft ,this.context, new Vector2D(x,spacecraft.getPosition().getY())));
 		
 	}
 	
@@ -607,8 +655,8 @@ public class EngineGame{
 	}
 	
 	private void updateEffectShoots(){
-		List<IWeaponBehavior> effects = new ArrayList<IWeaponBehavior>();
-		for(IWeaponBehavior shoot : this.shootsEffect){
+		List<IEffect> effects = new ArrayList<IEffect>();
+		for(IEffect shoot : this.shootsEffect){
 			if(shoot.isAlive()){
 				shoot.update();
 				effects.add(shoot);
@@ -625,9 +673,9 @@ public class EngineGame{
 		
 		if(asteroid.getLife() == 0){
 			
-			this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(asteroid.getPosition().getX(),asteroid.getPosition().getY())));
-			this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeHeight()/2,asteroid.getPosition().getY())));
-			this.shootsEffect.add(new EffectAsteroid(this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,asteroid.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX(),asteroid.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeHeight()/2,asteroid.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,asteroid.getPosition().getY())));
 			
 			String values = context.getString(R.string.score)+" "+spacecraft.getPoints()+" pt";
 			
@@ -751,7 +799,7 @@ public class EngineGame{
 		return powerUps;
 	}
 
-	public List<IWeaponBehavior> getShootsEffect() {
+	public List<IEffect> getShootsEffect() {
 		return shootsEffect;
 	}
 

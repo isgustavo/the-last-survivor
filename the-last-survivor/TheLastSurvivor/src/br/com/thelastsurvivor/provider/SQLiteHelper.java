@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
-import br.com.thelastsurvivor.provider.game.EffectProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
@@ -34,7 +33,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ GameProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 				+ GameProvider.ID_PLAYER + " INTEGER, "	
 				+ GameProvider.DATE_PAUSE +" VARCHAR, " 
-				+ GameProvider.TIME_PAUSE +" INTEGER ); "); 
+				+ GameProvider.TIME_PAUSE +" INTEGER, " 
+				+ GameProvider.POWER_UP +" INTEGER ); "); 
 		
 		db.execSQL(" CREATE TABLE "+ SpacecraftProvider.NAME_TABLE + "( "
 				+ SpacecraftProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
@@ -62,12 +62,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ AsteroidProvider.ROUTE +" INTEGER, "
 				+ AsteroidProvider.TYPE +" INTEGER ); ");
 		
-		db.execSQL(" CREATE TABLE "+ EffectProvider.NAME_TABLE + "( "
-				+ EffectProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
-				+ EffectProvider.ID_GAME + " INTEGER, "	
-				+ EffectProvider.POS_X +" INTEGER, " 
-				+ EffectProvider.POS_Y +" INTEGER, " 
-				+ EffectProvider.TIME +" INTEGER ); ");
 		
 		db.execSQL(" CREATE TABLE "+ PowerUpProvider.NAME_TABLE + "( "
 				+ PowerUpProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 

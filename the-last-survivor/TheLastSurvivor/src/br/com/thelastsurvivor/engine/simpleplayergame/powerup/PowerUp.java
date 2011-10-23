@@ -32,6 +32,15 @@ public class PowerUp implements IDrawBehavior{
 	}
 	
 	
+	public PowerUp(Context context, Vector2D position, Integer route) {
+		this.context = context;
+		this.position = position;
+		this.route = route;
+	
+		init();
+	}
+
+
 	@Override
 	public void init() {
 	
@@ -42,7 +51,9 @@ public class PowerUp implements IDrawBehavior{
 		
 		isAlive = true;
 		
-		this.route = (int) (Math.random()*4);
+		if(this.route == null){
+			this.route = (int) (Math.random()*4);
+		}
 		
 	}
 

@@ -13,7 +13,7 @@ public class Shoot implements Serializable{
 	private Vector2D position;
 	private Double angle;
 	
-	public Shoot( Vector2D position, Double angle) {
+	public Shoot(Vector2D position, Double angle) {
 		this.position = position;
 		this.angle = angle;
 	}
