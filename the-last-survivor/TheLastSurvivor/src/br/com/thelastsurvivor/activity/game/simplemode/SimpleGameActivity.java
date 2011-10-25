@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
+import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.engine.audio.AudioGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.GameLoopThread;
@@ -42,11 +43,14 @@ import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.model.game.PowerUp;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
+import br.com.thelastsurvivor.model.rank.Rank;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
+import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.rank.RankProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
@@ -139,7 +143,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	private void showWaitLoading(final Display display, final Game game){
 		
 		dialog = new Dialog(this, R.style.PauseGameDialogTheme);
-		dialog.setContentView(R.layout.features_wait_player_view);
+		dialog.setContentView(R.layout.wait_game_view);
 		   
 		dialog.show();
 		if (NAG_SCREEN > 0){
@@ -208,6 +212,16 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		//save result
 		
+		
+		ContentValues values = new ContentValues();
+
+		values.put(RankProvider.IDENTIFIER_PLAYER, getPlayerIdentifier(this.player));
+		values.put(RankProvider.POINTS, engine.getSpacecraft().getPoints());
+		values.put(RankProvider.DATE,  DateTimeUtil.DateToString(new Date()));
+		values.put(RankProvider.TYPE, Rank.SIMPLE );
+		
+		getContentResolver().insert(RankProvider.CONTENT_URI, values);
+		
 		Intent i = new Intent(SimpleGameActivity.this, ResultGameActivity.class);
 		
 		Bundle s = new Bundle();
@@ -224,6 +238,16 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 	}
 
+	public String getPlayerIdentifier(Integer id){
+		
+		Cursor c = this.getContentResolver().  
+				query(PlayerProvider.CONTENT_URI, null, PlayerProvider.ID+ " = "+ id , null, null); 
+				
+		while(c.moveToNext()){
+			return  c.getString(1);
+		}
+		return "";
+	}
 	
 	@Override
 	public void onPause() {

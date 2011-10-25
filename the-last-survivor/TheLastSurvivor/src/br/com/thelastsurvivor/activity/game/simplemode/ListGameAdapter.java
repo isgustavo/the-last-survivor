@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.model.game.Game;
+import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.FT2FontTextView;
 
 public class ListGameAdapter extends BaseAdapter{
@@ -46,16 +47,16 @@ public class ListGameAdapter extends BaseAdapter{
 		idGame.setWillNotDraw(true);
 		
 		FT2FontTextView dateGame = (FT2FontTextView) v.findViewById(R.id.date_game);
-		dateGame.setText(game.getDate()+"");
+		dateGame.setText(DateTimeUtil.DateToString(game.getDate()));
 		
 		FT2FontTextView timeGame = (FT2FontTextView) v.findViewById(R.id.time_game);
 		timeGame.setText(game.getRunTime()+"");
 		
 		FT2FontTextView lifeGame = (FT2FontTextView) v.findViewById(R.id.life_game);
-		lifeGame.setText("life: " + game.getSpacecraft().getLife());
+		lifeGame.setText(""+game.getSpacecraft().getLife());
 		
 		FT2FontTextView pointsGame = (FT2FontTextView) v.findViewById(R.id.points_game);
-		pointsGame.setText("Point :" + game.getSpacecraft().getPoints());
+		pointsGame.setText(""+ game.getSpacecraft().getPoints());
 	
 
 

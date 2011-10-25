@@ -9,36 +9,28 @@
     <string name="app_name_for">For</string>
     <string name="app_name_players">Players</string>
     
+    
+    
+    
+    
     <string name="profile">profile</string>
     <string name="erro_profile">Nickname is necessary!</string>
     
-    <string name="cadastre_palyer_1">
-    	Hello, this is small registration of your  		
+    <string name="cadastre_player_1">
+    	What will be your nickname
     </string>
     
-    <string name="cadastre_palyer_2">
-    	profile in The Last Survivor, you can    
+    <string name="cadastre_player_2">
+    	    in The Last Survivor?
     </string>
     
-    <string name="cadastre_palyer_3">
-    	using one new nickname, but us prefer  
+    <string name="alteration_palyer_1">
+    	 What will be your nickname  		
     </string>
     
-    <string name="cadastre_palyer_4">
-    	 you use your twitter nickname for one   
+    <string name="alteration_palyer_2">
+    	 in THE LAST SURVIVOR now?  
     </string>
-    
-    <string name="cadastre_palyer_5">
-    	best interaction with other players and 
-    </string>
-    
-    <string name="cadastre_palyer_6">
-    	the community.
-    </string>
-    
-    <string name="app_alterarion_player">Alterarion Profile</string>
-    
-    <string name="info_alteration_player"></string>
     
     
     <string name="nickname">Nickname</string>
@@ -65,15 +57,16 @@
 	 <string name="time">time in game: </string> 
 	 
 	 <string name="list_game">Save games</string>
-	 <string name="date_game">DATE: </string>
-	 <string name="time_game">TIME: </string>
-	 <string name="life_game">LIFE: </string>
-	 <string name="point_game">POINTS: </string>
+	 <string name="date_game">DATE:</string>
+	 <string name="time_game">TIME:</string>
+	 <string name="life_game">LIFE:</string>
+	 <string name="point_game">POINTS:</string>
     
     
 <!-- trophies -->    
     
     <string name="trophies">Trophies</string>
+        <string name="achieved">Achieved</string>
     
     <string name="t01">The beginning!</string>
     <string name="tObjective01">Finish a single match.</string>
@@ -87,35 +80,35 @@
     <string name="t04">Hability with weapons!</string>
     <string name="tObjective04">Get all weapons single game.</string>
 
-	<string name="t06">Space Drift!</string>
-    <string name="tObjective06">Remain for 2 minutes without colide with an asteroid.</string>
+	<string name="t05">Space Drift!</string>
+    <string name="tObjective05">Remain for 2 minutes without colide with an asteroid.</string>
 	  
-	<string name="t07">Action Group!</string>
-    <string name="tObjective07">Finish a network game.</string>
+	<string name="t06">Action Group!</string>
+    <string name="tObjective06">Finish a network game.</string>
 	  
-	<string name="t08">The last Survivor!</string>
-    <string name="tObjective08">Win a network game.</string>
+	<string name="t07">The last Survivor!</string>
+    <string name="tObjective07">Win a network game.</string>
     
-    <string name="t09">Unwitnessed!</string>
-    <string name="tObjective09">Destroy all enemy ships in a network match.</string>
+    <string name="t08">Unwitnessed!</string>
+    <string name="tObjective08">Destroy all enemy ships in a network match.</string>
     
-    <string name="t10">Kamikaze!</string>
-    <string name="tObjective10">Destroy an enemy in a suicide attack.</string>
+    <string name="t09">Kamikaze!</string>
+    <string name="tObjective09">Destroy an enemy in a suicide attack.</string>
     
-	<string name="t11">David against Goliath!</string>
-    <string name="tObjective11">Winning a network match with two unequal teams.</string>
+	<string name="t10">David against Goliath!</string>
+    <string name="tObjective10">Winning a network match with two unequal teams.</string>
 	     
-    <string name="t12">Partners!</string>
-    <string name="tObjective12">Winning a 2 vs 2 network match.</string>
+    <string name="t11">Partners!</string>
+    <string name="tObjective11">Winning a 2 vs 2 network match.</string>
     
-    <string name="t13">I am the Best!</string>
-    <string name="tObjective13">Winning a network match everyone for himself.</string>
+    <string name="t12">I am the Best!</string>
+    <string name="tObjective12">Winning a network match everyone for himself.</string>
     
-    <string name="t14">Apocalypse!</string>
-    <string name="tObjective14">Use "Black Hole".</string>    
+    <string name="t13">Apocalypse!</string>
+    <string name="tObjective13">Use "Black Hole".</string>    
     
-    <string name="t15">Trophies Hunter!</string>
-    <string name="tObjective15">Getting all trophies in the game.</string>
+    <string name="t14">Trophies Hunter!</string>
+    <string name="tObjective14">Getting all trophies in the game.</string>
 
     <string name="no_trophies">No Trophies yet.</string>
     

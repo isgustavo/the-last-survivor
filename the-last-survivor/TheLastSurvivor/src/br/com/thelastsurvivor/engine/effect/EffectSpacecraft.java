@@ -55,7 +55,7 @@ public class EffectSpacecraft implements IEffect {
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
 		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.shoot_effect_image);
+		
 		
 		this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
 		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
@@ -68,8 +68,7 @@ public class EffectSpacecraft implements IEffect {
 		
 		this.startTime = 0;
 		
-		this.sizeHeight = image.getHeight();
-		this.sizeWidth = image.getWidth();
+		
 		
 		isAlive = true;
 		
@@ -85,9 +84,7 @@ public class EffectSpacecraft implements IEffect {
 
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
-		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.shoot_effect_image);
-		
+			
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();
 		

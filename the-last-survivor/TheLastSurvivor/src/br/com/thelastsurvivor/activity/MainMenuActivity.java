@@ -38,8 +38,7 @@ public class MainMenuActivity extends Activity{
 		
 		loadPlayer();
 		
-		this.nickname = (FT2FontTextView)findViewById(R.id.user_name);
-		this.nickname.setText(this.player.getNickname());
+		
 		
 		Button buttonSimpleGame = (Button)findViewById(R.id.buttonSimpleMode);  
 		buttonSimpleGame.setOnClickListener(buttonSimpleGameListener);  

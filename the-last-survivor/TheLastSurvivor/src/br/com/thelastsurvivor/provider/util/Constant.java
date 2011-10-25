@@ -12,6 +12,7 @@ public final class Constant {
 	public static final int IS_EFFECT = 7;
 	public static final int IS_POWER_UP = 8;
 	public static final int IS_SHOOT = 9;
+	public static final int IS_RANK = 10;
 	
 
 }

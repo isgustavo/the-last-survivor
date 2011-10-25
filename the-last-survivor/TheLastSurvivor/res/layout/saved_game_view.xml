@@ -9,10 +9,6 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent"
 					android:id="@+id/surfaceView" /> 
-					
-<HorizontalScrollView android:layout_width="wrap_content" 
-    android:layout_height="wrap_content" 
-    android:scrollbars="none">
 
      
 <FrameLayout android:layout_width="fill_parent"
@@ -24,45 +20,37 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
     			
+    			<ImageView android:src="@drawable/rect_title_image" 
+    				android:id="@+id/imageView1" android:layout_height="wrap_content" 
+    				android:layout_width="fill_parent" android:layout_x="-140dp" android:layout_y="26dp">
+    			</ImageView> 
     			
-    			<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/app_first_name" 
-						android:textSize="24dp" android:textColor="@android:color/white"
+    			
+				<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/app_name" android:text="@string/list_game" 
+						android:textSize="20dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="6dp" android:layout_y="10dp">
+						android:layout_x="63dp" android:layout_y="31dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/app_last_name" 
-						android:textSize="24dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="6dp" android:layout_y="34dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-    			<br.com.thelastsurvivor.util.FT2FontTextView 
-	   				android:id="@+id/list_game" android:text="@string/list_game" 
-	   				android:textSize="15dp" android:textColor="@android:color/white"
-	   				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-	   				android:layout_x="270dp" android:layout_y="20dp">
-    			</br.com.thelastsurvivor.util.FT2FontTextView>
+			 	
+			 	<Button android:layout_height="wrap_content" 
+			      		android:layout_width="wrap_content"
+			      		android:background="@drawable/button_new_game_image" 
+			      		android:id="@+id/button_new_game"
+			      		android:layout_x="31dp" android:layout_y="350dp">
+			    </Button>
     			
    				<ListView android:layout_width="fill_parent" 
 					android:layout_height="wrap_content" 
 					android:id="@android:id/list"
 					android:layout_x="0dp" android:layout_y="80dp">
-				</ListView> 
+				</ListView>
+   				
 				
 				
-				<Button android:layout_height="wrap_content" 
-			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_new_game_image" 
-			      		android:id="@+id/button_new_game"
-			      		android:layout_x="185dp" android:layout_y="250dp">
-			    </Button>
-        	     
-       
-      </AbsoluteLayout>  
+				
+    </AbsoluteLayout>  
  </FrameLayout> 
-</HorizontalScrollView>
-
 
 
 </AbsoluteLayout>

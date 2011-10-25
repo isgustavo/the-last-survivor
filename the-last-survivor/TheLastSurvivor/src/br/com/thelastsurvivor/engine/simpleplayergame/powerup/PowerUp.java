@@ -10,7 +10,7 @@ import br.com.thelastsurvivor.util.Vector2D;
 
 public class PowerUp implements IDrawBehavior{
 
-	public static Integer POWER_UP = 1;
+	public static Integer POWER_UP = 0;
 	
 	private Context context;
 	private Vector2D position;

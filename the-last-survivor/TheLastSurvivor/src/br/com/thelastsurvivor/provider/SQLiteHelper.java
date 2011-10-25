@@ -9,6 +9,7 @@ import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.rank.RankProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
@@ -61,6 +62,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ AsteroidProvider.LIFE +" INTEGER, "
 				+ AsteroidProvider.ROUTE +" INTEGER, "
 				+ AsteroidProvider.TYPE +" INTEGER ); ");
+		
+		db.execSQL(" CREATE TABLE "+ RankProvider.NAME_TABLE + "( "
+				+ RankProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+				+ RankProvider.IDENTIFIER_PLAYER + " VARCHAR, "	
+				+ RankProvider.POINTS +" INTEGER, " 
+				+ RankProvider.DATE +" VARCHAR, " 
+				+ RankProvider.TYPE + " INTEGER ); ");
 		
 		
 		db.execSQL(" CREATE TABLE "+ PowerUpProvider.NAME_TABLE + "( "

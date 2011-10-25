@@ -188,7 +188,8 @@ public class EngineGame{
 	public void draw(Canvas c) {
 
 		if(!stillAAlive()){
-			c.drawRGB(colorWhite++, colorWhite++, colorWhite++);
+			colorWhite += 10;
+			c.drawRGB(colorWhite, colorWhite, colorWhite);
 			if(colorWhite > 200){
 				c.drawRGB(0, 0, 0);
 				activity.endGame();
@@ -240,6 +241,9 @@ public class EngineGame{
 	}
 	
 	public void verificationTrophies(){
+		List<Integer> trophiesNotAchieved = new ArrayList<Integer>();
+		
+		int position = 0;
 		
 		for (Integer trophies : listTrophies) {
 			switch (trophies) {
@@ -247,30 +251,43 @@ public class EngineGame{
 				if(this.spacecraft.getPoints() > 1000){
 					saveTrophieAchieved(2);
 					showTrophieAchieved(context.getString(R.string.t02));
+				}else{
+					trophiesNotAchieved.add(trophies);
 				}
 			break;
 			case 3:
 				if(this.spacecraft.getPoints() > 5000){
 					saveTrophieAchieved(3);
 					showTrophieAchieved(context.getString(R.string.t03));
+				}else{
+					trophiesNotAchieved.add(trophies);
 				}
 			break;
 			case 4:
 				if(PowerUp.POWER_UP == 3){
 					saveTrophieAchieved(4);
 					showTrophieAchieved(context.getString(R.string.t04));
+				}else{
+					trophiesNotAchieved.add(trophies);
 				}
 			break;
 			case 5:
 				if(getDriftTime() > 2){
 					saveTrophieAchieved(5);
-					showTrophieAchieved(context.getString(R.string.t06));
+					showTrophieAchieved(context.getString(R.string.t05));
+				}else{
+					trophiesNotAchieved.add(trophies);
 				}
 			break;
 			
 			default:
 				break;
 			}
+		}
+		
+		if(trophiesNotAchieved.size() != 0){
+			listTrophies.clear();
+			listTrophies.addAll(trophiesNotAchieved);
 		}
 		
 	}
@@ -377,7 +394,9 @@ public class EngineGame{
 				String values = context.getString(R.string.life)+" "+spacecraft.getLife()+" pt";
 				this.addMessage(new MessageGame(context, values, 3, 1000, "#FF3300"));
 				
-				//PowerUp.POWER_UP -= 1;
+				if(PowerUp.POWER_UP != 0){
+					PowerUp.POWER_UP -= 1;
+				}
 				
 				createEffectCollision(asteroid);
 				this.asteroidsDrawables.get(x).setAlive(false);
@@ -463,7 +482,10 @@ public class EngineGame{
 				powerUp.getPosition().getY()+(powerUp.getSizeHeight()-5) > spacecraft.getPosition().getY() &&
 				powerUp.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getHeight()-5)){
 			
-				PowerUp.POWER_UP += 1;
+				if(PowerUp.POWER_UP != 3){
+					PowerUp.POWER_UP += 1;
+				}
+				
 				//asteroidSituation(asteroid);
 				//spacecraft.addLife(-asteroid.getLife());
 				this.vibrator.vibrate(100);
@@ -503,7 +525,7 @@ public class EngineGame{
 		int up = 0;
 		
 		
-		up = 1;//(int) (Math.random()*2);	
+		up = (int) (Math.random()*60);	
 		
 		if(up == 1){
 			this.powerUps.add(new PowerUp(context, asteroid.getPosition()));
@@ -633,15 +655,15 @@ public class EngineGame{
 	
 	
 	public boolean verificationPositionOnScreen(IDrawBehavior object){
-		if(-40 > object.getPosition().getY()){
+		if(-200 > object.getPosition().getY()){
 			return false;
-		}else if(object.getPosition().getY() > this.camera.getY()+40){
+		}else if(object.getPosition().getY() > this.camera.getY()+200){
 			return false;
 		}
 	
-		if(-40 > object.getPosition().getX()){
+		if(-200 > object.getPosition().getX()){
 			return false;
-		}else if(object.getPosition().getX() > this.camera.getX()+40){
+		}else if(object.getPosition().getX() > this.camera.getX()+200){
 			return false;
 		}
 		
@@ -726,7 +748,14 @@ public class EngineGame{
 	}
 	
 	public Long getTimeGame(){
+		if(this.startTime/60000 == 0){
+			return getSecondGame();
+		}
 		return this.startTime/60000;
+	}
+	
+	public Long getSecondGame(){
+		return this.startTime/6000;
 	}
 	
 	public Long getDriftTime(){

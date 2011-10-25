@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
@@ -88,7 +89,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		}
 		
 		if(this.life == null){
-			this.life = 200;
+			this.life = 250;
 		}
 		
 		if(this.points == null){
@@ -114,17 +115,19 @@ public class Spacecraft implements IDrawControllable, Serializable {
     	this.shoots = new ArrayList<IDrawBehavior>();
     	this.shootsDrawables = new ArrayList<IDrawBehavior>();
 
+    	
+    
 	}
 	
-	
-	
+	 Double  x;
+	 Double  y;
 	
 	@Override
 	public void update() {
 		
 		this.sensorControlUpdate();
 		this.controlUpdate();
-			
+	
 		BitmapDrawable newImage = new BitmapDrawable(this.resizedBitmap);
 		this.drawableImage = newImage;
 		
@@ -134,8 +137,13 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void draw(Canvas c) {
 
-		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
+		
+		
+		c.drawBitmap(this.resizedBitmap, x.floatValue(), y.floatValue(),null);
 
+		Log.d("X", "."+x.floatValue());
+		Log.d("Y", "."+y.floatValue());
+		
 	   if(!this.shootsDrawables.isEmpty()){
 			for (IDrawBehavior shoot : this.shootsDrawables) {
 				shoot.draw(c);

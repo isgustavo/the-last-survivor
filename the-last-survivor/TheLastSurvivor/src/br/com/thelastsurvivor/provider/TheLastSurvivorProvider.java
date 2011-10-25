@@ -14,6 +14,7 @@ import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
+import br.com.thelastsurvivor.provider.rank.RankProvider;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.provider.util.Constant;
 
@@ -97,6 +98,10 @@ public class TheLastSurvivorProvider extends ContentProvider {
   
             break;
             
+            case Constant.IS_RANK :
+            	builder.setTables(RankProvider.NAME_TABLE);
+  
+            break;
             
             default:  
                 throw new IllegalArgumentException(  
@@ -191,10 +196,18 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		
 		break;
 		
+		case Constant.IS_RANK:
+			db = helper.getWritableDatabase();
+			rowId = db.insert(RankProvider.NAME_TABLE, null, values);
 		
+			if (rowId > 0) {
+				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
+				getContext().getContentResolver().notifyChange(uriId, null);			
+				return uriId;
+			}
 		
-		
-		
+		break;
+
 		default:
 			
 			throw new IllegalArgumentException("URI desconhecida " + uri);

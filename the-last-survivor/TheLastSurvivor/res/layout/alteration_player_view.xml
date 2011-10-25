@@ -1,88 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    
-<br.com.thelastsurvivor.view.BackgroundView
+ 
+ <br.com.thelastsurvivor.view.BackgroundView
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent"
 					android:id="@+id/surfaceView" /> 
-					  
+					
+<HorizontalScrollView android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:scrollbars="none">
+
+     
 <FrameLayout android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    
+
+
            <AbsoluteLayout 
     			android:orientation="vertical"
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
+    			
     		
-    			<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/app_name" 
-						android:textSize="22dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="3dp" android:layout_y="10dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
+    			<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/rect_title_image"
+    	 			android:layout_x="0dp" android:layout_y="25dp">
+				</ImageView>
+				
+				<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/rect_title_blue_image"
+    	 			android:layout_x="55dp" android:layout_y="101dp">
+				</ImageView>
+    		
+				
+				<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/profile" 
-						android:textSize="16dp" android:textColor="#4ed3ff"
+						android:textSize="29dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="385dp" android:layout_y="15dp">
+						android:layout_x="143dp" android:layout_y="31dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-    		
+			 	
+			 	
 				
 				<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/alteration_palyer_1" 
 						android:textSize="15dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="60dp">
+					    android:layout_x="93dp" android:layout_y="111dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/alteration_palyer_2" 
 						android:textSize="15dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="24dp" android:layout_y="80dp">
+						android:layout_x="68dp" android:layout_y="132dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_3" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="100dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_4" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="120dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_5" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="140dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/alteration_palyer_6" 
-						android:textSize="15dp" android:textColor="@android:color/white"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="25dp" android:layout_y="160dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-				
-				
-				<br.com.thelastsurvivor.util.FT2FontTextView 
-					   android:id="@+id/textNickName" android:text="@string/nickname" 
-					   android:textSize="15dp" android:textColor="@android:color/white"
-					   android:layout_width="fill_parent" android:layout_height="wrap_content" 
-					   lht:ttf_name="FT2FONT.TTF"
-					   android:layout_x="25dp" android:layout_y="200dp">
-			    </br.com.thelastsurvivor.util.FT2FontTextView>
-    
-			    <EditText android:layout_height="40dp" android:layout_width="300dp" 
-				          android:textSize="17dp"
-				          android:id="@+id/editNickName" 
+			 
+				<EditText android:layout_height="45dp" android:layout_width="304dp" 
+				          android:textSize="23dp"
+				           android:id="@+id/editNickName" 
 				          android:inputType="textPersonName" 
-				          android:layout_x="140dp" android:layout_y="190dp">
+				          android:layout_x="65dp" android:layout_y="217dp">
 				</EditText>
 				
 				
@@ -100,13 +84,8 @@
 			      		android:layout_x="360dp" android:layout_y="230dp">
 			    </Button>
 			    
-			    <Button android:layout_height="wrap_content" 
-			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_remove_image" 
-			      		android:id="@+id/buttonAdd"
-			      		android:layout_x="460dp" android:layout_y="230dp">
-			    </Button>
+ 	 </AbsoluteLayout>  
+ </FrameLayout> 
+</HorizontalScrollView>
 
- 		</AbsoluteLayout>
- </FrameLayout>
- </AbsoluteLayout>  
+</AbsoluteLayout>

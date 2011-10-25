@@ -1,18 +1,85 @@
 package br.com.thelastsurvivor.activity.rank;
 
 
-import android.app.Activity;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.simplemode.ListGameAdapter;
+import br.com.thelastsurvivor.activity.game.simplemode.SavedGameActivity;
+import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
+import br.com.thelastsurvivor.model.rank.Rank;
+import br.com.thelastsurvivor.provider.rank.RankProvider;
+import br.com.thelastsurvivor.util.DateTimeUtil;
 
-public class RankActivity extends Activity{
+public class RankActivity extends ListActivity {
+	
+	//public static final int EXIT_GAME = 0;
+	
+	private ListAdapter adapter;
+	
+	private Integer idPlayer;
+	private List<Rank> rank;
+	ListView listView;  
 
+	private Context context;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		this.setContentView(R.layout.rank_player_view);
+		context = RankActivity.this;
+		
+		rank = new ArrayList<Rank>();
+		
+		if (isThereRank()) {
+			
+			setContentView(R.layout.rank_player_view);  
+			
+			
+			setListAdapter(new ListRankAdapter(rank, this));
+		}
+		
 	}
+	
+	public boolean isThereRank(){
+		
+		
+		this.rank.addAll(loadRank());
+		
+		if(this.rank.size() == 0){
+			return false;
+		}
+		return true;
+	}
+	
+	public List<Rank> loadRank(){
+		List<Rank> rankList = new ArrayList<Rank>();
+		
+		Cursor c = this.getContentResolver().  
+		query(RankProvider.CONTENT_URI, null, null, null, null);  
+
+		if (c.getCount() == 0) {
+			return new ArrayList<Rank>();
+		}else{
+			while(c.moveToNext()){
+			rankList.add(new Rank(c.getString(1),
+					c.getInt(2), DateTimeUtil.stringToDate(c.getString(3)),
+					c.getInt(4)));
+			}
+		}
+		
+		return rankList;
+	}
+	
 }

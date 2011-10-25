@@ -31,6 +31,13 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
 						android:layout_x="385dp" android:layout_y="15dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
+			 	
+			 	<ListView android:layout_width="fill_parent" 
+					android:layout_height="wrap_content" 
+					android:id="@android:id/list"
+					android:layout_x="0dp" android:layout_y="80dp">
+				</ListView> 
+				
 		</AbsoluteLayout>
 </FrameLayout>
 </AbsoluteLayout>

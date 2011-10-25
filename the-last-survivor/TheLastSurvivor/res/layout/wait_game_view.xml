@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+<br.com.thelastsurvivor.view.BackgroundView
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:id="@+id/surfaceView" /> 
+					  
+<FrameLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    
+           <AbsoluteLayout 
+    			android:orientation="vertical"
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent">
+    		    		
+				<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/logo_android_market_image"
+    	 			android:layout_x="17dp" android:layout_y="107dp">
+				</ImageView>
+				
+				
+				<ProgressBar android:id="@+id/progressBar1" 
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content" 
+					style="?android:attr/progressBarStyleLarge" 
+					android:layout_x="382dp" android:layout_y="170dp"></ProgressBar>
+			 	
+				
+				
+
+ 		</AbsoluteLayout>
+ </FrameLayout>
+
+ </AbsoluteLayout>  

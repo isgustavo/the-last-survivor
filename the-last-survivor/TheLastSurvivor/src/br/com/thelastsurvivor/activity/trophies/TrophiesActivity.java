@@ -48,6 +48,7 @@ public class TrophiesActivity extends Activity{
 		for (Trophies trophie : trophies) {
 			switch (trophie.getId()) {
 			case 1:
+				final Trophies trophieSelect = trophie;
 				Drawable image = getResources().getDrawable(R.drawable.trophies_01);
 				
 				if(trophie.getDateAchieved() == null){
@@ -63,7 +64,10 @@ public class TrophiesActivity extends Activity{
 				    		
 				    		public boolean onKeyDown(int keyCode, KeyEvent event){
 				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-				    			image.setAlpha(70);
+				    			
+				    			if(trophieSelect.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
 				    			dialog.cancel();
 				    			return true;
 				    		}
@@ -76,10 +80,19 @@ public class TrophiesActivity extends Activity{
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_01));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
-						name.setText(getResources().getText(R.id.trophies_1));
+						name.setText(getResources().getText(R.string.t01));
 						
-						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
-						achieved.setText("-/-/-");
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective01));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophieSelect.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophieSelect.getDateAchieved()));
+						}
+						
 						
 						dialog.show();
 						
@@ -89,6 +102,8 @@ public class TrophiesActivity extends Activity{
 				
 			break;
 			case 2:
+				final Trophies trophie2Select = trophie;
+				
 				Drawable image2 = getResources().getDrawable(R.drawable.trophies_02);
 				
 				if(trophie.getDateAchieved() == null){
@@ -97,9 +112,51 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie2 = (Button)findViewById(R.id.trophies_2);
 				trophie2.setBackgroundDrawable(image2);
-				trophie2.setOnClickListener(buttonListener2);
+				trophie2.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie2Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_02));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t02));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective02));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie2Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie2Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
 			break;
 			case 3:
+				final Trophies trophie3Select = trophie;
 				Drawable image3 = getResources().getDrawable(R.drawable.trophies_03);
 				
 				if(trophie.getDateAchieved() == null){
@@ -108,9 +165,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie3 = (Button)findViewById(R.id.trophies_3);
 				trophie3.setBackgroundDrawable(image3);
-				trophie3.setOnClickListener(buttonListener3);
+				trophie3.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie3Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_03));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t03));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective03));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie3Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie3Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 4:
+				final Trophies trophie4Select = trophie;
 				Drawable image4 = getResources().getDrawable(R.drawable.trophies_04);
 				
 				if(trophie.getDateAchieved() == null){
@@ -119,9 +219,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie4 = (Button)findViewById(R.id.trophies_4);
 				trophie4.setBackgroundDrawable(image4);
-				trophie4.setOnClickListener(buttonListener4);
+				trophie4.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie4Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_04));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t04));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective04));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie4Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie4Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 5:
+				final Trophies trophie5Select = trophie;
 				Drawable image5 = getResources().getDrawable(R.drawable.trophies_05);
 				
 				if(trophie.getDateAchieved() == null){
@@ -130,9 +273,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie5 = (Button)findViewById(R.id.trophies_5);
 				trophie5.setBackgroundDrawable(image5);
-				trophie5.setOnClickListener(buttonListener5);
+				trophie5.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie5Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_05));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t05));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective05));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie5Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie5Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 6:
+				final Trophies trophie6Select = trophie;
 				Drawable image6 = getResources().getDrawable(R.drawable.trophies_06);
 				
 				if(trophie.getDateAchieved() == null){
@@ -141,9 +327,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie6 = (Button)findViewById(R.id.trophies_6);
 				trophie6.setBackgroundDrawable(image6);
-				trophie6.setOnClickListener(buttonListener6);
+				trophie6.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie6Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_06));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t06));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective06));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie6Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie6Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 7:
+				final Trophies trophie7Select = trophie;
 				Drawable image7 = getResources().getDrawable(R.drawable.trophies_07);
 				
 				if(trophie.getDateAchieved() == null){
@@ -152,9 +381,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie7 = (Button)findViewById(R.id.trophies_7);
 				trophie7.setBackgroundDrawable(image7);
-				trophie7.setOnClickListener(buttonListener7);
+				trophie7.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie7Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_07));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t07));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective07));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie7Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie7Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 8:
+				final Trophies trophie8Select = trophie;
 				Drawable image8 = getResources().getDrawable(R.drawable.trophies_08);
 				
 				if(trophie.getDateAchieved() == null){
@@ -163,9 +435,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie8 = (Button)findViewById(R.id.trophies_8);
 				trophie8.setBackgroundDrawable(image8);
-				trophie8.setOnClickListener(buttonListener8);
+				trophie8.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie8Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_08));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t08));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective08));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie8Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie8Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 9:
+				final Trophies trophie9Select = trophie;
 				Drawable image9 = getResources().getDrawable(R.drawable.trophies_09);
 				
 				if(trophie.getDateAchieved() == null){
@@ -174,9 +489,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie9 = (Button)findViewById(R.id.trophies_9);
 				trophie9.setBackgroundDrawable(image9);
-				trophie9.setOnClickListener(buttonListener9);
+				trophie9.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie9Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_09));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t09));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective09));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie9Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie9Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 10:
+				final Trophies trophie10Select = trophie;
 				Drawable image10 = getResources().getDrawable(R.drawable.trophies_10);
 				
 				if(trophie.getDateAchieved() == null){
@@ -185,9 +543,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie10 = (Button)findViewById(R.id.trophies_10);
 				trophie10.setBackgroundDrawable(image10);
-				trophie10.setOnClickListener(buttonListener10);
+				trophie10.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie10Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_10));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t10));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective10));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie10Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie10Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 11:
+				final Trophies trophie11Select = trophie;
 				Drawable image11 = getResources().getDrawable(R.drawable.trophies_11);
 				
 				if(trophie.getDateAchieved() == null){
@@ -196,9 +597,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie11 = (Button)findViewById(R.id.trophies_11);
 				trophie11.setBackgroundDrawable(image11);
-				trophie11.setOnClickListener(buttonListener11);
+				trophie11.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie11Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_11));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t11));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective11));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie11Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie11Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 12:
+				final Trophies trophie12Select = trophie;
 				Drawable image12 = getResources().getDrawable(R.drawable.trophies_12);
 				
 				if(trophie.getDateAchieved() == null){
@@ -207,9 +651,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie12 = (Button)findViewById(R.id.trophies_12);
 				trophie12.setBackgroundDrawable(image12);
-				trophie12.setOnClickListener(buttonListener12);
+				trophie12.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie12Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_12));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t12));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective12));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie12Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie12Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 13:
+				final Trophies trophie13Select = trophie;
 				Drawable image13 = getResources().getDrawable(R.drawable.trophies_13);
 				
 				if(trophie.getDateAchieved() == null){
@@ -218,9 +705,52 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie13 = (Button)findViewById(R.id.trophies_13);
 				trophie13.setBackgroundDrawable(image13);
-				trophie13.setOnClickListener(buttonListener13);
+				trophie13.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie13Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_13));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t13));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective13));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie13Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie13Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 			case 14:
+				final Trophies trophie14Select = trophie;
 				Drawable image14 = getResources().getDrawable(R.drawable.trophies_14);
 				
 				if(trophie.getDateAchieved() == null){
@@ -229,7 +759,49 @@ public class TrophiesActivity extends Activity{
 				
 				Button trophie14 = (Button)findViewById(R.id.trophies_14);
 				trophie14.setBackgroundDrawable(image14);
-				trophie14.setOnClickListener(buttonListener14);
+				trophie14.setOnClickListener(new OnClickListener() {  
+			        public void onClick(View v) {  
+			        	
+			        	dialog = new Dialog(TrophiesActivity.this, R.style.PauseGameDialogTheme){
+				    		
+				    		public boolean onKeyDown(int keyCode, KeyEvent event){
+				    			ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+				    			
+				    			if(trophie14Select.getDateAchieved() == null){
+				    				image.setAlpha(70);
+				    			}
+				    			dialog.cancel();
+				    			return true;
+				    		}
+
+				    	};
+				    	
+						dialog.setContentView(R.layout.trophies_details_view);
+						   
+						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_14));
+						
+						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						name.setText(getResources().getText(R.string.t14));
+						
+						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						details.setText(getResources().getText(R.string.tObjective14));
+						
+						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
+						
+						if(trophie14Select.getDateAchieved() == null){
+							achieved.setText("-/-/-");
+						}else{
+							achieved.setText(DateTimeUtil.DateToString(trophie14Select.getDateAchieved()));
+						}
+						
+						
+						dialog.show();
+						
+					
+			        }  
+				});
+
 			break;
 
 			default:
@@ -237,9 +809,6 @@ public class TrophiesActivity extends Activity{
 			}
 		}
 		
-		Drawable image15 = getResources().getDrawable(R.drawable.untitled_image);
-		Button trophie15 = (Button)findViewById(R.id.trophies_15);
-		trophie15.setBackgroundDrawable(image15);
 		
 
 	}
@@ -262,179 +831,7 @@ public class TrophiesActivity extends Activity{
 
 		return trophies;
 	}
-	
-	
-	private OnClickListener buttonListener2 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(2);
-        }  
-	};
-	private OnClickListener buttonListener3 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(3);
-        }  
-	};
-	private OnClickListener buttonListener4 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(4);
-        }  
-	};
-	private OnClickListener buttonListener5 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(5);
-        }  
-	};
-	private OnClickListener buttonListener6 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(6);
-        }  
-	};
-	private OnClickListener buttonListener7 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(7);
-        }  
-	};
-	private OnClickListener buttonListener8 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(8);
-        }  
-	};
-	private OnClickListener buttonListener9 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(9);
-        }  
-	};
-	private OnClickListener buttonListener10 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(10);
-        }  
-	};
-	private OnClickListener buttonListener11 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(11);
-        }  
-	};
-	private OnClickListener buttonListener12 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(12);
-        }  
-	};
-	private OnClickListener buttonListener13 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(13);
-        }  
-	};
-	private OnClickListener buttonListener14 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	renderedTrophies(14);
-        }  
-	};
-
-	
-	public void renderedTrophies(Integer trophie){
 		
-		if(!this.flag){
-			return;
-		}
-		
-		this.flag = false; 
-		
-		Drawable image15 = null;
-		
-		Button trophie15 = (Button)findViewById(R.id.trophies_15);
-		
-		switch (trophie) {
-		case 1:
-			image15 = getResources().getDrawable(R.drawable.trophies_01);
-			image15.setAlpha(1000);
-			
-		break;
-		case 2:
-			image15 = getResources().getDrawable(R.drawable.trophies_02);
-			image15.setAlpha(1000);
-			
-		break;
-		case 3:
-			image15 = getResources().getDrawable(R.drawable.trophies_03);
-			image15.setAlpha(1000);
-			
-		break;
-		case 4:
-			image15 = getResources().getDrawable(R.drawable.trophies_04);
-			image15.setAlpha(1000);
-			
-		break;
-		case 5:
-			image15 = getResources().getDrawable(R.drawable.trophies_05);
-			image15.setAlpha(1000);
-			
-		break;
-		case 6:
-			image15 = getResources().getDrawable(R.drawable.trophies_06);
-			image15.setAlpha(1000);
-			
-		break;
-		case 7:
-			image15 = getResources().getDrawable(R.drawable.trophies_07);
-			image15.setAlpha(1000);
-			
-		break;
-		case 8:
-			image15 = getResources().getDrawable(R.drawable.trophies_08);
-			image15.setAlpha(1000);
-			
-		break;
-		case 9:
-			image15 = getResources().getDrawable(R.drawable.trophies_09);
-			image15.setAlpha(1000);
-			
-		break;
-		case 10:
-			image15 = getResources().getDrawable(R.drawable.trophies_10);
-			image15.setAlpha(1000);
-			
-		break;
-		case 11:
-			image15 = getResources().getDrawable(R.drawable.trophies_11);
-			image15.setAlpha(1000);
-			
-		break;
-		case 12:
-			image15 = getResources().getDrawable(R.drawable.trophies_12);
-			image15.setAlpha(1000);
-			
-		break;
-		case 13:
-			image15 = getResources().getDrawable(R.drawable.trophies_13);
-			image15.setAlpha(1000);
-			
-		break;
-		case 14:
-			image15 = getResources().getDrawable(R.drawable.trophies_14);
-			image15.setAlpha(1000);
-			
-		break;
-
-		default:
-			break;
-		}
-		
-		trophie15.setBackgroundDrawable(image15);
-		trophie15.setOnClickListener(buttonListener15);
-		
-	}
-	
-	private OnClickListener buttonListener15 = new OnClickListener() {  
-        public void onClick(View v) {  
-        	Button trophie15 = (Button)findViewById(R.id.trophies_15);
-        	Drawable image = trophie15.getBackground();
-        	image.setAlpha(70);
-        	trophie15.setBackgroundDrawable(null);
-        	
-        	flag = true;
-        }  
-	};
-	
 	
 	@Override
 	protected void onDestroy() {
