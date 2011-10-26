@@ -16,7 +16,7 @@ public class GameLoopThread extends Thread{
 	private Paint blackScreen;
 	
 	private long sleepTime;
-	private long delay=20;
+	private long delay=60;
 	
 	public int state = 1;
 

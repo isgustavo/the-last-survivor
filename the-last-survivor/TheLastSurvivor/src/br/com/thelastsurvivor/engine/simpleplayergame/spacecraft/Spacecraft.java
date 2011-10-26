@@ -85,7 +85,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		
 		if(this.position == null){
 			this.position = new Vector2D((display.getWidth()/2)-width, 
-				(display.getHeight()/2)-height);
+					(display.getHeight()/2)-height);
 		}
 		
 		if(this.life == null){
@@ -119,8 +119,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
     
 	}
 	
-	 Double  x;
-	 Double  y;
+	
 	
 	@Override
 	public void update() {
@@ -137,13 +136,11 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void draw(Canvas c) {
 
-		
-		
-		c.drawBitmap(this.resizedBitmap, x.floatValue(), y.floatValue(),null);
+		c.drawBitmap(this.resizedBitmap, this.position.getX(), 
+				this.position.getY(), null);
 
-		Log.d("X", "."+x.floatValue());
-		Log.d("Y", "."+y.floatValue());
-		
+		//Log.d("DOUBLE","M"+(Math.tan(angle)));
+
 	   if(!this.shootsDrawables.isEmpty()){
 			for (IDrawBehavior shoot : this.shootsDrawables) {
 				shoot.draw(c);
@@ -180,6 +177,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		}
 	}
 	
+	Double angleTemp = 0.0;
 	private void controlUpdate(){
 			
 		if(this.angle >= 360){
@@ -189,24 +187,24 @@ public class Spacecraft implements IDrawControllable, Serializable {
     	}
 	 
 		
-		if (this.left) {
-    		this.angle -= 5;
-	    }else if(this.right){
-	    	this.angle += 5;
-	    }
-		
-		
 		
 		if (!this.down) {
+	    	angleTemp = angle;
 			Orientation.getNewPosition(this.angle, this.position);
-	   }
-		       
-		//this.angle = 10.0; 
-			   
-	    this.matrix.setRotate(angle.floatValue());
-   		this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
-   								this.image.getWidth(), this.image.getHeight(), this.matrix, true);
-		   
+	    }else if (this.left) {
+    		this.angle -= 5;
+    		Orientation.getNewPosition(angleTemp, this.position);
+	    }else if(this.right){
+	    	this.angle += 5;
+	    	Orientation.getNewPosition(angleTemp, this.position);
+	    }else{
+	    	Orientation.getNewPosition(angleTemp, this.position);
+	    }
+		
+		 this.matrix.setRotate(angle.floatValue());
+	   	 this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
+	   					this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+		
 	}
 	
 	
