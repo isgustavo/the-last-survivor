@@ -3,29 +3,60 @@
 	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
-    
- <!-- 	<br.com.thelastsurvivor.util.FT2FontTextView 
-	         android:id="@+id/textremoveProfile" android:text="@string/removeProfile" 
-	         android:textSize="23dp" android:textColor="@android:color/white"
-	         android:layout_width="fill_parent" android:layout_height="fill_parent"
-             lht:ttf_name="FT2FONT.TTF"
-           android:layout_x="3dp" android:layout_y="13dp">
-   </br.com.thelastsurvivor.util.FT2FontTextView>
-  -->
- 	<Button android:layout_height="wrap_content" 
-      		android:layout_width="wrap_content"
-      		android:background="@drawable/button_ok_image" 
-      		android:id="@+id/buttonOk"
-      		android:layout_x="30dp" android:layout_y="50dp">
-    </Button>
-    
-    <Button android:layout_height="wrap_content" 
-      		android:layout_width="wrap_content"
-      		android:background="@drawable/button_remove_image" 
-      		android:id="@+id/buttonRemove"
-      		android:layout_x="150dp" android:layout_y="50dp">
-    </Button>
-    
-</AbsoluteLayout>
+    android:layout_height="fill_parent"
+    android:background="@android:color/black">
+
+	 	<ImageView android:id="@+id/imagebackgraund"
+  	 			android:layout_width="fill_parent" 
+  	 			android:layout_height="fill_parent"
+  	 			android:src="@drawable/rect_black_image"
+  	 			android:layout_x="0dp" android:layout_y="0dp">
+		</ImageView>
+		
+		<ImageView android:id="@+id/imagebackgraund"
+  	 			android:layout_width="fill_parent" 
+  	 			android:layout_height="fill_parent"
+  	 			android:src="@drawable/alert_image"
+  	 			android:layout_x="57dp" android:layout_y="76dp">
+		</ImageView>
+	 		
+	    
+	   <br.com.thelastsurvivor.util.FT2FontTextView 
+			android:id="@+id/app_name" android:text="@string/removeProfile_1" 
+			android:textSize="25dp"  android:textColor="#4ed3ff"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+		    android:layout_x="254dp" android:layout_y="37dp">
+ 		</br.com.thelastsurvivor.util.FT2FontTextView>
+ 		<br.com.thelastsurvivor.util.FT2FontTextView 
+			android:id="@+id/app_name" android:text="@string/removeProfile_2" 
+			android:textSize="12dp" android:textColor="@android:color/white"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+			android:layout_x="188dp" android:layout_y="89dp">
+ 		</br.com.thelastsurvivor.util.FT2FontTextView>
+ 		<br.com.thelastsurvivor.util.FT2FontTextView 
+			android:id="@+id/app_name" android:text="@string/removeProfile_3" 
+			android:textSize="15dp" android:textColor="@android:color/white"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+			android:layout_x="188dp" android:layout_y="113dp">
+ 		</br.com.thelastsurvivor.util.FT2FontTextView>
+ 		<br.com.thelastsurvivor.util.FT2FontTextView 
+			android:id="@+id/app_name" android:text="@string/removeProfile_4" 
+			android:textSize="12dp" android:textColor="@android:color/white"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+			android:layout_x="188dp" android:layout_y="136dp">
+ 		</br.com.thelastsurvivor.util.FT2FontTextView>
+	    
+	    <Button android:layout_height="wrap_content"  
+	      		android:layout_width="wrap_content"
+	      		android:id="@+id/button_back_game"
+	      		android:background="@drawable/button_back_profile_image" 
+	      		android:layout_x="207dp" android:layout_y="174dp">
+	    </Button>
+	    <Button android:layout_height="wrap_content" 
+	      		android:layout_width="wrap_content"
+	      		android:id="@+id/button_remove"
+	      		android:background="@drawable/remove_profile_button_image" 
+	      		android:layout_x="304dp" android:layout_y="176dp">
+	    </Button>
+
+ </AbsoluteLayout> 

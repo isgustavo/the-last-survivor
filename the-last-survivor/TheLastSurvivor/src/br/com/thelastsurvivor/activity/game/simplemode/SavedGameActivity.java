@@ -56,9 +56,8 @@ public class SavedGameActivity extends ListActivity {
 		games = new ArrayList<Game>();
 		
 		if (isThereGame()) {
-			
+		
 			setContentView(R.layout.saved_game_view);  
-			
 			
 			setListAdapter(new ListGameAdapter(games, this));
 			
@@ -104,21 +103,6 @@ public class SavedGameActivity extends ListActivity {
 
 		
 		optionSavedGame(v);
-		
-		//Log.d("ID",".."+id);
-		//Log.d("ID",".."+position);
-		
-		//Log.d("VIEWID",".."+((TextView)v.findViewById(R.id.game_saved_id)).getText());
-		
-		
-		
-			//Intent i = new Intent(SavedGameActivity.this, MainMenuActivity.class);
-			
-			
-			//startActivity(i);
-			
-			//SavedGameActivity.this.finish();
-		
 		
 	}
 
@@ -242,7 +226,6 @@ public class SavedGameActivity extends ListActivity {
 	}
 	
 	public boolean isThereGame(){
-		
 		
 		this.games.addAll(loadGames());
 		

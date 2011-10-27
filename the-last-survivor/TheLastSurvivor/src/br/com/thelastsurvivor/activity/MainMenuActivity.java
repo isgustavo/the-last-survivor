@@ -1,9 +1,11 @@
 package br.com.thelastsurvivor.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,9 +23,9 @@ import br.com.thelastsurvivor.util.FT2FontTextView;
 public class MainMenuActivity extends Activity{
 	
 	private Player player;
-
-	private FT2FontTextView nickname;
 	
+	private Vibrator vibrator;
+	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,9 +38,9 @@ public class MainMenuActivity extends Activity{
 	
 	public void init(){
 		
+		this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		 
 		loadPlayer();
-		
-		
 		
 		Button buttonSimpleGame = (Button)findViewById(R.id.buttonSimpleMode);  
 		buttonSimpleGame.setOnClickListener(buttonSimpleGameListener);  
@@ -71,6 +73,7 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonSimpleGameListener = new OnClickListener() {  
         public void onClick(View v) {  
         	
+        	vibrator.vibrate(50);
         	
         	Intent i = new Intent(MainMenuActivity.this, SavedGameActivity.class);
         	
@@ -81,6 +84,8 @@ public class MainMenuActivity extends Activity{
 		    
 			
 			startActivity(i);
+			
+			
      
         }  
 	};  
@@ -88,6 +93,7 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonMultiModeListener = new OnClickListener() {  
 		public void onClick(View v) {  
 			
+			vibrator.vibrate(50);
 			Intent i = new Intent(MainMenuActivity.this, MultiGameActivity.class);
 			
 			Bundle s = new Bundle();
@@ -102,6 +108,7 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonTrophiesListener = new OnClickListener() {  
 		public void onClick(View v) {  
 			
+			vibrator.vibrate(50);
 			Intent i = new Intent(MainMenuActivity.this, TrophiesActivity.class);
 			
 			startActivity(i);
@@ -110,6 +117,8 @@ public class MainMenuActivity extends Activity{
  
 	private OnClickListener rankListener = new OnClickListener() {  
 		public void onClick(View v) {  
+			
+			vibrator.vibrate(50);
 			Intent i = new Intent(MainMenuActivity.this, RankActivity.class);
 			
 			startActivity(i);
@@ -119,9 +128,12 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonOptionListener = new OnClickListener() {  
 		public void onClick(View v) {  
 			
+			vibrator.vibrate(50);
 			Intent i = new Intent(MainMenuActivity.this, AlterationPlayerActivity.class);
 			
 			startActivity(i);
+			
+			MainMenuActivity.this.finish();
 		}  
 	};  
 	

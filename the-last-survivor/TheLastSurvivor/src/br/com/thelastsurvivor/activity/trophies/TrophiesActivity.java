@@ -49,7 +49,7 @@ public class TrophiesActivity extends Activity{
 			switch (trophie.getId()) {
 			case 1:
 				final Trophies trophieSelect = trophie;
-				Drawable image = getResources().getDrawable(R.drawable.trophies_01);
+				Drawable image = getResources().getDrawable(R.drawable.trophies_01_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image.setAlpha(70);
@@ -77,7 +77,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_01));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_01_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t01));
@@ -104,7 +104,7 @@ public class TrophiesActivity extends Activity{
 			case 2:
 				final Trophies trophie2Select = trophie;
 				
-				Drawable image2 = getResources().getDrawable(R.drawable.trophies_02);
+				Drawable image2 = getResources().getDrawable(R.drawable.trophies_02_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image2.setAlpha(70);
@@ -132,7 +132,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_02));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_02_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t02));
@@ -157,7 +157,7 @@ public class TrophiesActivity extends Activity{
 			break;
 			case 3:
 				final Trophies trophie3Select = trophie;
-				Drawable image3 = getResources().getDrawable(R.drawable.trophies_03);
+				Drawable image3 = getResources().getDrawable(R.drawable.trophies_03_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image3.setAlpha(70);
@@ -185,7 +185,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_03));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_03_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t03));
@@ -211,7 +211,7 @@ public class TrophiesActivity extends Activity{
 			break;
 			case 4:
 				final Trophies trophie4Select = trophie;
-				Drawable image4 = getResources().getDrawable(R.drawable.trophies_04);
+				Drawable image4 = getResources().getDrawable(R.drawable.trophies_04_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image4.setAlpha(70);
@@ -239,7 +239,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_04));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_04_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t04));
@@ -263,9 +263,9 @@ public class TrophiesActivity extends Activity{
 				});
 
 			break;
-			case 5:
+	/*		case 5:
 				final Trophies trophie5Select = trophie;
-				Drawable image5 = getResources().getDrawable(R.drawable.trophies_05);
+				Drawable image5 = getResources().getDrawable(R.drawable.trophies_05_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image5.setAlpha(70);
@@ -293,7 +293,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_05));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_05_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t05));
@@ -319,7 +319,7 @@ public class TrophiesActivity extends Activity{
 			break;
 			case 6:
 				final Trophies trophie6Select = trophie;
-				Drawable image6 = getResources().getDrawable(R.drawable.trophies_06);
+				Drawable image6 = getResources().getDrawable(R.drawable.trophies_06_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image6.setAlpha(70);
@@ -347,7 +347,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_06));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_06_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t06));
@@ -370,10 +370,10 @@ public class TrophiesActivity extends Activity{
 			        }  
 				});
 
-			break;
+			break;*/
 			case 7:
 				final Trophies trophie7Select = trophie;
-				Drawable image7 = getResources().getDrawable(R.drawable.trophies_07);
+				Drawable image7 = getResources().getDrawable(R.drawable.trophies_07_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image7.setAlpha(70);
@@ -401,7 +401,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_07));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_07_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t07));
@@ -427,7 +427,7 @@ public class TrophiesActivity extends Activity{
 			break;
 			case 8:
 				final Trophies trophie8Select = trophie;
-				Drawable image8 = getResources().getDrawable(R.drawable.trophies_08);
+				Drawable image8 = getResources().getDrawable(R.drawable.trophies_08_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image8.setAlpha(70);
@@ -455,7 +455,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_08));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_08_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t08));
@@ -481,7 +481,7 @@ public class TrophiesActivity extends Activity{
 			break;
 			case 9:
 				final Trophies trophie9Select = trophie;
-				Drawable image9 = getResources().getDrawable(R.drawable.trophies_09);
+				Drawable image9 = getResources().getDrawable(R.drawable.trophies_09_v2);
 				
 				if(trophie.getDateAchieved() == null){
 					image9.setAlpha(70);
@@ -509,7 +509,7 @@ public class TrophiesActivity extends Activity{
 						dialog.setContentView(R.layout.trophies_details_view);
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
-						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_09));
+						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_09_v2));
 						
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t09));
@@ -533,7 +533,7 @@ public class TrophiesActivity extends Activity{
 				});
 
 			break;
-			case 10:
+/*			case 10:
 				final Trophies trophie10Select = trophie;
 				Drawable image10 = getResources().getDrawable(R.drawable.trophies_10);
 				
@@ -586,7 +586,7 @@ public class TrophiesActivity extends Activity{
 			        }  
 				});
 
-			break;
+			break;*/
 			case 11:
 				final Trophies trophie11Select = trophie;
 				Drawable image11 = getResources().getDrawable(R.drawable.trophies_11);
@@ -641,7 +641,7 @@ public class TrophiesActivity extends Activity{
 				});
 
 			break;
-			case 12:
+	/*		case 12:
 				final Trophies trophie12Select = trophie;
 				Drawable image12 = getResources().getDrawable(R.drawable.trophies_12);
 				
@@ -694,7 +694,7 @@ public class TrophiesActivity extends Activity{
 			        }  
 				});
 
-			break;
+			break;*/
 			case 13:
 				final Trophies trophie13Select = trophie;
 				Drawable image13 = getResources().getDrawable(R.drawable.trophies_13);

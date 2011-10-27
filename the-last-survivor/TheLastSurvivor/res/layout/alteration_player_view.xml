@@ -34,7 +34,7 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 				
 				<ImageView android:id="@+id/imageView1"
     	 			android:layout_width="fill_parent" 
-    	 			android:layout_height="wrap_content" 
+    	 			android:layout_height="fill_parent" 
     	 			android:src="@drawable/rect_title_blue_image"
     	 			android:layout_x="55dp" android:layout_y="101dp">
 				</ImageView>
@@ -51,15 +51,15 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 				
 				<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/alteration_palyer_1" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:textSize="16dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-					    android:layout_x="93dp" android:layout_y="111dp">
+					    android:layout_x="93dp" android:layout_y="120dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/alteration_palyer_2" 
-						android:textSize="15dp" android:textColor="@android:color/white"
+						android:textSize="16dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="68dp" android:layout_y="132dp">
+						android:layout_x="93dp" android:layout_y="140dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 
 				<EditText android:layout_height="45dp" android:layout_width="304dp" 
@@ -72,16 +72,16 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 				
 				<Button android:layout_height="wrap_content" 
 			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_ok_image" 
+			      		android:background="@drawable/button_left_ok_image" 
 			      		android:id="@+id/buttonOk"
-			      		android:layout_x="260dp" android:layout_y="230dp">
+			      		android:layout_x="380dp" android:layout_y="210dp">
 			    </Button>
 			    
 			    <Button android:layout_height="wrap_content" 
 			      		android:layout_width="wrap_content"
-			      		android:background="@drawable/button_remove_image" 
+			      		android:background="@drawable/remove_profile_button_image" 
 			      		android:id="@+id/buttonRemove"
-			      		android:layout_x="360dp" android:layout_y="230dp">
+			      		android:layout_x="380dp" android:layout_y="0dp">
 			    </Button>
 			    
  	 </AbsoluteLayout>  

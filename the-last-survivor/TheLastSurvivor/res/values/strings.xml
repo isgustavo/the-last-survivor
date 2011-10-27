@@ -8,11 +8,7 @@
     
     <string name="app_name_for">For</string>
     <string name="app_name_players">Players</string>
-    
-    
-    
-    
-    
+
     <string name="profile">profile</string>
     <string name="erro_profile">Nickname is necessary!</string>
     
@@ -31,7 +27,22 @@
     <string name="alteration_palyer_2">
     	 in THE LAST SURVIVOR now?  
     </string>
+
+ 	<string name="removeProfile_1">
+    	 Alert!	
+    </string>
     
+    <string name="removeProfile_2">
+    	 This action will result in 		
+    </string>
+    
+    <string name="removeProfile_3">
+    	loss of all data on 	
+    </string>
+    
+    <string name="removeProfile_4">
+    	The Last Survivor 	
+    </string>
     
     <string name="nickname">Nickname</string>
     <string name="lg_twitter">Username or e-mail Twitter</string>
@@ -41,8 +52,7 @@
     
    
     
-    <string name="removeProfile">Alert: This action will result in loss of all data on The Last Survivor</string>
-    <string name="alert">Alert</string>
+   
     
     <string name="lista">LIST</string>
     
