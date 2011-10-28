@@ -524,11 +524,13 @@ public class EngineGame{
 		
 		int up = 0;
 		
-		
-		up = (int) (Math.random()*60);	
+		up = (int) (Math.random()*80);	
 		
 		if(up == 1){
-			this.powerUps.add(new PowerUp(context, asteroid.getPosition()));
+			//this.powerUps.add(new PowerUp(context, asteroid.getPosition()));
+			if(PowerUp.POWER_UP != 3){
+				PowerUp.POWER_UP += 1;
+			}
 		}
 		
 	}

@@ -129,9 +129,11 @@
 	<string name="destroyed_asteroid">Destroyed asteroid: Score </string>
 
 
-
-
-
+<!-- RANK -->
+	
+	<string name="rank">Rank</string>
+	<string name="rank_date">Date:</string>
+	<string name="rank_score">Score:</string>
 
 
     

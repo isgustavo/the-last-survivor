@@ -11,7 +11,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
@@ -79,7 +78,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void init() {
 		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image_v2);
 		this.width = image.getWidth();
 		this.height = image.getHeight();
 		
@@ -136,8 +135,8 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void draw(Canvas c) {
 
-		c.drawBitmap(this.resizedBitmap, this.position.getX(), 
-				this.position.getY(), null);
+		c.drawBitmap(this.resizedBitmap, this.position.getFloatX(), 
+				this.position.getFloatY(), null);
 
 		//Log.d("DOUBLE","M"+(Math.tan(angle)));
 
@@ -178,6 +177,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	}
 	
 	Double angleTemp = 0.0;
+	Vector2D backing = new Vector2D(0,0);
 	private void controlUpdate(){
 			
 		if(this.angle >= 360){
@@ -186,20 +186,46 @@ public class Spacecraft implements IDrawControllable, Serializable {
     		this.angle = 360.0;
     	}
 	 
-		
+		if (this.left) {
+    		this.angle -= 5;
+	    }else if(this.right){
+	    	this.angle += 5;
+	    }
 		
 		if (!this.down) {
+			Vector2D vetor = new Vector2D();
+			
+			Orientation.getNewPosition(angle, vetor);
+			
+			this.position.addFloatX(vetor.getFloatX()/2);
+			this.position.addFloatY(vetor.getFloatY()/2);
+			
+			
+		}
+		//angle = 200.0;
+		
+		//Vector2D vetor = new Vector2D();
+		
+		
+		
+		//this.position.addFloatX(vetor.getFloatX()*2);
+		//this.position.addFloatY(vetor.getFloatY()*2);
+		
+		/*if (!this.down) {
 	    	angleTemp = angle;
 			Orientation.getNewPosition(this.angle, this.position);
+			//backing = position;
 	    }else if (this.left) {
     		this.angle -= 5;
-    		Orientation.getNewPosition(angleTemp, this.position);
+    		Orientation.getNewPosition(angleTemp, this.backing);
+    		//this.position.setX();
+    		//this.position.setY();
 	    }else if(this.right){
 	    	this.angle += 5;
 	    	Orientation.getNewPosition(angleTemp, this.position);
 	    }else{
 	    	Orientation.getNewPosition(angleTemp, this.position);
-	    }
+	    }*/
 		
 		 this.matrix.setRotate(angle.floatValue());
 	   	 this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,

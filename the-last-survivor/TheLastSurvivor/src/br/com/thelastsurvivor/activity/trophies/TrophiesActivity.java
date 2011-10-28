@@ -79,11 +79,11 @@ public class TrophiesActivity extends Activity{
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_01_v2));
 						
-						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
-						name.setText(getResources().getText(R.string.t01));
+						//FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+						//name.setText(getResources().getText(R.string.t01));
 						
-						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
-						details.setText(getResources().getText(R.string.tObjective01));
+						//FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
+						//details.setText(getResources().getText(R.string.tObjective01));
 						
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
@@ -134,12 +134,12 @@ public class TrophiesActivity extends Activity{
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_02_v2));
 						
-						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
+				/*		FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t02));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective02));
-						
+					*/	
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie2Select.getDateAchieved() == null){
@@ -186,13 +186,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_03_v2));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t03));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective03));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie3Select.getDateAchieved() == null){
@@ -240,13 +240,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_04_v2));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t04));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective04));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie4Select.getDateAchieved() == null){
@@ -402,13 +402,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_07_v2));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t07));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective07));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie7Select.getDateAchieved() == null){
@@ -456,13 +456,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_08_v2));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t08));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective08));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie8Select.getDateAchieved() == null){
@@ -510,13 +510,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_09_v2));
-						
+				/*		
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t09));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective09));
-						
+					*/	
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie9Select.getDateAchieved() == null){
@@ -618,13 +618,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_11));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t11));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective11));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie11Select.getDateAchieved() == null){
@@ -726,13 +726,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_13));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t13));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective13));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie13Select.getDateAchieved() == null){
@@ -780,13 +780,13 @@ public class TrophiesActivity extends Activity{
 						   
 						ImageView image = (ImageView)dialog.findViewById(R.id.image_trophy);
 						image.setImageDrawable(getResources().getDrawable(R.drawable.trophies_14));
-						
+			/*			
 						FT2FontTextView name = (FT2FontTextView)dialog.findViewById(R.id.trophy_name);
 						name.setText(getResources().getText(R.string.t14));
 						
 						FT2FontTextView details = (FT2FontTextView)dialog.findViewById(R.id.trophy_detail);
 						details.setText(getResources().getText(R.string.tObjective14));
-						
+				*/		
 						FT2FontTextView achieved = (FT2FontTextView)dialog.findViewById(R.id.trophy_date);
 						
 						if(trophie14Select.getDateAchieved() == null){

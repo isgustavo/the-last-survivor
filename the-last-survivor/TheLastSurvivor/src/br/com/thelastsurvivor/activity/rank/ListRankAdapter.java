@@ -37,35 +37,23 @@ public class ListRankAdapter extends BaseAdapter{
 				
 		View v = inflater.inflate(R.layout.rank_list_view, null);
 		
-		ImageView image = (ImageView) v.findViewById(R.id.image_left);
+		ImageView image = (ImageView) v.findViewById(R.id.typeGame);
 		if(rank.getType() == Rank.SIMPLE){
-			image.setImageResource(R.drawable.spacecraft_image);
+			image.setImageResource(R.drawable.spacecraft_image_list);
 		}else{
 			image.setImageResource(R.drawable.online_image);
 		}
 		
-		FT2FontTextView rankId = (FT2FontTextView) v.findViewById(R.id.rank_id);
+		
+		FT2FontTextView rankId = (FT2FontTextView) v.findViewById(R.id.rank_name);
 		rankId.setText(rank.getIdentifier());
 		
-		FT2FontTextView pointGame = (FT2FontTextView) v.findViewById(R.id.rank_point);
-		pointGame.setText(rank.getPoint()+"");
+		FT2FontTextView rankScore = (FT2FontTextView) v.findViewById(R.id.rank_score);
+		rankScore.setText(rank.getPoint()+"");
 		
-		FT2FontTextView dateGame = (FT2FontTextView) v.findViewById(R.id.rank_date);
-		dateGame.setText(DateTimeUtil.DateToString(rank.getDate())+"");
+		FT2FontTextView rankDate = (FT2FontTextView) v.findViewById(R.id.rank_date);
+		rankDate.setText(DateTimeUtil.DateToString(rank.getDate())+"");
 		
-		
-
-
-		
-		//LayoutInflater inflater = LayoutInflater.from(context);
-		//v = LinearLayout.inflate(context, R.layout.game_list_view, null); 
-		
-		//View v = new LinearLayout(context);//  inflate(context, R.layout.game_list_view, null); //inflater.inflate(R.layout.game_list_view, null);
-		//v.setLayoutParams(R.layout.game_list_view);
-		
-		
-		
-	
 		return v;
 	}
 	

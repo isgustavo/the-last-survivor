@@ -4,42 +4,48 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
-<br.com.thelastsurvivor.view.BackgroundView
+ 
+ <br.com.thelastsurvivor.view.BackgroundView
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent"
 					android:id="@+id/surfaceView" /> 
-	
-	<FrameLayout android:layout_width="fill_parent"
-    	android:layout_height="wrap_content">
-    	
-    	<AbsoluteLayout 
+					
+<HorizontalScrollView android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:scrollbars="none">
+
+     
+<FrameLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+   
+           <AbsoluteLayout 
     			android:orientation="vertical"
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
-    			
-    			
-    			<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/app_name" 
-						android:textSize="22dp" android:textColor="@android:color/white"
+    		
+    			<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/rect_title_image"
+    	 			android:layout_x="0dp" android:layout_y="25dp">
+				</ImageView>
+				
+				<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/app_name" android:text="@string/rank" 
+						android:textSize="29dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="3dp" android:layout_y="10dp">
-			 	</br.com.thelastsurvivor.util.FT2FontTextView>
-			 	<br.com.thelastsurvivor.util.FT2FontTextView 
-						android:id="@+id/app_name" android:text="@string/profile" 
-						android:textSize="16dp" android:textColor="#4ed3ff"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="385dp" android:layout_y="15dp">
+						android:layout_x="143dp" android:layout_y="31dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	
 			 	<ListView android:layout_width="fill_parent" 
 					android:layout_height="wrap_content" 
 					android:id="@android:id/list"
-					android:layout_x="0dp" android:layout_y="80dp">
+					android:layout_x="120dp" android:layout_y="90dp">
 				</ListView> 
 				
 		</AbsoluteLayout>
 </FrameLayout>
+</HorizontalScrollView>
 </AbsoluteLayout>
 
 
