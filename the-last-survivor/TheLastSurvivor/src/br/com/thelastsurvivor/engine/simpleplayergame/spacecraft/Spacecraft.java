@@ -78,17 +78,21 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void init() {
 		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image_v2);
+		
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		
+	
 		this.width = image.getWidth();
 		this.height = image.getHeight();
 		
 		if(this.position == null){
-			this.position = new Vector2D((display.getWidth()/2)-width, 
+			this.position = new Vector2D((display.getWidth()/2-width), 
 					(display.getHeight()/2)-height);
 		}
+	
 		
 		if(this.life == null){
-			this.life = 250;
+			this.life = 2;
 		}
 		
 		if(this.points == null){
@@ -101,6 +105,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		
 		this.matrix = new Matrix();
 		this.matrix.setRotate(angle.floatValue());
+		
 		this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
 		
 		this.sensorPosition = new Vector2D(0,0);
@@ -135,8 +140,11 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void draw(Canvas c) {
 
+		//c.drawBitmap(this.resizedBitmapBackground, this.positionBackground.getFloatX(), 
+		//		this.positionBackground.getFloatY(), null);
 		c.drawBitmap(this.resizedBitmap, this.position.getFloatX(), 
 				this.position.getFloatY(), null);
+		
 
 		//Log.d("DOUBLE","M"+(Math.tan(angle)));
 
@@ -200,8 +208,16 @@ public class Spacecraft implements IDrawControllable, Serializable {
 			this.position.addFloatX(vetor.getFloatX()/2);
 			this.position.addFloatY(vetor.getFloatY()/2);
 			
+		}else{
+			Vector2D vetor = new Vector2D();
 			
+			Orientation.getNewPosition(angle, vetor);
+			
+			this.position.addFloatX(vetor.getFloatX()/5);
+			this.position.addFloatY(vetor.getFloatY()/5);
 		}
+		
+		
 		//angle = 200.0;
 		
 		//Vector2D vetor = new Vector2D();
@@ -230,10 +246,11 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		 this.matrix.setRotate(angle.floatValue());
 	   	 this.resizedBitmap = Bitmap.createBitmap(this.image, 0, 0,
 	   					this.image.getWidth(), this.image.getHeight(), this.matrix, true);
+	   	
+	   	 //this.resizedBitmapBackground = Bitmap.createBitmap(this.imageBackground, 0, 0,
+		//			this.imageBackground.getWidth(), this.imageBackground.getHeight(), this.matrix, true);
 		
 	}
-	
-	
 	
 	public void controlShoots(){
 		if(this.shootsDrawables != null){
@@ -310,6 +327,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		return angle;
 	}
 
+	
 	
 	
 	

@@ -2,22 +2,17 @@ package br.com.thelastsurvivor.activity.rank;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.game.simplemode.ListGameAdapter;
-import br.com.thelastsurvivor.activity.game.simplemode.SavedGameActivity;
-import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.model.rank.Rank;
 import br.com.thelastsurvivor.provider.rank.RankProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
@@ -78,6 +73,14 @@ public class RankActivity extends ListActivity {
 					c.getInt(4)));
 			}
 		}
+		
+	
+		Collections.sort(rankList, new Comparator<Rank>(){
+
+			@Override
+			public int compare(Rank rank, Rank rank2) {
+				return rank.getPoint().compareTo(rank2.getPoint());
+			}}); 
 		
 		return rankList;
 	}

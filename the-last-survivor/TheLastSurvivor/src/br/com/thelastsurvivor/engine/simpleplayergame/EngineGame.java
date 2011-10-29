@@ -251,6 +251,7 @@ public class EngineGame{
 				if(this.spacecraft.getPoints() > 1000){
 					saveTrophieAchieved(2);
 					showTrophieAchieved(context.getString(R.string.t02));
+					
 				}else{
 					trophiesNotAchieved.add(trophies);
 				}
@@ -259,6 +260,7 @@ public class EngineGame{
 				if(this.spacecraft.getPoints() > 5000){
 					saveTrophieAchieved(3);
 					showTrophieAchieved(context.getString(R.string.t03));
+					
 				}else{
 					trophiesNotAchieved.add(trophies);
 				}
@@ -267,6 +269,7 @@ public class EngineGame{
 				if(PowerUp.POWER_UP == 3){
 					saveTrophieAchieved(4);
 					showTrophieAchieved(context.getString(R.string.t04));
+					
 				}else{
 					trophiesNotAchieved.add(trophies);
 				}
@@ -275,6 +278,7 @@ public class EngineGame{
 				if(getDriftTime() > 2){
 					saveTrophieAchieved(5);
 					showTrophieAchieved(context.getString(R.string.t05));
+				
 				}else{
 					trophiesNotAchieved.add(trophies);
 				}
@@ -753,7 +757,7 @@ public class EngineGame{
 		if(this.startTime/60000 == 0){
 			return getSecondGame();
 		}
-		return this.startTime/60000;
+		return this.startTime;///60000;
 	}
 	
 	public Long getSecondGame(){
@@ -767,7 +771,8 @@ public class EngineGame{
 	public Long getRealTimeGame(){
 		return this.startTime;
 	}
-	
+
+
 	
 	
 }

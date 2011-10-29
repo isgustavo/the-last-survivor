@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
+import br.com.thelastsurvivor.activity.game.simplemode.ResultGameActivity;
 import br.com.thelastsurvivor.activity.game.simplemode.SavedGameActivity;
 import br.com.thelastsurvivor.model.game.Spacecraft;
 import br.com.thelastsurvivor.model.player.Player;
@@ -173,10 +174,20 @@ public class AlterationPlayerActivity extends Activity{
     	dialog.cancel();
 
 	}
+
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event){
-		return false;
+		 if(keyCode == KeyEvent.KEYCODE_BACK) {
+	    	  
+	    	  Intent i = new Intent(AlterationPlayerActivity.this, MainMenuActivity.class);
+			  startActivity(i);
+			  
+			  AlterationPlayerActivity.this.finish();
+	    	
+	    	
+	    }
+		return true;
 	}
 
 	public Player getPlayer(){

@@ -14,13 +14,15 @@ import br.com.thelastsurvivor.util.Vector2D;
 
 public abstract class ShootFactory {
 	
-	public static List<IDrawBehavior> newShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
+	public static Integer POWER_UP = 0;
 	
+	public static List<IDrawBehavior> newShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
+
 	    List<IDrawBehavior> shoot = new ArrayList<IDrawBehavior>();
 	    Vector2D temp = new Vector2D();
 	    Vector2D temp2 = new Vector2D();
 	    
-	    switch(PowerUp.POWER_UP){
+	    switch(POWER_UP){
 	    
 	    case 0:
 			Log.d("0", "shoot");
@@ -29,7 +31,7 @@ public abstract class ShootFactory {
 			position.addX(spacecraft.getWidth()/2);
 	     	position.addY(spacecraft.getHeight()/2);
 	     	
-	     	shoot.add(new SimpleShoot(context, position, angle, spacecraft));
+	     	shoot.add(new SimpleShoot(context, position, angle));
 	     	
 			return shoot;
 		
@@ -38,17 +40,17 @@ public abstract class ShootFactory {
 			
 			Vector2D positionLeft = new Vector2D(position);
 			
-			Orientation.getNewPositionShootLeft(angle, positionLeft, spacecraft);
-			shoot.add(new SimpleShoot(context, positionLeft, angle, spacecraft));
+			//Orientation.getNewPositionShootLeft(angle, positionLeft, spacecraft);
+			//shoot.add(new SimpleShoot(context, positionLeft, angle, spacecraft));
 			
 			
 			
-			Orientation.getNewPositionShootRight(angle, position, spacecraft);
+			//Orientation.getNewPositionShootRight(angle, position, spacecraft);
 			
 			//position.addX(position.getX());
 	     	//position.addY(position.getY());
 	     	
-	     	shoot.add(new SimpleShoot(context, position, angle, spacecraft));
+	     	//shoot.add(new SimpleShoot(context, position, angle, spacecraft));
 			//temp = new Vector2D(position.getX(), position.getY());
 			//Vector2D temp2 = new Vector2D();
 			//Orientation.getNewPosition(angle, position);
@@ -81,29 +83,29 @@ public abstract class ShootFactory {
 			//Orientation.getNewPosition(angle, position);
 			
 			//temp.addX();
-			position.addY(spacecraft.getHeight()/2);
+			//position.addY(spacecraft.getHeight()/2);
 			
 			Orientation.getNewPosition(angle, position);
 			
-			shoot.add(new SimpleShoot(context, position, angle, spacecraft));
+			//shoot.add(new SimpleShoot(context, position, angle, spacecraft));
 	     	
 			
 			//Log.d("1", ".."+position.getX()+".."+position.getY());
 			
-			temp.addX(spacecraft.getWidth());
-			temp.addY(spacecraft.getHeight()/2);
+			//temp.addX(spacecraft.getWidth());
+			//temp.addY(spacecraft.getHeight()/2);
 		       
 			Orientation.getNewPosition(angle, temp);
 			
 			
-			shoot.add(new SimpleShoot(context, temp, angle, spacecraft));
+			//shoot.add(new SimpleShoot(context, temp, angle, spacecraft));
 			
 			Orientation.getNewPosition(angle, temp2);
 			
-			temp2.addX(spacecraft.getWidth()/2);
-			temp2.addY((spacecraft.getHeight()/2)+10);
+			//temp2.addX(spacecraft.getWidth()/2);
+			//temp2.addY((spacecraft.getHeight()/2)+10);
 	     	
-	     	shoot.add(new SimpleShoot(context, temp2, angle, spacecraft));
+	     	//shoot.add(new SimpleShoot(context, temp2, angle, spacecraft));
 
 			return shoot;
 
@@ -113,10 +115,10 @@ public abstract class ShootFactory {
 	    	Log.d("d", "shoot"+PowerUp.POWER_UP);
 	    	Orientation.getNewPosition(angle, position);
 			
-			position.addX(spacecraft.getWidth()/2);
-	     	position.addY(spacecraft.getHeight()/2);
+			//position.addX(spacecraft.getWidth()/2);
+	     	//position.addY(spacecraft.getHeight()/2);
 	     	
-	     	shoot.add(new SimpleShoot(context, position, angle, spacecraft));
+	     	//shoot.add(new SimpleShoot(context, position, angle, spacecraft));
 	     	
 			return shoot;
 		}

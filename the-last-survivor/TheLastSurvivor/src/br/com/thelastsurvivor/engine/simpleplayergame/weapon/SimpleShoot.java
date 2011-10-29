@@ -36,15 +36,15 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	private Boolean isAlive;
 	private Integer color;
 	
-	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
-		this.context = context;
-		this.position = position;
-		this.angle = angle;
+	//public SimpleShoot(Context context, Vector2D position, Double angle){
+	//	this.context = context;
+	//	this.position = position;
+	//	this.angle = angle;
 		
-		this.spacecraft = spacecraft;
-		
-		init();
-	}
+		//this.spacecraft = spacecraft;
+	//	
+	//	init();
+	//}
 	
 	public SimpleShoot(Context context, Vector2D position, Double angle){
 		this.context = context;
@@ -56,7 +56,7 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	
 	@Override
 	public void init() {
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_blue_image);
 		
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();

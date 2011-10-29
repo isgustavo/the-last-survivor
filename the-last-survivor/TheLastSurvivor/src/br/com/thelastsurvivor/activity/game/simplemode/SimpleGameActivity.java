@@ -1,5 +1,6 @@
 package br.com.thelastsurvivor.activity.game.simplemode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -187,32 +188,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	public void endGame(){
 		
 		this.view.getGameLoop().state = 2;
-    	//Looper.prepare();
-    	
-    	//dialog = new Dialog(this, R.style.PauseGameDialogTheme){
-    		
-    		//public boolean onKeyDown(int keyCode, KeyEvent event){
-    		//		return false;
-    		//}
 
-    	//};
-    	
-		//dialog.setContentView(R.layout.result_game_view);
-		
-		//final FT2FontTextView scoreGame = (FT2FontTextView)dialog.findViewById(R.id.points_game);
-		//scoreGame.setText(" "+this.engine.getSpacecraft().getPoints()+" pt");
-	
-		//final FT2FontTextView timeGame = (FT2FontTextView)dialog.findViewById(R.id.time_game);
-		//timeGame.setText(" "+this.engine.getTimeGame()+" min");
-		//Log.d("LOG","ENDGAME");
-		//dialog.show();
-		
-		
-		
-		
-		//save result
-		
-		
 		ContentValues values = new ContentValues();
 
 		values.put(RankProvider.IDENTIFIER_PLAYER, getPlayerIdentifier(this.player));
@@ -225,11 +201,12 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		Intent i = new Intent(SimpleGameActivity.this, ResultGameActivity.class);
 		
 		Bundle s = new Bundle();
-	    s.putInt("id_player", player);
+	    s.putString("id_player", getPlayerIdentifier(this.player));
+	   
 	    s.putInt("points", this.engine.getSpacecraft().getPoints());
-	    s.putLong("time", this.engine.getTimeGame());
+	    s.putLong("time", this.engine.getRealTimeGame());
 	    
-	    i.putExtra("playerBundle",s);
+	    i.putExtra("gameBundle",s);
 		
 		startActivity(i);
 		
