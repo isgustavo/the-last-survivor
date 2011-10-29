@@ -49,7 +49,23 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    
+   
+
+    <activity android:name=".activity.twitter.TwitterActivity" 
+  			  android:screenOrientation="landscape"
+  			  android:launchMode="singleTask"
+  			  android:alwaysRetainTaskState="true"
+  			  android:noHistory="true">  
+   			<intent-filter>
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="callback" android:host="tweeter" />
+			</intent-filter>
+   	</activity>
     
     <activity android:name=".activity.game.simplemode.SavedGameActivity"
   			  android:screenOrientation="landscape"
@@ -77,13 +93,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-        
-        <activity android:name=".activity.game.Principal"
-  			  android:screenOrientation="landscape">
-     	<intent-filter>
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+          
     <activity android:name=".activity.game.SavedGamesActivity"
 	  		   android:screenOrientation="landscape">
       	<intent-filter>
@@ -132,6 +142,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>  
     
     
 </manifest>
