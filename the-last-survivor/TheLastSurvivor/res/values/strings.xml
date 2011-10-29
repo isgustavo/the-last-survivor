@@ -135,6 +135,20 @@
 	<string name="rank_date">Date:</string>
 	<string name="rank_score">Score:</string>
 
+<!-- RESULT -->
 
-    
+	<string name="result">Result</string>
+	<string name="result_time">Game time</string>
+	<string name="result_score">Score</string>
+	
+<!-- TWITTER -->
+	<string name="twitter_survived">survived</string>
+	<string name="twitter_more">more</string>
+	<string name="twitter_seconds">seconds</string>
+	<string name="twitter_minutes">minutes</string>
+	<string name="twitter_score">on THE LAST SURVIVOR and marked</string>
+	<string name="twitter_points">points.</string>
+	<string name="twitter_posted">Tweet posted.</string>
+	
+   
 </resources>
