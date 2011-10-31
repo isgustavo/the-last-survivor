@@ -65,6 +65,7 @@
 	 <string name="time_game">TIME:</string>
 	 <string name="life_game">LIFE:</string>
 	 <string name="point_game">POINTS:</string>
+	 <string name="point_team_game">TEAM POINTS:</string>
     
 
 <!-- Jogo Multiplayer -->
