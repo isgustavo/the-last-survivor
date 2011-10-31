@@ -15,11 +15,9 @@ public class Game implements Serializable{
 	private Integer powerUp;
 	private Spacecraft spacecraft;
 	private List<Asteroid> asteroids;
-	private List<PowerUp> powerUps;
 	
 	public Game(Integer player, final Date date, final Long runTime, Integer powerUp,
-			Spacecraft spacecraft, List<Asteroid> asteroids,
-			List<PowerUp> powerUps) {
+			Spacecraft spacecraft, List<Asteroid> asteroids) {
 		
 		this.player = player;
 		this.date = date;
@@ -27,7 +25,7 @@ public class Game implements Serializable{
 		this.powerUp = powerUp;
 		this.spacecraft = spacecraft;
 		this.asteroids = asteroids;
-		this.powerUps = powerUps;
+	
 	}
 	
 	public Game(Integer id, Integer player, final Date date, final Long runTime,Integer powerUp, Spacecraft spacecraft) {
@@ -84,12 +82,6 @@ public class Game implements Serializable{
 	}
 	public void setAsteroids(List<Asteroid> asteroids) {
 		this.asteroids = asteroids;
-	}
-	public List<PowerUp> getPowerUps() {
-		return powerUps;
-	}
-	public void setPowerUps(List<PowerUp> powerUps) {
-		this.powerUps = powerUps;
 	}
 	
 	

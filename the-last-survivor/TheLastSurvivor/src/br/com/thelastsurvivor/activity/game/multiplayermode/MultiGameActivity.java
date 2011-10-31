@@ -27,7 +27,6 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -37,12 +36,14 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.multiplayergame.client.ThreadClient;
 import br.com.thelastsurvivor.engine.multiplayergame.communication.ThreadCommunication;
+import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.engine.multiplayergame.server.EngineGameServer;
 import br.com.thelastsurvivor.engine.multiplayergame.server.ThreadServer;
 import br.com.thelastsurvivor.engine.util.IClient;
@@ -107,8 +108,10 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
  
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-     
+		
 		context = this.getApplicationContext();
+		
+		//showWaitVerificationBluetooth();
 		
 		Bundle s = this.getIntent().getExtras().getBundle("playerBundle");
 		this.namePlayer = s.getString("id_player");
@@ -133,8 +136,11 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 
         if (this.adapter != null) {
         	if (!adapter.isEnabled()) {
+        		
         		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         		startActivityForResult(enableBtIntent, BT_START);
+        		
+        		
         	}
         } else {
         	Toast.makeText(this, this.context.getText(R.string.not_bluetooth), 
@@ -173,6 +179,13 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
         buttonClient.setOnClickListener(buttonListenerClient);
 	}
 	
+	/*public void showWaitVerificationBluetooth(){
+		dialog = new Dialog(this, R.style.PauseGameDialogTheme);
+		dialog.setContentView(R.layout.wait_game_view);
+		   
+		dialog.show();
+	}*/
+	
 	private OnClickListener buttonListenerServer = new OnClickListener() {  
         public void onClick(View v) {  
         	
@@ -192,7 +205,10 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
         	adapter.startDiscovery();
 
         	dialog = new Dialog(activity, R.style.PauseGameDialogTheme);
-  		    dialog.setContentView(R.layout.features_wait_player_view);
+  		    dialog.setContentView(R.layout.wait_multigame_view);
+  		    
+  		    TextView text = (TextView)dialog.findViewById(R.id.wait);
+  		    text.setText(MultiGameActivity.this.getString(R.string.wait_client));
   		   
   		    dialog.show();
 
@@ -305,24 +321,20 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	  
 		 try {
 			 
-			 for (String name : nameAndColor) {
-				 Log.d("VALUES","."+name);
-			}
-	   
 			 for (ThreadCommunication communication : threadsCommunication) {
 		 
 				 if(nameAndColor.get(2).equalsIgnoreCase(communication.getPointName())){
-					 Log.d("NAMEANDCOLOR",".C"+communication.getName()+"V"+nameAndColor.get(2));
+					 
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(0),
 					   numberClient, Integer.parseInt(nameAndColor.get(1))));
 					 
 				 }else if(nameAndColor.size() >= 3 && nameAndColor.get(5).equalsIgnoreCase(communication.getPointName())){
-					 Log.d("NAMEANDCOLOR",".C"+communication.getName()+"V"+nameAndColor.get(5));
+					
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(3),
 					   numberClient, Integer.parseInt(nameAndColor.get(4))));
 					 
 				 }else if(nameAndColor.size() >= 9 && nameAndColor.get(8).equalsIgnoreCase(communication.getName())){
-					 Log.d("NAMEANDCOLOR",".C"+communication.getName()+"V"+nameAndColor.get(8));
+					
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(6),
 					   numberClient, Integer.parseInt(nameAndColor.get(7))));
 					 
@@ -341,20 +353,21 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	   }
 	}
 	 
-	public void startGameServer(final List<Spacecraft> spacecraftsClient){
-	   
-		handler.postDelayed(new Runnable() {
-			public void run() {
-				engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
-				viewServer = new EngineMultiGameView(activity.context,engineGame);
-				
-				setContentView(viewServer);
-			}
-		}, 0);
+	 public void startGameServer(final List<Spacecraft> spacecraftsClient){
+		   
+			handler.postDelayed(new Runnable() {
+				public void run() {
+					engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
+					viewServer = new EngineMultiGameView(activity.context,engineGame);
+					
+					setContentView(viewServer);
+				}
+			}, 0);
 
-   }
+	   }
+		
 	
-   public void gameSystemPrepares(final String[] values){
+  public void gameSystemPrepares(final String[] values){
 		    
 	   handler.postDelayed(new Runnable() {
 		   public void run() {
@@ -364,7 +377,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
      
    	}
    
-   private void startGameClient(String[] values){
+  private void startGameClient(String[] values){
 	   dialog.dismiss();
 	   
 	   this.engineGameClient = new EngineGameClient(context, MultiGameActivity.this, vibrator, display, namePlayer);
@@ -372,7 +385,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	  
 	   this.setContentView(viewClient);
 	   
-   }
+  }
    
    public void sendToClientStatusGame(String values){
 	   
@@ -408,7 +421,10 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
    private void showProgressDialogWaitClient(){
 		
 		dialog = new Dialog(this, R.style.PauseGameDialogTheme);
-		dialog.setContentView(R.layout.features_wait_player_view);
+		dialog.setContentView(R.layout.wait_multigame_view);
+		    
+		TextView text = (TextView)dialog.findViewById(R.id.wait);
+		text.setText(MultiGameActivity.this.getString(R.string.wait_server));
 		   
 		dialog.show();
 		if (BT_TIME > 0){
@@ -426,12 +442,21 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 
 	    String[] devices = new String[devicesRemote.size()];
 	    
+	    dialog.dismiss();
+    	dialog.cancel();
+    	
+	    if(devices.length == 0){	
+	    	Toast.makeText(this, this.context.getText(R.string.no_server),
+					Toast.LENGTH_SHORT).show();
+	    	
+	    	return;
+	    }
+	    
 	    for (int i = 0; i < devicesRemote.size(); i++) {
 	    	devices[i] = devicesRemote.get(i).getName();
 	    }
 
-	    AlertDialog dialog = new AlertDialog.Builder(this)
-	    	.setTitle("Aparelhos encontrados")
+	    AlertDialog dialog = new AlertDialog.Builder(this).setTitle(MultiGameActivity.this.getString(R.string.devices))
 	    	.setSingleChoiceItems(devices, -1, this)
 	    	.create();
 	    
@@ -569,7 +594,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	   dialog.dismiss();
 	   
 	   dialog = new Dialog(this, R.style.PauseGameDialogTheme);
-	   dialog.setContentView(R.layout.game_wait_view);
+	   dialog.setContentView(R.layout.wait_game_view);
 	   
 	   dialog.show();
 	}
@@ -578,9 +603,33 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 	     
+		dialog.dismiss();
+		
+		this.dialog = new Dialog(activity, R.style.PauseGameDialogTheme);
+		this.dialog.setContentView(R.layout.wait_multigame_view);
+		    
+		TextView text = (TextView)this.dialog.findViewById(R.id.wait);
+		text.setText(MultiGameActivity.this.getString(R.string.wait_init_server));
+		   
+		this.dialog.show();
+		
+		
+		
+		
 		startThreadClient(which);
-	    dialog.dismiss();
+	    
 	}
+	
+	
+	 @Override
+	 public boolean onTouchEvent(MotionEvent event){
+	    	
+		if(this.gestureScanner != null){
+			 return this.gestureScanner.onTouchEvent(event);
+		}
+	   return false;
+	 }
+	 
 	
 	@Override
 	public void onCancel(DialogInterface dialog) {
@@ -618,12 +667,17 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		return false;
 	}
 
-	@Override
+	@Override 
 	public boolean onSingleTapUp(MotionEvent event) {
-	
-		//this.engine.getSpacecraft().newShoot();
+		
+		if(this.engineGame != null){
 			
-			
+			this.engineGame.getSpacecraft().newShoot();
+        	
+        }else if(this.engineGameClient != null ){
+        	
+        	this.engineGameClient.getSpacecraft().newShootClient();
+        }
 		
 		return true;
 	}

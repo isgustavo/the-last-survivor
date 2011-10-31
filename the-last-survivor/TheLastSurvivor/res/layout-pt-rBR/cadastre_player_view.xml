@@ -18,13 +18,7 @@
     			android:layout_width="fill_parent"
     			android:layout_height="fill_parent">
     		
-		   		<ImageView android:id="@+id/top_image"
-		 	 			android:layout_width="fill_parent" 
-		 	 			android:layout_height="fill_parent" 
-		 	 			android:src="@drawable/left_top_image"
-		 	 			android:layout_x="-200dp" android:layout_y="0dp">
-				</ImageView>
-    		
+		   		
     			<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/app_first_name" 
 						android:textSize="29dp" android:textColor="@android:color/white"

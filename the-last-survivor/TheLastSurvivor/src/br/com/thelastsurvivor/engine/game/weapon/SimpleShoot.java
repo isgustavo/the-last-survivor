@@ -8,10 +8,9 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.simple.IDrawBehavior;
-import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
 import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
@@ -21,7 +20,7 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	
 	private Context context;
 	
-	private Bitmap image;
+	private static Bitmap image;
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
 	private Integer sizeWidth;
@@ -36,10 +35,15 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	private Boolean isAlive;
 	private Integer color;
 	
+	
 	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
 		this.context = context;
 		this.position = position;
 		this.angle = angle;
+		
+		if(image == null){
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		}
 		
 		this.spacecraft = spacecraft;
 		
@@ -52,14 +56,15 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		this.angle = angle;
 		this.color = color;
 		
-		spaceClient();
+		init();
+		
 	}
 	
 	public void spaceClient(){
 		
 		switch(this.color){
 		case 1:
-			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_red_image);
 		break;
 		case 2:
 			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
@@ -82,18 +87,21 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	
 	@Override
 	public void init() {
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
-		
+		//this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
+		spaceClient();
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();
 		
-		this.firstPosition();	
+		if(this.position == null){
+			this.firstPosition();	
+		}
+		
 		this.isAlive = true;
 		
-		this.matrix = new Matrix();
-		this.matrix.setRotate(0);
+		//this.matrix = new Matrix();
+		//this.matrix.setRotate(0);
 		
-    	this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
+    	//this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
 		
 	}
 
@@ -135,13 +143,13 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		
 		if(-10 > this.getPosition().getY()){
 			this.isAlive = false;
-		}else if(this.getPosition().getY() > EngineGame.getCamera().getY()+10){
+		}else if(this.getPosition().getY() > 350){
 			this.isAlive = false;
 		}
 	
 		if(-10 > this.getPosition().getX()){
 			this.isAlive = false;
-		}else if(this.getPosition().getX() > EngineGame.getCamera().getX()+10){
+		}else if(this.getPosition().getX() > 500){
 			this.isAlive = false;
 		}
 		
@@ -151,12 +159,17 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	@Override
 	public void draw(Canvas c) {
 		
-		this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
-	    		this.position.getX()+this.resizedBitmap.getWidth(), 
-	    			this.position.getY()+this.resizedBitmap.getHeight());
+		//Log.d("X","."+this.position.getX());
+		//Log.d("Y","."+this.position.getY());
+		
+		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
+		
+		//this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
+	    //		this.position.getX()+this.resizedBitmap.getWidth(), 
+	    //			this.position.getY()+this.resizedBitmap.getHeight());
 	    
 	    
-	    this.drawableImage.draw(c);
+	    //this.drawableImage.draw(c);
 
 	}
 
@@ -173,7 +186,6 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 
 	@Override
 	public Vector2D getPosition() {
-		// TODO Auto-generated method stub
 		return this.position;
 	}
 

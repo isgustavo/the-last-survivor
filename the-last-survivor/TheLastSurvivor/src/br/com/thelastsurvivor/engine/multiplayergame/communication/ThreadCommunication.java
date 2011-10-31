@@ -111,4 +111,4 @@ public class ThreadCommunication extends Thread {
 		return pointName;
 	}
     
-}             
+}                      

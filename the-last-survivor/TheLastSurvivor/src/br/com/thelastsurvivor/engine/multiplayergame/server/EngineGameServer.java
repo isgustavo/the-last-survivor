@@ -8,13 +8,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
+import br.com.thelastsurvivor.engine.effect.EffectGameFactory;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
+import br.com.thelastsurvivor.engine.effect.TypeEffect;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.engine.util.IServer;
 import br.com.thelastsurvivor.engine.util.MessageGameUtil;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -37,7 +41,7 @@ public class EngineGameServer implements IServer{
 	
 	protected List<MessageGameUtil> messages;
 	
-	protected List<EffectShoot> effects;
+	protected List<IEffect> shootsEffect;
 	
 	protected static Vector2D camera;
 	
@@ -69,8 +73,10 @@ public class EngineGameServer implements IServer{
 		this.activity = activity;
 		this.vibrator = vibrator;
 		this.display = display;
+		
 		this.spacecrafts = spacecrafts;
 		
+		Log.d("EngineGameServer","."+color);
 		this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200), color);
 		
 		this.init();
@@ -93,7 +99,10 @@ public class EngineGameServer implements IServer{
 		this.asteroidsDrawables = new ArrayList<IDrawBehavior>();
 		
 		this.messages = new ArrayList<MessageGameUtil>();
-		this.effects = new ArrayList<EffectShoot>();
+		
+		if(this.shootsEffect == null){
+			this.shootsEffect = new ArrayList<IEffect>();
+		}
 		
 	}
 	
@@ -107,57 +116,161 @@ public class EngineGameServer implements IServer{
 		start = System.currentTimeMillis(); 
 		
 		this.spacecraft.update();
+		verificationNewSpacecraftPositionScreen();
+		verificationCollisionShoot();
 		
-		updateNewAsteroid();
-		updateAsteroids();
-		this.spacecraftsDrawables.addAll(this.spacecrafts);
+		updateEffectShoots();
 		
-		for (Spacecraft spacecraft : this.spacecraftsDrawables) {
+		//updateNewAsteroid();
+		//updateAsteroids();
+		
+		
+		for (Spacecraft spacecraft : this.spacecrafts) {
 			spacecraft.updateClient();
+			verificationNewSpacecraftPositionScreen(spacecraft);
+			verificationCollisionShoot(spacecraft);
 		}
 		
+		this.spacecraftsDrawables.addAll(this.spacecrafts);
 		
 		
-		
-		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, asteroidsDrawables, messages, effects));
+		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, asteroidsDrawables, messages, shootsEffect));
 		
 
+	}
+	
+	private void updateEffectShoots(){
+		List<IEffect> effects = new ArrayList<IEffect>();
+		for(IEffect shoot : this.shootsEffect){
+			if(shoot.isAlive()){
+				shoot.update();
+				effects.add(shoot);
+			}
+		}
+		
+		this.shootsEffect.clear();
+		this.shootsEffect.addAll(effects);
+	}
+	
+	public void verificationCollisionShoot(){
+		
+		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
+		
+	
+		
+		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
+			for(Spacecraft spacecraft : this.spacecrafts){
+				
+				if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
+							shoot.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
+							shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
+							shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
+					
+					shoot.setAlive(false);
+					
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					
+					//this.spacecraft.addPoint(asteroid.getPower());
+					//Log.d("EFFECT", "FECTURE");
+					
+					//this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					
+					//if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
+					//	activity.getAudio().playSound(3, 0, 1);
+					//	if(asteroid.getTypeImage() != 0){
+					//		collisionAsteroid.add(new Asteroid(context, 
+					//				new Vector2D(asteroid.getPosition().getX(),
+					//						     asteroid.getPosition().getY()),
+					//						     asteroid.getTypeImage()-1, true));
+					//	}else{
+					//		asteroid.setAlive(false);
+					//	}
+						
+					//	verificationPowerUp((Asteroid)asteroid);
+					//	asteroid.setAlive(false);
+					}
+				}
+			}
+		}
+		
+		//this.asteroidsDrawables.addAll(collisionAsteroid);
+
+	public void verificationCollisionShoot(Spacecraft spacecraftShoot){
+		
+		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
+		
+		List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>(this.spacecrafts);
+		spacecrafts.remove(spacecraftShoot);
+		spacecrafts.add(this.spacecraft);
+		
+		
+		for (IDrawBehavior shoot : spacecraftShoot.getShootsDrawables()) {
+			for(Spacecraft spacecraft : spacecrafts){
+				
+				if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
+						shoot.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
+						shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
+						shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
+					
+					shoot.setAlive(false);
+					
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					
+					//this.spacecraft.addPoint(asteroid.getPower());
+					//Log.d("EFFECT", "FECTURE");
+					
+					//this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					
+					//if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
+					//	activity.getAudio().playSound(3, 0, 1);
+					//	if(asteroid.getTypeImage() != 0){
+					//		collisionAsteroid.add(new Asteroid(context, 
+					//				new Vector2D(asteroid.getPosition().getX(),
+					//						     asteroid.getPosition().getY()),
+					//						     asteroid.getTypeImage()-1, true));
+					//	}else{
+					//		asteroid.setAlive(false);
+					//	}
+						
+					//	verificationPowerUp((Asteroid)asteroid);
+					//	asteroid.setAlive(false);
+					}
+				}
+			}
+		}
+	
+	public void verificationNewSpacecraftPositionScreen(){
+		if(-5 > this.spacecraft.getPosition().getY()){
+			this.spacecraft.getPosition().setY(this.camera.getY());
+		}else if(this.spacecraft.getPosition().getY() > this.camera.getY()+5){
+			this.spacecraft.getPosition().setY(0);
+		}
+	
+		if(-5 > this.spacecraft.getPosition().getX()){
+			this.spacecraft.getPosition().setX(this.camera.getX());
+		}else if(this.spacecraft.getPosition().getX() > this.camera.getX()+5){
+			this.spacecraft.getPosition().setX(0);
+		}
+	}
+	
+	public void verificationNewSpacecraftPositionScreen(Spacecraft spacecraft){
+		if(-5 > spacecraft.getPosition().getY()){
+			spacecraft.getPosition().setY(this.camera.getY());
+		}else if(spacecraft.getPosition().getY() > this.camera.getY()+5){
+			spacecraft.getPosition().setY(0);
+		}
+	
+		if(-5 > spacecraft.getPosition().getX()){
+			spacecraft.getPosition().setX(this.camera.getX());
+		}else if(spacecraft.getPosition().getX() > this.camera.getX()+5){
+			spacecraft.getPosition().setX(0);
+		}
 	}
 	
 	private void currentTime(){
 		this.startTime += finish - start;
 	}
 	
-	private void updateAsteroids(){
-		if(this.asteroidsDrawables != null){
-			
-			this.asteroidsDrawables();
-			
-			this.asteroidsDrawables.addAll(asteroids);
-			
-			for (IDrawBehavior asteroid : this.asteroidsDrawables) {
-				asteroid.update();
-				verificationNewPositionScreen(asteroid);
-			}
-			
-			this.asteroids.clear();
-			//Log.d("SIZEupdateAsteroids", "."+this.asteroidsDrawables.size());
-		}
-	}
-	
-	private void asteroidsDrawables(){
-		
-		List<IDrawBehavior> asteroids = new ArrayList<IDrawBehavior>();
-		for(IDrawBehavior asteroid : this.asteroidsDrawables){
-			if(asteroid.isAlive()){
-				asteroids.add(asteroid);
-			}
-		}
-		
-		this.asteroidsDrawables.clear();
-		this.asteroidsDrawables.addAll(asteroids);
-		//Log.d("SIZEasteroidsDrawables", "."+this.asteroidsDrawables.size());
-	}
 	
 	public void verificationNewPositionScreen(IDrawBehavior object){
 		
@@ -184,7 +297,7 @@ public class EngineGameServer implements IServer{
 	public void setSpacecraftClientToUpdate(String[] values){
 		
 		synchronized(this){
-			
+			        
 			protocol.protocolResponseClientSpacecraft(values, this.spacecrafts);
 			
 			
@@ -209,46 +322,17 @@ public class EngineGameServer implements IServer{
 	@Override
 	public void draw(Canvas c) {
 		
-		
-		for (IDrawBehavior object : this.asteroidsDrawables) {
-
-			object.draw(c);
-		}
-		
 		this.spacecraft.draw(c);
 		
 		for (Spacecraft spacecraft : this.spacecraftsDrawables) {
 			spacecraft.draw(c);
 		}
 		
+		for (IEffect effect : this.shootsEffect) {
+			effect.draw(c);
+		}
+		
 		this.spacecraftsDrawables.clear();
-	}
-
-	private void updateNewAsteroid(){
-		
-		int isAsteroid = 0;
-		
-		switch ((int)(this.startTime/60000)) {
-		case 0:
-			isAsteroid = (int) (Math.random()*100);			
-		break;
-		case 1:
-			isAsteroid = (int) (Math.random()*80);			
-		break;
-		case 2:
-			isAsteroid = (int) (Math.random()*60);			
-		break;
-		case 3:
-			isAsteroid = (int) (Math.random()*40);			
-		break;
-		default:
-			isAsteroid = (int) (Math.random()*20);
-		}
-		
-		if(isAsteroid == 1){
-			this.asteroids.add(new Asteroid(this.context));
-		}
-		
 	}
 	
 	

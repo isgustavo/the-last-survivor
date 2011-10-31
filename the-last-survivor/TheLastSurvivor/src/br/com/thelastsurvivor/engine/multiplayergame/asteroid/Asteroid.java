@@ -18,12 +18,12 @@ import br.com.thelastsurvivor.util.Vector2D;
 
 public class Asteroid implements  IDraw, IDrawBehavior{
 
-private Context context;
+	private Context context;
 	
-	private Bitmap image;
+	
 	private Drawable drawableImage;
-	private Integer sizeWidth;
-	private Integer sizeHeight;
+	private static Integer sizeWidth;
+	private static Integer sizeHeight;
 	
 	private Integer life;
 	
@@ -41,6 +41,9 @@ private Context context;
 	//private Integer MAX_SPEED = 6;
 	
 	Spacecraft spacecraft;
+	
+	static Bitmap image;
+	static Bitmap image2;
 	
 	
 	public Asteroid(Context context){
@@ -78,10 +81,20 @@ private Context context;
 		this.position = origin;
 		this.typeImage = type;
 		
-		imageAsteroid(this.typeImage);
+
+		if(image == null){
+			image = BitmapFactory.decodeResource(Asteroid.this.context.getResources(), R.drawable.asteroids_1_image);
+		}
+		if(image2 == null){
+			image2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.asteroids_2_image);
+		}
 		
-		this.drawableImage = new BitmapDrawable(Bitmap.createBitmap(this.image, 0, 0,
+		
+		this.drawableImage = new BitmapDrawable(Bitmap.createBitmap(image2, 0, 0,
    				this.image.getWidth(), this.image.getHeight(), null, true));	
+		
+		this.sizeWidth = image.getWidth();
+		this.sizeHeight = image.getHeight();
 	}
 	
 	
@@ -204,8 +217,6 @@ private Context context;
 		break;
 		
 		case 1:
-		case 3:
-		case 5:
 			this.life =5;
 			power = 1;
 			
@@ -215,7 +226,6 @@ private Context context;
 			this.sizeHeight = image.getHeight();
 		break;
 		case 2:
-		case 4:
 			this.life = 3;
 			power = 1;
 			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
@@ -224,9 +234,7 @@ private Context context;
 			this.sizeHeight = image.getHeight();	
 		
 		break;
-		case 6:
-		case 7:
-			
+		case 3:		
 			this.life = 8;
 			power = 3;
 			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
@@ -235,8 +243,7 @@ private Context context;
 			this.sizeHeight = image.getHeight();
 		
 		break;
-		case 8:
-		case 9:
+		case 4:
 			
 			this.life = 10;
 			power = 3;
@@ -252,7 +259,7 @@ private Context context;
 	}
 	
 	private void ramdomImageAteroid() {
-		typeImage = (int) (Math.random()*10);
+		typeImage = (int) (Math.random()*3);
 		imageAsteroid(typeImage);
 	}
 
@@ -357,9 +364,7 @@ private Context context;
 	public Integer getPower() {
 		return power;
 	}
-
-	
-	
 	
 	
 }
+

@@ -62,21 +62,9 @@
 	<string name="show_progress">Aguardando por conexões...</string>
 	
 	
-	
 	<string name="multiplayer_mode_1">
-    	Oi! Você deverá escolher qual será  
-    </string>
-    <string name="multiplayer_mode_2">
-    	seu tipo de conexão. Aconselhamos que o
-    </string>
-    <string name="multiplayer_mode_3">
-    	aparelho com maior capacidade de 
-    </string>
-    <string name="multiplayer_mode_4">
-    	 Hardware seja o escolhido como
-    </string>
-    <string name="multiplayer_mode_5">
-    	 ESPAÇO. 
+    	Qual será eu tipo de conexão? Aconselhamos que o
+    	aparelho com maior capacidade de Hardware seja o escolhido como ESPAÇO. 
 	</string>
 	
 	
@@ -104,8 +92,8 @@
 <!-- Trofeu -->
     <string name="trophies">Troféus</string>
     <string name="achieved">Conquistou o troféu:</string>
-
-    <string name="t01">O início!</string>
+    
+     <string name="t01">O início!</string>
     <string name="tObjective01">Finalizar uma partida simples.</string>
     
     <string name="t02">Destruidor de pedras!</string>
@@ -114,45 +102,26 @@
     <string name="t03">Demolidor!</string>
     <string name="tObjective03">Conseguir 5000 pontos em uma partida simples.</string>
     
-    <string name="t04">Habilidade com armas.</string>
-    <string name="tObjective04">conseguir todas as marmas do jogo em um partida simples.</string>
-   
-	<string name="t06">Drift do espaço!</string>
-    <string name="tObjective06">Permanecer 2 minutos sem colidir com asteróides.</string>
+    <string name="t04">Chefe!</string>
+    <string name="tObjective04">Conseguir 10000 pontos em uma partida simples.</string>
+
+	<string name="t05">Sobrevivente!</string>
+    <string name="tObjective05">Sobreviver 3 minutos em uma partida simples.</string>
+
+	<string name="t06">Ação em grupo.</string>
+    <string name="tObjective06">Finalizar uma partida em rede.</string>
 	  
-	<string name="t07">Ação em grupo.</string>
-    <string name="tObjective07">Finalizar uma partida em rede.</string>
-	  
-	<string name="t08">O último sobrevivente!</string>
-    <string name="tObjective08">Vencer uma partida em rede.</string>
+	<string name="t07">O último sobrevivente!</string>
+    <string name="tObjective07">Vencer uma partida em rede.</string>
     
-    <string name="t09">Sem testemunhas!</string>
-    <string name="tObjective09">Destruir todas as naves inimigas em uma partida em rede.</string>
+    <string name="t08">Sócios!</string>
+    <string name="tObjective08">Vencer uma partida em cooperação.</string>
     
-    <string name="t10">Kamikaze!</string>
-    <string name="tObjective10">Destruir um inimigo eum um ataque suicida.</string>
-    
-	<string name="t11">Davi contra Golias!</string>
-    <string name="tObjective11">Vencer um parida em rede com dois times desiguais.</string>
-	     
-    <string name="t12">Sócios!</string>
-    <string name="tObjective12">Vencer uma partida em rede 2-contra-2.</string>
-    
-    <string name="t13">Eu sou o melhor!</string>
-    <string name="tObjective13">Vencer uma partida em rede cada um por si.</string>
-    
-    <string name="t14">Apocalipse!</string>
-    <string name="tObjective14">Utilizar a arma "Buraco Negro".</string>    
+    <string name="t09">Eu sou o melhor!</string>
+    <string name="tObjective09">Vencer uma partida em rede cada um por si.</string>
     
     <string name="t15">Caçador de Troféus!</string>
     <string name="tObjective15">Conquistar todos os troféus do jogo.</string>
     
-    
-    <string name="no_trophies">Sem Troféus ainda.</string>
-    
 
-
-
-    
-    
 </resources>

@@ -82,6 +82,11 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	@Override
 	public void init() {
 		
+		if(typeImage == null){
+			ramdomImageAteroid();
+		}else{
+			imageAsteroid(typeImage);
+		}
 		
 		if(this.position == null){
 			this.position = ramdonOrigin();
@@ -89,12 +94,6 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		
 		if(this.isAlive == null){
 			this.isAlive = true;
-		}
-		
-		if(typeImage == null){
-			ramdomImageAteroid();
-		}else{
-			imageAsteroid(typeImage);
 		}
 		
 		if(this.route == null){
@@ -132,24 +131,47 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	private Vector2D ramdonOrigin(){
 		
 		
+		Integer variant = ((typeImage == 4)||(typeImage == 3)) ? 240 : 85;
+		
+		
 		int origin = (int) (Math.random()*4);
-		int position = 1;
+		int position = 0;
 		switch (origin) {
 		case 0:
 			position = (int)(Math.random()*EngineGame.getCamera().getX());
-			return new Vector2D(position,-200);
+			
+			//if(this.route == null){
+				//this.route = 2;//(int) (Math.random()*2);
+			//}
+			
+			return new Vector2D(position,-variant);
 			
 		case 1:
 			position = (int)(Math.random()*EngineGame.getCamera().getY());
-			return new Vector2D(-200,position);
+			
+			//if(this.route == null){
+				//this.route =  1;//(int) (Math.random()*2);
+			//}
+			
+			return new Vector2D(-variant,position);
 			
 		case 2:
 			position = (int)(Math.random()*EngineGame.getCamera().getX());
-			return new Vector2D(position, EngineGame.getCamera().getY());
+			
+			//if(this.route == null){
+				//this.route =  0;//(int) (Math.random()*2);
+			//}
+			
+			return new Vector2D(position, EngineGame.getCamera().getY()+variant);
 			
 		case 3:
 			position = (int)(Math.random()*EngineGame.getCamera().getY());
-			return new Vector2D(EngineGame.getCamera().getX(),position);
+			
+			//if(this.route == null){
+				//this.route =  4;//(int) (Math.random()*2);
+			//}
+			
+			return new Vector2D(EngineGame.getCamera().getX()+variant,position);
 		}
 		return null;
 		

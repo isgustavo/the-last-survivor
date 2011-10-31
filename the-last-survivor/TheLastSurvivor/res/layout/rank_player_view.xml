@@ -22,14 +22,14 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/rect_title_image"
-    	 			android:layout_x="-200dp" android:layout_y="25dp">
+    	 			android:layout_x="-100dp" android:layout_y="25dp">
 				</ImageView>
 				
 				<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/app_name" android:text="@string/rank" 
 						android:textSize="29dp" android:textColor="@android:color/white"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-						android:layout_x="94dp" android:layout_y="31dp">
+						android:layout_x="110dp" android:layout_y="31dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 	
 			 	<ListView android:layout_width="fill_parent" 

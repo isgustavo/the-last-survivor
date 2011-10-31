@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
-import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
@@ -69,15 +68,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ RankProvider.POINTS +" INTEGER, " 
 				+ RankProvider.DATE +" VARCHAR, " 
 				+ RankProvider.TYPE + " INTEGER ); ");
-		
-		
-		db.execSQL(" CREATE TABLE "+ PowerUpProvider.NAME_TABLE + "( "
-				+ PowerUpProvider.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
-				+ PowerUpProvider.ID_GAME + " INTEGER, "	
-				+ PowerUpProvider.POS_X +" INTEGER, " 
-				+ PowerUpProvider.POS_Y +" INTEGER, " 
-				+ PowerUpProvider.ROUTE +" INTEGER ); ");
-		
 		
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ " VALUES (1, null ); ");

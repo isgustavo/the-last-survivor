@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
-import br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -112,7 +111,7 @@ public abstract class ShootFactory {
 			
 	    default:
 	    	
-	    	Log.d("d", "shoot"+PowerUp.POWER_UP);
+	    	//Log.d("d", "shoot"+PowerUp.POWER_UP);
 	    	Orientation.getNewPosition(angle, position);
 			
 			//position.addX(spacecraft.getWidth()/2);

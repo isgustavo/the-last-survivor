@@ -56,7 +56,7 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	
 	@Override
 	public void init() {
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_blue_image);
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
 		
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();

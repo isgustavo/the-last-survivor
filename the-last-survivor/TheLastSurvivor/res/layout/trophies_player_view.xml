@@ -63,40 +63,40 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     	 			android:layout_x="300dp" android:layout_y="80dp">
 				</Button>
 				
-				<Button android:id="@+id/trophies_7"
+				<Button android:id="@+id/trophies_5"
     	 			android:layout_width="84dp" 
     	 			android:layout_height="110dp" 
     	 			android:layout_x="390dp" android:layout_y="80dp">
 				</Button>
 				
-				<Button android:id="@+id/trophies_8"
+				<Button android:id="@+id/trophies_6"
     	 			android:layout_width="84dp" 
     	 			android:layout_height="110dp" 
     	 			android:layout_x="30dp" android:layout_y="200dp">
 				</Button>
 
-				<Button android:id="@+id/trophies_9"
+				<Button android:id="@+id/trophies_7"
     	 			android:layout_width="84dp" 
     	 			android:layout_height="110dp" 
     	 			android:layout_x="120dp" android:layout_y="200dp">
 				</Button>
 				
-				<Button android:id="@+id/trophies_11"
+				<Button android:id="@+id/trophies_8"
     	 			android:layout_width="84dp" 
     	 			android:layout_height="110dp" 
-    	 			android:layout_x="220dp" android:layout_y="200dp">
+    	 			android:layout_x="210dp" android:layout_y="200dp">
 				</Button>
 				
-				<Button android:id="@+id/trophies_13"
+				<Button android:id="@+id/trophies_9"
     	 			android:layout_width="84dp" 
     	 			android:layout_height="110dp" 
-    	 			android:layout_x="320dp" android:layout_y="200dp">
+    	 			android:layout_x="300dp" android:layout_y="200dp">
 				</Button>
 				
-				<Button android:id="@+id/trophies_14"
+				<Button android:id="@+id/trophies_10"
     	 			android:layout_width="84dp" 
     	 			android:layout_height="110dp" 
-    	 			android:layout_x="420dp" android:layout_y="200dp">
+    	 			android:layout_x="390dp" android:layout_y="200dp">
 				</Button>
 				
 				

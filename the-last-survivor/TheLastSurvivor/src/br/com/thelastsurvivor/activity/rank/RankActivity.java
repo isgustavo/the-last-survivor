@@ -37,11 +37,10 @@ public class RankActivity extends ListActivity {
 		
 		rank = new ArrayList<Rank>();
 		
+		setContentView(R.layout.rank_player_view);  
+		
 		if (isThereRank()) {
-			
-			setContentView(R.layout.rank_player_view);  
-			
-			
+
 			setListAdapter(new ListRankAdapter(rank, this));
 		}
 		

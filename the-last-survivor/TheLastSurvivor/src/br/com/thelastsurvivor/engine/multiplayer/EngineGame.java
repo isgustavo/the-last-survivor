@@ -86,15 +86,15 @@ public class EngineGame implements IServer{
 		switch (spacecrafts.size()) {
 		case 0:
 			Log.d("ENGINE_INIT_CLITN", "."+name);
-			spacecrafts.add(new Spacecraft(context, new Vector2D(200, 50), new Double(180.0),name));
+		//	spacecrafts.add(new Spacecraft(context, new Vector2D(200, 50), new Double(180.0),name));
 			return name+"/200/50/180";
 		case 1:
 			Log.d("ENGINE_INIT_CLITN", "."+name);
-			spacecrafts.add(new Spacecraft(context, new Vector2D(350, 100), new Double(270.0),name));
+		//	spacecrafts.add(new Spacecraft(context, new Vector2D(350, 100), new Double(270.0),name));
 			return name+"/350/100/270";
 		case 2:
 			Log.d("ENGINE_INIT_CLITN", "."+name);
-			spacecrafts.add(new Spacecraft(context, new Vector2D(50, 100), new Double(90.0),name));
+		//	spacecrafts.add(new Spacecraft(context, new Vector2D(50, 100), new Double(90.0),name));
 			return name+"/50/100/90";
 		}
 		return null;
@@ -130,7 +130,7 @@ public class EngineGame implements IServer{
 		}
 	}
 	
-	public void setClientDrawSpacecraft(String[] values){
+/*	public void setClientDrawSpacecraft(String[] values){
 		if(flag){		
 			List<Spacecraft> newSpacecrafts = protocol.protocolResponseAllNewSpacecrafts(values);
 			for (Spacecraft spacecraft : newSpacecrafts) {
@@ -143,7 +143,7 @@ public class EngineGame implements IServer{
 		}
 		spacecrafts = protocol.protocolResponseAllSpacecrafts(values, spacecrafts);
 
-	}
+	}*/
 
 	@Override
 	public void draw(Canvas c) {

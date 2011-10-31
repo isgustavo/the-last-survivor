@@ -1,43 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+ 
+ <br.com.thelastsurvivor.view.BackgroundView
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:id="@+id/surfaceView" /> 
+					
+<HorizontalScrollView android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:scrollbars="none">
 
-		<ImageView android:id="@+id/imagebackgraund"
+     
+<FrameLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+   
+           <AbsoluteLayout 
+    			android:orientation="vertical"
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent">
+    		
+    	<ImageView android:id="@+id/imagebackgraund"
   	 			android:layout_width="fill_parent" 
   	 			android:layout_height="wrap_content" 
   	 			android:src="@drawable/rect_black_image"
   	 			android:layout_x="0dp" android:layout_y="0dp">
 		</ImageView>
+		
+		
+		<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/rect_title_image"
+    	 			android:layout_x="0dp" android:layout_y="25dp">
+		</ImageView>
+		
+		<ImageView android:id="@+id/imageView1"
+    	 			android:layout_width="fill_parent" 
+    	 			android:layout_height="wrap_content" 
+    	 			android:src="@drawable/rect_title_blue_image"
+    	 			android:layout_x="70dp" android:layout_y="76dp">
+		</ImageView>
+				
 				
 		<br.com.thelastsurvivor.util.FT2FontTextView 
 				android:id="@+id/app_name" android:text="@string/pause_game" 
-				android:textSize="20dp" android:textColor="#4ed3ff"
+				android:textSize="20dp" android:textColor="@android:color/white"
 				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="135dp" android:layout_y="1dp">
+				android:layout_x="110dp" android:layout_y="31dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 	
 	 	<br.com.thelastsurvivor.util.FT2FontTextView 
 				android:id="@+id/score_pause_game"  
-				android:textSize="12dp" android:textColor="@android:color/white"
+				android:textSize="20dp" android:textColor="@android:color/white"
 				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="90dp" android:layout_y="32dp">
+				android:layout_x="80dp" android:layout_y="76dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 
 		<br.com.thelastsurvivor.util.FT2FontTextView 
 				android:id="@+id/life_pause_game" 
-				android:textSize="12dp" android:textColor="@android:color/white"
+				android:textSize="20dp" android:textColor="@android:color/white"
 				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="90dp" android:layout_y="44dp">
+				android:layout_x="80dp" android:layout_y="102dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 	
 	 	<br.com.thelastsurvivor.util.FT2FontTextView 
 				android:id="@+id/time_pause_game" 
-				android:textSize="12dp" android:textColor="@android:color/white"
+				android:textSize="20dp" android:textColor="@android:color/white"
 				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="90dp" android:layout_y="55dp">
+				android:layout_x="80dp" android:layout_y="132dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 	
 	 	
@@ -45,19 +79,24 @@
 	      		android:layout_width="wrap_content"
 	      		android:id="@+id/buttonBack"
 	      		android:background="@drawable/button_back_game_image" 
-	      		android:layout_x="90dp" android:layout_y="80dp">
+	      		android:layout_x="80dp" android:layout_y="169dp">
 	    </Button>
 	    <Button android:layout_height="wrap_content"  
 	      		android:layout_width="wrap_content"
 	      		android:id="@+id/buttonSave"
 	      		android:background="@drawable/button_save_game_image" 
-	      		android:layout_x="180dp" android:layout_y="80dp">
+	      		android:layout_x="189dp" android:layout_y="169dp">
 	    </Button>
 	    <Button android:layout_height="wrap_content" 
 	      		android:layout_width="wrap_content"
 	      		android:id="@+id/buttonExit"
 	      		android:background="@drawable/button_exit_game_image" 
-	      		android:layout_x="270dp" android:layout_y="80dp">
+	      		android:layout_x="300dp" android:layout_y="169dp">
 	    </Button>
 
- </AbsoluteLayout>  
+    
+      </AbsoluteLayout>  
+ </FrameLayout> 
+</HorizontalScrollView>
+
+</AbsoluteLayout>

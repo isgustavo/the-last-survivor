@@ -1,6 +1,5 @@
 package br.com.thelastsurvivor.activity.game.simplemode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,22 +31,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.MainMenuActivity;
-import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.engine.audio.AudioGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.GameLoopThread;
+import br.com.thelastsurvivor.engine.simpleplayergame.weapon.ShootFactory;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.view.EngineGameView;
 import br.com.thelastsurvivor.model.game.Asteroid;
 import br.com.thelastsurvivor.model.game.Game;
-import br.com.thelastsurvivor.model.game.PowerUp;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
 import br.com.thelastsurvivor.model.rank.Rank;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
-import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
@@ -190,7 +186,17 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		this.view.getGameLoop().state = 2;
 
 		ContentValues values = new ContentValues();
+		
+		Cursor c = this.getContentResolver().  
+                query(RankProvider.CONTENT_URI, null, null, null, null);  
 
+		if (c.getCount() == 10) {
+			Rank rank = lastPositionRank(c, engine.getSpacecraft().getPoints());
+			if(rank  != null){
+				getContentResolver().delete(RankProvider.CONTENT_URI, RankProvider.ID+" = "+rank.getId(), null);
+			}
+		}
+		
 		values.put(RankProvider.IDENTIFIER_PLAYER, getPlayerIdentifier(this.player));
 		values.put(RankProvider.POINTS, engine.getSpacecraft().getPoints());
 		values.put(RankProvider.DATE,  DateTimeUtil.DateToString(new Date()));
@@ -212,6 +218,28 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		SimpleGameActivity.this.finish();
 		
+		
+	}
+	
+	private Rank lastPositionRank(Cursor c, Integer points){
+		
+		boolean flag = false;
+		Rank last = new Rank(points);
+		
+		
+		while(c.moveToNext()){
+			if(last.getPoint() > c.getInt(2)){
+				last.setId(c.getInt(0));
+				last.setPoint(c.getInt(2));
+				flag = true;
+			}
+		}
+		
+		
+		if(flag){
+			return last;
+		}
+		return null;
 		
 	}
 
@@ -333,6 +361,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	    if(keyCode == KeyEvent.KEYCODE_BACK) {
 	    	
 	    	this.view.getGameLoop().state = 2;
+	    	this.audioBackgraund.pause();
 	    	
 	    	dialog = new Dialog(this, R.style.PauseGameDialogTheme){
 	    		
@@ -345,13 +374,24 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 			dialog.setContentView(R.layout.pause_game_view);
 			
 			final FT2FontTextView scoreGame = (FT2FontTextView)dialog.findViewById(R.id.score_pause_game);
-			scoreGame.setText(context.getString(R.string.score)+" "+this.engine.getSpacecraft().getPoints()+" pt");
+			scoreGame.setText(context.getString(R.string.score)+" "+this.engine.getSpacecraft().getPoints());
 			
 			final FT2FontTextView lifeGame = (FT2FontTextView)dialog.findViewById(R.id.life_pause_game);
 			lifeGame.setText(context.getString(R.string.life)+" "+this.engine.getSpacecraft().getLife()+" hp");
 			
+			String time = "";
+			if((this.engine.getRealTimeGame()/60000) == 0){
+				Integer timeGame = (int) (this.engine.getRealTimeGame()/1000);
+				time += "0:"+timeGame;
+
+			}else{
+				time += (int)(this.engine.getRealTimeGame()/60000)+":"+
+								((this.engine.getRealTimeGame()/1000)-((int)(this.engine.getRealTimeGame()/60000)*60));
+				
+			}
+			
 			final FT2FontTextView timeGame = (FT2FontTextView)dialog.findViewById(R.id.time_pause_game);
-			timeGame.setText(context.getString(R.string.time)+" "+this.engine.getTimeGame()+" min");
+			timeGame.setText(context.getString(R.string.time)+" "+time);
 			
 			
 			ImageView image = (ImageView)dialog.findViewById(R.id.imagebackgraund);
@@ -378,18 +418,20 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	
 	private OnClickListener buttonBackListener = new OnClickListener() {  
 		public void onClick(View v) {  
+			vibrator.vibrate(80);
 			
 			dialog.cancel();
 			dialog.dismiss();
 			
 			view.gameLoop = new GameLoopThread(view.getHolder(), context, engine);
-			view.gameLoop.start();  //setGameLoop().state = 1;
+			view.gameLoop.start(); 
 		}
 	};  
 	
 	private OnClickListener buttonSaveListener = new OnClickListener() {  
 		public void onClick(View v) {  
-
+			vibrator.vibrate(80);
+			
 			dialog = new Dialog(SimpleGameActivity.this, R.style.PauseGameDialogTheme);
 			dialog.setContentView(R.layout.features_wait_player_view);
 			   
@@ -399,8 +441,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 			dialog.cancel();
 			dialog.dismiss();
 			
-			Intent i = new Intent(SimpleGameActivity.this, MainMenuActivity.class);
-			startActivity(i);
+			//Intent i = new Intent(SimpleGameActivity.this, MainMenuActivity.class);
+			//startActivity(i);
 			
 			SimpleGameActivity.this.finish();
 		}
@@ -409,9 +451,9 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	private OnClickListener buttonExitListener = new OnClickListener() {  
 		public void onClick(View v) {  
 			
-			Intent i = new Intent(SimpleGameActivity.this, MainMenuActivity.class);
-			startActivity(i);
-			
+			//Intent i = new Intent(SimpleGameActivity.this, MainMenuActivity.class);
+			//startActivity(i);
+			vibrator.vibrate(80);
 			SimpleGameActivity.this.finish();
 			
 			//SimpleGameActivity.this.setResult(SavedGameActivity.EXIT_GAME);         
@@ -423,8 +465,8 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	
 	public Game preparesGameToSave(){
 		
-		return new Game(player, new Date(), engine.getRealTimeGame(), br.com.thelastsurvivor.engine.simpleplayergame.powerup.PowerUp.POWER_UP,
-				getSpacecraftGame(), getAsteroidsGame(),getPowerUpsGame());
+		return new Game(player, new Date(), engine.getRealTimeGame(), ShootFactory.POWER_UP,
+				getSpacecraftGame(), getAsteroidsGame());
 		
 	}
 
@@ -467,18 +509,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 	}
 	
-	private List<PowerUp> getPowerUpsGame(){
-		
-		List<PowerUp> powerUps = new ArrayList<PowerUp>();
-		
-		for(IDrawBehavior powerUp : this.engine.getPowerUps()){
-			powerUps.add(new PowerUp(powerUp.getPosition(), powerUp.getRoute()));
-		}
-		
-		return powerUps;
-		
-	}
-	
+
 	private boolean save(Game game){
 		
 		ContentValues values = new ContentValues();
@@ -533,19 +564,6 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 					
 			getContentResolver().insert(AsteroidProvider.CONTENT_URI, values);
 		}
-		
-		
-		for(PowerUp power : game.getPowerUps()){
-			values = new ContentValues();
-			
-			values.put(PowerUpProvider.ID_GAME, game.getId());
-			values.put(PowerUpProvider.POS_X, power.getPosition().getX());
-			values.put(PowerUpProvider.POS_Y, power.getPosition().getY());
-			values.put(PowerUpProvider.ROUTE, power.getRoute());
-					
-			getContentResolver().insert(PowerUpProvider.CONTENT_URI, values);
-		}
-		
 		
 		
 		return true;

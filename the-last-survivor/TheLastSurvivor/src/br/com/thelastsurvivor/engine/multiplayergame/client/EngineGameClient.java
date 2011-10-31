@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
@@ -68,15 +67,16 @@ public class EngineGameClient implements IClient{
 		
 		activity.sendsToServerClientSpacecraft(protocol.protocolSendToServerClientSpacecraft(this.spacecraft));
 		
+		this.spacecraft.setNewShoot(false);
 		
 	}
 	
 	@Override
 	public void drawGame(String[] message){
-		Log.d("DRAW", "GAME CLIENT");
+		//Log.d("DRAW", "GAME CLIENT");
 		drawables.clear();
 		
-		Log.d("DRAW", "drawGame"+message);
+		//Log.d("DRAW", "drawGame"+message);
 
 		this.drawables = this.protocol.protocolReceiveToServerStatusGame(this.context, message);
 
@@ -89,7 +89,7 @@ public class EngineGameClient implements IClient{
 				if(canvas != null){
 					canvas.drawRect(0,0,canvas.getWidth(), canvas.getHeight(), this.blackScreen);
 					for (IDraw object : drawables) {
-						 Log.d("DRAW", "object");
+						// Log.d("DRAW", "object");
 						object.draw(canvas);
 					}
 				}
@@ -144,3 +144,5 @@ public class EngineGameClient implements IClient{
 	
 
 }
+
+

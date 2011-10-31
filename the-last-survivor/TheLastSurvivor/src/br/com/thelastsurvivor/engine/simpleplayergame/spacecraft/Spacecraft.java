@@ -79,7 +79,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	public void init() {
 		
 		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
+		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image_v2);
 		
 	
 		this.width = image.getWidth();
@@ -92,7 +92,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	
 		
 		if(this.life == null){
-			this.life = 2;
+			this.life = 250;
 		}
 		
 		if(this.points == null){
@@ -186,6 +186,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	
 	Double angleTemp = 0.0;
 	Vector2D backing = new Vector2D(0,0);
+	Float back = 1.0f;
 	private void controlUpdate(){
 			
 		if(this.angle >= 360){
@@ -200,6 +201,8 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	    	this.angle += 5;
 	    }
 		
+		this.down = true;
+		
 		if (!this.down) {
 			Vector2D vetor = new Vector2D();
 			
@@ -207,14 +210,15 @@ public class Spacecraft implements IDrawControllable, Serializable {
 			
 			this.position.addFloatX(vetor.getFloatX()/2);
 			this.position.addFloatY(vetor.getFloatY()/2);
-			
+			back = 1.0f;
 		}else{
+			back += 0.5f;
 			Vector2D vetor = new Vector2D();
 			
 			Orientation.getNewPosition(angle, vetor);
 			
-			this.position.addFloatX(vetor.getFloatX()/5);
-			this.position.addFloatY(vetor.getFloatY()/5);
+			this.position.addFloatX((vetor.getFloatX()/back) < 0 ? 0 : vetor.getFloatX()/back);
+			this.position.addFloatY((vetor.getFloatY()/back) < 0 ? 0 : vetor.getFloatY()/back);
 		}
 		
 		

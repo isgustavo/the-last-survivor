@@ -118,22 +118,7 @@ public class EffectShoot implements IEffect {
 		}else{
 			this.setAlive(false);
 		}
-		
-	
-		
-		
-	/*	Integer alpha = this.color >>> 24;
-		alpha -= 12; //randomSizedimension(0,10).intValue();
-		if (alpha <= 0) {	
-			this.setAlive(false);
-		}else{
-			this.color = (this.color & 0x00ffffff) + (alpha << 24);		// set the new alpha
-			//paint.setAlpha(alpha);
-			this.alpha = alpha;
-		}
-		
-		this.paint.setAlpha(this.alpha);
-		*/
+
 	}
 
 	@Override
@@ -141,20 +126,20 @@ public class EffectShoot implements IEffect {
 		
 		if(startTime < 2){
 			c.drawBitmap(Bitmap.createBitmap(this.image4, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
+			        this.image4.getWidth(), this.image4.getHeight(), this.matrix, true),
+			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
 		}else if(startTime < 3){
 			c.drawBitmap(Bitmap.createBitmap(this.image3, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
+					this.image3.getWidth(), this.image3.getHeight(), this.matrix, true),
+			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
 		}else if(startTime < 4){
 			c.drawBitmap(Bitmap.createBitmap(this.image2, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
+					this.image2.getWidth(), this.image2.getHeight(), this.matrix, true),
+			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
 		}else if(startTime == 5){
 			c.drawBitmap(Bitmap.createBitmap(this.image1, 0, 0,
-			        this.sizeWidth, this.sizeHeight, this.matrix, true),
-			        this.positionShoot.getX()-(this.sizeWidth/2) , this.positionShoot.getY(), this.paint);
+					this.image1.getWidth(), this.image1.getHeight(), this.matrix, true),
+			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
 		}
 		
 		

@@ -62,7 +62,7 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 						android:layout_x="93dp" android:layout_y="140dp">
 			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 			 
-				<EditText android:layout_height="45dp" android:layout_width="304dp" 
+				<EditText android:layout_height="50dp" android:layout_width="200dp" 
 				          android:textSize="23dp"
 				           android:id="@+id/editNickName" 
 				          android:inputType="textPersonName" 
@@ -74,14 +74,14 @@ xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
 			      		android:layout_width="wrap_content"
 			      		android:background="@drawable/button_left_ok_image" 
 			      		android:id="@+id/buttonOk"
-			      		android:layout_x="380dp" android:layout_y="210dp">
+			      		android:layout_x="280dp" android:layout_y="210dp">
 			    </Button>
 			    
 			    <Button android:layout_height="wrap_content" 
 			      		android:layout_width="wrap_content"
 			      		android:background="@drawable/remove_profile_button_image" 
 			      		android:id="@+id/buttonRemove"
-			      		android:layout_x="380dp" android:layout_y="0dp">
+			      		android:layout_x="380dp" android:layout_y="210dp">
 			    </Button>
 			    
  	 </AbsoluteLayout>  

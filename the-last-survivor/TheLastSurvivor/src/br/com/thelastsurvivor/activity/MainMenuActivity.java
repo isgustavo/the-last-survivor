@@ -73,7 +73,7 @@ public class MainMenuActivity extends Activity{
 	private OnClickListener buttonSimpleGameListener = new OnClickListener() {  
         public void onClick(View v) {  
         	
-        	vibrator.vibrate(50);
+        	vibrator.vibrate(80);
         	
         	Intent i = new Intent(MainMenuActivity.this, SavedGameActivity.class);
         	
@@ -132,8 +132,7 @@ public class MainMenuActivity extends Activity{
 			Intent i = new Intent(MainMenuActivity.this, AlterationPlayerActivity.class);
 			
 			startActivity(i);
-			
-			MainMenuActivity.this.finish();
+		
 		}  
 	};  
 	

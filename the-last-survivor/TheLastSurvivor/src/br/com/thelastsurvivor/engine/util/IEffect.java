@@ -10,5 +10,6 @@ public interface IEffect extends IInitUpdateDraw{
 	public void setAlive(Boolean alive);
 	public Vector2D getPosition();
 	public boolean isAlive();
+	public Integer getAlpha();
 
 }

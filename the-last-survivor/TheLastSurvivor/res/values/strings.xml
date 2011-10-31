@@ -9,7 +9,7 @@
     <string name="app_name_for">For</string>
     <string name="app_name_players">Players</string>
 
-    <string name="profile">profile</string>
+    <string name="profile">Profile</string>
     <string name="erro_profile">Nickname is necessary!</string>
     
     <string name="cadastre_player_1">
@@ -28,20 +28,14 @@
     	 in THE LAST SURVIVOR now?  
     </string>
 
- 	<string name="removeProfile_1">
-    	 Alert!	
+ 	<string name="remove_alert"> Alert!</string>
+    
+    <string name="removeProfile">
+    	 This action will result in loss of all data on The Last Survivor 		
     </string>
     
     <string name="removeProfile_2">
-    	 This action will result in 		
-    </string>
-    
-    <string name="removeProfile_3">
-    	loss of all data on 	
-    </string>
-    
-    <string name="removeProfile_4">
-    	The Last Survivor 	
+    	This app will finished with the exclusion.
     </string>
     
     <string name="nickname">Nickname</string>
@@ -64,7 +58,7 @@
 	 <string name="power_up">new Weapon! </string> 
 	 
 	 <string name="pause_game">Pause game</string> 
-	 <string name="time">time in game: </string> 
+	 <string name="time">Time in game: </string> 
 	 
 	 <string name="list_game">Save games</string>
 	 <string name="date_game">DATE:</string>
@@ -72,55 +66,85 @@
 	 <string name="life_game">LIFE:</string>
 	 <string name="point_game">POINTS:</string>
     
-    
+
+<!-- Jogo Multiplayer -->
+
+	<string name="multiplayer">Multiplayer</string>
+
+	<string name="not_bluetooth">Aparelho não suporta Bluetooth.</string>
+	<string name="bluetooth_confirm">Você deve ativar o Bluetooth pra continuar.</string>
+	<string name="bluetooth_server">Para iniciar o servidor, seu aparelho deve estar visível.</string>
+	
+	<string name="no_client">Nenhum sobrevivente encontrado.</string>
+	<string name="no_server">Nenhum Servidor encontrado.</string>
+	<string name="devices">Devices.</string>
+	
+	<string name="server_confirm">Escolha um tipo de conexão.</string>
+	<string name="show_progress">Aguardando por conexões...</string>
+	
+	
+	<string name="multiplayer_mode_1">
+    	Em cada partida, somente um jogador deve escolher SERVIDOR, 
+    	enquanto todos os outros devem escolher SOBREVIVENTE.
+	</string>
+	
+	<string name="wait_server">Esperando por sobreviventes.</string>
+	<string name="wait_client">Buscando Servidor.</string>
+	<string name="wait_init_server">Conectando com o Servidor.</string>
+	
+	<string name="wait">Carregando!</string>
+	<string name="color">Qual sua cor?</string>
+	
+	<string name="features_mode_1">
+    	Oi! Em instantes você deverá escolher 
+    </string>
+    <string name="features_mode_2">
+    	uma cor paa jogar. Quando mais
+    </string>
+    <string name="features_mode_3">
+    	de um jogador escolhem a mesma 
+    </string>
+    <string name="features_mode_4">
+    	 cor os mesmo jogaram em modo 
+    </string>
+    <string name="features_mode_5">
+    	 cooperativo. 
+	</string>
+
 <!-- trophies -->    
     
     <string name="trophies">Trophies</string>
         <string name="achieved">Achieved</string>
     
     <string name="t01">The beginning!</string>
-    <string name="tObjective01">Finish a single match.</string>
+    <string name="tObjective01">Finish a single mode.</string>
     
     <string name="t02">Destroyer of stones!</string>
-    <string name="tObjective02">Getting 1000 points in a single match.</string>
+    <string name="tObjective02">Getting 1000 points in a single mode.</string>
     
     <string name="t03">Daredevil!</string>
-    <string name="tObjective03">Getting 5000 points in a single match.</string>
+    <string name="tObjective03">Getting 5000 points in a single mode.</string>
     
-    <string name="t04">Hability with weapons!</string>
-    <string name="tObjective04">Get all weapons single game.</string>
+    <string name="t04">Like a Boss!</string>
+    <string name="tObjective04">Getting 10000 points in a single mode.</string>
 
-	<string name="t05">Space Drift!</string>
-    <string name="tObjective05">Remain for 2 minutes without colide with an asteroid.</string>
+	<string name="t05">Survivor!</string>
+    <string name="tObjective05">Survive for 3 minutes in a single mode.</string>
 	  
 	<string name="t06">Action Group!</string>
-    <string name="tObjective06">Finish a network game.</string>
+    <string name="tObjective06">Finish a multiplayer mode.</string>
 	  
 	<string name="t07">The last Survivor!</string>
-    <string name="tObjective07">Win a network game.</string>
+    <string name="tObjective07">Win a game on multiplayer mode.</string>
     
-    <string name="t08">Unwitnessed!</string>
-    <string name="tObjective08">Destroy all enemy ships in a network match.</string>
+    <string name="t08">Partners!</string>
+    <string name="tObjective08">Winning a game in mode cooperative.</string>
     
-    <string name="t09">Kamikaze!</string>
-    <string name="tObjective09">Destroy an enemy in a suicide attack.</string>
+    <string name="t09">I am the Best!</string>
+    <string name="tObjective09">Winning a game in mode for himself.</string>
     
-	<string name="t10">David against Goliath!</string>
-    <string name="tObjective10">Winning a network match with two unequal teams.</string>
-	     
-    <string name="t11">Partners!</string>
-    <string name="tObjective11">Winning a 2 vs 2 network match.</string>
-    
-    <string name="t12">I am the Best!</string>
-    <string name="tObjective12">Winning a network match everyone for himself.</string>
-    
-    <string name="t13">Apocalypse!</string>
-    <string name="tObjective13">Use "Black Hole".</string>    
-    
-    <string name="t14">Trophies Hunter!</string>
-    <string name="tObjective14">Getting all trophies in the game.</string>
-
-    <string name="no_trophies">No Trophies yet.</string>
+    <string name="t10">Trophies Hunter!</string>
+    <string name="tObjective10">Getting all trophies in the game.</string>
     
 <!-- MESSAGE GAME -->
 
@@ -138,8 +162,8 @@
 <!-- RESULT -->
 
 	<string name="result">Result</string>
-	<string name="result_time">Game time</string>
-	<string name="result_score">Score</string>
+	<string name="result_time">Game time:</string>
+	<string name="result_score">Score:</string>
 	
 <!-- TWITTER -->
 	<string name="twitter_survived">survived</string>

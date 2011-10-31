@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
-import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
@@ -93,11 +92,6 @@ public class TheLastSurvivorProvider extends ContentProvider {
   
             break;
             
-            case Constant.IS_POWER_UP:
-            	builder.setTables(PowerUpProvider.NAME_TABLE);
-  
-            break;
-            
             case Constant.IS_RANK :
             	builder.setTables(RankProvider.NAME_TABLE);
   
@@ -175,18 +169,6 @@ public class TheLastSurvivorProvider extends ContentProvider {
 		case Constant.IS_ASTEROID:
 			db = helper.getWritableDatabase();
 			rowId = db.insert(AsteroidProvider.NAME_TABLE, null, values);
-		
-			if (rowId > 0) {
-				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
-				getContext().getContentResolver().notifyChange(uriId, null);			
-				return uriId;
-			}
-		
-		break;
-		
-		case Constant.IS_POWER_UP:
-			db = helper.getWritableDatabase();
-			rowId = db.insert(PowerUpProvider.NAME_TABLE, null, values);
 		
 			if (rowId > 0) {
 				Uri uriId = ContentUris.withAppendedId(uri, rowId);		
@@ -284,10 +266,9 @@ public class TheLastSurvivorProvider extends ContentProvider {
 			  db.delete(AsteroidProvider.NAME_TABLE, where, null);
 		  break;
 		
-		  
-		  case Constant.IS_POWER_UP: 
+		  case Constant.IS_RANK: 
 			  db = helper.getWritableDatabase();
-			  db.delete(PowerUpProvider.NAME_TABLE, where, null);
+			  db.delete(RankProvider.NAME_TABLE, where, null);
 		  break;
 		  
 		  default:

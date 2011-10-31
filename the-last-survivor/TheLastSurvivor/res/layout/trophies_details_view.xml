@@ -9,36 +9,42 @@
   	 			android:layout_width="fill_parent" 
   	 			android:layout_height="wrap_content" 
   	 			android:src="@drawable/rect_black_image"
-  	 			android:layout_x="0dp" android:layout_y="0dp">
+  	 			android:layout_x="0dp" android:layout_y="-20dp">
 		</ImageView>
 		
 		<ImageView android:id="@+id/image_trophy"
-  	 		
-  	 			android:layout_width="189dp" 
-    	 		android:layout_height="223dp" 
+  	 			android:layout_width="132dp" 
+    	 		android:layout_height="167dp" 
   	 			android:src="@drawable/rect_black_image"
-  	 			android:layout_x="113dp" android:layout_y="20dp">
+  	 			android:layout_x="49dp" android:layout_y="68dp">
 		</ImageView>
 				
-	<!-- 	<br.com.thelastsurvivor.util.FT2FontTextView 
-				android:id="@+id/trophy_name" 
-				android:textSize="15dp" android:textColor="@android:color/white"
-				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="200dp" android:layout_y="100dp">
+	 	<br.com.thelastsurvivor.util.FT2FontTextView 
+				android:id="@+id/trophy_name" android:inputType="textMultiLine"
+				android:textSize="17dp" android:textColor="@android:color/white"
+				android:lines="3" android:gravity="top|left"
+				android:scrollHorizontally="false"
+				android:maxWidth="240.0dip"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				lht:ttf_name="FT2FONT.TTF"
+				android:layout_x="200dp" android:layout_y="72dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 	
 	 	<br.com.thelastsurvivor.util.FT2FontTextView 
-				android:id="@+id/trophy_detail" 
-				android:textSize="10dp" android:textColor="@android:color/white"
+				android:id="@+id/trophy_detail" android:inputType="textMultiLine"
+				android:textSize="12dp" android:textColor="@android:color/white"
+				android:lines="3" android:gravity="top|left"
+				android:scrollHorizontally="false"
+				android:maxWidth="240.0dip"
 				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="250dp" android:layout_y="120dp">
+				android:layout_x="200dp" android:layout_y="110dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
-	  -->	
+	  	
 	 	<br.com.thelastsurvivor.util.FT2FontTextView 
 				android:id="@+id/trophy_date"  
 				android:textSize="12dp" android:textColor="@android:color/white"
 				android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
-				android:layout_x="166dp" android:layout_y="261dp">
+				android:layout_x="240dp" android:layout_y="160dp">
 	 	</br.com.thelastsurvivor.util.FT2FontTextView>
 	 
 		

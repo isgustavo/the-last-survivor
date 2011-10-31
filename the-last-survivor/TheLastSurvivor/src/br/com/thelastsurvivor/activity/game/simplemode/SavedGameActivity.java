@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,12 +20,10 @@ import android.widget.TextView;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.model.game.Asteroid;
 import br.com.thelastsurvivor.model.game.Game;
-import br.com.thelastsurvivor.model.game.PowerUp;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
-import br.com.thelastsurvivor.provider.game.PowerUpProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
@@ -35,6 +34,7 @@ public class SavedGameActivity extends ListActivity {
 	//public static final int EXIT_GAME = 0;
 	
 	private ListAdapter adapter;
+	private Vibrator vibrator;
 	
 	private Integer idPlayer;
 	private Game game;
@@ -52,6 +52,7 @@ public class SavedGameActivity extends ListActivity {
 		this.idPlayer = s.getInt("id_player");
 		
 		context = SavedGameActivity.this;
+		this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		
 		games = new ArrayList<Game>();
 		
@@ -64,7 +65,7 @@ public class SavedGameActivity extends ListActivity {
 			Button newGame = (Button)findViewById(R.id.button_new_game);
 			newGame.setOnClickListener(new OnClickListener() {  
 				public void onClick(View v2) {  
-					
+					vibrator.vibrate(80);
 					Intent i = new Intent(SavedGameActivity.this, SimpleGameActivity.class);
 					
 					Bundle b = new Bundle();
@@ -101,7 +102,7 @@ public class SavedGameActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
-		
+		vibrator.vibrate(80);
 		optionSavedGame(v);
 		
 	}
@@ -124,6 +125,7 @@ public class SavedGameActivity extends ListActivity {
 		Button backList = (Button)dialog.findViewById(R.id.button_back);
 		backList.setOnClickListener( new OnClickListener() {  
 			public void onClick(View v) {  
+				vibrator.vibrate(80);
 				
 				dialog.cancel();
 				dialog.dismiss();
@@ -134,6 +136,8 @@ public class SavedGameActivity extends ListActivity {
 		Button openGame = (Button)dialog.findViewById(R.id.button_open_game);
 		openGame.setOnClickListener(new OnClickListener() {  
 			public void onClick(View v2) {  
+				vibrator.vibrate(80);
+				
 			    game = openGame(Integer.parseInt(((TextView)v.findViewById(R.id.game_saved_id)).getText().toString()));
 				
 			    dialog.cancel();
@@ -147,6 +151,7 @@ public class SavedGameActivity extends ListActivity {
 		Button removeGame = (Button)dialog.findViewById(R.id.button_remove);
 		removeGame.setOnClickListener(new OnClickListener() {  
 			public void onClick(View v2) {  
+				vibrator.vibrate(80);
 				
 				deleteGame(Integer.parseInt(((TextView)v.findViewById(R.id.game_saved_id)).getText().toString()));
 				
@@ -189,7 +194,7 @@ public class SavedGameActivity extends ListActivity {
 		spacecraft.setShoots(loadShoots(spacecraft.getId()));
 	
 		return new Game(game.getId(), game.getDate(), game.getRunTime(), game.getPowerUp(),
-				spacecraft, loadAsteroid(id), loadPowerUp(id));
+				spacecraft, loadAsteroid(id));
 
 	}
 	
@@ -218,8 +223,6 @@ public class SavedGameActivity extends ListActivity {
 		getContentResolver().delete(ShootProvider.CONTENT_URI, ShootProvider.ID_SPACECRAFT +" = "+ spacecraft.getId(), null);
 		
 		getContentResolver().delete(AsteroidProvider.CONTENT_URI, AsteroidProvider.ID_GAME +" = "+ id, null);
-		
-		getContentResolver().delete(PowerUpProvider.CONTENT_URI, PowerUpProvider.ID_GAME +" = "+ id, null);
 		
 		return true;
 		
@@ -309,22 +312,6 @@ public class SavedGameActivity extends ListActivity {
 		}
 		
 		return asteroid;
-		
-	}
-
-	public List<PowerUp> loadPowerUp(Integer id){
-		
-		List<PowerUp> powerUp = new ArrayList<PowerUp>();
-		
-		Cursor c = this.getContentResolver().  
-		query(PowerUpProvider.CONTENT_URI, null, PowerUpProvider.ID_GAME+ " = "+ id , null, null); 
-		
-		while(c.moveToNext()){
-			powerUp.add(new PowerUp(new Vector2D(c.getInt(2),c.getInt(3)),
-					c.getInt(4)));
-		}
-		
-		return powerUp;
 		
 	}
 

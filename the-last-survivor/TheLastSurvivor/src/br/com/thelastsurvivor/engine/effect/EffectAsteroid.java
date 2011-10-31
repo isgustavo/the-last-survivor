@@ -234,7 +234,7 @@ public class EffectAsteroid implements IEffect {
 	}
 
 
-
+	@Override
 	public Integer getAlpha() {
 		return alpha;
 	}

@@ -1,10 +1,10 @@
 package br.com.thelastsurvivor.engine.multiplayergame.protocol;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
@@ -12,6 +12,7 @@ import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
 import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
+import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.engine.util.MessageGameUtil;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -53,10 +54,12 @@ public class ProtocolCommunication {
 			message += "up/";
 		}else if(spacecraft.getDown()){
 			message += "down/";
+		}else{
+			message +="/";
 		}
 		
-		message += spacecraft.getNewShoot().toString();
-		Log.d("PROTOCOLo", "."+message);
+		message += spacecraft.getNewShoot().toString()+"/";
+		//Log.d("PROTOCOLO------------------------------------------", "."+message);
 		return message;
 		
 		
@@ -80,6 +83,13 @@ public class ProtocolCommunication {
 					spacecraft.setDown(true);
 					
 				}
+				
+				if(values.length > 3){
+					if(values[3].equalsIgnoreCase("true")){
+						spacecraft.newShoot();
+					}
+				}
+				
 				
 			}
 			
@@ -144,7 +154,7 @@ public class ProtocolCommunication {
 	
 	
 	public String protocolSendToClientsStatusGame(Spacecraft spacecraftServer, List<Spacecraft> spacecrafts, List<IDrawBehavior> asteroids, 
-			List<MessageGameUtil> messages, List<EffectShoot> effects){
+			List<MessageGameUtil> messages, List<IEffect> shootsEffect){
 		
 		
 		String buffer = "";
@@ -155,8 +165,8 @@ public class ProtocolCommunication {
 			   +  spacecraftServer.getAngle()+"/"
 			   +  spacecraftServer.getColor()+"/";
 		if(spacecraftServer.getShootsDrawables().size() != 0){
-			buffer +="h/";
-			for(IWeaponBehavior shoot : spacecraftServer.getShootsDrawables()){
+			for(IDrawBehavior shoot : spacecraftServer.getShootsDrawables()){
+				buffer +="h/";
 				buffer += shoot.getPosition().getX()+"/"
 					   + shoot.getPosition().getY()+"/"
 					   + shoot.getAngle()+"/";
@@ -170,9 +180,9 @@ public class ProtocolCommunication {
 				   +  spacecraft.getAngle()+"/"
 				   +  spacecraft.getColor()+"/";
 			
-			if(spacecraft.getShootsDrawables().size() != 0){
-				buffer +="h/";
-				for(IWeaponBehavior shoot : spacecraft.getShootsDrawables()){
+			if(spacecraft.getShootsDrawables().size() != 0){	
+				for(IDrawBehavior shoot : spacecraft.getShootsDrawables()){
+					buffer +="h/";
 					buffer += shoot.getPosition().getX()+"/"
 						   + shoot.getPosition().getY()+"/"
 						   + shoot.getAngle()+"/";
@@ -180,7 +190,7 @@ public class ProtocolCommunication {
 			}
 		}
 		
-		for(IDrawBehavior asteroid : asteroids){
+	/*	for(IDrawBehavior asteroid : asteroids){
 			buffer += "a/"
 				   +  asteroid.getPosition().getX()+"/"
 				   +  asteroid.getPosition().getY()+"/"
@@ -193,8 +203,8 @@ public class ProtocolCommunication {
 				   +  message.getPosition()+"/"
 				   +  message.getAlfa()+"/";
 		}
-		
-		for(EffectShoot effect : effects){
+	*/	
+		for(IEffect effect : shootsEffect){
 			buffer += "e/"
 				   +  effect.getPosition().getX()+"/"
 				   +  effect.getPosition().getY()+"/"
@@ -207,7 +217,7 @@ public class ProtocolCommunication {
 	
 	
 	public List<IDraw> protocolReceiveToServerStatusGame(Context context, String[] values){
-		
+
 		List<IDraw> listDrawables = new ArrayList<IDraw>();
 		
 		int color = 0;
@@ -229,7 +239,7 @@ public class ProtocolCommunication {
 				i += 3;
 			break;
 			
-			case 'a':
+			/*		case 'a':
 				listDrawables.add(new Asteroid(context,new Vector2D(values[i+1], values[i+2]),
 						Integer.parseInt(values[i+3])));
 				i += 3;
@@ -241,7 +251,7 @@ public class ProtocolCommunication {
 				
 				i += 3;
 			break;
-			
+			*/
 			case 'e':
 				listDrawables.add(new EffectShoot(context, new Vector2D(values[i+1], values[i+2]),
 						Integer.parseInt(values[i+3])));
@@ -251,6 +261,8 @@ public class ProtocolCommunication {
 			}
 		}
 		
+		//Log.d("SIZE","."+listDrawables.size());
+
 		return listDrawables;
 		
 	}

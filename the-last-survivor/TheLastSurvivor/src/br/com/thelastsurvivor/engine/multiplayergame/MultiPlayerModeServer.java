@@ -7,7 +7,6 @@ import android.view.Display;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayer.EngineGame;
-import br.com.thelastsurvivor.util.Vector2D;
 
 public class MultiPlayerModeServer extends EngineGame {
 
@@ -38,7 +37,7 @@ public class MultiPlayerModeServer extends EngineGame {
 	public void init() {
 		super.init();
 		
-		this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200));
+		//this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200));
 		
 	
 	}

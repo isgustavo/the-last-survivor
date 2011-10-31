@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,8 +19,7 @@ import br.com.thelastsurvivor.provider.player.PlayerProvider;
 
 public class CadastrePlayerActivity extends Activity {
 
-	private Intent i;
-	private CadastrePlayerActivity activity;
+	private Vibrator vibrator;
 	
 	private EditText nickname;
 
@@ -35,9 +35,7 @@ public class CadastrePlayerActivity extends Activity {
 	
 	public void init(){
 		
-		this.i = new Intent(this, MainMenuActivity.class);
-		this.activity = this;
-		
+		this.vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 		this.setNickname((EditText) findViewById(R.id.editNickName));
 
 		final Button button = (Button) findViewById(R.id.buttonOk);
@@ -46,17 +44,20 @@ public class CadastrePlayerActivity extends Activity {
 	
 	private OnClickListener buttonListener = new OnClickListener() {  
         public void onClick(View v) {  
-        	
+        	vibrator.vibrate(80);
         	if (getNickname().getText().toString().equals("")) {
 				
-        		Toast.makeText(activity,R.string.erro_profile , 
+        		Toast.makeText(CadastrePlayerActivity.this,R.string.erro_profile , 
                         Toast.LENGTH_SHORT).show();
         		
 			}else{
 				if(insertPlayer(new Player(getNickname().getText().toString()))){
-				   startActivity(i);
+				  
+					Intent i = new Intent(CadastrePlayerActivity.this, MainMenuActivity.class);
+					
+					startActivity(i);
 
-				   CadastrePlayerActivity.this.finish();
+					CadastrePlayerActivity.this.finish();
 	    		}
 			}
      
