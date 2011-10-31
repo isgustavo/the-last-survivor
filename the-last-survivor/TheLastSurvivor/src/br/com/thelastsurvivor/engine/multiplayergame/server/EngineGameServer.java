@@ -43,6 +43,7 @@ public class EngineGameServer implements IServer{
 	protected Spacecraft spacecraft;
 	protected List<Spacecraft> spacecrafts;
 	protected List<Spacecraft> spacecraftsDrawables;
+	protected List<Spacecraft> spacecraftsDead;
 	
 	protected List<IEffect> shootsEffect;
 	
@@ -99,7 +100,8 @@ public class EngineGameServer implements IServer{
 		this.camera = new Vector2D(display.getWidth(), display.getHeight());
 		
 		this.spacecraftsDrawables = new ArrayList<Spacecraft>();
-
+		this.spacecraftsDead = new ArrayList<Spacecraft>();
+		
 		this.messages = new ArrayList<MessageGame>();
 		this.messagesDrawables = new ArrayList<MessageGame>();
 		
@@ -138,10 +140,31 @@ public class EngineGameServer implements IServer{
 			this.explosion.update(this.getSpacecraft());
 		}
 		
+		if(spacecraftsDead.size() != 0){
+			//envia mensagem de pontuação
+		}
+		
 		this.spacecraftsDrawables.addAll(this.spacecrafts);
 		
 		
 		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, messages, shootsEffect));
+		
+		List<Spacecraft> spacecraftALive = new ArrayList<Spacecraft>();
+		for(Spacecraft spacecraft : spacecrafts){
+			if(spacecraft.getLife() < 0){
+				spacecraftsDead.add(spacecraft);
+				//envia mensagem de morte
+			}else{
+				spacecraftALive.add(spacecraft);
+			}
+		}
+		
+		spacecrafts.clear();
+		spacecrafts.addAll(spacecraftALive);
+		
+		if(spacecrafts.size() == 0){
+			// fim do jogo
+		}
 		
 
 	}
@@ -160,7 +183,6 @@ public class EngineGameServer implements IServer{
 	}
 	
 	public void verificationCollisionShoot(){
-		
 	
 		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
 			for(Spacecraft spacecraft : this.spacecrafts){
@@ -174,10 +196,9 @@ public class EngineGameServer implements IServer{
 					if(this.spacecraft.getColor() != spacecraft.getColor()){
 						getTeamPoint(this.spacecraft);
 						spacecraft.addLife(-10);
+					
 					}
 
-					
-					
 					shoot.setAlive(false);
 					
 					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
@@ -191,7 +212,66 @@ public class EngineGameServer implements IServer{
 		//this.asteroidsDrawables.addAll(collisionAsteroid);
 
 	
-	public void getTeamPoint(Spacecraft spacecraft){
+	
+
+	
+	public void verificationCollisionShoot(Spacecraft spacecraftShoot){
+		
+		
+		for (IDrawBehavior shoot : spacecraftShoot.getShootsDrawables()) {
+			for(Spacecraft spacecraft : this.spacecrafts){
+				
+				if(!spacecraftShoot.equals(spacecraft)){
+					if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
+							shoot.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
+							shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
+							shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
+						
+					shoot.setAlive(false);
+					
+					if(spacecraftShoot.getColor() != spacecraft.getColor()){
+						
+						getTeamPoint(spacecraftShoot);
+						
+						spacecraft.addLife(-10);
+
+					}
+					
+					
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					break;
+					}
+				}
+			}
+			
+			if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > this.spacecraft.getPosition().getX() &&
+					shoot.getPosition().getX() < this.spacecraft.getPosition().getX()+(this.spacecraft.getSizeWidth()-10)&&
+					shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > this.spacecraft.getPosition().getY() &&
+					shoot.getPosition().getY() < this.spacecraft.getPosition().getY()+(this.spacecraft.getSizeHeight()-10)){
+				
+				
+				shoot.setAlive(false);
+			
+				if(spacecraftShoot.getColor() != this.spacecraft.getColor()){
+				
+					getTeamPoint(spacecraftShoot);
+				
+					this.spacecraft.addLife(-10);
+					
+					
+			}
+			
+			
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+
+			
+			this.vibrator.vibrate(100);
+			
+			}
+			
+		}
+	}
+public void getTeamPoint(Spacecraft spacecraft){
 		
 		String values;
 		
@@ -247,68 +327,6 @@ public class EngineGameServer implements IServer{
 		this.messages.add(newMessage);
 		this.messages.addAll(newListMessage);
 	}	
-
-	
-	public void verificationCollisionShoot(Spacecraft spacecraftShoot){
-		
-		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
-		
-		//List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>(this.spacecrafts);
-		//spacecrafts.remove(spacecraftShoot);
-		//spacecrafts.add(this.spacecraft);
-		
-		
-		for (IDrawBehavior shoot : spacecraftShoot.getShootsDrawables()) {
-			for(Spacecraft spacecraft : this.spacecrafts){
-				
-				if(!spacecraftShoot.equals(spacecraft)){
-					if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
-							shoot.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
-							shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
-							shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
-						
-					shoot.setAlive(false);
-					
-					if(spacecraftShoot.getColor() != spacecraft.getColor()){
-						
-						getTeamPoint(spacecraftShoot);
-						
-						spacecraft.addLife(-10);
-					}
-					
-					
-					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
-					break;
-					}
-				}
-			}
-			
-			if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > this.spacecraft.getPosition().getX() &&
-					shoot.getPosition().getX() < this.spacecraft.getPosition().getX()+(this.spacecraft.getSizeWidth()-10)&&
-					shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > this.spacecraft.getPosition().getY() &&
-					shoot.getPosition().getY() < this.spacecraft.getPosition().getY()+(this.spacecraft.getSizeHeight()-10)){
-				
-				
-				shoot.setAlive(false);
-			
-				if(spacecraftShoot.getColor() != this.spacecraft.getColor()){
-				
-					getTeamPoint(spacecraftShoot);
-				
-					this.spacecraft.addLife(-10);
-			}
-			
-			
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
-
-			
-			this.vibrator.vibrate(100);
-			
-			}
-			
-		}
-	}
-	
 	public void verificationNewSpacecraftPositionScreen(){
 		if(-5 > this.spacecraft.getPosition().getY()){
 			this.spacecraft.getPosition().setY(this.camera.getY());

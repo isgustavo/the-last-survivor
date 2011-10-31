@@ -263,10 +263,16 @@ public class EngineGame{
 				}
 			break;
 			case 4:
-				
+				if(this.spacecraft.getPoints() > 10000){
+					saveTrophieAchieved(3);
+					showTrophieAchieved(context.getString(R.string.t04));
+					
+				}else{
+					trophiesNotAchieved.add(trophies);
+				}
 			break;
 			case 5:
-				if(getDriftTime() > 2){
+				if((getRealTimeGame()/60000)> 4 ){
 					saveTrophieAchieved(5);
 					showTrophieAchieved(context.getString(R.string.t05));
 				
