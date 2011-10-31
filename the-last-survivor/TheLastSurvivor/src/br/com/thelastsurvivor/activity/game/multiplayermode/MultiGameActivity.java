@@ -29,6 +29,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
@@ -420,7 +421,14 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
    
    private void showProgressDialogWaitClient(){
 		
-		dialog = new Dialog(this, R.style.PauseGameDialogTheme);
+		dialog = new Dialog(this, R.style.PauseGameDialogTheme){
+    		
+    		public boolean onKeyDown(int keyCode, KeyEvent event){
+    				return false;
+    		}
+
+    	};
+    	
 		dialog.setContentView(R.layout.wait_multigame_view);
 		    
 		TextView text = (TextView)dialog.findViewById(R.id.wait);
@@ -593,7 +601,13 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	   dialog.cancel();
 	   dialog.dismiss();
 	   
-	   dialog = new Dialog(this, R.style.PauseGameDialogTheme);
+	   dialog = new Dialog(this, R.style.PauseGameDialogTheme){
+   		
+   		public boolean onKeyDown(int keyCode, KeyEvent event){
+   				return false;
+   		}
+
+   	};
 	   dialog.setContentView(R.layout.wait_game_view);
 	   
 	   dialog.show();

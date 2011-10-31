@@ -11,12 +11,11 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
 import br.com.thelastsurvivor.engine.simple.IDrawControllable;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
-import br.com.thelastsurvivor.engine.simpleplayergame.weapon.ShootFactory;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -29,6 +28,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	
 	private String name;
 	private Integer life;
+	private Integer points;
 	private Integer color;
 	private Vector2D position;
 	private Vector2D sensorPosition = new Vector2D(0,0);
@@ -43,13 +43,10 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
-	
-	//private Boolean orientationChange;
 
 	private Boolean left = false;
-	//private Boolean flagLeft;
 	private Boolean right = false;
-	//private Boolean flagRight;
+	
 	
 	private Boolean down = false;
 	private Boolean up = false; 
@@ -82,6 +79,8 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		this.color = color;
 		this.newShoot = false;
 		
+		init();
+		
 		initImageSpacecraft();
 		
 	}
@@ -90,6 +89,8 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		this.context = context;
 		this.position = position;
 		this.color = color;
+		
+		init();
 		
 		initImageSpacecraft();
 		
@@ -103,6 +104,8 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		getStartingPositionClient(numberClient);
 		this.color = color;
 		this.newShoot = false;
+		
+		init();
 		
 		initImageSpacecraft();
 	}
@@ -175,27 +178,31 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	@Override
 	public void init() {
 		
+		if(this.life == null){
+			this.life = 250;
+		}
+		
+		if(this.points == null){
+			this.points = 0;
+		}
+		
+		if(this.angle == null){
+			this.angle = 0.0;
+		}
+		
 		this.sensorPosition = new Vector2D(0,0);
-		//this.orientationChange = false;
-		
-		this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.spacecraft_image);
-		
+
 		
 		this.left = false;
-		//this.flagLeft = false;
 		this.right = false;
-		//this.flagRight = false;
 		this.up = false;
 		this.down = false;
-		
-        this.matrix = new Matrix();
-		this.matrix.setRotate(angle.floatValue());
-		
-    	//this.resizedBitmap = Bitmap.createBitmap(image, 0, 0,image.getWidth(), image.getHeight(), matrix, true);
-    	
-		this.shoots = new ArrayList<IDrawBehavior>();
+
+    	this.shoots = new ArrayList<IDrawBehavior>();
     	this.shootsDrawables = new ArrayList<IDrawBehavior>();
+
     	
+    
 	}
 	
 	public void initClient(){
@@ -254,23 +261,28 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	
 	public boolean flagUp = false;
 	public void sensorControlUpdate(){
+		
 		this.left = false;
 		this.right = false;
-		this.down = false;
 		this.up = false;
-		flagUp = false;
+		this.down = false;
 		
-		if (this.sensorPosition.getX() > 15 ) {
+		if (this.sensorPosition.getX() > 8) {
 	    	right = true;
-	    }else if(this.sensorPosition.getX() < -15) {
-	    	left = true;
-	    }else if(this.sensorPosition.getY() < -10){
-			up = true;
-		}
+	    }
 		
-		//Log.d("sensorCOltrol", ""+this.sensorPosition.getY()+""+this.sensorPosition.getX()+""+this.left+""+this.right+""+this.down+""+this.up);
+	    if(this.sensorPosition.getX() < -8) {
+	    	left = true;
+	    }
+	    
+	    if(this.sensorPosition.getY() > 5){
+			down = true;
+		}
 	}
 	
+	Double angleTemp = 0.0;
+	Vector2D backing = new Vector2D(0,0);
+	Float back = 1.0f;
 	private void controlUpdate(){
 			
 		if(this.angle >= 360){
@@ -279,7 +291,6 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
     		this.angle = 360.0;
     	}
 	 
-		
 		if (this.left) {
     		this.angle -= 5;
 	    }else if(this.right){
@@ -287,16 +298,25 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	    }
 		
 	
-		
-		if (this.up) {
-			Orientation.getNewPosition(this.angle, this.position);
-	    }
-		
+		if (!this.down) {
+			Vector2D vetor = new Vector2D();
+			
+			Orientation.getNewPosition(angle, vetor);
+			
+			this.position.addFloatX(vetor.getFloatX()/2);
+			this.position.addFloatY(vetor.getFloatY()/2);
+			back = 1.0f;
+		}else{
+			back += 0.5f;
+			Vector2D vetor = new Vector2D();
+			
+			Orientation.getNewPosition(angle, vetor);
+			
+			this.position.addFloatX((vetor.getFloatX()/back) < 0 ? 0 : vetor.getFloatX()/back);
+			this.position.addFloatY((vetor.getFloatY()/back) < 0 ? 0 : vetor.getFloatY()/back);
+		}
 	
 	    initImageSpacecraft();
-   		
-		   
-		
 	}
 	
 	
@@ -307,7 +327,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 			this.shootsDrawables();
 			
 			this.shootsDrawables.addAll(shoots);
-			
+			Log.d("shootsDrawables","."+this.shootsDrawables.size());
 			for (IDrawBehavior shoot : shootsDrawables) {
 				shoot.update();
 			}
@@ -332,19 +352,22 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 
 	public void newShoot(){
 		newShoot = true;
-		
+		Log.d("shoot","shoot");
 		shoots.add(new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.color));
+		Log.d("shootSize","."+shoots.size());
 	}
 	
 	public void newShootClient(){
 		newShoot = true;
 	}
 
+	
+	
 	@Override
 	public void draw(Canvas c) {
 
 	
-		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
+		c.drawBitmap(this.resizedBitmap, this.position.getFloatX() , this.position.getFloatY(),null);
 		 
 	
 	    
@@ -352,11 +375,17 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 			for (IDrawBehavior shoot : this.shootsDrawables) {
 				shoot.draw(c);
 			}
-	   }
-	    
-	   
-	    
-	    
+	   }   
+	}
+	
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this.position.getFloatX().equals(((Spacecraft)o).getPosition().getFloatX())
+				&& this.position.getFloatY().equals(((Spacecraft)o).getPosition().getFloatY()))
+			return true;
+		else 
+			return false;
 	}
 	
 	@Override
@@ -490,7 +519,18 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		this.shootsDrawables = shootsDrawables;
 	}
 
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void addPoint(Integer point){
+		this.points += point;
+	}
 	
+
+	public void addLife(Integer life){
+		this.life += life;
+	}
 
 	
 	

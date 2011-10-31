@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
-import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
-import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
+import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.IEffect;
-import br.com.thelastsurvivor.engine.util.MessageGameUtil;
 import br.com.thelastsurvivor.util.Vector2D;
 
 public class ProtocolCommunication {
@@ -153,8 +152,8 @@ public class ProtocolCommunication {
 	
 	
 	
-	public String protocolSendToClientsStatusGame(Spacecraft spacecraftServer, List<Spacecraft> spacecrafts, List<IDrawBehavior> asteroids, 
-			List<MessageGameUtil> messages, List<IEffect> shootsEffect){
+	public String protocolSendToClientsStatusGame(Spacecraft spacecraftServer, List<Spacecraft> spacecrafts,  
+			List<MessageGame> messages, List<IEffect> shootsEffect){
 		
 		
 		String buffer = "";
@@ -196,14 +195,14 @@ public class ProtocolCommunication {
 				   +  asteroid.getPosition().getY()+"/"
 				   +  asteroid.getTypeImage()+"/";
 		}
-		
-		for(MessageGameUtil message : messages){
+	*/	
+		for(MessageGame message : messages){
 			buffer += "m/"
 				   +  message.getText()+"/"
 				   +  message.getPosition()+"/"
-				   +  message.getAlfa()+"/";
+				   +  message.getAlpha()+"/";
 		}
-	*/	
+		
 		for(IEffect effect : shootsEffect){
 			buffer += "e/"
 				   +  effect.getPosition().getX()+"/"
@@ -217,6 +216,7 @@ public class ProtocolCommunication {
 	
 	
 	public List<IDraw> protocolReceiveToServerStatusGame(Context context, String[] values){
+		
 
 		List<IDraw> listDrawables = new ArrayList<IDraw>();
 		
@@ -243,15 +243,15 @@ public class ProtocolCommunication {
 				listDrawables.add(new Asteroid(context,new Vector2D(values[i+1], values[i+2]),
 						Integer.parseInt(values[i+3])));
 				i += 3;
-			break;
+			break;*/
 			
 			case 'm':
-				listDrawables.add(new MessageGameUtil(context, values[i+1], 
+				listDrawables.add(new MessageGame(context, values[i+1], 
 						Integer.parseInt(values[i+2]),Integer.parseInt(values[i+3])));
 				
 				i += 3;
 			break;
-			*/
+			
 			case 'e':
 				listDrawables.add(new EffectShoot(context, new Vector2D(values[i+1], values[i+2]),
 						Integer.parseInt(values[i+3])));

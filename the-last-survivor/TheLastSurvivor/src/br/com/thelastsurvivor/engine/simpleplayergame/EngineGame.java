@@ -348,7 +348,7 @@ public class EngineGame{
 								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
 					shoot.setAlive(false);
 					this.spacecraft.addPoint(asteroid.getPower());
-					Log.d("EFFECT", "FECTURE");
+					
 					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
 					
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
@@ -385,7 +385,9 @@ public class EngineGame{
 			
 				//asteroidSituation(asteroid);
 				spacecraft.addLife(-asteroid.getLife());
+				
 				this.vibrator.vibrate(100);
+				
 				String values = context.getString(R.string.life)+" "+spacecraft.getLife()+" pt";
 				this.addMessage(new MessageGame(context, values, 3, 1000, "#FF3300"));
 				

@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.effect.EffectGameFactory;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
@@ -17,6 +18,7 @@ import br.com.thelastsurvivor.engine.effect.TypeEffect;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
+import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.engine.util.IServer;
@@ -32,14 +34,15 @@ public class EngineGameServer implements IServer{
 	protected Vibrator vibrator;
 	private Display display;
 	
+	protected static final Integer POINTS = 10;
+	protected Integer pointsTeamRed;
+	protected Integer pointsTeamBlue;
+	protected Integer pointsTeamYellow;
+	protected Integer pointsTeamGreen;
+	
 	protected Spacecraft spacecraft;
 	protected List<Spacecraft> spacecrafts;
 	protected List<Spacecraft> spacecraftsDrawables;
-	
-	private List<IDrawBehavior> asteroids;
-	protected List<IDrawBehavior> asteroidsDrawables;
-	
-	protected List<MessageGameUtil> messages;
 	
 	protected List<IEffect> shootsEffect;
 	
@@ -51,13 +54,8 @@ public class EngineGameServer implements IServer{
 	protected Typeface font; 
 	
 	
-	//protected HashMap<String, Spacecraft> spacecrafts;
-	
-	
-	
-	protected List<IDrawBehavior> components;
-	protected List<IDrawBehavior> componentsDrawables;
-	
+	protected List<MessageGame> messages;
+	protected List<MessageGame> messagesDrawables;
 	
 	boolean flag = true;
 	
@@ -89,16 +87,21 @@ public class EngineGameServer implements IServer{
 		this.start = 0L;
 		this.finish = 0L;
 		
+		this.explosion = new Explosion(200);
+		
+		this.pointsTeamRed = 0;
+		this.pointsTeamBlue = 0;
+		this.pointsTeamYellow = 0;
+		this.pointsTeamGreen = 0;
+		
 		protocol = new ProtocolCommunication();
 		
 		this.camera = new Vector2D(display.getWidth(), display.getHeight());
 		
 		this.spacecraftsDrawables = new ArrayList<Spacecraft>();
-		
-		this.asteroids = new ArrayList<IDrawBehavior>();
-		this.asteroidsDrawables = new ArrayList<IDrawBehavior>();
-		
-		this.messages = new ArrayList<MessageGameUtil>();
+
+		this.messages = new ArrayList<MessageGame>();
+		this.messagesDrawables = new ArrayList<MessageGame>();
 		
 		if(this.shootsEffect == null){
 			this.shootsEffect = new ArrayList<IEffect>();
@@ -121,20 +124,24 @@ public class EngineGameServer implements IServer{
 		
 		updateEffectShoots();
 		
-		//updateNewAsteroid();
-		//updateAsteroids();
-		
-		
+		for (MessageGame message : this.messages) {
+			message.update();
+		}
+
 		for (Spacecraft spacecraft : this.spacecrafts) {
 			spacecraft.updateClient();
 			verificationNewSpacecraftPositionScreen(spacecraft);
 			verificationCollisionShoot(spacecraft);
 		}
 		
+		if (this.explosion != null && this.explosion.isAlive) {
+			this.explosion.update(this.getSpacecraft());
+		}
+		
 		this.spacecraftsDrawables.addAll(this.spacecrafts);
 		
 		
-		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, asteroidsDrawables, messages, shootsEffect));
+		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, messages, shootsEffect));
 		
 
 	}
@@ -154,10 +161,7 @@ public class EngineGameServer implements IServer{
 	
 	public void verificationCollisionShoot(){
 		
-		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
-		
 	
-		
 		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
 			for(Spacecraft spacecraft : this.spacecrafts){
 				
@@ -166,28 +170,19 @@ public class EngineGameServer implements IServer{
 							shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
 							shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
 					
+					
+					if(this.spacecraft.getColor() != spacecraft.getColor()){
+						getTeamPoint(this.spacecraft);
+						spacecraft.addLife(-10);
+					}
+
+					
+					
 					shoot.setAlive(false);
 					
 					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
 					
-					//this.spacecraft.addPoint(asteroid.getPower());
-					//Log.d("EFFECT", "FECTURE");
-					
-					//this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
-					
-					//if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
-					//	activity.getAudio().playSound(3, 0, 1);
-					//	if(asteroid.getTypeImage() != 0){
-					//		collisionAsteroid.add(new Asteroid(context, 
-					//				new Vector2D(asteroid.getPosition().getX(),
-					//						     asteroid.getPosition().getY()),
-					//						     asteroid.getTypeImage()-1, true));
-					//	}else{
-					//		asteroid.setAlive(false);
-					//	}
-						
-					//	verificationPowerUp((Asteroid)asteroid);
-					//	asteroid.setAlive(false);
+					break;
 					}
 				}
 			}
@@ -195,49 +190,124 @@ public class EngineGameServer implements IServer{
 		
 		//this.asteroidsDrawables.addAll(collisionAsteroid);
 
+	
+	public void getTeamPoint(Spacecraft spacecraft){
+		
+		String values;
+		
+		switch (spacecraft.getColor()) {
+		case 1:
+			addPointsTeamRed(POINTS);
+			values = context.getString(R.string.point_team_game)+" "+pointsTeamRed+" pt";
+			this.addMessage(new MessageGame(context, values, 3, 1000, "#FF0000"));
+		break;
+		
+		case 2:
+			addPointsTeamBlue(POINTS);
+			values = context.getString(R.string.point_team_game)+" "+pointsTeamBlue+" pt";
+			this.addMessage(new MessageGame(context, values, 3, 1000, "#000066"));
+		break;
+			
+		case 3:
+			addPointsTeamYellow(POINTS);
+			values = context.getString(R.string.point_team_game)+" "+pointsTeamYellow+" pt";
+			this.addMessage(new MessageGame(context, values, 3, 1000, "#FFFF00"));
+		break;
+			
+		case 4:
+			addPointsTeamGreen(POINTS);
+			values = context.getString(R.string.point_team_game)+" "+pointsTeamGreen+" pt";
+			this.addMessage(new MessageGame(context, values, 3, 1000, "#006633"));
+		break;
+
+		default:
+			break;
+		}
+		
+		
+		
+	}
+	
+	private void addMessage(MessageGame newMessage){
+		
+		List<MessageGame> newListMessage = new ArrayList<MessageGame>();
+		
+		for (MessageGame message : this.messages) {
+			if(message.getPosition() != 1 || !message.isAlive()){
+				message.setPosition(message.getPosition()-1);
+				newListMessage.add(message);
+			}
+		}
+		
+		
+		this.messages.clear();
+		
+		Log.d("NEWSIZE","."+newListMessage.size());
+		
+		this.messages.add(newMessage);
+		this.messages.addAll(newListMessage);
+	}	
+
+	
 	public void verificationCollisionShoot(Spacecraft spacecraftShoot){
 		
 		//List<IDrawBehavior> collisionAsteroid = new ArrayList<IDrawBehavior>();
 		
-		List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>(this.spacecrafts);
-		spacecrafts.remove(spacecraftShoot);
-		spacecrafts.add(this.spacecraft);
+		//List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>(this.spacecrafts);
+		//spacecrafts.remove(spacecraftShoot);
+		//spacecrafts.add(this.spacecraft);
 		
 		
 		for (IDrawBehavior shoot : spacecraftShoot.getShootsDrawables()) {
-			for(Spacecraft spacecraft : spacecrafts){
+			for(Spacecraft spacecraft : this.spacecrafts){
 				
-				if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
-						shoot.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
-						shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
-						shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
-					
+				if(!spacecraftShoot.equals(spacecraft)){
+					if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
+							shoot.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getSizeWidth()-10)&&
+							shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
+							shoot.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getSizeHeight()-10)){
+						
 					shoot.setAlive(false);
 					
-					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
-					
-					//this.spacecraft.addPoint(asteroid.getPower());
-					//Log.d("EFFECT", "FECTURE");
-					
-					//this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
-					
-					//if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
-					//	activity.getAudio().playSound(3, 0, 1);
-					//	if(asteroid.getTypeImage() != 0){
-					//		collisionAsteroid.add(new Asteroid(context, 
-					//				new Vector2D(asteroid.getPosition().getX(),
-					//						     asteroid.getPosition().getY()),
-					//						     asteroid.getTypeImage()-1, true));
-					//	}else{
-					//		asteroid.setAlive(false);
-					//	}
+					if(spacecraftShoot.getColor() != spacecraft.getColor()){
 						
-					//	verificationPowerUp((Asteroid)asteroid);
-					//	asteroid.setAlive(false);
+						getTeamPoint(spacecraftShoot);
+						
+						spacecraft.addLife(-10);
+					}
+					
+					
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					break;
 					}
 				}
 			}
+			
+			if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > this.spacecraft.getPosition().getX() &&
+					shoot.getPosition().getX() < this.spacecraft.getPosition().getX()+(this.spacecraft.getSizeWidth()-10)&&
+					shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > this.spacecraft.getPosition().getY() &&
+					shoot.getPosition().getY() < this.spacecraft.getPosition().getY()+(this.spacecraft.getSizeHeight()-10)){
+				
+				
+				shoot.setAlive(false);
+			
+				if(spacecraftShoot.getColor() != this.spacecraft.getColor()){
+				
+					getTeamPoint(spacecraftShoot);
+				
+					this.spacecraft.addLife(-10);
+			}
+			
+			
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+
+			
+			this.vibrator.vibrate(100);
+			
+			}
+			
 		}
+	}
 	
 	public void verificationNewSpacecraftPositionScreen(){
 		if(-5 > this.spacecraft.getPosition().getY()){
@@ -332,6 +402,16 @@ public class EngineGameServer implements IServer{
 			effect.draw(c);
 		}
 		
+		for (MessageGame message : this.messages) {
+			
+			message.draw(c);
+			
+		}
+		
+		if (explosion != null) {
+ 			explosion.draw(c);
+ 		}
+		
 		this.spacecraftsDrawables.clear();
 	}
 	
@@ -362,4 +442,23 @@ public class EngineGameServer implements IServer{
 	public ProtocolCommunication getProtocol() {
 		return this.protocol;
 	}
+
+	public void addPointsTeamRed(Integer pointsTeamRed) {
+		this.pointsTeamRed += pointsTeamRed;
+	}
+
+	public void addPointsTeamBlue(Integer pointsTeamBlue) {
+		this.pointsTeamBlue += pointsTeamBlue;
+	}
+
+	public void addPointsTeamYellow(Integer pointsTeamYellow) {
+		this.pointsTeamYellow += pointsTeamYellow;
+	}
+
+	public void addPointsTeamGreen(Integer pointsTeamGreen) {
+		this.pointsTeamGreen += pointsTeamGreen;
+	}
+
+	
+	
 }

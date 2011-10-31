@@ -118,6 +118,14 @@ public class MessageGame implements IInitUpdateDraw{
 		return isAlive;
 	}
 
+	public String getText() {
+		return text;
+	}
+
+	public Integer getAlpha() {
+		return alpha;
+	}
+
 	
 
 }
