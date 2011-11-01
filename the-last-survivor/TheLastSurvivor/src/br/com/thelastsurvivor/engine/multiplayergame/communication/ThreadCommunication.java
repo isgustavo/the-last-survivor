@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 
 public class ThreadCommunication extends Thread {
@@ -33,8 +34,20 @@ public class ThreadCommunication extends Thread {
 	             
 	            String[] values = string.split("/");
 	             
-	           
-	            
+	                                 
+	            if(values[0].equals("serverToClientDead")){
+	            	Log.d("RUN","RUN");
+	            	if(activity.getEngineGameClient() != null){
+	            		Log.d("IF","IF");
+	            		Log.d(activity.getEngineGameClient().getSpacecraft().getName(), values[1]);
+	            		
+	            		if(activity.getEngineGameClient().getSpacecraft().getName()
+	            				.equalsIgnoreCase(values[1])){
+	            			
+	            			activity.getEngineGameClient().getSpacecraft().setIsDead(true);
+	            		}
+	            	}
+	            }
 	            
 	             
 	            //client send spacecraft to server  

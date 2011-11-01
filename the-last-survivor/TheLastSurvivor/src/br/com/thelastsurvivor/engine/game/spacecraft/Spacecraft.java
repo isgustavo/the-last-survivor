@@ -28,6 +28,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	
 	private String name;
 	private Integer life;
+	private Boolean isDead;
 	private Integer points;
 	private Integer color;
 	private Vector2D position;
@@ -61,6 +62,8 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	public Spacecraft(String name){
 		
 		this.name = name;
+		
+		this.isDead = false;
 	}
 	
 	public Spacecraft(Vector2D position, Double angle, String name){
@@ -179,7 +182,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	public void init() {
 		
 		if(this.life == null){
-			this.life = 250;
+			this.life = 5;
 		}
 		
 		if(this.points == null){
@@ -192,6 +195,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		
 		this.sensorPosition = new Vector2D(0,0);
 
+		this.isDead = false;
 		
 		this.left = false;
 		this.right = false;
@@ -530,6 +534,14 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 
 	public void addLife(Integer life){
 		this.life += life;
+	}
+
+	public Boolean getIsDead() {
+		return isDead;
+	}
+
+	public void setIsDead(Boolean isDead) {
+		this.isDead = isDead;
 	}
 
 	

@@ -4,11 +4,10 @@ package br.com.thelastsurvivor.engine.multiplayergame.protocol;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.util.Log;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
+import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
@@ -158,19 +157,22 @@ public class ProtocolCommunication {
 		
 		String buffer = "";
 		
-		buffer += "s/"
-			   +  spacecraftServer.getPosition().getX()+"/"
-			   +  spacecraftServer.getPosition().getY()+"/"
-			   +  spacecraftServer.getAngle()+"/"
-			   +  spacecraftServer.getColor()+"/";
-		if(spacecraftServer.getShootsDrawables().size() != 0){
-			for(IDrawBehavior shoot : spacecraftServer.getShootsDrawables()){
-				buffer +="h/";
-				buffer += shoot.getPosition().getX()+"/"
-					   + shoot.getPosition().getY()+"/"
-					   + shoot.getAngle()+"/";
-			}
+		if(spacecraftServer != null){
+			buffer += "s/"
+					   +  spacecraftServer.getPosition().getX()+"/"
+					   +  spacecraftServer.getPosition().getY()+"/"
+					   +  spacecraftServer.getAngle()+"/"
+					   +  spacecraftServer.getColor()+"/";
+				if(spacecraftServer.getShootsDrawables().size() != 0){
+					for(IDrawBehavior shoot : spacecraftServer.getShootsDrawables()){
+						buffer +="h/";
+						buffer += shoot.getPosition().getX()+"/"
+							   + shoot.getPosition().getY()+"/"
+							   + shoot.getAngle()+"/";
+					}
+				}
 		}
+		
 		
 		for (Spacecraft spacecraft : spacecrafts) {
 			buffer += "s/"+ 
@@ -188,14 +190,6 @@ public class ProtocolCommunication {
 				}
 			}
 		}
-		
-	/*	for(IDrawBehavior asteroid : asteroids){
-			buffer += "a/"
-				   +  asteroid.getPosition().getX()+"/"
-				   +  asteroid.getPosition().getY()+"/"
-				   +  asteroid.getTypeImage()+"/";
-		}
-	*/	
 		for(MessageGame message : messages){
 			buffer += "m/"
 				   +  message.getText()+"/"
@@ -209,65 +203,81 @@ public class ProtocolCommunication {
 				   +  effect.getPosition().getY()+"/"
 				   +  effect.getAlpha()+"/";
 		}
-
+		
 		return buffer;
 		
 	}
 	
 	
-	public List<IDraw> protocolReceiveToServerStatusGame(Context context, String[] values){
+	public List<IDraw> protocolReceiveToServerStatusGame(EngineGameClient engine, String[] values){
 		
 
-		List<IDraw> listDrawables = new ArrayList<IDraw>();
-		
-		int color = 0;
-		
-		for(int i = 1; i < values.length; i++){
+			List<IDraw> listDrawables = new ArrayList<IDraw>();
 			
-			switch(values[i].charAt(0)){
+			int color = 0;
 			
-			case 's':
-				listDrawables.add(new Spacecraft(context, new Vector2D(values[i+1], values[i+2]),
-						Double.parseDouble(values[i+3]), Integer.parseInt(values[i+4])));
-				color = Integer.parseInt(values[i+4]);
-				i += 4;
-			break;
-			
-			case 'h':
-				listDrawables.add(new SimpleShoot(context, new Vector2D(values[i+1], values[i+2]),
-						Double.parseDouble(values[i+3]), color));
-				i += 3;
-			break;
-			
-			/*		case 'a':
-				listDrawables.add(new Asteroid(context,new Vector2D(values[i+1], values[i+2]),
-						Integer.parseInt(values[i+3])));
-				i += 3;
-			break;*/
-			
-			case 'm':
-				listDrawables.add(new MessageGame(context, values[i+1], 
-						Integer.parseInt(values[i+2]),Integer.parseInt(values[i+3])));
+			for(int i = 1; i < values.length; i++){
 				
-				i += 3;
-			break;
-			
-			case 'e':
-				listDrawables.add(new EffectShoot(context, new Vector2D(values[i+1], values[i+2]),
-						Integer.parseInt(values[i+3])));
+				switch(values[i].charAt(0)){
 				
-				i +=3;
-			break;
+				case 's':
+					listDrawables.add(new Spacecraft(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
+							Double.parseDouble(values[i+3]), Integer.parseInt(values[i+4])));
+					color = Integer.parseInt(values[i+4]);
+					i += 4;
+				break;
+				
+				case 'h':
+					listDrawables.add(new SimpleShoot(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
+							Double.parseDouble(values[i+3]), color));
+					i += 3;
+				break;
+				
+				case 'm':
+					listDrawables.add(new MessageGame(engine.getContext(), values[i+1], 
+							Integer.parseInt(values[i+2]),Integer.parseInt(values[i+3])));
+					
+					i += 3;
+				break;
+				
+				case 'e':
+					listDrawables.add(new EffectShoot(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
+							Integer.parseInt(values[i+3])));
+					
+					i +=3;
+				break;
+				}
 			}
-		}
+			return listDrawables;
 		
-		//Log.d("SIZE","."+listDrawables.size());
-
-		return listDrawables;
+		
 		
 	}
 	
-	
+	public String protocolSentToClientsEndGame(Integer pointsTeamRed,
+			Integer pointsTeamBlue, Integer pointsTeamYellow, Integer pointsTeamGreen,
+			Spacecraft spacecraft,List<Spacecraft> spacecrafts){
+				
+		String buffer = "";
+		
+		buffer += "r/"+pointsTeamRed+"/";
+		buffer += "b/"+pointsTeamBlue+"/";
+		buffer += "y/"+pointsTeamYellow+"/";
+		buffer += "g/"+pointsTeamGreen+"/";
+		
+		///termina mensage, twitter multplayer
+		
+		
+		
+		buffer +="t/"+spacecraft.getName();
+			
+		
+		
+		
+		
+		
+		return null;
+	}
 	
 	
 	

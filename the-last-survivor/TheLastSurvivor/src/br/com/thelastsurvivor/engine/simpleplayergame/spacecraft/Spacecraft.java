@@ -201,7 +201,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	    	this.angle += 5;
 	    }
 		
-		this.down = true;
+		//this.down = true;
 		
 		if (!this.down) {
 			Vector2D vetor = new Vector2D();

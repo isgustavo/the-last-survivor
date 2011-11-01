@@ -19,6 +19,7 @@ import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
+import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGameOver;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.engine.util.IServer;
@@ -35,6 +36,7 @@ public class EngineGameServer implements IServer{
 	private Display display;
 	
 	protected static final Integer POINTS = 10;
+	
 	protected Integer pointsTeamRed;
 	protected Integer pointsTeamBlue;
 	protected Integer pointsTeamYellow;
@@ -54,7 +56,7 @@ public class EngineGameServer implements IServer{
 	protected Paint paint;
 	protected Typeface font; 
 	
-	
+	protected MessageGameOver message;
 	protected List<MessageGame> messages;
 	protected List<MessageGame> messagesDrawables;
 	
@@ -120,9 +122,12 @@ public class EngineGameServer implements IServer{
 		}
 		start = System.currentTimeMillis(); 
 		
-		this.spacecraft.update();
-		verificationNewSpacecraftPositionScreen();
-		verificationCollisionShoot();
+		if(!this.spacecraft.getIsDead()){
+			this.spacecraft.update();
+			verificationNewSpacecraftPositionScreen();
+			verificationCollisionShoot();
+		}
+		
 		
 		updateEffectShoots();
 		
@@ -140,20 +145,23 @@ public class EngineGameServer implements IServer{
 			this.explosion.update(this.getSpacecraft());
 		}
 		
-		if(spacecraftsDead.size() != 0){
-			//envia mensagem de pontuação
-		}
 		
 		this.spacecraftsDrawables.addAll(this.spacecrafts);
+
+		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(
+				spacecraft.getIsDead() ? null : spacecraft, 
+				spacecraftsDrawables, messages, shootsEffect));
 		
 		
-		activity.sendToClientStatusGame(protocol.protocolSendToClientsStatusGame(spacecraft, spacecraftsDrawables, messages, shootsEffect));
 		
 		List<Spacecraft> spacecraftALive = new ArrayList<Spacecraft>();
 		for(Spacecraft spacecraft : spacecrafts){
 			if(spacecraft.getLife() < 0){
+				
 				spacecraftsDead.add(spacecraft);
-				//envia mensagem de morte
+				this.addMessage(new MessageGame(context, spacecraft.getName()+" IS DEAD!", 3, 1000, "#FF0000"));
+				activity.setToClientDead(spacecraft.getName());
+			
 			}else{
 				spacecraftALive.add(spacecraft);
 			}
@@ -162,8 +170,25 @@ public class EngineGameServer implements IServer{
 		spacecrafts.clear();
 		spacecrafts.addAll(spacecraftALive);
 		
+		if(this.spacecraft.getLife() < 0){
+			this.addMessage(new MessageGame(context, this.spacecraft.getName()+" IS DEAD!", 3, 1000, "#FF0000"));
+			this.spacecraft.setIsDead(true);
+		}
+		
+		
 		if(spacecrafts.size() == 0){
-			// fim do jogo
+			
+			//activity.setEndGame(protocol.protocolSentToClientsEndGame(pointsTeamRed,
+			//		pointsTeamBlue, pointsTeamYellow, pointsTeamGreen, spacecraft, spacecrafts));
+			
+		}else{
+			if(spacecrafts.size() == 1 && this.spacecraft.getIsDead()){
+				
+			//	activity.setEndGame(protocol.protocolSentToClientsEndGame(pointsTeamRed,
+			//			pointsTeamBlue, pointsTeamYellow, pointsTeamGreen, spacecraft, spacecrafts));
+				
+				
+			}
 		}
 		
 
@@ -244,34 +269,38 @@ public class EngineGameServer implements IServer{
 				}
 			}
 			
-			if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > this.spacecraft.getPosition().getX() &&
-					shoot.getPosition().getX() < this.spacecraft.getPosition().getX()+(this.spacecraft.getSizeWidth()-10)&&
-					shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > this.spacecraft.getPosition().getY() &&
-					shoot.getPosition().getY() < this.spacecraft.getPosition().getY()+(this.spacecraft.getSizeHeight()-10)){
-				
-				
-				shoot.setAlive(false);
 			
-				if(spacecraftShoot.getColor() != this.spacecraft.getColor()){
-				
-					getTeamPoint(spacecraftShoot);
-				
-					this.spacecraft.addLife(-10);
+			if(!this.spacecraft.getIsDead()){
+				if(shoot.getPosition().getX()+(shoot.getSizeWidth()-10) > this.spacecraft.getPosition().getX() &&
+						shoot.getPosition().getX() < this.spacecraft.getPosition().getX()+(this.spacecraft.getSizeWidth()-10)&&
+						shoot.getPosition().getY()+(shoot.getSizeHeight()-10) > this.spacecraft.getPosition().getY() &&
+						shoot.getPosition().getY() < this.spacecraft.getPosition().getY()+(this.spacecraft.getSizeHeight()-10)){
 					
 					
-			}
-			
-			
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					shoot.setAlive(false);
+				
+					if(spacecraftShoot.getColor() != this.spacecraft.getColor()){
+					
+						getTeamPoint(spacecraftShoot);
+					
+						this.spacecraft.addLife(-10);
+						//this.addMessage(new MessageGame(context, values, 3, 1000, "#FF0000"));
+						
+					}
+				
+				
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
 
-			
-			this.vibrator.vibrate(100);
+				
+					this.vibrator.vibrate(100);
+				}
 			
 			}
 			
 		}
 	}
-public void getTeamPoint(Spacecraft spacecraft){
+	
+	public void getTeamPoint(Spacecraft spacecraft){
 		
 		String values;
 		
@@ -327,30 +356,31 @@ public void getTeamPoint(Spacecraft spacecraft){
 		this.messages.add(newMessage);
 		this.messages.addAll(newListMessage);
 	}	
+	
 	public void verificationNewSpacecraftPositionScreen(){
 		if(-5 > this.spacecraft.getPosition().getY()){
-			this.spacecraft.getPosition().setY(this.camera.getY());
-		}else if(this.spacecraft.getPosition().getY() > this.camera.getY()+5){
+			this.spacecraft.getPosition().setY(MultiGameActivity.DISPLAY_HEIGHT);
+		}else if(this.spacecraft.getPosition().getY() > MultiGameActivity.DISPLAY_HEIGHT+5){
 			this.spacecraft.getPosition().setY(0);
 		}
 	
 		if(-5 > this.spacecraft.getPosition().getX()){
-			this.spacecraft.getPosition().setX(this.camera.getX());
-		}else if(this.spacecraft.getPosition().getX() > this.camera.getX()+5){
+			this.spacecraft.getPosition().setX(MultiGameActivity.DISPLAY_WIDHT);
+		}else if(this.spacecraft.getPosition().getX() > MultiGameActivity.DISPLAY_WIDHT+5){
 			this.spacecraft.getPosition().setX(0);
 		}
 	}
 	
 	public void verificationNewSpacecraftPositionScreen(Spacecraft spacecraft){
 		if(-5 > spacecraft.getPosition().getY()){
-			spacecraft.getPosition().setY(this.camera.getY());
-		}else if(spacecraft.getPosition().getY() > this.camera.getY()+5){
+			spacecraft.getPosition().setY(MultiGameActivity.DISPLAY_HEIGHT);
+		}else if(spacecraft.getPosition().getY() > MultiGameActivity.DISPLAY_HEIGHT+5){
 			spacecraft.getPosition().setY(0);
 		}
 	
 		if(-5 > spacecraft.getPosition().getX()){
-			spacecraft.getPosition().setX(this.camera.getX());
-		}else if(spacecraft.getPosition().getX() > this.camera.getX()+5){
+			spacecraft.getPosition().setX(MultiGameActivity.DISPLAY_WIDHT);
+		}else if(spacecraft.getPosition().getX() > MultiGameActivity.DISPLAY_WIDHT+5){
 			spacecraft.getPosition().setX(0);
 		}
 	}
@@ -359,27 +389,6 @@ public void getTeamPoint(Spacecraft spacecraft){
 		this.startTime += finish - start;
 	}
 	
-	
-	public void verificationNewPositionScreen(IDrawBehavior object){
-		
-		int tolerance = 20;
-		
-		if(object instanceof Asteroid){
-			tolerance = ((Asteroid)object).getTypeImage() < 8 ? 20 : 200;
-		}
-		
-		if(-tolerance > object.getPosition().getY()){
-			object.getPosition().setY(this.camera.getY()+tolerance);
-		}else if(object.getPosition().getY() > this.camera.getY()+tolerance){
-			object.getPosition().setY(0);
-		}
-	
-		if(-tolerance > object.getPosition().getX()+tolerance){
-			object.getPosition().setX(this.camera.getX());
-		}else if(object.getPosition().getX() > this.camera.getX()+tolerance){
-			object.getPosition().setX(0);
-		}
-	}
 	
 	@Override
 	public void setSpacecraftClientToUpdate(String[] values){
@@ -410,7 +419,16 @@ public void getTeamPoint(Spacecraft spacecraft){
 	@Override
 	public void draw(Canvas c) {
 		
-		this.spacecraft.draw(c);
+		if(!this.spacecraft.getIsDead()){
+			this.spacecraft.draw(c);
+		}else{
+			if(message == null){
+				
+				message = new MessageGameOver(context, "YOU DEAD!", "#006633");
+			}
+			
+			c.drawText(message.getText(), 150, 100, message.getPaint());
+		}
 		
 		for (Spacecraft spacecraft : this.spacecraftsDrawables) {
 			spacecraft.draw(c);

@@ -6,12 +6,14 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Message;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
+import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGameOver;
 import br.com.thelastsurvivor.engine.util.IClient;
 import br.com.thelastsurvivor.engine.util.IDraw;
 
@@ -24,9 +26,16 @@ public class EngineGameClient implements IClient{
 	protected Vibrator vibrator;
 	private Display display;
 	
+	protected Integer pointsTeamRed;
+	protected Integer pointsTeamBlue;
+	protected Integer pointsTeamYellow;
+	protected Integer pointsTeamGreen;
+	
 	protected Spacecraft spacecraft;
 	protected List<IDraw> drawables;
 	private Paint blackScreen;
+	
+	private MessageGameOver message;
 	
 	public EngineGameClient(Context context, MultiGameActivity activity, Vibrator vibrator, Display display, String name) {
 		this.context = context;
@@ -63,6 +72,7 @@ public class EngineGameClient implements IClient{
 	}
 	
 	public void updateClient() {
+		
 		this.spacecraft.updateSensor();
 		
 		activity.sendsToServerClientSpacecraft(protocol.protocolSendToServerClientSpacecraft(this.spacecraft));
@@ -72,43 +82,57 @@ public class EngineGameClient implements IClient{
 	}
 	
 	@Override
-	public void drawGame(String[] message){
+	public void drawGame(String[] values){
 		//Log.d("DRAW", "GAME CLIENT");
 		drawables.clear();
 		
 		//Log.d("DRAW", "drawGame"+message);
 
-		this.drawables = this.protocol.protocolReceiveToServerStatusGame(this.context, message);
+		this.drawables = this.protocol.protocolReceiveToServerStatusGame(EngineGameClient.this, values);
 
-		Canvas canvas = null;
-		try{
-			
-			if(holder != null){
-
-				canvas = holder.lockCanvas(null);
-				if(canvas != null){
-					canvas.drawRect(0,0,canvas.getWidth(), canvas.getHeight(), this.blackScreen);
-					for (IDraw object : drawables) {
-						// Log.d("DRAW", "object");
-						object.draw(canvas);
-					}
-				}
-			//synchronized (canvas) {
-			
+			Canvas canvas = null;
+			try{
 				
-				//engine.draw(canvas);
+				if(holder != null){
+
+					canvas = holder.lockCanvas(null);
+					if(canvas != null){
+						canvas.drawRect(0,0,canvas.getWidth(), canvas.getHeight(), this.blackScreen);
+						for (IDraw object : drawables) {
+							// Log.d("DRAW", "object");
+							object.draw(canvas);
+						}
+					}
+				//synchronized (canvas) {
+					if(spacecraft.getIsDead()){
+						
+						if(message == null){
+						
+							message = new MessageGameOver(context, "YOU DEAD!", "#006633");
+						}
+						
+						canvas.drawText(message.getText(), 150, 100, message.getPaint());
+						
+					}
+					
+					//engine.draw(canvas);
+				}
+				//}
+			}finally{
+				if(canvas != null){
+					holder.unlockCanvasAndPost(canvas);
+				}
 			}
-			//}
-		}finally{
-			if(canvas != null){
-				holder.unlockCanvasAndPost(canvas);
+
+			if(!spacecraft.getIsDead()){
+				updateClient();
 			}
+			
 		}
-		
-		updateClient();
-		
-	}
+
 	
+	
+
 	@Override
 	public void draw(Canvas c) {
 		////for (IDraw object : drawables) {
@@ -135,6 +159,42 @@ public class EngineGameClient implements IClient{
 
 	public void setHolder(SurfaceHolder holder) {
 		this.holder = holder;
+	}
+
+	public Context getContext() {
+		return context;
+	}
+
+	public Integer getPointsTeamRed() {
+		return pointsTeamRed;
+	}
+
+	public void setPointsTeamRed(Integer pointsTeamRed) {
+		this.pointsTeamRed = pointsTeamRed;
+	}
+
+	public Integer getPointsTeamBlue() {
+		return pointsTeamBlue;
+	}
+
+	public void setPointsTeamBlue(Integer pointsTeamBlue) {
+		this.pointsTeamBlue = pointsTeamBlue;
+	}
+
+	public Integer getPointsTeamYellow() {
+		return pointsTeamYellow;
+	}
+
+	public void setPointsTeamYellow(Integer pointsTeamYellow) {
+		this.pointsTeamYellow = pointsTeamYellow;
+	}
+
+	public Integer getPointsTeamGreen() {
+		return pointsTeamGreen;
+	}
+
+	public void setPointsTeamGreen(Integer pointsTeamGreen) {
+		this.pointsTeamGreen = pointsTeamGreen;
 	}
 
 

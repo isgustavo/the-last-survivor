@@ -27,10 +27,11 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,7 +45,6 @@ import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.multiplayergame.client.ThreadClient;
 import br.com.thelastsurvivor.engine.multiplayergame.communication.ThreadCommunication;
-import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.engine.multiplayergame.server.EngineGameServer;
 import br.com.thelastsurvivor.engine.multiplayergame.server.ThreadServer;
 import br.com.thelastsurvivor.engine.util.IClient;
@@ -64,6 +64,9 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	private static final int BT_VISIBLE = 1;
 	
 	private static final int MSG_DISCONNECTED = 2;
+	
+	public static final Integer DISPLAY_WIDHT = 480;
+	public static final Integer DISPLAY_HEIGHT = 320;
 	
 	private static final String RED = "1";
 	private static final String BLUE = "2";
@@ -316,6 +319,8 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	
 	 private void startGame(){
 		 dialog.dismiss();
+		 dialog.cancel();
+		 
 		   
 		 int numberClient = 0;
 		 List<Spacecraft> spacecraftsClient = new ArrayList<Spacecraft>();
@@ -355,9 +360,12 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	}
 	 
 	 public void startGameServer(final List<Spacecraft> spacecraftsClient){
-		   
+		 	dialog.dismiss();
+		 	dialog.cancel();
 			handler.postDelayed(new Runnable() {
 				public void run() {
+					dialog.dismiss();
+				 	dialog.cancel();
 					engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
 					viewServer = new EngineMultiGameView(activity.context,engineGame);
 					
@@ -380,6 +388,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
    
   private void startGameClient(String[] values){
 	   dialog.dismiss();
+	   dialog.cancel();
 	   
 	   this.engineGameClient = new EngineGameClient(context, MultiGameActivity.this, vibrator, display, namePlayer);
 	   this.viewClient = new br.com.thelastsurvivor.engine.multiplayergame.client.EngineMultiGameView(this,this.engineGameClient);
@@ -417,6 +426,20 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	   } catch (IOException e) {
 		   e.printStackTrace();
 	   }
+   }
+   
+   public void setToClientDead(String name){
+	   
+	   Log.d("SETTOCLINETDEAD", "SETTOCLINETDEAD");
+	   try {
+		   for (ThreadCommunication communication : threadsCommunication) {
+			   communication.os.writeUTF("serverToClientDead/"+name);
+		   }
+		
+	   } catch (IOException e) {
+		e.printStackTrace();
+	   }
+		
    }
    
    private void showProgressDialogWaitClient(){
@@ -488,8 +511,13 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	        		nameAndColor.add(2, namePlayer);
 	        		
 	        		if(!checksStartGame()){
-	        			showProgressDialogWaitCompleteFeatureGame();
+	        			checksStartGame();
 	        		}
+	        		
+	        		showProgressDialogWaitCompleteFeatureGame();
+	        		
+	        		
+	        		
 	        	}else{
 	        		//is client
 	        		showProgressDialogWaitCompleteFeatureGame();
@@ -517,6 +545,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	        		if(!checksStartGame()){
 	        			checksStartGame();
 	        		}
+			    	
 	        		showProgressDialogWaitCompleteFeatureGame();
 	        	
 	        	}else{
@@ -544,10 +573,11 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	        		nameAndColor.add(1, YELLOW);
 	        		nameAndColor.add(2, namePlayer);
 	        		
+	        		
 	        		if(!checksStartGame()){
 	        			checksStartGame();
 	        		}
-
+			    	
 	        		showProgressDialogWaitCompleteFeatureGame();
 	        	}else{
 	        		//is Client
@@ -607,12 +637,14 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
    				return false;
    		}
 
-   	};
+   		};
 	   dialog.setContentView(R.layout.wait_game_view);
 	   
 	   dialog.show();
 	}
 	   
+	
+	
 	
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

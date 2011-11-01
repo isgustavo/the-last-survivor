@@ -132,6 +132,8 @@ public class MainMenuActivity extends Activity{
 			Intent i = new Intent(MainMenuActivity.this, AlterationPlayerActivity.class);
 			
 			startActivity(i);
+			
+			MainMenuActivity.this.finish();
 		
 		}  
 	};  

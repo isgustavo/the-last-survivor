@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.MainMenuActivity;
 import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
@@ -82,7 +84,13 @@ public class AlterationPlayerActivity extends Activity{
 			}else{
 				if(updatePlayer(new Player(getNickname().getText().toString()))){
 				   
-				   AlterationPlayerActivity.this.finish();
+					Intent i = new Intent(AlterationPlayerActivity.this, MainMenuActivity.class);
+					
+					startActivity(i);
+					
+				    AlterationPlayerActivity.this.finish();
+				   
+				   
 	    		}
 			}
      
@@ -121,7 +129,7 @@ public class AlterationPlayerActivity extends Activity{
     				vibrator.vibrate(80);
     			    deleteAll();
     			    
-    			   AlterationPlayerActivity.this.finish();
+    			    AlterationPlayerActivity.this.finish();
     			    
     			}
     		}); 
@@ -178,7 +186,11 @@ public class AlterationPlayerActivity extends Activity{
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 		 if(keyCode == KeyEvent.KEYCODE_BACK) {
 	    	  
-			  AlterationPlayerActivity.this.finish();
+			 Intent i = new Intent(AlterationPlayerActivity.this, MainMenuActivity.class);
+				
+				startActivity(i);
+				
+			    AlterationPlayerActivity.this.finish();
 	    	
 	    	
 	    }
