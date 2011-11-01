@@ -86,6 +86,9 @@
 	<string name="wait">Loading!</string>
 	<string name="color">What color are you?</string>
 	
+	<string name="game_over">waiting for the last survivor</string>
+	<string name="score_team">Score Team</string>
+	
 <!-- trophies -->    
     
     <string name="trophies">Trophies</string>
