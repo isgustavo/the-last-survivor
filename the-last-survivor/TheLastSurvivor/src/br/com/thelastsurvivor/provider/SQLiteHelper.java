@@ -89,14 +89,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ " VALUES (9, null ); ");
 		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
 				+ " VALUES (10, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (11, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (12, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (13, null ); ");
-		db.execSQL("INSERT INTO "+ TrophiesProvider.NAME_TABLE 
-				+ " VALUES (14, null ); ");
 		
 				
 

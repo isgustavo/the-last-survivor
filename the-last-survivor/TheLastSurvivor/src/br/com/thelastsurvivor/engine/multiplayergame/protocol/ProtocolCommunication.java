@@ -265,20 +265,14 @@ public class ProtocolCommunication {
 		buffer += "y/"+pointsTeamYellow+"/";
 		buffer += "g/"+pointsTeamGreen+"/";
 		
-		///termina mensage, twitter multplayer
+		buffer += "s/"+spacecraft.getName()+"/c"+spacecraft.getColor();
 		
-		
-		
-		buffer +="t/"+spacecraft.getName();
-			
-		
-		
-		
-		
-		
-		return null;
+		for(Spacecraft space : spacecrafts){
+			buffer += "s/"+space.getName()+"/c"+space.getColor();
+		}
+				
+		return buffer;
 	}
 	
-	
-	
+		
 }

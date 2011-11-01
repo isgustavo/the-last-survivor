@@ -48,6 +48,7 @@ import br.com.thelastsurvivor.provider.game.ShootProvider;
 import br.com.thelastsurvivor.provider.game.SpacecraftProvider;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
 import br.com.thelastsurvivor.provider.rank.RankProvider;
+import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
@@ -186,6 +187,15 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		this.view.getGameLoop().state = 2;
 
 		ContentValues values = new ContentValues();
+		
+		Cursor c = this.getContentResolver().  
+        	query(TrophiesProvider.CONTENT_URI, null, TrophiesProvider.ID+" = 1", null, null);  
+
+		while(c.moveToNext()){
+			if(c.getString(2) == ""){
+				//ganhou trofeu
+			}
+		}
 		
 		Cursor c = this.getContentResolver().  
                 query(RankProvider.CONTENT_URI, null, null, null, null);  

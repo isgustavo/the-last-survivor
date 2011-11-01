@@ -27,7 +27,6 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -41,6 +40,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.simplemode.ResultMultiGameActivity;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.multiplayergame.client.ThreadClient;
@@ -430,7 +430,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
    
    public void setToClientDead(String name){
 	   
-	   Log.d("SETTOCLINETDEAD", "SETTOCLINETDEAD");
+	   //Log.d("SETTOCLINETDEAD", "SETTOCLINETDEAD");
 	   try {
 		   for (ThreadCommunication communication : threadsCommunication) {
 			   communication.os.writeUTF("serverToClientDead/"+name);
@@ -440,6 +440,61 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		e.printStackTrace();
 	   }
 		
+   }
+   
+   public void setEndGame(String value){
+	   try {
+		   for (ThreadCommunication communication : threadsCommunication) {
+			   communication.os.writeUTF("serverToClientEndGame/"+value);
+		   }
+		
+	   } catch (IOException e) {
+		   e.printStackTrace();
+	   }
+   }
+   
+   public void endGame(String[] value){
+		
+	   this.viewServer.getGameLoop().state = 2;
+	   
+	   Bundle s = new Bundle();
+	   
+	 
+	   s.putInt("teamRed", Integer.parseInt(value[1]));
+	   s.putInt("teamBlue", Integer.parseInt(value[3]));
+	   s.putInt("teamYellow", Integer.parseInt(value[5]));
+	   s.putInt("teamGreen", Integer.parseInt(value[7]));
+	   
+	   
+	   int size = 1;
+	   
+	   for(int i = 8; i < value.length; i+=2){
+			
+			switch(value[i].charAt(0)){
+			
+			case 's':
+				if(value[i+1].equalsIgnoreCase(this.namePlayer)){
+					s.putString("id_player", this.namePlayer);
+					s.putInt("color_player", Integer.parseInt(value[i+2]));
+				}else{
+					
+					s.putString("other_player_"+size, value[i+1]);
+					s.putInt("other_color_"+size, Integer.parseInt(value[i+2]));
+					i++;
+				}
+			break;
+			}
+	   }
+	   
+	   s.putInt("id_size", size);
+	   
+	   Intent i = new Intent(MultiGameActivity.this, ResultMultiGameActivity.class);
+    
+	   i.putExtra("gameBundle",s);
+	
+	   startActivity(i);
+	
+	   MultiGameActivity.this.finish();
    }
    
    private void showProgressDialogWaitClient(){
