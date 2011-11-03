@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +19,6 @@ import br.com.thelastsurvivor.activity.rank.RankActivity;
 import br.com.thelastsurvivor.activity.trophies.TrophiesActivity;
 import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.provider.player.PlayerProvider;
-import br.com.thelastsurvivor.util.FT2FontTextView;
 
 public class MainMenuActivity extends Activity{
 	
@@ -41,6 +41,9 @@ public class MainMenuActivity extends Activity{
 		this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		 
 		loadPlayer();
+		
+		Log.d("MAINMENUACTIVITY","..");
+		Log.d(".."+this.player.getId(),".."+this.player.getNickname());
 		
 		Button buttonSimpleGame = (Button)findViewById(R.id.buttonSimpleMode);  
 		buttonSimpleGame.setOnClickListener(buttonSimpleGameListener);  
@@ -65,9 +68,9 @@ public class MainMenuActivity extends Activity{
 		Cursor c = getContentResolver().query(PlayerProvider.CONTENT_URI, 
 				null, null , null, null);
 		
-			while(c.moveToNext()){
-				this.player = new Player(c.getInt(0),c.getString(1));
-			}
+		while(c.moveToNext()){
+			this.player = new Player(c.getInt(0),c.getString(1));
+		}
 	}
 	
 	private OnClickListener buttonSimpleGameListener = new OnClickListener() {  
@@ -79,6 +82,7 @@ public class MainMenuActivity extends Activity{
         	
         	Bundle s = new Bundle();
 		    s.putInt("id_player",player.getId());
+		    s.putString("name_player",player.getNickname());
 		    
 		    i.putExtra("playerBundle",s);
 		    

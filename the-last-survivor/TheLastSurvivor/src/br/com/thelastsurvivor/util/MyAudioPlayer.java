@@ -68,6 +68,13 @@ public class MyAudioPlayer implements OnCompletionListener{
 	
 	public void onCompletion(MediaPlayer mp) {
 		Log.i("", "Fim da música: " + mp3);
+		statusAtual = PARADO;
 	}
+
+	public int getStatusAtual() {
+		return statusAtual;
+	}
+	
+	
 	
 }

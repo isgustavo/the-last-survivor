@@ -31,6 +31,13 @@ public class Rank implements Serializable{
 		
 	}
 	
+	public Rank(Integer id, Integer point) {
+
+		this.id = id;
+		this.point = point;
+	
+	}
+	
 	public Integer getId() {
 		return id;
 	}

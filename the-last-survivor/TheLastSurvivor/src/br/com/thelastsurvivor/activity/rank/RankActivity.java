@@ -10,6 +10,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import br.com.thelastsurvivor.R;
@@ -78,10 +79,20 @@ public class RankActivity extends ListActivity {
 
 			@Override
 			public int compare(Rank rank, Rank rank2) {
-				return rank.getPoint().compareTo(rank2.getPoint());
+				return rank2.getPoint().compareTo(rank.getPoint());
 			}}); 
 		
 		return rankList;
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+	    if(keyCode == KeyEvent.KEYCODE_BACK) {
+	    	
+	    	
+	    	RankActivity.this.finish();
+	    }
+	    return true;
+	
 	}
 	
 }

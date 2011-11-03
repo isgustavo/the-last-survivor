@@ -21,10 +21,10 @@ public class EffectShoot implements IEffect {
 	
 	private Bitmap image;
 	
-	private Bitmap image1;
-	private Bitmap image2;
-	private Bitmap image3;
-	private Bitmap image4;
+	private static Bitmap image1;
+	private static Bitmap image2;
+	private static Bitmap image3;
+	private static Bitmap image4;
 	
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
@@ -51,11 +51,17 @@ public class EffectShoot implements IEffect {
 		this.paint.setColor(Color.WHITE);
 		
 		
+		if(image1 == null)
+			this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
 		
-		this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
-		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
-		this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
-		this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
+		if(image2 == null)
+			this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
+		
+		if(image3 == null)
+			this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
+		
+		if(image4 == null)
+			this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
 		
 		this.startTime = 0;
 		
@@ -76,10 +82,17 @@ public class EffectShoot implements IEffect {
 		
 		
 		
-		this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
-		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
-		this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
-		this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
+		if(image1 == null)
+			this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
+		
+		if(image2 == null)
+			this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
+		
+		if(image3 == null)
+			this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
+		
+		if(image4 == null)
+			this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
 		
 		this.startTime = time;
 		

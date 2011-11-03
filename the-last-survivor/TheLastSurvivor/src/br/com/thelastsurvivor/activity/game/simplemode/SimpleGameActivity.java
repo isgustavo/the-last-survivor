@@ -1,6 +1,8 @@
 package br.com.thelastsurvivor.activity.game.simplemode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +25,17 @@ import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.audio.AudioGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
@@ -41,6 +47,7 @@ import br.com.thelastsurvivor.model.game.Asteroid;
 import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
+import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.model.rank.Rank;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
@@ -54,7 +61,7 @@ import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 import br.com.thelastsurvivor.util.Vector2D;
 
-public class SimpleGameActivity extends Activity implements SensorEventListener, OnGestureListener{
+public class SimpleGameActivity<T> extends Activity implements SensorEventListener, OnGestureListener{
 	
 	private SensorManager manager;
     private Sensor accelerometer;
@@ -68,7 +75,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 
     private static final Integer NAG_SCREEN = 5;
     
-    private Integer player;
+    private Player player;
     
     private WakeLock wakeLock;
     private Long beforeTime;
@@ -81,10 +88,11 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		super.onCreate(savedInstanceState);
 
 		Bundle s = this.getIntent().getExtras().getBundle("startGame");
-		this.player = s.getInt("id_player");
+		player = new Player(s.getInt("id_player"), s.getString("name_player"));
 		
+		Log.d("SIMPLEGAMEACTIVITY","..");
+		Log.d(".."+this.player.getId(),".."+this.player.getNickname());
 		
-		//Log.d("ID PLAYER","."+player);
 		
 		if(s.getSerializable("game") != null){
 			this.init((Game) s.getSerializable("game"));
@@ -138,7 +146,142 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	}
 	
 	
+	
+
+
+	public void endGame(){
+		
+		this.view.getGameLoop().state = 2;
+
+		ContentValues values = new ContentValues();
+		
+		Cursor c = this.getContentResolver().  
+        	query(TrophiesProvider.CONTENT_URI, null, TrophiesProvider.ID+" = 1", null, null);  
+
+		while(c.moveToNext()){
+			if(c.getString(1) == null){
+				
+				showTrophieAchieved(context.getString(R.string.t01), R.drawable.trophies_01_v3);
+				
+				values.put(TrophiesProvider.DATE_ACHIEVED, DateTimeUtil.DateToString(new Date()));	
+				
+				getContentResolver().update(TrophiesProvider.CONTENT_URI, values, TrophiesProvider.ID +" = "+ 1, null);
+			}
+		}
+		
+		Cursor c2 = this.getContentResolver().  
+                query(RankProvider.CONTENT_URI, null, null, null, null);  
+		
+		List<Rank> rankList = new ArrayList<Rank>();
+		
+		while(c2.moveToNext()){
+			rankList.add(new Rank(c2.getInt(0),c2.getInt(2)));
+		}
+		
+		boolean save = true;
+		
+		if(rankList.size() == 10){
+			Collections.sort(rankList, new Comparator<Rank>() {
+
+				@Override
+				public int compare(Rank r1, Rank r2) {
+					return r1.getPoint().compareTo(r2.getPoint());
+				}
+			}); 
+			
+
+			if(rankList.get(0).getPoint() < engine.getSpacecraft().getPoints()){
+				getContentResolver().delete(RankProvider.CONTENT_URI, RankProvider.ID+" = "+rankList.get(0).getId(), null);
+			}else{
+				save = false;
+			}
+			
+		}
+		
+		if(save){
+			values = new ContentValues();
+			
+			values.put(RankProvider.IDENTIFIER_PLAYER, getPlayerIdentifier(this.player.getId()));
+			values.put(RankProvider.POINTS, engine.getSpacecraft().getPoints());
+			values.put(RankProvider.DATE,  DateTimeUtil.DateToString(new Date()));
+			values.put(RankProvider.TYPE, Rank.SIMPLE );
+			
+			getContentResolver().insert(RankProvider.CONTENT_URI, values);
+		}
+
+		
+		Intent i = new Intent(SimpleGameActivity.this, ResultGameActivity.class);
+		
+		Bundle s = new Bundle();
+	    s.putString("name_player", this.player.getNickname());
+	   
+	    s.putInt("points", this.engine.getSpacecraft().getPoints());
+	    s.putLong("time", this.engine.getRealTimeGame());
+	    
+	    i.putExtra("gameBundle",s);
+		
+		startActivity(i);
+		
+		SimpleGameActivity.this.finish();
+		
+		
+	}
+	
+	private Rank lastPositionRank(Cursor c, Integer points){
+		
+		boolean flag = false;
+		Rank last = new Rank(points);
+		
+		
+		while(c.moveToNext()){
+			if(last.getPoint() > c.getInt(2)){
+				last.setId(c.getInt(0));
+				last.setPoint(c.getInt(2));
+				flag = true;
+			}
+		}
+		
+		
+		if(flag){
+			return last;
+		}
+		return null;
+		
+	}
+	
+	public void showTrophieAchieved(final String trophy, final Integer image){
+		
+		getAudio().playSound(5, 0, 1);
+		vibrator.vibrate(110);
+		
+		handler.postDelayed(new Runnable() {
+			public void run() {
+			
+			LayoutInflater inflater =  getLayoutInflater();
+			View layout = inflater.inflate(R.layout.trophy_toast_view,
+			                               (ViewGroup) findViewById(R.id.toast_layout_root));
+	
+			ImageView imageView = (ImageView) layout.findViewById(R.id.image);
+			imageView.setImageResource(image);
+			
+			
+			FT2FontTextView text = (FT2FontTextView) layout.findViewById(R.id.trophy);
+			text.setText(trophy);
+	
+			Toast toast = new Toast(getApplicationContext());
+			toast.setGravity(Gravity.TOP, 0, 30);
+			toast.setDuration(Toast.LENGTH_SHORT);
+			toast.setView(layout);
+			toast.show();
+			}
+		}, 0);
+	}
+	
 	private void showWaitLoading(final Display display, final Game game){
+		
+		//Chame seus amigos para baixarem o app de O ÚLTIMO SOBREVIVENTE na Android Market. 
+		//Novas possibilidades de partidas  multijogador cada um por si ou em cooperação.
+
 		
 		dialog = new Dialog(this, R.style.PauseGameDialogTheme);
 		dialog.setContentView(R.layout.wait_game_view);
@@ -180,78 +323,6 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 			}, NAG_SCREEN * 1000);
 		}
 	} 
-
-
-	public void endGame(){
-		
-		this.view.getGameLoop().state = 2;
-
-		ContentValues values = new ContentValues();
-		
-		Cursor c = this.getContentResolver().  
-        	query(TrophiesProvider.CONTENT_URI, null, TrophiesProvider.ID+" = 1", null, null);  
-
-		while(c.moveToNext()){
-			if(c.getString(2) == ""){
-				//ganhou trofeu
-			}
-		}
-		
-		Cursor c = this.getContentResolver().  
-                query(RankProvider.CONTENT_URI, null, null, null, null);  
-
-		if (c.getCount() == 10) {
-			Rank rank = lastPositionRank(c, engine.getSpacecraft().getPoints());
-			if(rank  != null){
-				getContentResolver().delete(RankProvider.CONTENT_URI, RankProvider.ID+" = "+rank.getId(), null);
-			}
-		}
-		
-		values.put(RankProvider.IDENTIFIER_PLAYER, getPlayerIdentifier(this.player));
-		values.put(RankProvider.POINTS, engine.getSpacecraft().getPoints());
-		values.put(RankProvider.DATE,  DateTimeUtil.DateToString(new Date()));
-		values.put(RankProvider.TYPE, Rank.SIMPLE );
-		
-		getContentResolver().insert(RankProvider.CONTENT_URI, values);
-		
-		Intent i = new Intent(SimpleGameActivity.this, ResultGameActivity.class);
-		
-		Bundle s = new Bundle();
-	    s.putString("id_player", getPlayerIdentifier(this.player));
-	   
-	    s.putInt("points", this.engine.getSpacecraft().getPoints());
-	    s.putLong("time", this.engine.getRealTimeGame());
-	    
-	    i.putExtra("gameBundle",s);
-		
-		startActivity(i);
-		
-		SimpleGameActivity.this.finish();
-		
-		
-	}
-	
-	private Rank lastPositionRank(Cursor c, Integer points){
-		
-		boolean flag = false;
-		Rank last = new Rank(points);
-		
-		
-		while(c.moveToNext()){
-			if(last.getPoint() > c.getInt(2)){
-				last.setId(c.getInt(0));
-				last.setPoint(c.getInt(2));
-				flag = true;
-			}
-		}
-		
-		
-		if(flag){
-			return last;
-		}
-		return null;
-		
-	}
 
 	public String getPlayerIdentifier(Integer id){
 		
@@ -475,7 +546,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 	
 	public Game preparesGameToSave(){
 		
-		return new Game(player, new Date(), engine.getRealTimeGame(), ShootFactory.POWER_UP,
+		return new Game(player.getId(), new Date(), engine.getRealTimeGame(), ShootFactory.POWER_UP,
 				getSpacecraftGame(), getAsteroidsGame());
 		
 	}
@@ -524,7 +595,7 @@ public class SimpleGameActivity extends Activity implements SensorEventListener,
 		
 		ContentValues values = new ContentValues();
 
-		values.put(GameProvider.ID_PLAYER, player);
+		values.put(GameProvider.ID_PLAYER, player.getId());
 		values.put(GameProvider.DATE_PAUSE, DateTimeUtil.DateToString(game.getDate()));
 		values.put(GameProvider.TIME_PAUSE, game.getRunTime());
 		values.put(GameProvider.POWER_UP, game.getPowerUp());

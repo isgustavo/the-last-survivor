@@ -21,14 +21,14 @@ public class EffectAsteroid implements IEffect {
 	
 	private Bitmap image;
 	
-	private Bitmap image1;
-	private Bitmap image2;
-	private Bitmap image3;
-	private Bitmap image4;
-	private Bitmap image5;
-	private Bitmap image6;
-	private Bitmap image7;
-	private Bitmap image8;
+	private static Bitmap image1;
+	private static Bitmap image2;
+	private static Bitmap image3;
+	private static Bitmap image4;
+	private static Bitmap image5;
+	private static Bitmap image6;
+	private static Bitmap image7;
+	private static Bitmap image8;
 	
 	private Bitmap resizedBitmap;
 	private Drawable drawableImage;
@@ -54,14 +54,29 @@ public class EffectAsteroid implements IEffect {
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
 		
-		this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
-		this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
-		this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
-		this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
-		this.image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_9_image);
-		this.image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_11_image);
-		this.image7 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_10_image);
-		this.image8 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_8_image);
+		if(image1 == null)
+			this.image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_1_image);
+		
+		if(image2 == null)
+			this.image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_2_image);
+		
+		if(image3 == null)
+			this.image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_3_image);
+		
+		if(image4 == null)
+			this.image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_4_image);
+		
+		if(image5 == null)
+			this.image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_9_image);
+		
+		if(image6 == null)
+			this.image6 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_11_image);
+		
+		if(image7 == null)
+			this.image7 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_10_image);
+		
+		if(image8 == null)
+			this.image8 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.effect_8_image);
 		
 		this.startTime = 0;
 		

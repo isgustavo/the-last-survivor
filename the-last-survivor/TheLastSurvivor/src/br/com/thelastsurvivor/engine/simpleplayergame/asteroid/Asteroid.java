@@ -20,6 +20,14 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	private Context context;
 	
 	private Bitmap image;
+	
+	private static Bitmap image1;
+	private static Bitmap image2;
+	private static Bitmap image3;
+	private static Bitmap image4;
+	private static Bitmap image5;
+	
+	
 	private Drawable drawableImage;
 	private Integer sizeWidth;
 	private Integer sizeHeight;
@@ -207,9 +215,12 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		switch(typeImage){
 		case 0:
 			this.life = 3;
-			power = 1;
+			power = 10;
 			
-			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image);
+			if(image1 == null)
+				image1 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_1_image);
+			
+			image = image1; 
 			
 			this.sizeWidth = image.getWidth();
 			this.sizeHeight = image.getHeight();
@@ -217,18 +228,25 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		break;
 		
 		case 1:
-			this.life =5;
-			power = 1;
+			this.life = 5;
+			power = 15;
 			
-			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image);
+			if(image2 == null)
+				image2 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_2_image);
+			
+			image = image2; 
 			
 			this.sizeWidth = image.getWidth();
 			this.sizeHeight = image.getHeight();
 		break;
 		case 2:
 			this.life = 3;
-			power = 1;
-			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
+			power = 10;
+			
+			if(image3 == null)
+				image3 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_3_image);
+			
+			image = image3; 
 			
 			this.sizeWidth = image.getWidth();
 			this.sizeHeight = image.getHeight();	
@@ -237,8 +255,12 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		case 3:
 
 			this.life = 8;
-			power = 3;
-			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
+			power = 30;
+			
+			if(image4 == null)
+				image4 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_5_image);
+			
+			image = image4; 
 			
 			this.sizeWidth = image.getWidth();
 			this.sizeHeight = image.getHeight();
@@ -246,9 +268,13 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		break;
 		case 4:
 			
-			this.life = 10;
-			power = 3;
-			image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image);
+			this.life = 15;
+			power = 50;
+			
+			if(image5 == null)
+				image5 = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.asteroids_6_image);
+			
+			image = image5; 
 			
 			this.sizeWidth = image.getWidth();
 			this.sizeHeight = image.getHeight();

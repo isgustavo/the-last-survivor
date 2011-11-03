@@ -37,16 +37,17 @@ public class AudioGame {
 		sounds.put(index, soundPool.load(context, soundID, 1));
 	}
 	
-	public static void loadSounds(){         
-		
+	public static void loadSounds(){         	
 		sounds.put(3, soundPool.load(context, R.raw.explosion, 1));	
 		sounds.put(2, soundPool.load(context, R.raw.laser_single, 1));	
+		sounds.put(4, soundPool.load(context, R.raw.bonus, 1));
+		sounds.put(5, soundPool.load(context, R.raw.trophy, 1));
 	}
 	
 	public static int playSound(int index, int loop, float speed){ 		
 	     float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC); 
 	     streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-	     return soundPool.play(sounds.get(index), streamVolume, streamVolume, 1, 0, speed); 
+	     return soundPool.play(sounds.get(index), streamVolume, 2, 1, 0, speed); 
 	}
 
 	
@@ -64,41 +65,4 @@ public class AudioGame {
 	}
 	
 }
-	/*
-	public static final int NOT_REPEATS = 0;
-	public static final int REPEATS = 1; 
 	
-	private Integer type;
-	private MediaPlayer player;
-	
-	public AudioGame(Context context, Integer audio, Integer type) {
-		player = MediaPlayer.create(context, audio);
-		player.setOnCompletionListener(AudioGame.this);
-		
-		this.type = type; 
-	}
-	
-	public void start() {
-		try {
-			player.start();
-		} catch (Exception e) {}
-	}
-	
-	public void stop() {
-		player.stop();
-		
-		player.release();
-		player = null;
-	}
-	
-	@Override
-	public void onCompletion(MediaPlayer mp) {
-		if(type == NOT_REPEATS){
-			this.stop();
-		}else{
-			this.start();
-		}
-	}
-	
-}*/
-

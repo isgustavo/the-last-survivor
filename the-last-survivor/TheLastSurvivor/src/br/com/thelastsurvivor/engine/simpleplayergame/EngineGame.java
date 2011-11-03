@@ -9,8 +9,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Canvas;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.engine.effect.EffectGameFactory;
@@ -25,6 +30,7 @@ import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
+import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.Vector2D;
 import br.com.thelastsurvivor.view.particle.Explosion;
 
@@ -88,16 +94,6 @@ public class EngineGame{
 			}
 		}
 		
-		/*if(game.getPowerUps().size() != 0){
-			this.powerUps = new ArrayList<IDrawBehavior>();
-			
-			PowerUp.POWER_UP = game.getPowerUp();
-			
-			for(br.com.thelastsurvivor.model.game.PowerUp powerUp : game.getPowerUps()){
-				this.powerUps.add(new PowerUp(context, powerUp.getPosition(), powerUp.getRoute()));
-			}
-		}*/
-		
 		init();
 		
 		this.addMessage(new MessageGame(context, context.getString(R.string.restart_game),3, 1000));
@@ -151,6 +147,10 @@ public class EngineGame{
 		start = System.currentTimeMillis(); 
 		
 		if(stillAAlive()){
+			
+			if(activity.getAudioBackgraund().getStatusAtual() == 3){
+				activity.getAudioBackgraund().start();
+			}
 			
 			verificationTrophies();
 			
@@ -239,15 +239,13 @@ public class EngineGame{
 	
 	public void verificationTrophies(){
 		List<Integer> trophiesNotAchieved = new ArrayList<Integer>();
-		
-		int position = 0;
-		
+				
 		for (Integer trophies : listTrophies) {
 			switch (trophies) {
 			case 2:
 				if(this.spacecraft.getPoints() > 1000){
 					saveTrophieAchieved(2);
-					showTrophieAchieved(context.getString(R.string.t02));
+					activity.showTrophieAchieved(context.getString(R.string.t02), R.drawable.trophies_02_v3);
 					
 				}else{
 					trophiesNotAchieved.add(trophies);
@@ -256,7 +254,7 @@ public class EngineGame{
 			case 3:
 				if(this.spacecraft.getPoints() > 5000){
 					saveTrophieAchieved(3);
-					showTrophieAchieved(context.getString(R.string.t03));
+					activity.showTrophieAchieved(context.getString(R.string.t03), R.drawable.trophies_03_v3);
 					
 				}else{
 					trophiesNotAchieved.add(trophies);
@@ -265,16 +263,16 @@ public class EngineGame{
 			case 4:
 				if(this.spacecraft.getPoints() > 10000){
 					saveTrophieAchieved(3);
-					showTrophieAchieved(context.getString(R.string.t04));
+					activity.showTrophieAchieved(context.getString(R.string.t04), R.drawable.trophies_04_v3);
 					
 				}else{
 					trophiesNotAchieved.add(trophies);
 				}
 			break;
 			case 5:
-				if((getRealTimeGame()/60000)> 4 ){
+				if((driftTime/60000)> 4 ){
 					saveTrophieAchieved(5);
-					showTrophieAchieved(context.getString(R.string.t05));
+					activity.showTrophieAchieved(context.getString(R.string.t05), R.drawable.trophies_05_v3);
 				
 				}else{
 					trophiesNotAchieved.add(trophies);
@@ -292,14 +290,6 @@ public class EngineGame{
 		}
 		
 	}
-	
-	private void showTrophieAchieved(String trophie){
-		//sond
-		
-		String values = context.getString(R.string.achieved) + trophie;
-		this.addMessage(new MessageGame(context, values, 3, 1000, "#FF3300"));
-	}
-	
 	
 	public void verificationNewSpacecraftPositionScreen(){
 		if(-5 > this.spacecraft.getPosition().getY()){
@@ -321,19 +311,19 @@ public class EngineGame{
 		
 		switch ((int)(this.startTime/60000)) {
 		case 0:
-			isAsteroid = (int) (Math.random()*80);			
+			isAsteroid = (int) (Math.random()*50);			
 		break;
 		case 1:
-			isAsteroid = (int) (Math.random()*60);			
+			isAsteroid = (int) (Math.random()*40);			
 		break;
 		case 2:
-			isAsteroid = (int) (Math.random()*40);			
+			isAsteroid = (int) (Math.random()*30);			
 		break;
 		case 3:
 			isAsteroid = (int) (Math.random()*20);			
 		break;
 		default:
-			isAsteroid = (int) (Math.random()*10);
+			isAsteroid = (int) (Math.random()*20);
 		}
 		
 		if(isAsteroid == 1){
@@ -349,16 +339,18 @@ public class EngineGame{
 		for (IDrawBehavior shoot : this.getSpacecraft().getShootsDrawables()) {
 			for(IDrawBehavior asteroid : this.asteroidsDrawables){
 				if((asteroid.getPosition().getX() < shoot.getPosition().getX() &&
-						shoot.getPosition().getX() < asteroid.getPosition().getX()+asteroid.getSizeWidth()) &&
+						shoot.getPosition().getX() < asteroid.getPosition().getX()+asteroid.getSizeWidth()-35) &&
 						(asteroid.getPosition().getY() < shoot.getPosition().getY() &&
-								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight())){
+								shoot.getPosition().getY() < asteroid.getPosition().getY()+asteroid.getSizeHeight()-35)){
 					shoot.setAlive(false);
 					this.spacecraft.addPoint(asteroid.getPower());
 					
 					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
 					
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
+						
 						activity.getAudio().playSound(3, 0, 1);
+						
 						if(asteroid.getTypeImage() != 0){
 							collisionAsteroid.add(new Asteroid(context, 
 									new Vector2D(asteroid.getPosition().getX(),
@@ -384,10 +376,10 @@ public class EngineGame{
 		for(int x= 0; x < this.asteroidsDrawables.size(); x++){
 			Asteroid asteroid = (Asteroid)this.asteroidsDrawables.get(x);
 					
-			if(asteroid.getPosition().getX()+(asteroid.getSizeWidth()-10) > spacecraft.getPosition().getX() &&
-			   asteroid.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getWidth()-10)&&
-			   asteroid.getPosition().getY()+(asteroid.getSizeHeight()-10) > spacecraft.getPosition().getY() &&
-			   asteroid.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getHeight()-10)){
+			if(asteroid.getPosition().getX()+(asteroid.getSizeWidth()-35) > spacecraft.getPosition().getX() &&
+			   asteroid.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getWidth()-20)&&
+			   asteroid.getPosition().getY()+(asteroid.getSizeHeight()-35) > spacecraft.getPosition().getY() &&
+			   asteroid.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getHeight()-20)){
 			
 				//asteroidSituation(asteroid);
 				spacecraft.addLife(-asteroid.getLife());
@@ -410,35 +402,7 @@ public class EngineGame{
 
 	}
 
-	public void createEffectCollision(Asteroid asteroid, Asteroid asteroid2){
-		Integer x = 0; 
-		Integer y = 0;
-		
-		for (int i = asteroid.getPosition().getX(); 
-				i < asteroid.getPosition().getX()+asteroid.getSizeWidth(); i++) {
-			if(i == asteroid2.getPosition().getX()){
-				x = i;
-				break;
-			}else if(i == asteroid2.getPosition().getX()+asteroid2.getSizeWidth()){
-				x = i;
-				break;
-			}
-		}
-		
-		for (int i = asteroid.getPosition().getY(); 
-				i < asteroid.getPosition().getY()+asteroid.getSizeHeight(); i++) {
-			if(i == asteroid2.getPosition().getY()){
-				y = i;
-				break;
-			}else if(i == asteroid2.getPosition().getY()+asteroid2.getSizeWidth()){
-				y = i;
-				break;
-			}
-		}
-		
-		this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(x,y)));
-
-	}
+	
 	public void createEffectCollision(Asteroid asteroid){
 		
 		Integer x = 0; 
@@ -475,43 +439,16 @@ public class EngineGame{
 		
 	}
 	
-/*	private void verificationSpacecraftCollisionsPowerUp(){
-		
-		for(int x= 0; x < this.powerUps.size(); x++){
-			PowerUp powerUp = (PowerUp)this.powerUps.get(x);
-					
-			if(powerUp.getPosition().getX()+(powerUp.getSizeWidth()-5) > spacecraft.getPosition().getX() &&
-				powerUp.getPosition().getX() < spacecraft.getPosition().getX()+(spacecraft.getWidth()-5)&&
-				powerUp.getPosition().getY()+(powerUp.getSizeHeight()-5) > spacecraft.getPosition().getY() &&
-				powerUp.getPosition().getY() < spacecraft.getPosition().getY()+(spacecraft.getHeight()-5)){
-			
-				if(ShootFactory.POWER_UP != 3){
-					ShootFactory.POWER_UP += 1;
-				}
-				
-				//asteroidSituation(asteroid);
-				//spacecraft.addLife(-asteroid.getLife());
-				this.vibrator.vibrate(100);
-				String values = context.getString(R.string.power_up);
-				this.addMessage(new MessageGame(context, values, 3, 1000, "#FFFF00"));
-				
-				
-				
-				this.powerUps.get(x).setAlive(false);
-			}
-		}
-
-	}*/
-	
-	
 	public void verificationPowerUp(Asteroid asteroid){
 		
 		int up = 0;
 		
-		up = (int) (Math.random()*80);	
+		up = (int) (Math.random()*101);	
 		
 		if(up == 1){
-			//this.powerUps.add(new PowerUp(context, asteroid.getPosition()));
+			
+			activity.getAudio().playSound(4, 0, 1);
+			
 			if(ShootFactory.POWER_UP != 3){
 				ShootFactory.POWER_UP += 1;
 			}

@@ -40,7 +40,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.game.simplemode.ResultMultiGameActivity;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.multiplayergame.client.ThreadClient;
@@ -455,15 +454,18 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
    
    public void endGame(String[] value){
 		
-	   this.viewServer.getGameLoop().state = 2;
+	   if(this.viewServer != null){
+		 this.viewServer.getGameLoop().state = 2;
+	   }
+	   
 	   
 	   Bundle s = new Bundle();
 	   
 	 
-	   s.putInt("teamRed", Integer.parseInt(value[1]));
-	   s.putInt("teamBlue", Integer.parseInt(value[3]));
-	   s.putInt("teamYellow", Integer.parseInt(value[5]));
-	   s.putInt("teamGreen", Integer.parseInt(value[7]));
+	   s.putInt("teamRed", Integer.parseInt(value[2]));
+	   s.putInt("teamBlue", Integer.parseInt(value[4]));
+	   s.putInt("teamYellow", Integer.parseInt(value[6]));
+	   s.putInt("teamGreen", Integer.parseInt(value[8]));
 	   
 	   
 	   int size = 1;
@@ -496,6 +498,10 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	
 	   MultiGameActivity.this.finish();
    }
+   
+   
+  
+   
    
    private void showProgressDialogWaitClient(){
 		

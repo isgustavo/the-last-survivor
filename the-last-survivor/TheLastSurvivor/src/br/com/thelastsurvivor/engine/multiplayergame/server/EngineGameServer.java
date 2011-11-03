@@ -178,15 +178,25 @@ public class EngineGameServer implements IServer{
 		
 		if(spacecrafts.size() == 0){
 			
-			activity.setEndGame(protocol.protocolSentToClientsEndGame(pointsTeamRed,
-					pointsTeamBlue, pointsTeamYellow, pointsTeamGreen, spacecraft, spacecrafts));
+			String protocol = this.protocol.protocolSentToClientsEndGame(pointsTeamRed,
+					pointsTeamBlue, pointsTeamYellow, pointsTeamGreen, spacecraft, spacecrafts);
+			
+			activity.setEndGame(protocol);
+
+			
+			activity.endGame(("serverToClientEndGame/"+protocol).split("/"));
 			
 		}else{
 			if(spacecrafts.size() == 1 && this.spacecraft.getIsDead()){
 				
-			//	activity.setEndGame(protocol.protocolSentToClientsEndGame(pointsTeamRed,
-			//			pointsTeamBlue, pointsTeamYellow, pointsTeamGreen, spacecraft, spacecrafts));
 				
+				String protocol = this.protocol.protocolSentToClientsEndGame(pointsTeamRed,
+						pointsTeamBlue, pointsTeamYellow, pointsTeamGreen, spacecraft, spacecrafts);
+				
+				activity.setEndGame(protocol);
+
+				protocol += "serverToClientEndGame/";
+				activity.endGame(("serverToClientEndGame/"+protocol).split("/"));
 				
 			}
 		}

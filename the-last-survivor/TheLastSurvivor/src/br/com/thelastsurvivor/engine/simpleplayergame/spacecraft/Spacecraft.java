@@ -92,7 +92,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	
 		
 		if(this.life == null){
-			this.life = 250;
+			this.life = 0;
 		}
 		
 		if(this.points == null){
@@ -140,13 +140,8 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	@Override
 	public void draw(Canvas c) {
 
-		//c.drawBitmap(this.resizedBitmapBackground, this.positionBackground.getFloatX(), 
-		//		this.positionBackground.getFloatY(), null);
 		c.drawBitmap(this.resizedBitmap, this.position.getFloatX(), 
 				this.position.getFloatY(), null);
-		
-
-		//Log.d("DOUBLE","M"+(Math.tan(angle)));
 
 	   if(!this.shootsDrawables.isEmpty()){
 			for (IDrawBehavior shoot : this.shootsDrawables) {

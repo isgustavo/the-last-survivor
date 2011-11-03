@@ -4,6 +4,7 @@ package br.com.thelastsurvivor.engine.multiplayergame.protocol;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
@@ -270,8 +271,10 @@ public class ProtocolCommunication {
 		for(Spacecraft space : spacecrafts){
 			buffer += "s/"+space.getName()+"/c"+space.getColor();
 		}
-				
+		
+		Log.d("BUFFER MESSAGE","."+buffer);
 		return buffer;
+		
 	}
 	
 		

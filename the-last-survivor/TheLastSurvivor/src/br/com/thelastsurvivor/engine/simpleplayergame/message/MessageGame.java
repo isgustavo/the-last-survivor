@@ -54,17 +54,11 @@ public class MessageGame implements IInitUpdateDraw{
 	
 	@Override
 	public void init() {
-		
-		
-		
+
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
 		this.paint.setTextSize(14);
-		
-		
-		
-		
-		
+
 	}
 	
 	@Override

@@ -3,6 +3,8 @@ package br.com.thelastsurvivor.activity.game.simplemode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +18,7 @@ import br.com.thelastsurvivor.util.MyAudioPlayer;
 public class ResultGameActivity extends Activity {
 	
 	private MyAudioPlayer audioBackgraund;
+	private Vibrator vibrator;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,8 +27,11 @@ public class ResultGameActivity extends Activity {
 		audioBackgraund = new MyAudioPlayer(ResultGameActivity.this, R.raw.sol);
 		audioBackgraund.start();
 
+		vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+		
 		Bundle s = this.getIntent().getExtras().getBundle("gameBundle");
 		
+		String name = s.getString("name_player");
 		Integer score = s.getInt("points");	
 		Long time = s.getLong("time");	
 
@@ -34,7 +40,7 @@ public class ResultGameActivity extends Activity {
 		final FT2FontTextView scoreGame = (FT2FontTextView)findViewById(R.id.result_score);
 		scoreGame.setText(score+"");
 
-	    String textTwitte = s.getString("id_palyer")+" "+this.getString(R.string.twitter_survived)+" "; 
+	    String textTwitte = name+" "+this.getString(R.string.twitter_survived)+" "; 
 		
 		if((time/60000) == 0){
 			Integer timeGame = (int) (time/1000);
@@ -58,6 +64,9 @@ public class ResultGameActivity extends Activity {
 		Button twitte = (Button)findViewById(R.id.button_twitte);
 		twitte.setOnClickListener(new OnClickListener() {    
 			  public void onClick(View v) {  
+				  
+				  vibrator.vibrate(80);
+				  
 				  Intent i = new Intent(ResultGameActivity.this, TwitterActivity.class);
 				  
 				  Bundle s = new Bundle();

@@ -1,4 +1,4 @@
-package br.com.thelastsurvivor.activity.game.simplemode;
+package br.com.thelastsurvivor.activity.game.multiplayermode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +63,7 @@ public class ResultMultiGameActivity extends Activity {
 			colorPlayer3 = s.getInt("other_player_3");
 		}
 		
-		setContentView(R.layout.result_game_view);
+		setContentView(R.layout.result_multi_game_view);
 		
 		final FT2FontTextView red = (FT2FontTextView)findViewById(R.id.red);
 		red.setText(teamRed+"");
@@ -133,7 +133,7 @@ public class ResultMultiGameActivity extends Activity {
 				  
 				  startActivity(i);
 				  
-				  //ResultMultiGameActivity.this.finish();
+				  ResultMultiGameActivity.this.finish();
 			  }  
 		});  
 		

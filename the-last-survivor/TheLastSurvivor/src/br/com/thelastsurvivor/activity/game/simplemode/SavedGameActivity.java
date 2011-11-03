@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,7 @@ import br.com.thelastsurvivor.model.game.Asteroid;
 import br.com.thelastsurvivor.model.game.Game;
 import br.com.thelastsurvivor.model.game.Shoot;
 import br.com.thelastsurvivor.model.game.Spacecraft;
+import br.com.thelastsurvivor.model.player.Player;
 import br.com.thelastsurvivor.provider.game.AsteroidProvider;
 import br.com.thelastsurvivor.provider.game.GameProvider;
 import br.com.thelastsurvivor.provider.game.ShootProvider;
@@ -36,7 +38,7 @@ public class SavedGameActivity extends ListActivity {
 	private ListAdapter adapter;
 	private Vibrator vibrator;
 	
-	private Integer idPlayer;
+	private Player player;
 	private Game game;
 	private List<Game> games;
 	ListView listView;  
@@ -49,7 +51,10 @@ public class SavedGameActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		Bundle s = this.getIntent().getExtras().getBundle("playerBundle");
-		this.idPlayer = s.getInt("id_player");
+		player = new Player(s.getInt("id_player"), s.getString("name_player"));
+		
+		Log.d("SAVEDGAMEACTIVITY","..");
+		Log.d(".."+this.player.getId(),".."+this.player.getNickname());
 		
 		context = SavedGameActivity.this;
 		this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -69,7 +74,8 @@ public class SavedGameActivity extends ListActivity {
 					Intent i = new Intent(SavedGameActivity.this, SimpleGameActivity.class);
 					
 					Bundle b = new Bundle();
-					b.putInt("id_player", SavedGameActivity.this.idPlayer);
+					b.putInt("id_player", SavedGameActivity.this.player.getId());
+					b.putString("name_player", SavedGameActivity.this.player.getNickname());
 				   
 					i.putExtra("startGame",b);
 				    
@@ -85,7 +91,8 @@ public class SavedGameActivity extends ListActivity {
 			Intent i = new Intent(SavedGameActivity.this, SimpleGameActivity.class);
 			
 			Bundle b = new Bundle();
-			b.putInt("id_player", this.idPlayer);
+			b.putInt("id_player", SavedGameActivity.this.player.getId());
+			b.putString("name_player", SavedGameActivity.this.player.getNickname());
 		    
 			i.putExtra("startGame",b);
 		    
@@ -202,7 +209,8 @@ public class SavedGameActivity extends ListActivity {
 		Intent i = new Intent(SavedGameActivity.this, SimpleGameActivity.class);
 		
 		Bundle b = new Bundle();
-		b.putInt("id_player", this.idPlayer);
+		b.putInt("id_player", SavedGameActivity.this.player.getId());
+		b.putString("name_player", SavedGameActivity.this.player.getNickname());
 		b.putSerializable("game", this.game);
 		
 		i.putExtra("startGame",b);

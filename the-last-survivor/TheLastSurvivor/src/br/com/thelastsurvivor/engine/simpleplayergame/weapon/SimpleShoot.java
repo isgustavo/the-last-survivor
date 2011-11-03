@@ -61,11 +61,7 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		this.sizeHeight = image.getHeight();
 		this.sizeWidth = image.getWidth();
 		
-		//this.firstPosition();
-		//Orientation.getNewPosition(this.angle, position);
-		//this.position.addX((this.spacecraft.getWidth()/2));
-		//this.position.addY((this.spacecraft.getHeight()/2));
-		
+	
 		this.isAlive = true;
 		
 		this.matrix = new Matrix();

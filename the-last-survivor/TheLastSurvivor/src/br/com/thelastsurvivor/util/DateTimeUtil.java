@@ -1,8 +1,6 @@
 package br.com.thelastsurvivor.util;
 
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -15,11 +13,16 @@ public class DateTimeUtil {
 
         Date date = null;  
         //try {
-        	Calendar dateAchieved = Calendar.getInstance(new Locale("portuguese"));
+        	Calendar dateAchieved = Calendar.getInstance();
         	
         	dateAchieved.set(Integer.parseInt(dateString.substring(6)),
         			Integer.parseInt(dateString.substring(3,5)),
         			Integer.parseInt(dateString.substring(0,2)));
+        	
+        	
+        	//Locale locale = new Locale("ja");
+        	//DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+        	
         	return dateAchieved.getTime();
         	
             //DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
@@ -36,7 +39,9 @@ public class DateTimeUtil {
 		
 		Calendar date = Calendar.getInstance();
 		date.setTime(date1);
-		return date.get(Calendar.DAY_OF_MONTH)+"/" + (((date.get(Calendar.MONTH)+"").length()) == 1 ? ("0"+date.get(Calendar.MONTH)) : date.get(Calendar.MONTH))  +"/"+date.get(Calendar.YEAR);
+		return (((date.get(Calendar.DAY_OF_MONTH)+"").length()) == 1 ? ("0"+date.get(Calendar.DAY_OF_MONTH)) : date.get(Calendar.DAY_OF_MONTH))+ 
+					"/" + (((date.get(Calendar.MONTH)+"").length()) == 1 ? ("0"+date.get(Calendar.MONTH)) : date.get(Calendar.MONTH))+  
+					"/" +  date.get(Calendar.YEAR);
 		
 	}
 }
