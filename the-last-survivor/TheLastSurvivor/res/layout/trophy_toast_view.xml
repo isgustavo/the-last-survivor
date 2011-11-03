@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:lht="http://schemas.android.com/apk/res/br.com.thelastsurvivor"
+              android:id="@+id/toast_layout_root"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="10dp"
+              android:background="#EE1693">
+              
+    	<ImageView android:id="@+id/image"
+               android:layout_width="70dp" 
+    	 	   android:layout_height="50dp" 
+               />
+   
+   		<br.com.thelastsurvivor.util.FT2FontTextView 
+			android:id="@+id/trophy"
+			android:textSize="18dp" android:textColor="@android:color/white"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" lht:ttf_name="FT2FONT.TTF"
+			android:layout_marginTop="15dp">
+		</br.com.thelastsurvivor.util.FT2FontTextView>
+   
+   
+</LinearLayout>

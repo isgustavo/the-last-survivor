@@ -7,6 +7,7 @@
  	<string name="app_middle_name">Último</string>
     <string name="app_last_name">Sobrevivente</string>
     
+    <string name="locale">pt</string>
 
 <!-- Cadastro do Perfil -->  
     <string name="profile">Perfil</string>
@@ -108,5 +109,11 @@
     <string name="t15">Caçador de Troféus!</string>
     <string name="tObjective15">Conquistar todos os troféus do jogo.</string>
     
+    
+    
+<!-- NAG -->
+	<string name="text_nag">Chame seus amigos para baixarem o app de O ÚLTIMO SOBREVIVENTE na Android Market.</string>
+	<string name="text_nag2">Novas possibilidades de partidas multijogador em modos cada um por si ou em cooperação.</string>
+
 
 </resources>

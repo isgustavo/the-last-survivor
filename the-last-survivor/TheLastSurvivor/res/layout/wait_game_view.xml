@@ -22,7 +22,7 @@
     	 			android:layout_width="fill_parent" 
     	 			android:layout_height="wrap_content" 
     	 			android:src="@drawable/logo_android_market_image"
-    	 			android:layout_x="17dp" android:layout_y="107dp">
+    	 			android:layout_x="17dp" android:layout_y="60dp">
 				</ImageView>
 				
 				
@@ -30,8 +30,32 @@
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content" 
 					style="?android:attr/progressBarStyleLarge" 
-					android:layout_x="382dp" android:layout_y="170dp"></ProgressBar>
+					android:layout_x="360dp" android:layout_y="55dp"></ProgressBar>
 			 	
+				
+				<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/text_nag" android:text="@string/text_nag" 
+						android:inputType="textMultiLine"
+						android:textSize="15dp" android:textColor="#00889C"
+						android:lines="8" android:gravity="top|left"
+						android:scrollHorizontally="false"
+						android:maxWidth="390.0dip"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						lht:ttf_name="FT2FONT.TTF"
+						android:layout_x="25dp" android:layout_y="150dp">
+			 	</br.com.thelastsurvivor.util.FT2FontTextView>
+			 	
+			 	<br.com.thelastsurvivor.util.FT2FontTextView 
+						android:id="@+id/text_nag" android:text="@string/text_nag2" 
+						android:inputType="textMultiLine"
+						android:textSize="15dp" android:textColor="#FF0000"
+						android:lines="8" android:gravity="top|left"
+						android:scrollHorizontally="false"
+						android:maxWidth="390.0dip"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						lht:ttf_name="FT2FONT.TTF"
+						android:layout_x="25dp" android:layout_y="200dp">
+			 	</br.com.thelastsurvivor.util.FT2FontTextView>
 				
 				
 

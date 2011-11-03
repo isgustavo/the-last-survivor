@@ -53,8 +53,6 @@
 
     <activity android:name=".activity.twitter.TwitterActivity" 
   			  android:screenOrientation="landscape"
-  			  android:launchMode="singleTask"
-  			  android:alwaysRetainTaskState="true"
   			  android:noHistory="true">  
    			<intent-filter>
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -84,6 +82,17 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+    
+     <activity android:name=".activity.game.multiplayermode.ResultMultiGameActivity"
+  			  android:screenOrientation="landscape"
+  			  android:launchMode="singleTask"
+  			  android:alwaysRetainTaskState="true">
+     	<intent-filter>
+     		
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+   
     
     <activity android:name=".activity.game.multiplayermode.FeaturesGameActivity"
   			  android:screenOrientation="landscape"

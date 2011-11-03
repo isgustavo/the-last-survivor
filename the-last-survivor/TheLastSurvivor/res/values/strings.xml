@@ -12,6 +12,9 @@
     <string name="profile">Profile</string>
     <string name="erro_profile">Nickname is necessary!</string>
     
+    
+    <string name="locale">us</string>
+    
     <string name="cadastre_player_1">
     	What will be your nickname
     </string>
@@ -153,4 +156,8 @@
 	<string name="twitter_posted">Tweet posted.</string>
 	
    
+<!-- NAG -->
+	<string name="text_nag">Call your friends to download the app THE LAST SURVIVOR in Android Market.</string>
+	<string name="text_nag2">New possibilities of multiplayer game in free for all or cooperation modes.</string>   
+
 </resources>
