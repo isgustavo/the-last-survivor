@@ -18,7 +18,6 @@
     <string name="cadastre_player_1">
     	What will be your nickname
     </string>
-    
     <string name="cadastre_player_2">
     	    in The Last Survivor?
     </string>
@@ -26,7 +25,6 @@
     <string name="alteration_palyer_1">
     	 What will be your nickname  		
     </string>
-    
     <string name="alteration_palyer_2">
     	 in THE LAST SURVIVOR now?  
     </string>
@@ -36,7 +34,6 @@
     <string name="removeProfile">
     	 This action will result in loss of all data on The Last Survivor 		
     </string>
-    
     <string name="removeProfile_2">
     	This app will be closed due to exclusion.
     </string>

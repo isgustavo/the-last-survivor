@@ -36,7 +36,7 @@
 				<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/text_nag" android:text="@string/text_nag" 
 						android:inputType="textMultiLine"
-						android:textSize="15dp" android:textColor="#00889C"
+						android:textSize="15dp" android:textColor="@android:color/white"
 						android:lines="8" android:gravity="top|left"
 						android:scrollHorizontally="false"
 						android:maxWidth="390.0dip"
@@ -48,7 +48,7 @@
 			 	<br.com.thelastsurvivor.util.FT2FontTextView 
 						android:id="@+id/text_nag" android:text="@string/text_nag2" 
 						android:inputType="textMultiLine"
-						android:textSize="15dp" android:textColor="#FF0000"
+						android:textSize="15dp" android:textColor="#00889C"
 						android:lines="8" android:gravity="top|left"
 						android:scrollHorizontally="false"
 						android:maxWidth="390.0dip"

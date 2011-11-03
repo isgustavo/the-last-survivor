@@ -2,6 +2,9 @@ package br.com.thelastsurvivor.activity.game.multiplayermode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,10 +16,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -30,25 +35,40 @@ import android.os.Vibrator;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
+import br.com.thelastsurvivor.engine.audio.AudioGame;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.client.EngineGameClient;
 import br.com.thelastsurvivor.engine.multiplayergame.client.ThreadClient;
 import br.com.thelastsurvivor.engine.multiplayergame.communication.ThreadCommunication;
 import br.com.thelastsurvivor.engine.multiplayergame.server.EngineGameServer;
 import br.com.thelastsurvivor.engine.multiplayergame.server.ThreadServer;
+import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.util.IClient;
 import br.com.thelastsurvivor.engine.util.IServer;
+import br.com.thelastsurvivor.engine.view.EngineGameView;
 import br.com.thelastsurvivor.engine.view.EngineMultiGameView;
+import br.com.thelastsurvivor.model.game.Game;
+import br.com.thelastsurvivor.model.rank.Rank;
+import br.com.thelastsurvivor.model.rank.Result;
+import br.com.thelastsurvivor.provider.rank.RankProvider;
+import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
+import br.com.thelastsurvivor.util.DateTimeUtil;
+import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 
 public class MultiGameActivity extends Activity implements SensorEventListener, 
@@ -77,7 +97,9 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	private Sensor accelerometer;
 	private GestureDetector gestureScanner;
 	private Vibrator vibrator;
+	private MyAudioPlayer audioBackgraund;
 	private MyAudioPlayer audioPlayer;
+	private AudioGame audio;
 	private Display display;
 	private WakeLock wakeLock;
 	
@@ -352,6 +374,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 				 communication.os.writeUTF("startGameClient/");
 			}
 	   
+			
 			startGameServer(spacecraftsClient);
 	   } catch (IOException e) {
 			e.printStackTrace();
@@ -365,21 +388,101 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 				public void run() {
 					dialog.dismiss();
 				 	dialog.cancel();
-					engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
-					viewServer = new EngineMultiGameView(activity.context,engineGame);
+				 	
+				 	showWaitLoading(display, spacecraftsClient);
+				 	
+				 	audio.getInstance();
+					audio.initSounds(MultiGameActivity.this);
+					audio.loadSounds();
 					
-					setContentView(viewServer);
+					//engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
+					//viewServer = new EngineMultiGameView(activity.context,engineGame);
+					
+					//setContentView(viewServer);
 				}
 			}, 0);
 
 	   }
+	 
+	 private static final Integer NAG_SCREEN = 5;
+	 
+	 private void showWaitLoading(final Display display, final List<Spacecraft> spacecraftsClient){
+			
+			dialog = new Dialog(this, R.style.PauseGameDialogTheme);
+			dialog.setContentView(R.layout.wait_game_view);
+			   
+			dialog.show();
+			if (NAG_SCREEN > 0){
+				handler.postDelayed(new Runnable() {
+					public void run() {
+						if(MultiGameActivity.this.getAudio().playSound(2, 0, 1) != 0){
+							dialog.cancel();
+							
+							MultiGameActivity.this.audioBackgraund = new MyAudioPlayer(MultiGameActivity.this, R.raw.singleplayer_soundtrack);
+							MultiGameActivity.this.audioBackgraund.start();
+							
+							
+								MultiGameActivity.this.engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
+								
+								MultiGameActivity.this.viewServer = new EngineMultiGameView(activity.context,engineGame);
+							
+								MultiGameActivity.this.setContentView(viewServer);
+							
+						}else{
+							dialog.cancel();
+							showWaitLoading(display, spacecraftsClient);
+							
+						}
+		           	   	
+				   	}
+				}, NAG_SCREEN * 1000);
+			}
+		} 
+	 
+	 private void showWaitLoading(final Display display, final String[] values){
+			
+			dialog = new Dialog(this, R.style.PauseGameDialogTheme);
+			dialog.setContentView(R.layout.wait_game_view);
+			   
+			dialog.show();
+			if (NAG_SCREEN > 0){
+				handler.postDelayed(new Runnable() {
+					public void run() {
+						if(MultiGameActivity.this.getAudio().playSound(2, 0, 1) != 0){
+							dialog.cancel();
+							
+							MultiGameActivity.this.audioBackgraund = new MyAudioPlayer(MultiGameActivity.this, R.raw.singleplayer_soundtrack);
+							MultiGameActivity.this.audioBackgraund.start();
+							
+							
+							MultiGameActivity.this.engineGameClient = new EngineGameClient(context, MultiGameActivity.this, vibrator, display, namePlayer);
+							MultiGameActivity.this.viewClient = new br.com.thelastsurvivor.engine.multiplayergame.client.EngineMultiGameView(MultiGameActivity.this,MultiGameActivity.this.engineGameClient);
+							  
+							MultiGameActivity.this.setContentView(viewClient);
+							
+						}else{
+							dialog.cancel();
+							showWaitLoading(display, values);
+							
+						}
+		           	   	
+				   	}
+				}, NAG_SCREEN * 1000);
+			}
+		} 
 		
 	
   public void gameSystemPrepares(final String[] values){
 		    
 	   handler.postDelayed(new Runnable() {
 		   public void run() {
-			   startGameClient(values);
+			    
+			    showWaitLoading(display, values);
+			 	
+			 	audio.getInstance();
+				audio.initSounds(MultiGameActivity.this);
+				audio.loadSounds();
+			   //startGameClient(values);
 		   }
        	}, 0);
      
@@ -458,17 +561,20 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		 this.viewServer.getGameLoop().state = 2;
 	   }
 	   
-	   
+	   Integer points = 0;
 	   Bundle s = new Bundle();
 	   
-	 
+	   
+	   
 	   s.putInt("teamRed", Integer.parseInt(value[2]));
 	   s.putInt("teamBlue", Integer.parseInt(value[4]));
 	   s.putInt("teamYellow", Integer.parseInt(value[6]));
 	   s.putInt("teamGreen", Integer.parseInt(value[8]));
 	   
-	   
 	   int size = 1;
+	   String type = null;
+	   Boolean coop = false;
+	   Boolean free = true;
 	   
 	   for(int i = 8; i < value.length; i+=2){
 			
@@ -478,17 +584,84 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 				if(value[i+1].equalsIgnoreCase(this.namePlayer)){
 					s.putString("id_player", this.namePlayer);
 					s.putInt("color_player", Integer.parseInt(value[i+2]));
+					
+					
+					switch (value[i].charAt(0)) {
+						case 'r':
+							points = Integer.parseInt(value[2]);
+							type = MultiGameActivity.RED;
+						break;
+						case 'b':
+							points = Integer.parseInt(value[4]);
+							type = MultiGameActivity.BLUE;
+						break;
+						case 'y':
+							points = Integer.parseInt(value[6]);
+							type = MultiGameActivity.YELLOW;
+						break;
+						case 'g':
+							points = Integer.parseInt(value[8]);
+							type = MultiGameActivity.GREEN;
+						break;
+					}
+
+					
 				}else{
 					
 					s.putString("other_player_"+size, value[i+1]);
 					s.putInt("other_color_"+size, Integer.parseInt(value[i+2]));
+					if(type.equalsIgnoreCase(value[i+2])){
+						coop = true;
+						free = false;
+					}
 					i++;
 				}
 			break;
 			}
 	   }
 	   
-	   s.putInt("id_size", size);
+	   verificationTrophies(Integer.parseInt(value[2]),Integer.parseInt(value[4]),
+			   Integer.parseInt(value[6]),Integer.parseInt(value[8]), type, coop, free);
+	   
+	   ContentValues values = new ContentValues();
+	   
+	   Cursor c2 = this.getContentResolver().  
+       query(RankProvider.CONTENT_URI, null, null, null, null);  
+
+	   List<Rank> rankList = new ArrayList<Rank>();
+		
+	   while(c2.moveToNext()){
+		   rankList.add(new Rank(c2.getInt(0),c2.getInt(2)));
+	   }
+		
+	   boolean save = true;
+		
+	   if(rankList.size() == 10){
+			Collections.sort(rankList, new Comparator<Rank>() {
+		
+				@Override
+				public int compare(Rank r1, Rank r2) {
+					return r1.getPoint().compareTo(r2.getPoint());
+				}
+		});}	
+		
+		if(rankList.get(0).getPoint() < points){
+			getContentResolver().delete(RankProvider.CONTENT_URI, RankProvider.ID+" = "+rankList.get(0).getId(), null);
+		}else{
+			save = false;
+		}
+		
+		if(save){
+			values = new ContentValues();
+			
+			values.put(RankProvider.IDENTIFIER_PLAYER, this.namePlayer);
+			values.put(RankProvider.POINTS, points);
+			values.put(RankProvider.DATE,  DateTimeUtil.DateToString(new Date()));
+			values.put(RankProvider.TYPE, Rank.MULTI);
+			
+			getContentResolver().insert(RankProvider.CONTENT_URI, values);
+		}
+
 	   
 	   Intent i = new Intent(MultiGameActivity.this, ResultMultiGameActivity.class);
     
@@ -498,10 +671,114 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	
 	   MultiGameActivity.this.finish();
    }
+
    
+   public void verificationTrophies(Integer red, Integer blue, 
+		   Integer yellow, Integer green, String type, Boolean coop, Boolean free){
+	   
+	   List<Result> results = new ArrayList<Result>(); 
+	   results.add(new Result(MultiGameActivity.RED, red));
+	   results.add(new Result(MultiGameActivity.BLUE, blue));
+	   results.add(new Result(MultiGameActivity.YELLOW, yellow));
+	   results.add(new Result(MultiGameActivity.GREEN, green));
+	   
+	   
+	   Collections.sort(results, new Comparator<Result>() {
+
+			@Override
+			public int compare(Result r1, Result r2) {
+				return r2.getPoints().compareTo(r1.getPoints());
+			}
+		}); 
+	   
+	   List<Integer> listTrophies = getListTrophiesNotAchieved();
+	   
+	   for (Integer trophies : listTrophies) {
+			switch (trophies) {
+			case 6:
+					saveTrophieAchieved(6);
+					activity.showTrophieAchieved(context.getString(R.string.t06), R.drawable.trophies_06_v3);
+			break;
+			case 7:
+				if(results.get(0).getId().equalsIgnoreCase(type)){
+					saveTrophieAchieved(7);
+					activity.showTrophieAchieved(context.getString(R.string.t07), R.drawable.trophies_07_v3);
+					
+				}
+			break;
+			case 8:
+				if(results.get(0).getId().equalsIgnoreCase(type) && coop){
+					saveTrophieAchieved(8);
+					activity.showTrophieAchieved(context.getString(R.string.t08), R.drawable.trophies_08_v3);
+					
+				}
+			break;
+			case 9:
+				if(results.get(0).getId().equalsIgnoreCase(type) && free ){
+					saveTrophieAchieved(9);
+					activity.showTrophieAchieved(context.getString(R.string.t09), R.drawable.trophies_09_v3);
+				}
+			break;
+			
+			default:
+				break;
+			}
+	   }
+	   
+   }
    
-  
+   private List<Integer> getListTrophiesNotAchieved(){
+		
+		List<Integer> listTrophies = new ArrayList<Integer>();
+		
+		Cursor c = activity.getContentResolver().query(TrophiesProvider.CONTENT_URI, 
+				null, TrophiesProvider.DATE_ACHIEVED +" IS NULL " , null, null);
+		
+		while(c.moveToNext()){
+			listTrophies.add(c.getInt(0));
+		}
+		
+		return listTrophies;
+	}
    
+   private void saveTrophieAchieved(Integer id){
+		
+		ContentValues values = new ContentValues();
+
+		values.put(TrophiesProvider.DATE_ACHIEVED, DateTimeUtil.DateToString(new Date()));	
+		
+		activity.getContentResolver().update(TrophiesProvider.CONTENT_URI, values, TrophiesProvider.ID +" = "+ id, null);
+			
+		
+	}
+   
+   public void showTrophieAchieved(final String trophy, final Integer image){
+		
+		getAudio().playSound(5, 0, 1);
+		vibrator.vibrate(110);
+		
+		handler.postDelayed(new Runnable() {
+			public void run() {
+			
+			LayoutInflater inflater =  getLayoutInflater();
+			View layout = inflater.inflate(R.layout.trophy_toast_view,
+			                               (ViewGroup) findViewById(R.id.toast_layout_root));
+	
+			ImageView imageView = (ImageView) layout.findViewById(R.id.image);
+			imageView.setImageResource(image);
+			
+			
+			FT2FontTextView text = (FT2FontTextView) layout.findViewById(R.id.trophy);
+			text.setText(trophy);
+	
+			Toast toast = new Toast(getApplicationContext());
+			toast.setGravity(Gravity.TOP, 0, 30);
+			toast.setDuration(Toast.LENGTH_SHORT);
+			toast.setView(layout);
+			toast.show();
+			}
+		}, 0);
+	}
    
    private void showProgressDialogWaitClient(){
 		
@@ -778,11 +1055,11 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	public boolean onSingleTapUp(MotionEvent event) {
 		
 		if(this.engineGame != null){
-			
+			audio.playSound(2, 0, 1);
 			this.engineGame.getSpacecraft().newShoot();
         	
         }else if(this.engineGameClient != null ){
-        	
+        	audio.playSound(2, 0, 1);
         	this.engineGameClient.getSpacecraft().newShootClient();
         }
 		
@@ -887,8 +1164,9 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		return engineGameClient;
 	}
 	
-	
-	
+	public AudioGame getAudio() {
+		return audio;
+	}
 	
 	
 	

@@ -13,16 +13,14 @@
     <string name="profile">Perfil</string>
     <string name="erro_profile">Nickname é necessário!</string>
     
-    <string name="cadastre_palyer_1">
-    	<!-- Oi! Este é um cadastro necessário para    -->
-    	Oi! Qual será seu apelido em 	
+    
+    <string name="cadastre_player_1">
+    	Oi! Qual será seu apelido em 
     </string>
     
-    <string name="cadastre_palyer_2">
-    	<!-- seu perfil em O ÚLTIMO SOBREVIVENTE.  -->
-    	    O ÚLTIMO SOBREVIVENTE?
+    <string name="cadastre_player_2">
+    	O ÚLTIMO SOBREVIVENTE?
     </string>
-    
 	
 <!-- Alteração do Perfil -->
     
@@ -34,10 +32,11 @@
     	qualquer momento ou excluir seu     
     </string>
    
-    <string name="removeProfile">Seu perfil será excluido e o aplicativo encerrado.</string>    
    
-    <string name="remove_confirm">Confirmar remoção do perfil</string>
-    <string name="remove_back">Não remover perfil</string>
+   	<string name="removeProfile">
+   		Esta ação resultará na perca de todos os seus dados em O Último Sobrevivente
+    </string>
+    <string name="removeProfile_2">Seu app será encerrado.</string>    
 
 
 <!-- Jogo Simpleplayer -->
@@ -106,14 +105,14 @@
     <string name="t09">Eu sou o melhor!</string>
     <string name="tObjective09">Vencer uma partida em rede cada um por si.</string>
     
-    <string name="t15">Caçador de Troféus!</string>
-    <string name="tObjective15">Conquistar todos os troféus do jogo.</string>
+    <string name="t10">Caçador de Troféus!</string>
+    <string name="tObjective10">Conquistar todos os troféus do jogo.</string>
     
     
     
 <!-- NAG -->
-	<string name="text_nag">Chame seus amigos para baixarem o app de O ÚLTIMO SOBREVIVENTE na Android Market.</string>
-	<string name="text_nag2">Novas possibilidades de partidas multijogador em modos cada um por si ou em cooperação.</string>
+	<string name="text_nag">Convide seus amigos para baixarem o app de O ÚLTIMO SOBREVIVENTE na Android Market.</string>
+	<string name="text_nag2">Novas possibilidades de partidas multijogador com até 4 jogadores.</string>
 
 
 </resources>

@@ -90,8 +90,8 @@ public class SimpleGameActivity<T> extends Activity implements SensorEventListen
 		Bundle s = this.getIntent().getExtras().getBundle("startGame");
 		player = new Player(s.getInt("id_player"), s.getString("name_player"));
 		
-		Log.d("SIMPLEGAMEACTIVITY","..");
-		Log.d(".."+this.player.getId(),".."+this.player.getNickname());
+		//Log.d("SIMPLEGAMEACTIVITY","..");
+		//Log.d(".."+this.player.getId(),".."+this.player.getNickname());
 		
 		
 		if(s.getSerializable("game") != null){
