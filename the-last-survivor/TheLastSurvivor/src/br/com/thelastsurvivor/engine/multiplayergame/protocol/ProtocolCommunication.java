@@ -131,7 +131,7 @@ public class ProtocolCommunication {
 		return spacecrafts;
 	}
 	
-	public List<Spacecraft> protocolResponseAllNewSpacecrafts(String[] message){
+	/*public List<Spacecraft> protocolResponseAllNewSpacecrafts(String[] message){
 		
 		List<Spacecraft> newSpacecrafts = new ArrayList<Spacecraft>();
 		
@@ -148,7 +148,7 @@ public class ProtocolCommunication {
 		
 		
 		return newSpacecrafts;
-	}
+	}*/
 	
 	
 	
@@ -223,14 +223,14 @@ public class ProtocolCommunication {
 				
 				case 's':
 					listDrawables.add(new Spacecraft(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
-							Double.parseDouble(values[i+3]), Integer.parseInt(values[i+4])));
+							Double.parseDouble(values[i+3]), Integer.parseInt(values[i+4]), engine.getDisplay()));
 					color = Integer.parseInt(values[i+4]);
 					i += 4;
 				break;
 				
 				case 'h':
 					listDrawables.add(new SimpleShoot(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
-							Double.parseDouble(values[i+3]), color));
+							Double.parseDouble(values[i+3]), color, engine.getDisplay()));
 					i += 3;
 				break;
 				
@@ -266,10 +266,10 @@ public class ProtocolCommunication {
 		buffer += "y/"+pointsTeamYellow+"/";
 		buffer += "g/"+pointsTeamGreen+"/";
 		
-		buffer += "s/"+spacecraft.getName()+"/c"+spacecraft.getColor();
+		buffer += "s/"+spacecraft.getName()+"/c/"+spacecraft.getColor()+"/";
 		
 		for(Spacecraft space : spacecrafts){
-			buffer += "s/"+space.getName()+"/c"+space.getColor();
+			buffer += "s/"+space.getName()+"/c/"+space.getColor()+"/";
 		}
 		
 		Log.d("BUFFER MESSAGE","."+buffer);

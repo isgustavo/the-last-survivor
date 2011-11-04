@@ -33,7 +33,7 @@ public class ThreadCommunication extends Thread {
 	           
 	             
 	            String[] values = string.split("/");
-	             
+	            
 	            
 	            if(values[0].equals("serverToClientEndGame")){
 	            	
@@ -54,6 +54,9 @@ public class ThreadCommunication extends Thread {
 	            				.equalsIgnoreCase(values[1])){
 	            			
 	            			activity.getEngineGameClient().getSpacecraft().setIsDead(true);
+	            			
+	            			activity.getAudio().playSound(3, 0, 1);
+	            			activity.getAudio().playSound(3, 0, 1);
 	            		}
 	            	}
 	            }

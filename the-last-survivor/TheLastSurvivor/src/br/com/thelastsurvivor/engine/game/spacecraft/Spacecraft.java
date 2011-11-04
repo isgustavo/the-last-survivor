@@ -12,7 +12,9 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
 import br.com.thelastsurvivor.engine.simple.IDrawControllable;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
@@ -33,6 +35,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	private Integer color;
 	private Vector2D position;
 	private Vector2D sensorPosition = new Vector2D(0,0);
+	private Display display;
 	
 	private static  Bitmap image;
 	private static  Bitmap image2;
@@ -59,28 +62,30 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	private List<IDrawBehavior> shoots = new ArrayList<IDrawBehavior>();
 	private List<IDrawBehavior> shootsDrawables = new ArrayList<IDrawBehavior>();
 	
-	public Spacecraft(String name){
+	public Spacecraft(String name, Display display){
 		
 		this.name = name;
-		
+		this.display = display;
 		this.isDead = false;
 	}
 	
-	public Spacecraft(Vector2D position, Double angle, String name){
+	public Spacecraft(Vector2D position, Double angle, String name, Display display){
 		this.position = position;
 		this.angle = angle;
 		this.name = name;
-		
+		this.display = display;
 	}
 	
 	
 	/*inicia nave no cliente draw */
-	public Spacecraft(Context context, Vector2D position, Double angle, Integer color){
+	public Spacecraft(Context context, Vector2D position, Double angle, Integer color, Display display){
 		this.context = context;
 		this.position = position;
 		this.angle = angle;
 		this.color = color;
 		this.newShoot = false;
+		this.display = display;
+		
 		
 		init();
 		
@@ -88,11 +93,12 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 		
 	}
 	
-	public Spacecraft(Context context, Vector2D position, Integer color){
+	public Spacecraft(Context context, Vector2D position,String name, Integer color, Display display){
 		this.context = context;
 		this.position = position;
 		this.color = color;
-		
+		this.name = name;
+		this.display = display;
 		init();
 		
 		initImageSpacecraft();
@@ -101,13 +107,13 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	
 	
 	/*Inicar nave do cliente no servidor*/
-	public Spacecraft(Context context, String name, Integer numberClient, Integer color){
+	public Spacecraft(Context context, String name, Integer numberClient, Integer color, Display display){
 		this.context = context;
 		this.name = name;
 		getStartingPositionClient(numberClient);
 		this.color = color;
 		this.newShoot = false;
-		
+		this.display = display;
 		init();
 		
 		initImageSpacecraft();
@@ -357,7 +363,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	public void newShoot(){
 		newShoot = true;
 		Log.d("shoot","shoot");
-		shoots.add(new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.color));
+		shoots.add(new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.color, display));
 		Log.d("shootSize","."+shoots.size());
 	}
 	
@@ -370,8 +376,13 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	@Override
 	public void draw(Canvas c) {
 
-	
-		c.drawBitmap(this.resizedBitmap, this.position.getFloatX() , this.position.getFloatY(),null);
+		
+		if(display.getWidth() > MultiGameActivity.DISPLAY_WIDHT){
+			c.drawBitmap(this.resizedBitmap, (this.position.getFloatX()*1.5f) , (this.position.getFloatY()*1.5f),null);
+		}else{
+			c.drawBitmap(this.resizedBitmap, this.position.getFloatX() , this.position.getFloatY(),null);
+		}
+		
 		 
 	
 	    

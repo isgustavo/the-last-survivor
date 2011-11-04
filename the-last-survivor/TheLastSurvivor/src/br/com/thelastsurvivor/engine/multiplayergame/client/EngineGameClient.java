@@ -10,12 +10,14 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.SurfaceHolder;
+import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGameOver;
 import br.com.thelastsurvivor.engine.util.IClient;
 import br.com.thelastsurvivor.engine.util.IDraw;
+import br.com.thelastsurvivor.view.particle.Explosion;
 
 public class EngineGameClient implements IClient{
 
@@ -31,6 +33,8 @@ public class EngineGameClient implements IClient{
 	protected Integer pointsTeamYellow;
 	protected Integer pointsTeamGreen;
 	
+	protected Explosion explosion;
+	
 	protected Spacecraft spacecraft;
 	protected List<IDraw> drawables;
 	private Paint blackScreen;
@@ -43,7 +47,7 @@ public class EngineGameClient implements IClient{
 		this.vibrator = vibrator;
 		this.display = display;
 
-		this.spacecraft = new Spacecraft(name);
+		this.spacecraft = new Spacecraft(name, display);
 		
 		this.init();
 	}
@@ -53,6 +57,8 @@ public class EngineGameClient implements IClient{
 		this.protocol = new ProtocolCommunication();
 		this.drawables = new ArrayList<IDraw>();
 		this.spacecraft.initClient();
+
+		this.explosion = new Explosion(200);
 		
 		blackScreen = new Paint();
 		blackScreen.setARGB(255, 0, 0, 0);
@@ -72,6 +78,10 @@ public class EngineGameClient implements IClient{
 	}
 	
 	public void updateClient() {
+		
+		if (this.explosion != null && this.explosion.isAlive) {
+			this.explosion.update(this.getSpacecraft());
+		}
 		
 		this.spacecraft.updateSensor();
 		
@@ -108,22 +118,29 @@ public class EngineGameClient implements IClient{
 						
 						if(message == null){
 						
-							message = new MessageGameOver(context, "YOU DEAD!", "#006633");
+							message = new MessageGameOver(context, activity.getString(R.string.end_game_wait), "#EE1693");
 						}
 						
-						canvas.drawText(message.getText(), 150, 100, message.getPaint());
+						canvas.drawText(message.getText(),20, 100, message.getPaint());
 						
 					}
-					
 					//engine.draw(canvas);
+					if (explosion != null) {
+			 			explosion.draw(canvas);
+			 		}
 				}
 				//}
 			}finally{
+
+				
+				
 				if(canvas != null){
 					holder.unlockCanvasAndPost(canvas);
 				}
 			}
 
+			
+			
 			if(!spacecraft.getIsDead()){
 				updateClient();
 			}
@@ -195,6 +212,10 @@ public class EngineGameClient implements IClient{
 
 	public void setPointsTeamGreen(Integer pointsTeamGreen) {
 		this.pointsTeamGreen = pointsTeamGreen;
+	}
+
+	public Display getDisplay() {
+		return display;
 	}
 
 

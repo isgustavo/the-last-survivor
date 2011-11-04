@@ -32,6 +32,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -353,21 +354,21 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 				 if(nameAndColor.get(2).equalsIgnoreCase(communication.getPointName())){
 					 
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(0),
-					   numberClient, Integer.parseInt(nameAndColor.get(1))));
+					   numberClient, Integer.parseInt(nameAndColor.get(1)),display));
 					 
 				 }else if(nameAndColor.size() >= 3 && nameAndColor.get(5).equalsIgnoreCase(communication.getPointName())){
 					
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(3),
-					   numberClient, Integer.parseInt(nameAndColor.get(4))));
+					   numberClient, Integer.parseInt(nameAndColor.get(4)),display));
 					 
 				 }else if(nameAndColor.size() >= 9 && nameAndColor.get(8).equalsIgnoreCase(communication.getName())){
 					
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(6),
-					   numberClient, Integer.parseInt(nameAndColor.get(7))));
+					   numberClient, Integer.parseInt(nameAndColor.get(7)),display));
 					 
 				 }else if(nameAndColor.size() == 12 && nameAndColor.get(11).equalsIgnoreCase(communication.getName())){
 					 spacecraftsClient.add(new Spacecraft(this, nameAndColor.get(9),
-					   numberClient, Integer.parseInt(nameAndColor.get(10))));
+					   numberClient, Integer.parseInt(nameAndColor.get(10)),display));
 				 }
 
 				 numberClient += 1;
@@ -422,7 +423,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 							MultiGameActivity.this.audioBackgraund.start();
 							
 							
-								MultiGameActivity.this.engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display, Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
+								MultiGameActivity.this.engineGame = new EngineGameServer(activity.context, MultiGameActivity.this, vibrator, display,namePlayer,Integer.parseInt(nameAndColor.get(1)), spacecraftsClient);
 								
 								MultiGameActivity.this.viewServer = new EngineMultiGameView(activity.context,engineGame);
 							
@@ -473,7 +474,8 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 		
 	
   public void gameSystemPrepares(final String[] values){
-		    
+	   dialog.dismiss();
+	   dialog.cancel();
 	   handler.postDelayed(new Runnable() {
 		   public void run() {
 			    
@@ -563,9 +565,8 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	   
 	   Integer points = 0;
 	   Bundle s = new Bundle();
-	   
-	   
-	   
+
+
 	   s.putInt("teamRed", Integer.parseInt(value[2]));
 	   s.putInt("teamBlue", Integer.parseInt(value[4]));
 	   s.putInt("teamYellow", Integer.parseInt(value[6]));
@@ -623,36 +624,45 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	   verificationTrophies(Integer.parseInt(value[2]),Integer.parseInt(value[4]),
 			   Integer.parseInt(value[6]),Integer.parseInt(value[8]), type, coop, free);
 	   
-	   ContentValues values = new ContentValues();
+	   
+	   
 	   
 	   Cursor c2 = this.getContentResolver().  
-       query(RankProvider.CONTENT_URI, null, null, null, null);  
-
-	   List<Rank> rankList = new ArrayList<Rank>();
+               query(RankProvider.CONTENT_URI, null, null, null, null);  
 		
-	   while(c2.moveToNext()){
-		   rankList.add(new Rank(c2.getInt(0),c2.getInt(2)));
-	   }
+		List<Rank> rankList = new ArrayList<Rank>();
 		
-	   boolean save = true;
+		while(c2.moveToNext()){
+			rankList.add(new Rank(c2.getInt(0),c2.getInt(2)));
+		}
 		
-	   if(rankList.size() == 10){
+		boolean save = true;
+		
+		if(rankList.size() == 10){
 			Collections.sort(rankList, new Comparator<Rank>() {
-		
+
 				@Override
 				public int compare(Rank r1, Rank r2) {
 					return r1.getPoint().compareTo(r2.getPoint());
 				}
-		});}	
-		
-		if(rankList.get(0).getPoint() < points){
-			getContentResolver().delete(RankProvider.CONTENT_URI, RankProvider.ID+" = "+rankList.get(0).getId(), null);
-		}else{
-			save = false;
+			}); 
+			
+
+			if(rankList.get(0).getPoint() < points){
+				getContentResolver().delete(RankProvider.CONTENT_URI, RankProvider.ID+" = "+rankList.get(0).getId(), null);
+			}else{
+				save = false;
+			}
+			
 		}
 		
+		Log.d("...", "."+this.namePlayer);
+		Log.d("...", "."+points);
+		Log.d("...", "."+type);
+		
 		if(save){
-			values = new ContentValues();
+
+			ContentValues values = new ContentValues();
 			
 			values.put(RankProvider.IDENTIFIER_PLAYER, this.namePlayer);
 			values.put(RankProvider.POINTS, points);
@@ -1098,6 +1108,20 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 			threadClient.stopClient();
 			threadClient = null;
 		}	
+		
+		if(threadCommunication != null){
+			threadCommunication.stopCommunication();
+			threadCommunication = null;
+		}
+		
+		if(threadsCommunication != null){
+			for (ThreadCommunication communication : this.threadsCommunication) {
+				communication.stopCommunication();
+			}
+			
+			threadsCommunication.clear();
+		}
+		
 	}
 	
 	private class EventBluetoothReceiver  extends BroadcastReceiver {
@@ -1132,6 +1156,8 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	 
 	protected void onDestroy() {
 		super.onDestroy();
+		
+		this.audioBackgraund.fechar();
 		unregisterReceiver(receiver);
 
 		stopThreads();

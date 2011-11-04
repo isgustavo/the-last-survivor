@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.effect.EffectGameFactory;
-import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.effect.TypeEffect;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
-import br.com.thelastsurvivor.engine.multiplayergame.asteroid.Asteroid;
 import br.com.thelastsurvivor.engine.multiplayergame.protocol.ProtocolCommunication;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.message.MessageGameOver;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.engine.util.IServer;
-import br.com.thelastsurvivor.engine.util.MessageGameUtil;
 import br.com.thelastsurvivor.util.Vector2D;
 import br.com.thelastsurvivor.view.particle.Explosion;
 
@@ -69,7 +69,7 @@ public class EngineGameServer implements IServer{
 	
 	                                   
 	public EngineGameServer(Context context, MultiGameActivity activity, Vibrator vibrator, 
-			Display display, Integer color, List<Spacecraft> spacecrafts) {
+			Display display, String name, Integer color, List<Spacecraft> spacecrafts) {
 		this.context = context;
 		this.activity = activity;
 		this.vibrator = vibrator;
@@ -78,7 +78,7 @@ public class EngineGameServer implements IServer{
 		this.spacecrafts = spacecrafts;
 		
 		Log.d("EngineGameServer","."+color);
-		this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200), color);
+		this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200), name, color, display);
 		
 		this.init();
 		
@@ -110,7 +110,7 @@ public class EngineGameServer implements IServer{
 		if(this.shootsEffect == null){
 			this.shootsEffect = new ArrayList<IEffect>();
 		}
-		
+
 	}
 	
 	
@@ -159,9 +159,13 @@ public class EngineGameServer implements IServer{
 			if(spacecraft.getLife() < 0){
 				
 				spacecraftsDead.add(spacecraft);
-				this.addMessage(new MessageGame(context, spacecraft.getName()+" IS DEAD!", 3, 1000, "#FF0000"));
+				this.addMessage(new MessageGame(context, spacecraft.getName()+activity.getString(R.string.dead), 3, 1000, "#FF0000"));
 				activity.setToClientDead(spacecraft.getName());
-			
+				
+				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX(),spacecraft.getPosition().getY())));
+				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeHeight()/2,spacecraft.getPosition().getY())));
+				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeWidth()/2,spacecraft.getPosition().getY())));
+				
 			}else{
 				spacecraftALive.add(spacecraft);
 			}
@@ -170,12 +174,20 @@ public class EngineGameServer implements IServer{
 		spacecrafts.clear();
 		spacecrafts.addAll(spacecraftALive);
 		
-		if(this.spacecraft.getLife() < 0){
-			this.addMessage(new MessageGame(context, this.spacecraft.getName()+" IS DEAD!", 3, 1000, "#FF0000"));
+		if(!this.spacecraft.getIsDead() && this.spacecraft.getLife() < 0){
+			
+			activity.getAudio().playSound(3, 0, 1);
+			activity.getAudio().playSound(3, 0, 1);
+			
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX(),spacecraft.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeHeight()/2,spacecraft.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeWidth()/2,spacecraft.getPosition().getY())));
+			
+			this.addMessage(new MessageGame(context, this.spacecraft.getName()+activity.getString(R.string.dead), 3, 1000, "#FF0000"));
 			this.spacecraft.setIsDead(true);
 		}
 		
-		
+/*		
 		if(spacecrafts.size() == 0){
 			
 			String protocol = this.protocol.protocolSentToClientsEndGame(pointsTeamRed,
@@ -200,8 +212,7 @@ public class EngineGameServer implements IServer{
 				
 			}
 		}
-		
-
+		*/
 	}
 	
 	private void updateEffectShoots(){
@@ -361,7 +372,7 @@ public class EngineGameServer implements IServer{
 		
 		this.messages.clear();
 		
-		Log.d("NEWSIZE","."+newListMessage.size());
+		//Log.d("NEWSIZE","."+newListMessage.size());
 		
 		this.messages.add(newMessage);
 		this.messages.addAll(newListMessage);
@@ -411,7 +422,7 @@ public class EngineGameServer implements IServer{
 		}
 	}
 	
-	public void setClientDrawSpacecraft(String[] values){
+	/*(public void setClientDrawSpacecraft(String[] values){
 		if(flag){		
 			List<Spacecraft> newSpacecrafts = protocol.protocolResponseAllNewSpacecrafts(values);
 			for (Spacecraft spacecraft : newSpacecrafts) {
@@ -424,7 +435,7 @@ public class EngineGameServer implements IServer{
 		}
 		spacecrafts = protocol.protocolResponseAllSpacecrafts(values, spacecrafts);
 
-	}
+	}*/
 
 	@Override
 	public void draw(Canvas c) {
@@ -434,10 +445,10 @@ public class EngineGameServer implements IServer{
 		}else{
 			if(message == null){
 				
-				message = new MessageGameOver(context, "YOU DEAD!", "#006633");
+				message = new MessageGameOver(context, activity.getString(R.string.end_game_wait), "#EE1693");
 			}
 			
-			c.drawText(message.getText(), 150, 100, message.getPaint());
+			c.drawText(message.getText(),20, 100, message.getPaint());
 		}
 		
 		for (Spacecraft spacecraft : this.spacecraftsDrawables) {
@@ -453,6 +464,7 @@ public class EngineGameServer implements IServer{
 			message.draw(c);
 			
 		}
+				
 		
 		if (explosion != null) {
  			explosion.draw(c);

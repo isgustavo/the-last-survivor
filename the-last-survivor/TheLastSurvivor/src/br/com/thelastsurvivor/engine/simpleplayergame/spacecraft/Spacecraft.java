@@ -70,7 +70,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		init();
 		
 		for(Shoot shoot : spacecraft.getShoots()){
-			this.shoots.add(ShootFactory.restartShoot(context, shoot));
+			this.shoots.add(ShootFactory.restartShoot(context, shoot, display));
 		}
 		
 	}
@@ -96,7 +96,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 		}
 		
 		if(this.points == null){
-			this.points = 0;
+			this.points = 10;
 		}
 		
 		if(this.angle == null){
@@ -282,7 +282,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 
 	public void newShoot(){
 	
-		shoots.addAll(ShootFactory.newShoot(this.context, new Vector2D(this.position.getX(),this.position.getY()), this.angle, this.image));	
+		shoots.addAll(ShootFactory.newShoot(this.context, new Vector2D(this.position.getX(),this.position.getY()), this.angle, this.image, display));	
 	   
 	}
 

@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
 import br.com.thelastsurvivor.engine.util.IDraw;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
@@ -19,6 +21,7 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	private final int power = 1;
 	
 	private Context context;
+	private Display display;
 	
 	private static Bitmap image;
 	private Bitmap resizedBitmap;
@@ -36,10 +39,11 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	private Integer color;
 	
 	
-	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
+	public SimpleShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft, Display display){
 		this.context = context;
 		this.position = position;
 		this.angle = angle;
+		this.display = display;
 		
 		if(image == null){
 			this.image = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.simple_shoot_image);
@@ -50,11 +54,12 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		init();
 	}
 	
-	public SimpleShoot(Context context, Vector2D position, Double angle, Integer color){
+	public SimpleShoot(Context context, Vector2D position, Double angle, Integer color, Display display){
 		this.context = context;
 		this.position = position;
 		this.angle = angle;
 		this.color = color;
+		this.display = display;
 		
 		init();
 		
@@ -162,7 +167,15 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		//Log.d("X","."+this.position.getX());
 		//Log.d("Y","."+this.position.getY());
 		
-		c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
+		if(display.getWidth() > MultiGameActivity.DISPLAY_WIDHT){
+			c.drawBitmap(this.resizedBitmap, (this.position.getFloatX()*1.5f) , (this.position.getFloatY()*1.5f),null);
+		}else{
+			c.drawBitmap(this.resizedBitmap, this.position.getFloatX() , this.position.getFloatY(),null);
+		}
+		
+		
+		
+		//c.drawBitmap(this.resizedBitmap, this.position.getX() , this.position.getY(),null);
 		
 		//this.drawableImage.setBounds(this.position.getX(), this.position.getY(),  
 	    //		this.position.getX()+this.resizedBitmap.getWidth(), 

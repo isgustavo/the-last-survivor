@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.Display;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
 import br.com.thelastsurvivor.engine.util.IDrawBehavior;
 import br.com.thelastsurvivor.model.game.Shoot;
@@ -15,7 +16,7 @@ public abstract class ShootFactory {
 	
 	public static Integer POWER_UP = 0;
 	
-	public static List<IDrawBehavior> newShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft){
+	public static List<IDrawBehavior> newShoot(Context context, Vector2D position, Double angle, Bitmap spacecraft, Display display){
 
 	    List<IDrawBehavior> shoot = new ArrayList<IDrawBehavior>();
 	    Vector2D temp = new Vector2D();
@@ -30,7 +31,7 @@ public abstract class ShootFactory {
 			position.addX(spacecraft.getWidth()/2);
 	     	position.addY(spacecraft.getHeight()/2);
 	     	
-	     	shoot.add(new SimpleShoot(context, position, angle));
+	     	shoot.add(new SimpleShoot(context, position, angle, display));
 	     	
 			return shoot;
 		
@@ -125,7 +126,7 @@ public abstract class ShootFactory {
 	}
 	
 	
-	public static IDrawBehavior restartShoot(Context context, Shoot shoot){
-		return new SimpleShoot(context, shoot.getPosition(), shoot.getAngle());
+	public static IDrawBehavior restartShoot(Context context, Shoot shoot, Display display){
+		return new SimpleShoot(context, shoot.getPosition(), shoot.getAngle(), display);
 	}
 }

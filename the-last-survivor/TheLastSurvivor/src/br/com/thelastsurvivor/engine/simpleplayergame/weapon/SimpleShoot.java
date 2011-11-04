@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
@@ -20,6 +22,7 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	private final int power = 1;
 	
 	private Context context;
+	private Display display;
 	
 	private Bitmap image;
 	private Bitmap resizedBitmap;
@@ -46,10 +49,11 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 	//	init();
 	//}
 	
-	public SimpleShoot(Context context, Vector2D position, Double angle){
+	public SimpleShoot(Context context, Vector2D position, Double angle, Display display){
 		this.context = context;
 		this.position = position;
 		this.angle = angle;
+		this.display = display;
 		
 		init();
 	}
