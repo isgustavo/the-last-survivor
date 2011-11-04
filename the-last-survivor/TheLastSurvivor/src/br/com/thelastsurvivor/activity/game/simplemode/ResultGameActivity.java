@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
-import br.com.thelastsurvivor.activity.twitter.TwitterActivity;
+import br.com.thelastsurvivor.activity.twitter.LoginTwitterActivity;
 import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 
@@ -67,7 +66,9 @@ public class ResultGameActivity extends Activity {
 				  
 				  vibrator.vibrate(80);
 				  
-				  Intent i = new Intent(ResultGameActivity.this, TwitterActivity.class);
+				  Intent i = new Intent(ResultGameActivity.this, LoginTwitterActivity.class);
+				  
+				  startActivityForResult(i, 0);
 				  
 				  Bundle s = new Bundle();
 				  s.putString("tweet", tweet);

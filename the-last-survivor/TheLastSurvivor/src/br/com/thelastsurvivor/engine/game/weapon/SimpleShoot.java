@@ -244,5 +244,9 @@ public class SimpleShoot implements  IDraw, IDrawBehavior, IWeaponBehavior{
 		return angle;
 	}
 
+	public Integer getColor() {
+		return color;
+	}
+
 
 }

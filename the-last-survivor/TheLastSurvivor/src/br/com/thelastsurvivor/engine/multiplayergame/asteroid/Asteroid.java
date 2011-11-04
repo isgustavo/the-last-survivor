@@ -364,6 +364,13 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 	public Integer getPower() {
 		return power;
 	}
+
+
+	@Override
+	public Integer getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

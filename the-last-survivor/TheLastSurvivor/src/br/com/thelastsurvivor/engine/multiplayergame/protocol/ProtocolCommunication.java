@@ -4,7 +4,6 @@ package br.com.thelastsurvivor.engine.multiplayergame.protocol;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
@@ -169,7 +168,8 @@ public class ProtocolCommunication {
 						buffer +="h/";
 						buffer += shoot.getPosition().getX()+"/"
 							   + shoot.getPosition().getY()+"/"
-							   + shoot.getAngle()+"/";
+							   + shoot.getAngle()+"/"
+							   + shoot.getColor()+"/";
 					}
 				}
 		}
@@ -187,7 +187,8 @@ public class ProtocolCommunication {
 					buffer +="h/";
 					buffer += shoot.getPosition().getX()+"/"
 						   + shoot.getPosition().getY()+"/"
-						   + shoot.getAngle()+"/";
+						   + shoot.getAngle()+"/"
+						   + shoot.getColor()+"/";
 				}
 			}
 		}
@@ -195,7 +196,8 @@ public class ProtocolCommunication {
 			buffer += "m/"
 				   +  message.getText()+"/"
 				   +  message.getPosition()+"/"
-				   +  message.getAlpha()+"/";
+				   +  message.getAlpha()+"/"
+				   +  message.getColorText()+"/";
 		}
 		
 		for(IEffect effect : shootsEffect){
@@ -230,15 +232,15 @@ public class ProtocolCommunication {
 				
 				case 'h':
 					listDrawables.add(new SimpleShoot(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
-							Double.parseDouble(values[i+3]), color, engine.getDisplay()));
-					i += 3;
+							Double.parseDouble(values[i+3]), Integer.parseInt(values[i+4]), engine.getDisplay()));
+					i += 4;
 				break;
 				
 				case 'm':
 					listDrawables.add(new MessageGame(engine.getContext(), values[i+1], 
-							Integer.parseInt(values[i+2]),Integer.parseInt(values[i+3])));
+							Integer.parseInt(values[i+2]),Integer.parseInt(values[i+3]), values[i+4]));
 					
-					i += 3;
+					i += 4;
 				break;
 				
 				case 'e':
@@ -272,7 +274,7 @@ public class ProtocolCommunication {
 			buffer += "s/"+space.getName()+"/c/"+space.getColor()+"/";
 		}
 		
-		Log.d("BUFFER MESSAGE","."+buffer);
+		//Log.d("BUFFER MESSAGE","."+buffer);
 		return buffer;
 		
 	}

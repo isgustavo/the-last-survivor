@@ -17,6 +17,7 @@ public class MessageGame implements IInitUpdateDraw{
 	protected Integer position;
 	protected Integer alpha;
 	protected boolean isAlive;
+	protected String colorText;
 	public Integer color = Color.argb(255, 255, 255, 255);
 	
 	public MessageGame(Context context, String text, Integer position, Integer time, String color){
@@ -25,6 +26,7 @@ public class MessageGame implements IInitUpdateDraw{
 		this.alpha = time;
 		this.text = text;
 		
+		this.colorText = color;
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.parseColor(color));
 		this.paint.setTextSize(14);
@@ -118,6 +120,10 @@ public class MessageGame implements IInitUpdateDraw{
 
 	public Integer getAlpha() {
 		return alpha;
+	}
+
+	public String getColorText() {
+		return colorText;
 	}
 
 	

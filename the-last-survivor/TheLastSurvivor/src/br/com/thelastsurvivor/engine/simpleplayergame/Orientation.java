@@ -446,47 +446,6 @@ public final class Orientation {
 			   position.addX((spacecraft.getWidth()/2));
 		       position.addY((spacecraft.getHeight()/2)-20);
 		   break;
-		   
-		  /* case 5:
-			   position.addX(1);
-		       position.addY(-2);
-		   break;
-		   case 10:
-			   position.addX(2);
-		    	position.addY(-3);
-		   break;
-		   case 15:
-			   position.addX(2);
-		       position.addY(-4);
-		   break;
-		   case 20:
-			   position.addX(3);
-		    	position.addY(-4);
-		   break;
-		   case 25:
-			   position.addX(4);
-		       position.addY(-4);
-		   break;
-		   case 30:
-			    position.addX(4);
-		    	position.addY(-4);
-		   break;
-		   case 35:
-			   position.addX(5);
-		       position.addY(-5);
-		   break;
-		   case 40:
-			   position.addX(6);
-		    	position.addY(-5);
-		   break;
-		   case 45:
-			   position.addX(6);
-		       position.addY(-5);
-		   break;
-		   case 50:
-			   position.addX(7);
-		    	position.addY(-6);
-		   break;*/
 		   case 55:
 			   position.addX((spacecraft.getWidth()/2));
 		       position.addY((spacecraft.getHeight()/2)-21);

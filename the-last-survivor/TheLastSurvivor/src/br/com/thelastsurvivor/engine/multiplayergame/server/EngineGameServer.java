@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;

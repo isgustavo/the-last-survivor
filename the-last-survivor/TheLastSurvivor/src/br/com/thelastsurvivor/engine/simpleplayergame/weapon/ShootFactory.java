@@ -25,7 +25,7 @@ public abstract class ShootFactory {
 	    switch(POWER_UP){
 	    
 	    case 0:
-			Log.d("0", "shoot");
+			//Log.d("0", "shoot");
 			Orientation.getNewPosition(angle, position);
 			
 			position.addX(spacecraft.getWidth()/2);
@@ -36,7 +36,7 @@ public abstract class ShootFactory {
 			return shoot;
 		
 		case 1:
-			Log.d("1", "shoot");
+			//Log.d("1", "shoot");
 			
 			Vector2D positionLeft = new Vector2D(position);
 			

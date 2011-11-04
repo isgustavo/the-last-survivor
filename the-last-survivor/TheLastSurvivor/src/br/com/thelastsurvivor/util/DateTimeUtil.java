@@ -1,9 +1,7 @@
 package br.com.thelastsurvivor.util;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class DateTimeUtil {
 

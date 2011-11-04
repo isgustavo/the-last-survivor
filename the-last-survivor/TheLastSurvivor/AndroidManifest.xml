@@ -64,6 +64,20 @@
 				<data android:scheme="callback" android:host="tweeter" />
 			</intent-filter>
    	</activity>
+   	
+   	<activity android:name=".activity.twitter.LoginTwitterActivity" 
+  			  android:screenOrientation="landscape"
+  			  android:noHistory="true">  
+   			<intent-filter>
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="callback" android:host="tweeter" />
+			</intent-filter>
+   	</activity>
     
     <activity android:name=".activity.game.simplemode.SavedGameActivity"
   			  android:screenOrientation="landscape"

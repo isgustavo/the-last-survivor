@@ -9,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.game.weapon.IWeaponBehavior;
 import br.com.thelastsurvivor.engine.simpleplayergame.EngineGame;
 import br.com.thelastsurvivor.engine.simpleplayergame.Orientation;
@@ -199,6 +198,11 @@ public class SimpleShoot  implements  IDraw, IDrawBehavior, IWeaponBehavior{
 
 	public Double getAngle() {
 		return angle;
+	}
+
+	@Override
+	public Integer getColor() {
+		return this.color;
 	}
 
 

@@ -16,12 +16,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import br.com.thelastsurvivor.R;
-import br.com.thelastsurvivor.activity.game.simplemode.SimpleGameActivity;
 import br.com.thelastsurvivor.model.trophies.Trophies;
 import br.com.thelastsurvivor.provider.trophies.TrophiesProvider;
 import br.com.thelastsurvivor.util.DateTimeUtil;
 import br.com.thelastsurvivor.util.FT2FontTextView;
-import br.com.thelastsurvivor.util.MyAudioPlayer;
 
 public class TrophiesActivity extends Activity{
 	

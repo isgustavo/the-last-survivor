@@ -391,6 +391,12 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		return this.position.getX().equals(((Asteroid)o).getPosition().getX())  &&
 				this.position.getY().equals(((Asteroid)o).getPosition().getY());
 	}
+
+	@Override
+	public Integer getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

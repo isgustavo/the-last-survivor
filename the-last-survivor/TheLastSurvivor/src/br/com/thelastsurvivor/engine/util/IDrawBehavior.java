@@ -17,4 +17,5 @@ public interface IDrawBehavior extends IInitUpdateDraw{
 	public Double getAngle();
 	public Integer getRoute() ;
 	public Integer getPower();
+	public Integer getColor();
 }

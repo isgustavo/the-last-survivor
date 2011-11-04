@@ -6,7 +6,6 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,8 +39,11 @@ public class TwitterActivity extends Activity{
 	    twitter = new TwitterFactory().getInstance();  
 	    twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);  
 	    
+	    AccessToken accessToken = loadAccessToken();  
+	    
+	    twitter.setOAuthAccessToken(accessToken);  
 	//    if(loadAccessToken() == null){
-	    try {  
+	    /*try {  
 		    AccessToken accessToken = loadAccessToken();  
 		    if (accessToken == null) {  
 		      twitter = new TwitterFactory().getInstance();  
@@ -66,9 +68,11 @@ public class TwitterActivity extends Activity{
 		  } catch (Exception e) {  
 		    e.printStackTrace();  
 		    showToast(e.getMessage());  
-		  }  
+		  }  */
 	  		    
 		tweet(textTwitter);
+		
+		finish();
 		//finishActivity();
 	
 	}
