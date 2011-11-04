@@ -152,6 +152,9 @@
 	<string name="twitter_points">points.</string>
 	<string name="twitter_posted">Tweet posted.</string>
 	
+<!-- END GAME -->   
+ 	<string name="end_game_wait">Wait for last survivor</string>
+ 	<string name="dead">IS DEAD!</string>
    
 <!-- NAG -->
 	<string name="text_nag">Call your friends to download the app THE LAST SURVIVOR in Android Market.</string>
