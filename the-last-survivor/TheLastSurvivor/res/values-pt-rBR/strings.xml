@@ -107,7 +107,15 @@
     
     <string name="t10">Caçador de Troféus!</string>
     <string name="tObjective10">Conquistar todos os troféus do jogo.</string>
-    
+
+<!-- TWITTER -->
+	<string name="twitter_survived">Sobreviveu</string>
+	<string name="twitter_more">mais de</string>
+	<string name="twitter_seconds">segundos</string>
+	<string name="twitter_minutes">minutos</string>
+	<string name="twitter_score">em O ÚLTIMO SOBREVIVENTE e fez</string>
+	<string name="twitter_points">pontos.</string>
+	<string name="twitter_posted">Tweet enviado.</string>
     
     
 <!-- NAG -->

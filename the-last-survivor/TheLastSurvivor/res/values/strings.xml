@@ -63,6 +63,7 @@
 
 	<string name="not_bluetooth">Device does not support Bluetooth.</string>
 	<string name="bluetooth_confirm">You must enable Bluetooth to continue.</string>
+	<string name="bluetooth_server">To start the server, your device must be visible.</string>
 	
 	<!-- <string name="bluetooth_server">Para iniciar o servidor, seu aparelho deve estar visível.</string>
 	 -->
