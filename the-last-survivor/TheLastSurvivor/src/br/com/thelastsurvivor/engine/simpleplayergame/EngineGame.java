@@ -338,7 +338,7 @@ public class EngineGame{
 					shoot.setAlive(false);
 					this.spacecraft.addPoint(asteroid.getPower());
 					
-					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition(), display));
 					
 					if(this.isAsteroidDestroyed((Asteroid)asteroid,(IWeaponBehavior) shoot)){
 						
@@ -353,7 +353,7 @@ public class EngineGame{
 							asteroid.setAlive(false);
 						}
 						
-						verificationPowerUp((Asteroid)asteroid);
+						//verificationPowerUp((Asteroid)asteroid);
 						asteroid.setAlive(false);
 					}
 				}
@@ -428,7 +428,7 @@ public class EngineGame{
 		
 		//Log.d("EFFECT", "X"+x+"Y"+y);
 		
-		this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft ,this.context, new Vector2D(x,spacecraft.getPosition().getY())));
+		this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.spacecraft ,this.context, new Vector2D(x,spacecraft.getPosition().getY()),display));
 		
 	}
 	
@@ -502,9 +502,9 @@ public class EngineGame{
 		
 		if(asteroid.getLife() == 0){
 			
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX(),asteroid.getPosition().getY())));
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeHeight()/2,asteroid.getPosition().getY())));
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,asteroid.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX(),asteroid.getPosition().getY()),display));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeHeight()/2,asteroid.getPosition().getY()),display));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(asteroid.getPosition().getX()+asteroid.getSizeWidth()/2,asteroid.getPosition().getY()),display));
 			
 			String values = context.getString(R.string.score)+" "+spacecraft.getPoints()+" pt";
 			

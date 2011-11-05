@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.util.Vector2D;
@@ -45,7 +46,7 @@ public class EffectSpacecraft implements IEffect {
 	
 	private Integer startTime;
 	
-	protected EffectSpacecraft(Context context, Vector2D position, TypeEffect type){
+	protected EffectSpacecraft(Context context, Vector2D position, TypeEffect type, Display display){
 		this.context = context;
 		this.positionShoot = position;
 		this.type = type;

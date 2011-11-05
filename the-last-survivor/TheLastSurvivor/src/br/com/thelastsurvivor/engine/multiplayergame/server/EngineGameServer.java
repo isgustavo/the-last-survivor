@@ -159,9 +159,9 @@ public class EngineGameServer implements IServer{
 				this.addMessage(new MessageGame(context, spacecraft.getName()+activity.getString(R.string.dead), 3, 1000, "#FF0000"));
 				activity.setToClientDead(spacecraft.getName());
 				
-				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX(),spacecraft.getPosition().getY())));
-				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeHeight()/2,spacecraft.getPosition().getY())));
-				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeWidth()/2,spacecraft.getPosition().getY())));
+				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX(),spacecraft.getPosition().getY()), display));
+				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeHeight()/2,spacecraft.getPosition().getY()), display));
+				this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeWidth()/2,spacecraft.getPosition().getY()), display));
 				
 			}else{
 				spacecraftALive.add(spacecraft);
@@ -176,15 +176,14 @@ public class EngineGameServer implements IServer{
 			activity.getAudio().playSound(3, 0, 1);
 			activity.getAudio().playSound(3, 0, 1);
 			
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX(),spacecraft.getPosition().getY())));
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeHeight()/2,spacecraft.getPosition().getY())));
-			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeWidth()/2,spacecraft.getPosition().getY())));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX(),spacecraft.getPosition().getY()), display));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeHeight()/2,spacecraft.getPosition().getY()), display));
+			this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.asteroid, this.context, new Vector2D(spacecraft.getPosition().getX()+spacecraft.getSizeWidth()/2,spacecraft.getPosition().getY()), display));
 			
 			this.addMessage(new MessageGame(context, this.spacecraft.getName()+activity.getString(R.string.dead), 3, 1000, "#FF0000"));
 			this.spacecraft.setIsDead(true);
 		}
 		
-/*		
 		if(spacecrafts.size() == 0){
 			
 			String protocol = this.protocol.protocolSentToClientsEndGame(pointsTeamRed,
@@ -209,7 +208,7 @@ public class EngineGameServer implements IServer{
 				
 			}
 		}
-		*/
+		
 	}
 	
 	private void updateEffectShoots(){
@@ -244,7 +243,7 @@ public class EngineGameServer implements IServer{
 
 					shoot.setAlive(false);
 					
-					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition(), display));
 					
 					break;
 					}
@@ -281,7 +280,7 @@ public class EngineGameServer implements IServer{
 					}
 					
 					
-					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition(), display));
 					break;
 					}
 				}
@@ -307,7 +306,7 @@ public class EngineGameServer implements IServer{
 					}
 				
 				
-					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition()));
+					this.shootsEffect.add(EffectGameFactory.newEffect(TypeEffect.shoot, this.context, shoot.getPosition(), display));
 
 				
 					this.vibrator.vibrate(100);
@@ -419,21 +418,6 @@ public class EngineGameServer implements IServer{
 		}
 	}
 	
-	/*(public void setClientDrawSpacecraft(String[] values){
-		if(flag){		
-			List<Spacecraft> newSpacecrafts = protocol.protocolResponseAllNewSpacecrafts(values);
-			for (Spacecraft spacecraft : newSpacecrafts) {
-				spacecraft.setContext(context);
-				spacecraft.init();
-				
-			}
-			spacecrafts = newSpacecrafts;
-			flag = false;
-		}
-		spacecrafts = protocol.protocolResponseAllSpacecrafts(values, spacecrafts);
-
-	}*/
-
 	@Override
 	public void draw(Canvas c) {
 		

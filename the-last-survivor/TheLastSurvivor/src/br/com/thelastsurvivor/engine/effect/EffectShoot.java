@@ -9,7 +9,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Display;
 import br.com.thelastsurvivor.R;
+import br.com.thelastsurvivor.activity.game.multiplayermode.MultiGameActivity;
 import br.com.thelastsurvivor.engine.util.IEffect;
 import br.com.thelastsurvivor.util.Vector2D;
 
@@ -31,6 +33,7 @@ public class EffectShoot implements IEffect {
 	private Integer sizeWidth;
 	private Integer sizeHeight;
 	
+	private Display display;
 	
 	private Matrix matrix;
 	private Boolean isAlive;
@@ -41,12 +44,14 @@ public class EffectShoot implements IEffect {
 	
 	private Integer startTime;
 	
-	protected EffectShoot(Context context, Vector2D position, TypeEffect type){
+	protected EffectShoot(Context context, Vector2D position, TypeEffect type, Display display){
 		this.context = context;
 		this.positionShoot = position;
 		this.type = type;
 		this.alpha = 0;
 
+		this.display = display;
+		
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
 		
@@ -72,10 +77,12 @@ public class EffectShoot implements IEffect {
 		
 	}
 	
-	public EffectShoot(Context context, Vector2D position, Integer time){
+	public EffectShoot(Context context, Vector2D position, Integer time, Display display){
 		this.context = context;
 		this.positionShoot = position;
 		this.alpha = 0;
+		
+		this.display = display;
 
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.WHITE);
@@ -137,23 +144,48 @@ public class EffectShoot implements IEffect {
 	@Override
 	public void draw(Canvas c) {
 		
-		if(startTime < 2){
-			c.drawBitmap(Bitmap.createBitmap(this.image4, 0, 0,
-			        this.image4.getWidth(), this.image4.getHeight(), this.matrix, true),
-			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
-		}else if(startTime < 3){
-			c.drawBitmap(Bitmap.createBitmap(this.image3, 0, 0,
-					this.image3.getWidth(), this.image3.getHeight(), this.matrix, true),
-			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
-		}else if(startTime < 4){
-			c.drawBitmap(Bitmap.createBitmap(this.image2, 0, 0,
-					this.image2.getWidth(), this.image2.getHeight(), this.matrix, true),
-			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
-		}else if(startTime == 5){
-			c.drawBitmap(Bitmap.createBitmap(this.image1, 0, 0,
-					this.image1.getWidth(), this.image1.getHeight(), this.matrix, true),
-			        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
+		if(display.getWidth() > MultiGameActivity.DISPLAY_WIDHT){
+			if(startTime < 2){
+				c.drawBitmap(Bitmap.createBitmap(this.image4, 0, 0,
+				        this.image4.getWidth(), this.image4.getHeight(), this.matrix, true),
+				        (this.positionShoot.getX()-(this.image4.getWidth()/2))*1.5f , 
+				        (this.positionShoot.getY())*1.5f, this.paint);
+			}else if(startTime < 3){
+				c.drawBitmap(Bitmap.createBitmap(this.image3, 0, 0,
+						this.image3.getWidth(), this.image3.getHeight(), this.matrix, true),
+				        (this.positionShoot.getX()-(this.image4.getWidth()/2))*1.5f, 
+				        (this.positionShoot.getY())*1.5f, this.paint);
+			}else if(startTime < 4){
+				c.drawBitmap(Bitmap.createBitmap(this.image2, 0, 0,
+						this.image2.getWidth(), this.image2.getHeight(), this.matrix, true),
+				        (this.positionShoot.getX()-(this.image4.getWidth()/2))*1.5f , 
+				        (this.positionShoot.getY())*1.5f, this.paint);
+			}else if(startTime == 5){
+				c.drawBitmap(Bitmap.createBitmap(this.image1, 0, 0,
+						this.image1.getWidth(), this.image1.getHeight(), this.matrix, true),
+				        (this.positionShoot.getX()-(this.image4.getWidth()/2))*1.5f , 
+				        (this.positionShoot.getY())*1.5f, this.paint);
+			}
+		}else{
+			if(startTime < 2){
+				c.drawBitmap(Bitmap.createBitmap(this.image4, 0, 0,
+				        this.image4.getWidth(), this.image4.getHeight(), this.matrix, true),
+				        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
+			}else if(startTime < 3){
+				c.drawBitmap(Bitmap.createBitmap(this.image3, 0, 0,
+						this.image3.getWidth(), this.image3.getHeight(), this.matrix, true),
+				        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
+			}else if(startTime < 4){
+				c.drawBitmap(Bitmap.createBitmap(this.image2, 0, 0,
+						this.image2.getWidth(), this.image2.getHeight(), this.matrix, true),
+				        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
+			}else if(startTime == 5){
+				c.drawBitmap(Bitmap.createBitmap(this.image1, 0, 0,
+						this.image1.getWidth(), this.image1.getHeight(), this.matrix, true),
+				        this.positionShoot.getX()-(this.image4.getWidth()/2) , this.positionShoot.getY(), this.paint);
+			}
 		}
+		
 		
 		
 	}

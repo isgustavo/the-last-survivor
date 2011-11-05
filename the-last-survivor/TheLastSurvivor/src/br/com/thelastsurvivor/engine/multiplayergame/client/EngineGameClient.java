@@ -76,6 +76,7 @@ public class EngineGameClient implements IClient{
 		
 	}
 	
+	
 	public void updateClient() {
 		
 		if (this.explosion != null && this.explosion.isAlive) {

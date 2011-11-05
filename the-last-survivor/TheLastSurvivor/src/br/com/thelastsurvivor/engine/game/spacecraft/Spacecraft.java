@@ -188,7 +188,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 	public void init() {
 		
 		if(this.life == null){
-			this.life = 5;
+			this.life = 800;
 		}
 		
 		if(this.points == null){
@@ -337,7 +337,7 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 			this.shootsDrawables();
 			
 			this.shootsDrawables.addAll(shoots);
-			Log.d("shootsDrawables","."+this.shootsDrawables.size());
+			//Log.d("shootsDrawables","."+this.shootsDrawables.size());
 			for (IDrawBehavior shoot : shootsDrawables) {
 				shoot.update();
 			}
@@ -362,9 +362,9 @@ public class Spacecraft implements IDraw, IDrawControllable, Serializable {
 
 	public void newShoot(){
 		newShoot = true;
-		Log.d("shoot","shoot");
-		shoots.add(new SimpleShoot(this.context,new Vector2D(this.position.getX(), this.position.getY()), this.angle, this.color, display));
-		Log.d("shootSize","."+shoots.size());
+		//Log.d("shoot","shoot");
+		shoots.add(new SimpleShoot(this.context,new Vector2D(this.position.getX()+this.getSizeWidth()/2, this.position.getY()+this.getSizeHeight()/2), this.angle, this.color, display));
+		//Log.d("shootSize","."+shoots.size());
 	}
 	
 	public void newShootClient(){

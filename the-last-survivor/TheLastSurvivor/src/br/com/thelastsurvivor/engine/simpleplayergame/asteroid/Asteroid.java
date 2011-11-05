@@ -254,7 +254,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		break;
 		case 3:
 
-			this.life = 8;
+			this.life = 6;
 			power = 30;
 			
 			if(image4 == null)
@@ -268,7 +268,7 @@ public class Asteroid implements  IDraw, IDrawBehavior{
 		break;
 		case 4:
 			
-			this.life = 15;
+			this.life = 10;
 			power = 50;
 			
 			if(image5 == null)

@@ -11,6 +11,7 @@ import android.widget.Button;
 import br.com.thelastsurvivor.R;
 import br.com.thelastsurvivor.activity.MainMenuActivity;
 import br.com.thelastsurvivor.activity.twitter.LoginTwitterActivity;
+import br.com.thelastsurvivor.activity.twitter.TwitterActivity;
 import br.com.thelastsurvivor.util.FT2FontTextView;
 import br.com.thelastsurvivor.util.MyAudioPlayer;
 
@@ -70,12 +71,13 @@ public class ResultGameActivity extends Activity {
 				  
 				  startActivityForResult(i, 0);
 				  
+				  Intent i2 = new Intent(ResultGameActivity.this, TwitterActivity.class);
 				  Bundle s = new Bundle();
 				  s.putString("tweet", tweet);
 				    
-				  i.putExtra("tweetBundle",s);
+				  i2.putExtra("tweetBundle",s);
 				  
-				  startActivity(i);
+				  startActivity(i2);
 				  
 				  ResultGameActivity.this.finish();
 			  }  

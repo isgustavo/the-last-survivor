@@ -1153,7 +1153,10 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 	protected void onDestroy() {
 		super.onDestroy();
 		
-		this.audioBackgraund.fechar();
+		if(this.audioBackgraund != null){
+			this.audioBackgraund.fechar();
+		}
+		
 		unregisterReceiver(receiver);
 
 		stopThreads();

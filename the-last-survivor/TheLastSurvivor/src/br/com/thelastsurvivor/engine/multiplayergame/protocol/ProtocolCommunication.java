@@ -4,6 +4,7 @@ package br.com.thelastsurvivor.engine.multiplayergame.protocol;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
 import br.com.thelastsurvivor.engine.effect.EffectShoot;
 import br.com.thelastsurvivor.engine.game.spacecraft.Spacecraft;
 import br.com.thelastsurvivor.engine.game.weapon.SimpleShoot;
@@ -207,6 +208,7 @@ public class ProtocolCommunication {
 				   +  effect.getAlpha()+"/";
 		}
 		
+		Log.d("message",".."+messages.size());
 		return buffer;
 		
 	}
@@ -245,7 +247,7 @@ public class ProtocolCommunication {
 				
 				case 'e':
 					listDrawables.add(new EffectShoot(engine.getContext(), new Vector2D(values[i+1], values[i+2]),
-							Integer.parseInt(values[i+3])));
+							Integer.parseInt(values[i+3]), engine.getDisplay()));
 					
 					i +=3;
 				break;

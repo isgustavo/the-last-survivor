@@ -47,11 +47,11 @@ public class LoginTwitterActivity extends Activity {
 	    	e.printStackTrace();  
 	    }
 	    
-	    Intent i = new Intent(LoginTwitterActivity.this, TwitterActivity.class);
+	    //Intent i = new Intent(LoginTwitterActivity.this, TwitterActivity.class);
 	    
-	    startActivity(i);
+	    //startActivity(i);
 	    
-	    finish();
+	    //finish();
 	    
 	    
 	    

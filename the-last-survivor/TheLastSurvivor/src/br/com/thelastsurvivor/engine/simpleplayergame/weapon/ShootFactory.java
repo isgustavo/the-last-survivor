@@ -76,7 +76,7 @@ public abstract class ShootFactory {
 			return shoot;
 		
 		case 2:
-			Log.d("1", "shoot");
+			//Log.d("1", "shoot");
 			temp = new Vector2D(position.getX(), position.getY());
 			temp2 = new Vector2D(position.getX(), position.getY());
 			//Vector2D temp2 = new Vector2D();
