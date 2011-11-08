@@ -193,12 +193,17 @@ public class ProtocolCommunication {
 				}
 			}
 		}
+		int size = 0;
 		for(MessageGame message : messages){
 			buffer += "m/"
 				   +  message.getText()+"/"
 				   +  message.getPosition()+"/"
 				   +  message.getAlpha()+"/"
 				   +  message.getColorText()+"/";
+			size += 1;
+			if(size == 3){
+				break;
+			}
 		}
 		
 		for(IEffect effect : shootsEffect){
