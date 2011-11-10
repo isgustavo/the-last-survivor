@@ -606,7 +606,7 @@ public class SimpleGameActivity<T> extends Activity implements SensorEventListen
 		
 		values = new ContentValues();
 		
-		Log.d("SPACECRAFT GAME ID", "."+ game.getId());
+		//Log.d("SPACECRAFT GAME ID", "."+ game.getId());
 		
 		values.put(SpacecraftProvider.ID_GAME, game.getId());
 		values.put(SpacecraftProvider.POS_X, game.getSpacecraft().getPosition().getX());
@@ -653,16 +653,16 @@ public class SimpleGameActivity<T> extends Activity implements SensorEventListen
 	private void setIdGame(Game game){
 		
 		Cursor c = getContentResolver().query(GameProvider.CONTENT_URI, 
-				null,GameProvider.ID_PLAYER +" = " + player 
+				null, GameProvider.ID_PLAYER +" = " + player.getId() 
 					+" AND "+ GameProvider.DATE_PAUSE+ " = '" +DateTimeUtil.DateToString(game.getDate())+"' " 
 					+ " AND "+ GameProvider.TIME_PAUSE+ " = " +game.getRunTime(), null, null);
-		Log.d("GAME ID","WHILE");
+		//Log.d("GAME ID","WHILE");
 			while(c.moveToNext()){
-				Log.d("GAME ID", "."+c.getInt(0));
+				//Log.d("GAME ID", "."+c.getInt(0));
 				game.setId(c.getInt(0));
 			}
 			
-			Log.d("RETURN GAME ID", "."+ game.getId());
+			//Log.d("RETURN GAME ID", "."+ game.getId());
 	}
 	
 	private void setIdSpacecraft(Game game){

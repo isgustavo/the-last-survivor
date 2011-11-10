@@ -53,9 +53,6 @@ public class SavedGameActivity extends ListActivity {
 		Bundle s = this.getIntent().getExtras().getBundle("playerBundle");
 		player = new Player(s.getInt("id_player"), s.getString("name_player"));
 		
-		Log.d("SAVEDGAMEACTIVITY","..");
-		Log.d(".."+this.player.getId(),".."+this.player.getNickname());
-		
 		context = SavedGameActivity.this;
 		this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		

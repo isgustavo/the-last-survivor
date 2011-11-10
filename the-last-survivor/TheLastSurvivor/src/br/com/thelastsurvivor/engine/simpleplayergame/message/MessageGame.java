@@ -29,7 +29,7 @@ public class MessageGame implements IInitUpdateDraw{
 		this.colorText = color;
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.parseColor(color));
-		this.paint.setTextSize(14);
+		this.paint.setTextSize(18);
 		
 		this.font = Typeface.createFromAsset(this.context.getAssets(),"fonts/FT2FONT.TTF");
 		

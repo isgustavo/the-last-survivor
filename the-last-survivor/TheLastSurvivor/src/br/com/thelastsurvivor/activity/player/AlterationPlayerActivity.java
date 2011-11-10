@@ -82,7 +82,7 @@ public class AlterationPlayerActivity extends Activity{
                         Toast.LENGTH_SHORT).show();
         		
 			}else{
-				if(updatePlayer(new Player(getNickname().getText().toString()))){
+				if(updatePlayer(new Player(player.getId(), getNickname().getText().toString()))){
 				   
 					Intent i = new Intent(AlterationPlayerActivity.this, MainMenuActivity.class);
 					
@@ -139,7 +139,7 @@ public class AlterationPlayerActivity extends Activity{
 	public boolean updatePlayer(Player player) {
 		
 		ContentValues values = new ContentValues();
-		values.put(PlayerProvider.ID, player.getId());
+		values.put(PlayerProvider.IDENTIFIER_PLAYER, player.getNickname());
 
 		getContentResolver().update(PlayerProvider.CONTENT_URI, values, PlayerProvider.ID +" = "+ player.getId(), null);
 		

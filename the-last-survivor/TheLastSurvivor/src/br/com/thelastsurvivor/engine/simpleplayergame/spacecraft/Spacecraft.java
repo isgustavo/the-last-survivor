@@ -92,7 +92,7 @@ public class Spacecraft implements IDrawControllable, Serializable {
 	
 		
 		if(this.life == null){
-			this.life = 250;
+			this.life = 0;
 		}
 		
 		if(this.points == null){

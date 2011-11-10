@@ -1,9 +1,16 @@
 package br.com.thelastsurvivor.activity.game.simplemode;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +26,15 @@ public class ResultGameActivity extends Activity {
 	
 	private MyAudioPlayer audioBackgraund;
 	private Vibrator vibrator;
+	
+	private final String consumerKey = "lYzErfjAnwcmCGOkcVJ5g";  
+	private final String consumerSecret = "en5DkY1oApA5vh7YInqZj4lcOfDHT8yXjKWkluecQ";  
+	
+	private final String CALLBACKURL = "callback://tweeter";  
+	
+	private Twitter twitter; 
+	private static String textTwitter;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +69,7 @@ public class ResultGameActivity extends Activity {
 		
 		
 		textTwitte += this.getString(R.string.twitter_score)+" "+score+" "+this.getString(R.string.twitter_points)
-				+ " #theLastSurvivorUpTo4Players"; 
+				+ " #theLastSurvivorUpTo4PlayersBeta"; 
 		
 		
 		final FT2FontTextView textTwitteView = (FT2FontTextView)findViewById(R.id.text_twitte);
@@ -67,9 +83,39 @@ public class ResultGameActivity extends Activity {
 				  
 				  vibrator.vibrate(80);
 				  
-				  Intent i = new Intent(ResultGameActivity.this, LoginTwitterActivity.class);
+				  twitter = new TwitterFactory().getInstance();  
+				  twitter.setOAuthConsumer(consumerKey, consumerSecret);  
+				    
+				  try {  
+		    		    AccessToken accessToken = loadAccessToken();  
+		    		    if (accessToken == null) {  
+		    		      twitter = new TwitterFactory().getInstance();  
+		    		      twitter.setOAuthConsumer(  
+		    		        consumerKey, consumerSecret);  
+		    		      
+		    		      RequestToken requestToken =   
+		    		        twitter.getOAuthRequestToken(CALLBACKURL);  
+		    		   
+		    		      String url = requestToken.getAuthenticationURL();  
+		    		      Intent it = new Intent(  
+		    		        Intent.ACTION_VIEW, Uri.parse(url));  
+		    		      it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);  
+		    		      startActivity(it);  
+		    		      
+		    		      saveRequestData(requestToken.getToken(),   
+		    		        requestToken.getTokenSecret());  
+		    		     
+		    		    } else {  
+		    		      twitter.setOAuthAccessToken(accessToken);  
+		    		    }  
+		    		  } catch (Exception e) {  
+		    		    e.printStackTrace();  
+		    		   
+		    		  }  
 				  
-				  startActivityForResult(i, 0);
+				 // Intent i = new Intent(ResultGameActivity.this, LoginTwitterActivity.class);
+				  
+				  //startActivityForResult(i, 0);
 				  
 				  Intent i2 = new Intent(ResultGameActivity.this, TwitterActivity.class);
 				  Bundle s = new Bundle();
@@ -97,6 +143,35 @@ public class ResultGameActivity extends Activity {
 	    }
 		return true;
 	}	
+	
+	private AccessToken loadAccessToken() {  
+		  SharedPreferences prefs = PreferenceManager.  
+		    getDefaultSharedPreferences(this);  
+		  String acToken =   
+		    prefs.getString("access_token", null);  
+		  String acTokenSecret =   
+		    prefs.getString("access_tokensecret", null);  
+		  
+		  if (acToken != null || acTokenSecret != null){  
+		    return new AccessToken(acToken, acTokenSecret);  
+		  }  
+		  return null;  
+		}  
+	
+	private void saveRequestData(  
+			  String requestToken, String requestTokenSecret){  
+			  
+			  SharedPreferences prefs = PreferenceManager.  
+			    getDefaultSharedPreferences(this);  
+			  SharedPreferences.Editor editor = prefs.edit();  
+			  
+			  editor.putString(  
+			    "request_token", requestToken);  
+			  editor.putString(  
+			    "request_tokensecret", requestTokenSecret);  
+			  
+			  editor.commit();    
+			}  
 	
 	@Override
 	protected void onDestroy() {

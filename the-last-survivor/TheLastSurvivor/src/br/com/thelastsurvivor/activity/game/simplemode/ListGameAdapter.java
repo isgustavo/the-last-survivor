@@ -49,8 +49,19 @@ public class ListGameAdapter extends BaseAdapter{
 		FT2FontTextView dateGame = (FT2FontTextView) v.findViewById(R.id.date_game);
 		dateGame.setText(DateTimeUtil.DateToString(game.getDate()));
 		
+		String time = "";
+		if((game.getRunTime()/60000) == 0){
+			Integer timeGame = (int) (game.getRunTime()/1000);
+			time += "0:"+timeGame;
+
+		}else{
+			time += (int)(game.getRunTime()/60000)+":"+
+							((game.getRunTime()/1000)-((int)(game.getRunTime()/60000)*60));
+			
+		}
+		
 		FT2FontTextView timeGame = (FT2FontTextView) v.findViewById(R.id.time_game);
-		timeGame.setText(game.getRunTime()+"");
+		timeGame.setText(time);
 		
 		FT2FontTextView lifeGame = (FT2FontTextView) v.findViewById(R.id.life_game);
 		lifeGame.setText(""+game.getSpacecraft().getLife());

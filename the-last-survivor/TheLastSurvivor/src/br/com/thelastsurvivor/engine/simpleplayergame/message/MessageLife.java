@@ -21,7 +21,7 @@ public class MessageLife extends MessageGame{
 		
 		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.paint.setColor(Color.parseColor("#00889C"));
-		this.paint.setTextSize(14);
+		this.paint.setTextSize(18);
 		
 	
 		//.font = Typeface.createFromAsset(this.context.getAssets(),"fonts/FT2FONT.TTF");
