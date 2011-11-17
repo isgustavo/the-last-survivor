@@ -304,19 +304,19 @@ public class EngineGame{
 		
 		switch ((int)(this.startTime/60000)) {
 		case 0:
-			isAsteroid = (int) (Math.random()*50);			
-		break;
-		case 1:
-			isAsteroid = (int) (Math.random()*40);			
-		break;
-		case 2:
-			isAsteroid = (int) (Math.random()*30);			
-		break;
-		case 3:
 			isAsteroid = (int) (Math.random()*20);			
 		break;
+		case 1:
+			isAsteroid = (int) (Math.random()*15);			
+		break;
+		case 2:
+			isAsteroid = (int) (Math.random()*10);			
+		break;
+		case 3:
+			isAsteroid = (int) (Math.random()*5);			
+		break;
 		default:
-			isAsteroid = (int) (Math.random()*20);
+			isAsteroid = (int) (Math.random()*2);
 		}
 		
 		if(isAsteroid == 1){
@@ -349,8 +349,6 @@ public class EngineGame{
 									new Vector2D(asteroid.getPosition().getX(),
 											     asteroid.getPosition().getY()),
 											     asteroid.getTypeImage()-1, true));
-						}else{
-							asteroid.setAlive(false);
 						}
 						
 						//verificationPowerUp((Asteroid)asteroid);
@@ -459,7 +457,7 @@ public class EngineGame{
 			
 			for (IDrawBehavior asteroid : this.asteroidsDrawables) {
 				asteroid.update();
-				//verificationNewPositionScreen(asteroid);
+				verificationNewPositionScreen(asteroid);
 			}
 			
 			this.asteroids.clear();

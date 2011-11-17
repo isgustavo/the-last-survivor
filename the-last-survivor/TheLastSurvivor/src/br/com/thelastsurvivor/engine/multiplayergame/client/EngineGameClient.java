@@ -125,9 +125,9 @@ public class EngineGameClient implements IClient{
 						
 					}
 					//engine.draw(canvas);
-					if (explosion != null) {
-			 			explosion.draw(canvas);
-			 		}
+					//if (explosion != null) {
+			 		//	explosion.draw(canvas);
+			 		//}
 				}
 				//}
 			}finally{

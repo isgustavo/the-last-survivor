@@ -132,10 +132,14 @@ public class Particle {
 	
 	
 	public void draw(Canvas canvas) {
-
-		paint.setColor(this.color);
-		canvas.drawRect((float) this.position.getX(), (float) this.position.getY(), 
-				(float) (this.position.getX() + this.widht),(float) (this.position.getY() + this.height), paint);
+		
+		if(paint != null){
+			paint.setColor(this.color);
+			canvas.drawRect((float) this.position.getX(), (float) this.position.getY(), 
+					(float) (this.position.getX() + this.widht),(float) (this.position.getY() + this.height), paint);
+			
+		}
+		
 		
 	}
 	

@@ -371,7 +371,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 				 communication.os.writeUTF("startGameClient/");
 			}
 	   
-			
+			Log.d("SERVER",""+spacecraftsClient.size());
 			startGameServer(spacecraftsClient);
 	   } catch (IOException e) {
 			e.printStackTrace();
@@ -652,9 +652,7 @@ public class MultiGameActivity extends Activity implements SensorEventListener,
 			
 		}
 		
-		Log.d("...", "."+this.namePlayer);
-		Log.d("...", "."+points);
-		Log.d("...", "."+type);
+		
 		
 		if(save){
 

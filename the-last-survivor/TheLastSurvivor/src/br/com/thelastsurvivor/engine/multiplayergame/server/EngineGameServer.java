@@ -74,7 +74,7 @@ public class EngineGameServer implements IServer{
 		
 		this.spacecrafts = spacecrafts;
 		
-		Log.d("EngineGameServer","."+color);
+		//Log.d("EngineGameServer","."+color);
 		this.spacecraft = new Spacecraft(this.getContext(), new Vector2D(200,200), name, color, display);
 		
 		this.init();

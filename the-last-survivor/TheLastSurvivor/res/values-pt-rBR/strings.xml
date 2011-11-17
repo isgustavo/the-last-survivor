@@ -62,6 +62,10 @@
 	<string name="no_server">Nenhum Servidor encontrado.</string>
 	<string name="devices">Devices.</string>
 	
+	<string name="wait_server">Esperando por jogadores...</string>
+	<string name="wait_client">Buscando servidor.</string>
+	<string name="wait_init_server">conectando com o servidor.</string>
+	
 	<string name="server_confirm">Escolha um tipo de conexão.</string>
 	<string name="show_progress">Aguardando por conexões...</string>
 	
